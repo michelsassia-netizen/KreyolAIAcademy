@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<!-- ================================================================
+  🇭🇹 KreyòlAI Academy — Course Platform (30 Jou AI)
+  ================================================================
+  HOW IT WORKS:
+  1. User fills name/email/password → account saved in browser
+  2. They see 30 lessons organised by week
+  3. Each lesson has content + action task
+  4. At the end: quiz + certificate with their name
+
+  🔑 KEY THINGS TO EDIT:
+  • Course content (lessons): Search "COURSE DATA" below
+  • Add/remove a lesson:       Find the lessons[] array
+  • Change quiz questions:     Search "QUIZ" section
+  • Change certificate text:   Search "CERTIFICATE" section
+  • Email notifications:       Search "formspree.io"
+
+  ⚠️  DO NOT EDIT: The SUPABASE lines (not connected, safe to ignore)
+  ================================================================ -->
+<html lang="ht">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KreyòlAIHub — Platfòm Aprann 30 Jou AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+  /* ================================================
+     🎨 COLORS — Same brand colors as landing page
+     Change --blue, --gold to update the whole app
+     ================================================ */
+    :root {
+      --navy: #0B1C2D; --navy-mid: #0f2540; --navy-light: #162f4a;
+      --blue: #1E90FF; --gold: #F5B942; --white: #F0F6FF;
+      --white-dim: rgba(240,246,255,0.65);
+      --white-faint: rgba(240,246,255,0.07);
+      --success: #22c55e; --border: rgba(30,144,255,0.15);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+    h1,h2,h3,h4 { font-family: 'Syne', sans-serif; line-height: 1.2; }
+
+    /* ===== AUTH GATE ===== */
+    #auth-gate {
+      position: fixed; inset: 0; z-index: 500;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    #auth-gate.hidden { display: none; }
+    .auth-card {
+      background: var(--navy-light); border: 1px solid var(--border);
+      border-radius: 28px; padding: 3rem; width: 100%; max-width: 480px;
+      text-align: center;
+    }
+    .auth-card .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; margin-bottom: 0.25rem; }
+    .auth-card .logo span { color: var(--gold); }
+    .auth-card .tagline { color: var(--white-dim); font-size: 0.85rem; margin-bottom: 2rem; }
+    .auth-tabs { display: flex; border: 1px solid var(--border); border-radius: 50px; overflow: hidden; margin-bottom: 1.5rem; }
+    .auth-tab { flex: 1; padding: 0.65rem; cursor: pointer; font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; transition: all 0.2s; color: var(--white-dim); text-align: center; }
+    .auth-tab.active { background: var(--blue); color: #fff; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.85rem; text-align: left; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--white-dim); }
+    .form-group input { background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--white); border-radius: 12px; padding: 0.75rem 1rem; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; width: 100%; }
+    .form-group input:focus { border-color: var(--blue); }
+    .btn-primary { background: linear-gradient(135deg, var(--blue), #0f6fdf); color: #fff; border: none; border-radius: 50px; padding: 0.85rem 2rem; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.25s; font-family: 'Syne', sans-serif; box-shadow: 0 0 25px rgba(30,144,255,0.35); width: 100%; margin-top: 0.5rem; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(30,144,255,0.5); }
+    .auth-msg { padding: 0.7rem 1rem; border-radius: 10px; font-size: 0.85rem; margin-bottom: 0.75rem; display: none; }
+    .auth-msg.error { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; }
+    .auth-msg.success { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); color: #86efac; }
+    .back-link { display: block; margin-top: 1.25rem; color: var(--white-dim); font-size: 0.82rem; text-decoration: none; }
+    .back-link:hover { color: var(--white); }
+
+    /* ===== MAIN LAYOUT ===== */
+    #app { display: none; min-height: 100vh; }
+    #app.visible { display: flex; }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: 300px; flex-shrink: 0;
+      background: var(--navy-mid);
+      border-right: 1px solid var(--border);
+      height: 100vh; position: sticky; top: 0;
+      overflow-y: auto; display: flex; flex-direction: column;
+    }
+    .sidebar-header { padding: 1.5rem; border-bottom: 1px solid var(--border); }
+    .sidebar-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; }
+    .sidebar-logo span { color: var(--gold); }
+    .user-info { margin-top: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
+    .user-avatar { width: 36px; height: 36px; background: linear-gradient(135deg, var(--blue), #0f6fdf); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+    .user-name { font-size: 0.85rem; font-weight: 600; }
+    .user-role { font-size: 0.75rem; color: var(--white-dim); }
+    .progress-bar-outer { margin: 1rem 1.5rem; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--white-dim); margin-bottom: 0.4rem; }
+    .progress-bar { height: 6px; background: var(--white-faint); border-radius: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--gold)); border-radius: 10px; transition: width 0.5s; }
+    .sidebar-nav { padding: 0.75rem 0; flex: 1; }
+    .nav-section-title { padding: 0.5rem 1.5rem; font-size: 0.7rem; font-weight: 700; color: var(--white-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+    .nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 1.5rem; cursor: pointer; transition: background 0.15s; font-size: 0.88rem; border-left: 3px solid transparent; }
+    .nav-item:hover { background: var(--white-faint); }
+    .nav-item.active { background: rgba(30,144,255,0.1); border-left-color: var(--blue); color: var(--white); }
+    .nav-item.locked { opacity: 0.45; cursor: not-allowed; }
+    .nav-item.done .check { color: var(--success); }
+    .nav-item .day-num { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--blue); min-width: 28px; }
+    .nav-item .item-title { flex: 1; }
+    .nav-item .check { font-size: 0.85rem; }
+    .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); }
+    .btn-sm { background: var(--white-faint); border: 1px solid var(--border); color: var(--white-dim); border-radius: 8px; padding: 0.5rem 0.75rem; font-size: 0.8rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+    .btn-sm:hover { border-color: var(--blue); color: var(--white); }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content { flex: 1; overflow-y: auto; padding: 2rem; max-width: 900px; }
+
+    /* ===== LESSON VIEW ===== */
+    .lesson-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 2rem; flex-wrap: gap; gap: 1rem; }
+    .lesson-badge { background: rgba(30,144,255,0.12); border: 1px solid rgba(30,144,255,0.25); color: var(--blue); border-radius: 50px; padding: 0.3rem 0.85rem; font-size: 0.75rem; font-weight: 700; margin-bottom: 0.5rem; display: inline-block; }
+    .lesson-title { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800; }
+    .lesson-quote { color: var(--gold); font-size: 0.95rem; font-style: italic; margin-top: 0.3rem; }
+    .lesson-body { line-height: 1.8; color: var(--white-dim); }
+    .lesson-body h3 { color: var(--white); font-size: 1.05rem; margin: 1.5rem 0 0.5rem; }
+    .concept-box { background: var(--white-faint); border: 1px solid var(--border); border-radius: 16px; padding: 1.25rem; margin: 1rem 0; }
+    .concept-box .concept-title { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--blue); margin-bottom: 0.5rem; }
+    .real-story { background: linear-gradient(135deg, rgba(30,144,255,0.06), rgba(245,185,66,0.04)); border-left: 3px solid var(--gold); border-radius: 0 16px 16px 0; padding: 1rem 1.25rem; margin: 1.25rem 0; }
+    .real-story .story-label { font-size: 0.75rem; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+    .action-box { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; padding: 1.25rem; margin: 1.25rem 0; }
+    .action-box .action-label { font-size: 0.75rem; font-weight: 700; color: var(--success); letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .action-steps { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+    .action-steps li { display: flex; gap: 0.5rem; font-size: 0.9rem; }
+    .action-steps li::before { content: attr(data-n)'.'; color: var(--blue); font-weight: 700; min-width: 18px; }
+    .code-block { background: #0a1628; border: 1px solid rgba(79,195,247,0.2); border-radius: 12px; padding: 1rem; margin: 1rem 0; font-family: 'Courier New', monospace; font-size: 0.85rem; color: #a5d6a7; overflow-x: auto; white-space: pre; }
+    .nav-btns { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+    .btn-secondary { background: var(--white-faint); border: 1px solid var(--border); color: var(--white); border-radius: 50px; padding: 0.75rem 1.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; font-family: 'Syne', sans-serif; transition: all 0.2s; }
+    .btn-secondary:hover { border-color: var(--blue); }
+    .complete-btn { background: linear-gradient(135deg, var(--success), #16a34a); color: #fff; border: none; border-radius: 50px; padding: 0.75rem 1.75rem; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: 'Syne', sans-serif; }
+
+    /* ===== QUIZ VIEW ===== */
+    .kwiz-container { max-width: 680px; }
+    .kwiz-header { margin-bottom: 2rem; }
+    .kwiz-progress { display: flex; gap: 0.3rem; margin-bottom: 1rem; }
+    .q-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--white-faint); transition: background 0.3s; }
+    .q-dot.done { background: var(--success); }
+    .q-dot.active { background: var(--blue); }
+    .question-card { background: var(--white-faint); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem; }
+    .question-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 1.25rem; line-height: 1.5; }
+    .options { display: flex; flex-direction: column; gap: 0.75rem; }
+    .option { display: flex; align-items: center; gap: 0.85rem; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px; padding: 0.85rem 1rem; cursor: pointer; transition: all 0.2s; font-size: 0.92rem; }
+    .option:hover { border-color: rgba(30,144,255,0.4); background: rgba(30,144,255,0.06); }
+    .option.selected { border-color: var(--blue); background: rgba(30,144,255,0.1); }
+    .option.correct { border-color: var(--success); background: rgba(34,197,94,0.1); color: #86efac; }
+    .option.wrong { border-color: #ef4444; background: rgba(239,68,68,0.08); color: #fca5a5; }
+    .option .opt-letter { width: 28px; height: 28px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+    .option.selected .opt-letter { background: var(--blue); border-color: var(--blue); }
+    .explanation { background: rgba(245,185,66,0.08); border: 1px solid rgba(245,185,66,0.2); border-radius: 12px; padding: 1rem; margin-top: 0.75rem; color: var(--gold); font-size: 0.88rem; display: none; }
+    .score-card { text-align: center; padding: 3rem 2rem; }
+    .score-ring { width: 120px; height: 120px; border-radius: 50%; border: 6px solid var(--border); margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; position: relative; }
+    .score-ring .score-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; }
+    .score-ring.pass { border-color: var(--success); }
+    .score-ring.fail { border-color: #ef4444; }
+
+    /* ===== CERTIFICATE VIEW ===== */
+    .cert-section { max-width: 700px; margin: 0 auto; }
+    .cert-frame {
+      border: 3px solid var(--blue); border-radius: 24px;
+      background: linear-gradient(135deg, var(--navy-mid), rgba(30,144,255,0.06));
+      padding: 3rem; text-align: center; margin: 2rem 0;
+      position: relative;
+    }
+    .cert-frame::before {
+      content: ''; position: absolute; inset: 6px; border: 1px solid rgba(30,144,255,0.25); border-radius: 18px; pointer-events: none;
+    }
+    .cert-frame .cert-brand { font-size: 0.75rem; letter-spacing: 0.15em; color: var(--blue); font-weight: 700; margin-bottom: 1rem; }
+    .cert-frame .cert-heading { font-size: 1.2rem; color: var(--white-dim); margin-bottom: 0.5rem; }
+    .cert-frame .cert-course { font-size: 2rem; font-weight: 800; color: var(--blue); margin-bottom: 0.25rem; }
+    .cert-frame .cert-sub { color: var(--white-dim); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .cert-frame hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem auto; width: 80%; }
+    .cert-frame .student-name { font-size: 1.8rem; font-weight: 800; color: var(--gold); margin: 0.5rem 0; }
+    .cert-frame .cert-date { color: var(--white-dim); font-size: 0.82rem; }
+    .cert-frame .cert-badge { font-size: 3rem; margin-bottom: 0.5rem; }
+    .cert-frame .cert-footer { display: flex; justify-content: space-between; margin-top: 2rem; font-size: 0.75rem; color: var(--white-dim); }
+    .cert-name-input { margin: 1.5rem auto; max-width: 380px; }
+    .cert-name-input input { width: 100%; background: var(--white-faint); border: 1px solid var(--border); color: var(--white); border-radius: 12px; padding: 0.85rem 1.25rem; font-size: 1rem; text-align: center; font-family: 'Syne', sans-serif; font-weight: 700; outline: none; }
+    .cert-name-input input:focus { border-color: var(--gold); }
+    .cert-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-gold { background: linear-gradient(135deg, var(--gold), #d49d30); color: #0B1C2D; border: none; border-radius: 50px; padding: 0.85rem 2rem; font-size: 0.95rem; font-weight: 700; cursor: pointer; font-family: 'Syne', sans-serif; }
+    .locked-overlay { position: absolute; inset: 0; background: rgba(11,28,45,0.85); border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; text-align: center; padding: 2rem; z-index: 5; }
+    .locked-overlay h3 { font-size: 1.3rem; }
+    .locked-overlay p { color: var(--white-dim); font-size: 0.9rem; max-width: 320px; }
+
+    /* ===== DASHBOARD VIEW ===== */
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+    .week-card { background: var(--white-faint); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; cursor: pointer; transition: all 0.2s; }
+    .week-card:hover { border-color: rgba(30,144,255,0.4); transform: translateY(-3px); }
+    .week-card .week-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--blue); }
+    .week-card .week-title { font-weight: 600; margin: 0.25rem 0 0.5rem; }
+    .week-card .week-days { font-size: 0.8rem; color: var(--white-dim); margin-bottom: 0.75rem; }
+    .week-card .week-prog { height: 4px; background: var(--white-faint); border-radius: 10px; overflow: hidden; }
+    .week-card .week-fill { height: 100%; background: var(--blue); border-radius: 10px; transition: width 0.4s; }
+    .week-card.completed { border-color: rgba(34,197,94,0.3); }
+    .week-card.completed .week-num { color: var(--success); }
+
+    /* ===== TOAST ===== */
+    #toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 600; background: var(--success); color: #fff; padding: 1rem 1.5rem; border-radius: 12px; font-weight: 600; font-size: 0.9rem; transform: translateY(100px); transition: transform 0.4s; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main-content { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================================
+  🔐 AUTH GATE — Login/Signup screen
+  Shows BEFORE the course loads
+  • "Enskri Gratis" tab → gateSignup() function
+  • "Konekte" tab       → gateLogin() function
+  Both functions are in the JAVASCRIPT section below
+  ================================================ -->
+<div id="auth-gate">
+  <div class="auth-card">
+    <div class="logo">Kreyòl<span>AI</span>Hub</div>
+    <div class="tagline">Platfòm Aprann — 30 Jou AI</div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="gate-tab-signup" onclick="gateTab('signup')">Enskri Gratis</div>
+      <div class="auth-tab" id="gate-tab-login" onclick="gateTab('login')">Konekte</div>
+    </div>
+    <div class="auth-msg" id="gate-msg"></div>
+    <div id="gate-signup">
+      <div class="form-group"><label>Non Konplè</label><input type="text" id="g-name" placeholder="Non ak Siyati ou" /></div>
+      <div class="form-group"><label>Imèl</label><input type="email" id="g-email" placeholder="imèl@example.com" /></div>
+      <div class="form-group"><label>Modpas (6 karaktè min.)</label><input type="password" id="g-pass" placeholder="••••••••" /></div>
+      <button class="btn-primary" onclick="gateSignup()">Kreye Kont & Kòmanse →</button>
+    </div>
+    <div id="gate-login" style="display:none">
+      <div class="form-group"><label>Imèl</label><input type="email" id="gl-email" placeholder="imèl@example.com" /></div>
+      <div class="form-group"><label>Modpas</label><input type="password" id="gl-pass" placeholder="••••••••" /></div>
+      <button class="btn-primary" onclick="gateLogin()">Konekte →</button>
+    </div>
+    <a href="index.html" class="back-link">← Retounen nan paj prensipal la</a>
+  </div>
+</div>
+
+<!-- ================================================
+  📱 MAIN APP — Only visible AFTER login
+  Contains:
+  • Left sidebar  → lesson list + progress bar
+  • Right content → lesson/dashboard/quiz/certificate
+  Everything inside is generated by JavaScript
+  ================================================ -->
+<div id="app">
+  <!-- ================================================
+  📋 SIDEBAR — Left panel
+  • Avatar + name (top)
+  • Progress bar
+  • Lesson list (generated by renderSidebar() JS function)
+  • Bottom buttons: Dashboard, Quiz, Certificate
+  ================================================ -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">Kreyòl<span>AI</span>Hub</div>
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">S</div>
+        <div>
+          <div class="user-name" id="sidebar-name">Elèv</div>
+          <div class="user-role">30 Jou AI</div>
+        </div>
+      </div>
+    </div>
+    <div class="progress-bar-outer">
+      <div class="progress-label">
+        <span>Pwogrè Total</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-bar" style="width:0%"></div></div>
+    </div>
+    <div class="sidebar-nav" id="sidebar-nav"><!-- Generated by JS --></div>
+    <div class="sidebar-footer">
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <button class="btn-sm" onclick="showView('dashboard')">🏠 Akèy</button>
+        <button class="btn-sm" onclick="showView('kwiz')">📝 Kiz Final</button>
+        <button class="btn-sm" onclick="showView('cert')">🏆 Sètifika</button>
+        <button class="btn-sm" onclick="logout()">🚪 Sòti</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+  📄 MAIN CONTENT — Right panel
+  Content is generated by JavaScript depending on what the user clicks:
+  • showView("dashboard") → renderDashboard()
+  • showView("lesson")    → renderLesson()
+  • showView("kwiz")      → renderKwiz()
+  • showView("cert")      → renderCert()
+  ================================================ -->
+  <div class="main-content" id="main-content"><!-- Rendered by JS --></div>
+</div>
+
+<div id="toast">✓ <span id="toast-msg">Done!</span></div>
+
+<script>
+// ================================================
+// ⚙️  SUPABASE CONFIG — Optional database (not required)
+// ================================================
+// The site works 100% WITHOUT Supabase using localStorage
+// Only set this up if you want accounts to persist across devices
+// For now: leave these as-is, everything works fine
+// ================================================
+const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+const SUPABASE_KEY = 'YOUR_ANON_KEY';
+let sb = null;
+try { sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch {}
+
+// ================================================
+// 📚 COURSE DATA — THIS IS WHERE YOUR LESSONS LIVE
+// ================================================
+// Each lesson has:
+//   day:     lesson number (1-30)
+//   title:   lesson title (shown in sidebar)
+//   emoji:   icon shown next to title
+//   content: HTML content shown when user opens lesson
+//   action:  the daily challenge at the bottom
+//
+// ✏️  TO EDIT A LESSON: Find the day number, change title/content/action
+// ➕  TO ADD A LESSON: Copy a lesson block, change the day number
+// ================================================
+const WEEKS = [
+  { num: 1, title: 'Fondasyon AI', days: '1–5', color: '#1E90FF' },
+  { num: 2, title: 'Modèl ak Tip Aprantisaj', days: '6–10', color: '#9b5cf6' },
+  { num: 3, title: 'Zouti Pratik ak Etik', days: '11–15', color: '#F5B942' },
+  { num: 4, title: 'Zouti AI Avanse', days: '16–20', color: '#22c55e' },
+  { num: 5, title: 'Teknik Avanse', days: '21–25', color: '#ef4444' },
+  { num: 6, title: 'Aplikasyon ak Laveni', days: '26–30', color: '#06b6d4' },
+];
+
+const LESSONS = [
+  { day: 1, week: 1, title: 'Ki sa ki AI?', quote: '"AI ap chanje mond lan... èske w pare?"',
+    content: `<p>AI (Entèlijans Atifisyèl) se sistèm òdinatè ki ka aprann nan done epi pran desizyon tankou yon moun — men pi vit ak pi konsistan.</p>`,
+    concepts: [
+      { title: 'Aprann nan done', body: 'AI gade anpil egzanp pou li konprann modèl. Li pa bezwen yon moun eksplike l chak règ.' },
+      { title: 'Rekonèt modèl', body: 'Li wè regilarite nan enfòmasyon epi li rekonèt yo pou pran pi bon desizyon.' },
+      { title: 'Pran desizyon', body: 'Li ka chwazi pi bon opsyon baze sou sa li te aprann anvan.' },
+    ],
+    story: { who: 'Digicel Ayiti', text: 'Digicel itilize AI pou detekte frode nan tranzaksyon mobil. Chak jou, li analize milyon transaksyon epi bloke aktivite sispèk.' },
+    action: { steps: ['Ouvri WhatsApp sou telefòn ou', 'Chèche "Meta AI"', 'Di: "Bonjou, ki sa ou ka fè pou mwen?"', 'Ekri nan kòmantè: "Mwen fè l!"'] }
+  },
+  { day: 2, week: 1, title: 'Kijan AI Aprann?', quote: '"Machin yo aprann tankou timoun... men pi vit!"',
+    content: `<p>AI aprann atravè yon pwosesis ki gen 3 etap kle: gade egzanp, jwenn modèl, epi korije erè yo.</p>`,
+    concepts: [
+      { title: 'Etap 1: Gade anpil egzanp', body: 'AI gade plizyè milyon egzanp pou li kapab wè diferan ka.' },
+      { title: 'Etap 2: Jwenn modèl ki repete', body: 'Li idantifye sa ki sanble nan done yo — tankou nou rekonèt figi fanmi nou.' },
+      { title: 'Etap 3: Korije erè', body: 'Li ajiste chak fwa li fè yon erè, tankou yon timoun k ap aprann mache.' },
+    ],
+    story: { who: 'Marie nan Delma', text: 'Marie te bouke ak spam nan imèl li. Apre kèk semèn, filtè AI a aprann sa li pa vle. Kounye a inbox li pi pwòp.' },
+    action: { steps: ['Ouvri YouTube ou', 'Gade 3 videyo sou nenpòt sijè', 'Remake: rekòmandasyon yo pral chanje!', 'Sa se AI k ap aprann preferans ou'] }
+  },
+  { day: 3, week: 1, title: 'Ki kote AI Itilize?', quote: '"AI toupatou... men ou pa wè l!"',
+    content: `<p>AI pa sèlman nan telefòn entelijan yo. Li nan bank ou, lopital, GPS ou, ak anpil lòt kote ou pa t imajine.</p>`,
+    concepts: [
+      { title: '🏥 Sante', body: 'AI li radyografi pou detekte maladi. Lopital ki sèvi kominote Ayisyen itilize sa.' },
+      { title: '💰 Finans (MonCash)', body: 'MonCash itilize AI pou verifye tranzaksyon epi pwoteje kont ou kontra frode.' },
+      { title: '🚗 Transpò (GPS)', body: 'GPS nan Pòtoprens itilize AI pou chwazi pi bon wout selon trafik an tan reyèl.' },
+    ],
+    story: { who: 'Nadia nan Jakmèl', text: 'Nadia itilize GPS chak jou pou livrezon. AI chwazi wout ki pi rapid selon trafik. Li rive a lè pi souvan.' },
+    action: { steps: ['Ekri nan kòmantè: "AI ka ede Ayiti ak ____"', 'Ranplase ____ ak yon lide ou pèsonèl', '🇭🇹 Ayiti kapab!'] }
+  },
+  { day: 4, week: 1, title: 'Ki sa ki Done?', quote: '"DONE = manje AI. San done, AI grangou!"',
+    content: `<p>Chak foto ou pran, chak mesaj ou voye, chak achte ou fè — tout sa se done. Done se baz tout aprantisaj AI.</p>`,
+    concepts: [
+      { title: 'Types de done', body: 'Foto ak imaj • Tèks ak mesaj • Son ak vwa • Nimewo ak statistik • Videyo' },
+      { title: 'Done Kreyòl enpòtan', body: 'Plis nou ekri an Kreyòl, plis AI ka aprann lang nou. Chak mesaj WhatsApp an Kreyòl ede!' },
+    ],
+    story: { who: 'Rico nan Gonaïves', text: 'Rico fè ti biznis. Li kòmanse kenbe done lavant li yo chak jou. Sa ede l konprann ki pwodwi ki vann pi byen.' },
+    action: { steps: ['Gade galri telefòn ou', 'Idantifye 3 kalite done ou genyen', 'Ekri: Foto / Tèks / Son / Videyo', 'Sonje: chak foto = done pou AI!'] }
+  },
+  { day: 5, week: 1, title: 'Kijan AI Pran Desizyon?', quote: '"AI pa panse... AI KALKILE!"',
+    content: `<p>AI pa gen yon "sèvo" tankou nou. Li kalkile pwobabilite ak pran pi bon chwa baze sou done li te wè anvan.</p>`,
+    concepts: [
+      { title: 'Etap 1: Gade done ki antre', body: 'Li resevwa enfòmasyon ou ba li — tèks, imaj, oswa son.' },
+      { title: 'Etap 2: Konpare ak modèl', body: 'Li konpare ak tout egzanp li te wè pandan fòmasyon li.' },
+      { title: 'Etap 3: Kalkile pwobabilite', body: 'Li chwazi repons ki gen pi wo pousantaj kòrèktite.' },
+    ],
+    story: { who: 'Klavye ou chak jou', text: 'Lè ou tape "Mwen vle..." klavye ou sijere mo ansuit. Se AI k ap kalkile ki mo sanble plis selon sa ou ekri.' },
+    action: { steps: ['Ouvri imèl oswa WhatsApp', 'Tape "Mwen vle..." epi rete', 'Gade 3 mo AI sijere yo', 'Remake: se pwobabilite ki deside!'] }
+  },
+  { day: 6, week: 2, title: 'Ki sa ki yon Modèl AI?', quote: '"Chak AI gen sèvo espesyalize..."',
+    content: `<p>Yon modèl AI se yon "sèvo" espesyalize pou yon travay espesifik. Modèl tradiksyon pa menm jan ak modèl imaj.</p>`,
+    concepts: [
+      { title: 'Modèl Tradiksyon', body: 'ChatGPT, Google Translate — espesyalize pou konprann ak tradui lang.' },
+      { title: 'Modèl Vizaj', body: 'FaceID, Google Photos — espesyalize pou rekonèt figi ak idantifye moun.' },
+      { title: 'Modèl Mizik', body: 'Spotify AI — espesyalize pou rekòmande ak jeneere mizik.' },
+    ],
+    story: { who: 'Sonia nan Brooklyn', text: 'Sonia bezwen tradui dokiman. Li itilize modèl tradiksyon, pa modèl imaj. Rezilta: repons pi bon ak pi presi.' },
+    action: { steps: ['Teste 2 zouti AI diferan jodi a', 'Tradui yon fraz ak Google Translate', 'Rekonèt yon objè ak Google Lens', 'Ki diferans ou wè?'] }
+  },
+  { day: 7, week: 2, title: 'Ki sa ki yon Algoritm?', quote: '"Algoritm se resèt magik AI..."',
+    content: `<p>Yon algoritm se yon seri etap ki dwe suiv nan yon lòd espesifik pou rezoud yon pwoblèm. Tankou resèt Soup Joumou!</p>`,
+    concepts: [
+      { title: 'Lòd enpòtan', body: 'Etap dwe nan bon lòd. Si ou bwi jiwoumn anvan ou bouyi vyann — soupe a pa bon!' },
+      { title: 'Presizyon enpòtan', body: 'Chak detay konte. Si yon etap manke, sistèm nan ka bloke.' },
+    ],
+    story: { who: 'Junior nan Pòtoprens', text: 'Junior fè livrezon. Li suiv etap (algoritm): pran kòmand → verifye adrès → kalkile pri → livre. Sa diminye erè pa 80%.' },
+    action: { steps: ['Ekri algoritm ou pou prepare manje Ayisyen', 'Tankou: Bouyi vyann → Kale jiwoumn → Melanje', 'Si w chanje lòd → pwoblèm!'] }
+  },
+  { day: 8, week: 2, title: 'Machine Learning', quote: '"Machin ki aprann san ou pa montre l tout..."',
+    content: `<p>Machine Learning (ML) se branch AI kote machin aprann nan done san yo pa bezwen pwograme yo eksplisite.</p>`,
+    concepts: [
+      { title: 'ML = AI aprann ak done', body: 'Pa bezwen ekri tout règ. AI li wè pàtèn nan done epi li fè règ li menm.' },
+      { title: 'Egzanp: Filtè Spam', body: 'Imèl ou ka klase spam otomatikman paske ML te aprann pàtèn mesaj move yo.' },
+    ],
+    code: `# Egzanp senp Machine Learning (Python)
+from sklearn.neighbors import KNeighborsClassifier
+
+# Done: [depans_mwa, salè] → [spam: 1 = wi, 0 = non]
+X_train = [[100, 500], [50, 200], [2000, 100]]
+y_train = [0, 0, 1]  # 0=bon, 1=spam
+
+modèl = KNeighborsClassifier(n_neighbors=1)
+modèl.fit(X_train, y_train)
+print(modèl.predict([[1500, 80]]))  # → [1] (spam!)
+# Eseye sou: colab.research.google.com (GRATIS!)`,
+    story: { who: 'Claudine nan Lond', text: 'Claudine sèvi ak AI pou klase email yo. Sistèm nan aprann preferans li. Li ekonomize 30-60 minit chak jou.' },
+    action: { steps: ['Chwazi 1 app ki rekòmande bagay (YouTube, Netflix)', 'Gade: kijan li konnen sa ou renmen?', 'Sa se ML k ap travay!', '→ Eseye kòd sou colab.research.google.com'] }
+  },
+  { day: 9, week: 2, title: 'Deep Learning', quote: '"Aprantisaj ki fon... pi pwisan!"',
+    content: `<p>Deep Learning se yon kalite ML ki itilize "couches" (kouch) plizyè nan rezo newonal pou rezoud pwoblèm konplèks.</p>`,
+    concepts: [
+      { title: 'Deep Learning = ML + anpil kouch', body: 'Plis kouch = plis kapasite = pi bon rezilta sou travay konplèks.' },
+      { title: 'Kote DL enpòtan', body: 'Rekonèt figi • Konprann vwa • Tradui lang konplèks • Detekte maladi' },
+    ],
+    code: `# Rezo Newonal Senp ak TensorFlow (gratis sou Colab)
+import tensorflow as tf
+
+modèl = tf.keras.Sequential([
+    tf.keras.layers.Dense(128, activation='relu'),  # Kouch 1
+    tf.keras.layers.Dense(64, activation='relu'),   # Kouch 2
+    tf.keras.layers.Dense(1, activation='sigmoid')  # Kouch final
+])
+# Plis kouch = plis "entèlijans" pou pwoblèm konplèks
+print("Modèl pare!")`,
+    story: { who: 'Doktè Pierre nan Kap-Ayisyen', text: 'Doktè Pierre itilize aplikasyon DL pou li imaj medikal. Li ede l idantifye siy maladi vit. Sa amelyore tretman.' },
+    action: { steps: ['Ale sou Google Photos', 'Chèche yon moun — remake: li gwoupe figi!', 'Sa se Deep Learning k ap travay', '→ Eseye: playground.tensorflow.org'] }
+  },
+  { day: 10, week: 2, title: 'Rezo Newonal', quote: '"Rezo newonal = imite sèvo moun..."',
+    content: `<p>Rezo Newonal Atifisyèl imite fason nèwon sèvo imen yo travay. Yo aprann nan koneksyon antre nòd.</p>`,
+    concepts: [
+      { title: 'Nòd konekte tankou nèwon', body: 'Chak nòd resevwa enfòmasyon, trete li, epi pase l al kote pwochen.' },
+      { title: 'Egzanp reyèl', body: 'Foto → rezo wè kouche, bò, koulè → idantifye objè. Vwa → rezo tande son → konvèti an tèks.' },
+    ],
+    code: `# Vizualize Rezo Newonal OU MENM
+# Ale sou: playground.tensorflow.org
+# Ou ka:
+# 1. Chwazi nimewo kouch
+# 2. Ajoute / retire nòd
+# 3. Wè kijan AI a aprann an tan reyèl!
+# Epi pou modèl Kreyòl:
+# → huggingface.co/spaces (Modèl gratis)`,
+    story: { who: 'Wendy nan Monreyal', text: 'Wendy itilize app transkipsyon vwa. Li pale, epi app la ekri. Se rezo newonal k ap konvèti vwa an tèks pou li.' },
+    action: { steps: ['Ale sou playground.tensorflow.org', 'Gade rezo a aprann', 'Eseye chanje nimewo kouch', 'Pataje sa ou wè!'] }
+  },
+  // Continuing weeks 3-6 (simplified for space)
+  { day: 11, week: 3, title: 'Supervised Learning', quote: '"Aprann ak pwofesè... san pwofesè!"',
+    content: `<p>Supervised Learning se kalite ML kote ou montre AI done ki deja gen repons kòrèkt. Li aprann pou predi repons nouvo done.</p>`,
+    concepts: [
+      { title: 'Done etikete', body: 'Ou montre AI: "Sa se spam", "Sa se pa spam". Li aprann diferans lan.' },
+      { title: 'Egzanp', body: 'Email: Spam vs Non-spam • Bank: Nòmal vs Frode • Foto: Chat vs Chen' },
+    ],
+    story: { who: 'Nadia nan Delma', text: 'Bank Nadia itilize Supervised Learning pou detekte frode. Modèl la aprann sou milyon tranzaksyon etikete "nòmal" ak "frode".' },
+    action: { steps: ['Panse a 1 pwoblèm ou genyen', 'Ki done ou ta ka etikete?', 'Egzanp: bon kliyan vs move kliyan'] }
+  },
+  { day: 12, week: 3, title: 'Unsupervised Learning', quote: '"AI ki dekouvri sa ou pa t konnen..."',
+    content: `<p>Unsupervised Learning se kote AI gwoupe done ki sanble san ou pa di li ki repons kòrèkt. Li dekouvri pàtèn kache.</p>`,
+    concepts: [
+      { title: 'Gwoupman otomatik', body: 'Netflix gwoupe itilizatè ak preferans ki sanble — san yo pa di: "Mete moun sa yo ansanm".' },
+      { title: 'Kote li itil', body: 'Segmante kliyan • Gwoupe foto • Dekouvri pàtèn achte • Detekte anomali' },
+    ],
+    story: { who: 'Kenley nan Pètion-Vil', text: 'Kenley te sezi lè telefòn li gwoupe foto fanmi yo otomatikman. Pèsonn pa di AI a kiyès ki kiyès — li jwenn sa pou kont li.' },
+    action: { steps: ['Ouvri Google Photos ou', 'Gade seksyon "People"', 'Ki kijan li gwoupe figi yo?', 'Sa se Unsupervised Learning!'] }
+  },
+  { day: 13, week: 3, title: 'Reinforcement Learning', quote: '"Aprann nan erè... tankou jwè echèk!"',
+    content: `<p>Reinforcement Learning se kote AI aprann pou maximize "rekonpans" atravè eseye-erè. Li amelyore chak fwa li eseye.</p>`,
+    concepts: [
+      { title: 'Sistèm rekonpans', body: 'AI resevwa pwen pou bon aksyon, penalite pou move aksyon. Li aprann pou jwenn plis pwen.' },
+      { title: 'Egzanp', body: 'Jwèt echèk • Robot aspiratè • GPS optimizasyon wout • Asistan vwa' },
+    ],
+    story: { who: 'Junior nan Pòtoprens', text: 'Junior renmen jwèt sou telefòn. AI a aprann pou genyen plis. Chak fwa li pèdi, li chanje estrateji. Tankou yon jwè echèk ki etidye.' },
+    action: { steps: ['Jwenn yon jwèt ki ka pran desizyon (echèk, dame)', 'Remake: kijan li amelyore?', 'Sa se Reinforcement Learning!'] }
+  },
+  { day: 14, week: 3, title: 'Bias nan AI', quote: '"AI ka gen prejije tou... fò nou veye!"',
+    content: `<p>Bias nan AI se lè modèl la produi rezilta ki pa jis oswa diskriminatwa paske done fòmasyon yo pa te ekilibre.</p>`,
+    concepts: [
+      { title: 'Koze bias', body: 'Si done fòmasyon yo montre "doktè = gason", AI pral asosye doktè ak gason otomatikman.' },
+      { title: 'Bias ak Kreyòl', body: 'Paske gen pi piti done an Kreyòl, tradiksyon AI yo ka mwens presi. Se poukisa KreyòlAIHub travay!' },
+    ],
+    story: { who: 'Sonia', text: 'Sonia remake tradiksyon AI bay move sans pou kèk ekspresyon Kreyòl. Sa rive paske done tradiksyon an Kreyòl yo limit.' },
+    action: { steps: ['Mande ChatGPT yon kesyon sou Ayiti', 'Gade si repons la kòrèkt', 'Ekri 1 bias ou wè + 1 solisyon'] }
+  },
+  { day: 15, week: 3, title: 'Etik nan AI', quote: '"Pouvwa = responsabilite... itilize AI byen!"',
+    content: `<p>Etik AI konsène kijan nou dwe devlope ak itilize AI yon fason ki respekte dwa moun, jistis, ak sekirite.</p>`,
+    concepts: [
+      { title: 'Règ fondamantal', body: 'Pa itilize AI pou manti, vòl, oswa scam. Pa pataje done moun san pèmisyon yo.' },
+      { title: 'AI pou bien', body: 'Itilize AI pou ede moun, amelyore sèvis, epi kreye opòtinite.' },
+    ],
+    story: { who: 'Marie', text: 'Marie gen biznis sou WhatsApp. Li itilize AI pou ekri mesaj pi klè — san li pa twonpe kliyan. Sa bati konfyans ak fidèlite.' },
+    action: { steps: ['Ekri 1 règ etik ou pral swiv pou AI', 'Ekzanp: "Mwen p ap itilize AI pou twonpe moun"', 'Pataje règ ou a'] }
+  },
+  { day: 16, week: 4, title: 'Chatbot AI', quote: '"Yon asistan ki pa dòmi... 24/7!"',
+    content: `<p>Chatbot AI se pwogram ki ka pale / ekri ak moun otomatikman, reponn kesyon, ak ede kliyan san poz.</p>`,
+    concepts: [
+      { title: 'Avantaj chatbot', body: 'Disponib 24/7 • Pa janm fatige • Reponn kesyon repetitif • Ekonomize tan' },
+      { title: 'Kote itilize li', body: 'Sèvis kliyan • WhatsApp Biznis • Sit entènèt • Sipò teknik' },
+    ],
+    story: { who: 'Marie nan Jakmèl', text: 'Marie mete chatbot sou WhatsApp biznis li. Li reponn kesyon pri/orè. Li vann plis paske li reponn pi vit — menm lannwit!' },
+    action: { steps: ['Ekri 5 kesyon kliyan toujou poze w', 'Sa yo se premye bagay pou yon chatbot', '→ Eseye: ChatBase.co oswa Tidio.com'] }
+  },
+  { day: 17, week: 4, title: 'Computer Vision', quote: '"AI ki ka wè... tankou je moun!"',
+    content: `<p>Computer Vision se branch AI ki pèmèt machin "wè" ak konprann imaj ak videyo — rekonèt objè, figi, ak tèks.</p>`,
+    concepts: [
+      { title: 'Rekonèt figi', body: 'FaceID sou iPhone • Android Face Unlock • Pòtal sekirite nan aèpò' },
+      { title: 'Rekonèt tèks (OCR)', body: 'Google Lens pran foto yon tèks epi li li. Itil pou dokiman, resèt, pankat.' },
+    ],
+    story: { who: 'Doktè Pierre', text: 'Doktè Pierre sèvi ak app ki lit dokiman pa foto. Li pran foto papye a, app la ekstrè tèks la. Li ekonomize anpil tan.' },
+    action: { steps: ['Ouvri Google Lens (oswa Google Photos)', 'Pran foto yon tèks enprime', 'Gade si AI li l kòrèktman', 'Eseye ak tèks an Kreyòl!'] }
+  },
+  { day: 18, week: 4, title: 'NLP — Traitement Langaj Natirèl', quote: '"AI ki konprann lang ou... nan Kreyòl!"',
+    content: `<p>NLP (Natural Language Processing) se branch AI ki pèmèt machin konprann, tradui, epi jeneere lang imen.</p>`,
+    concepts: [
+      { title: 'Sa NLP ka fè', body: 'Tradui lang • Rezime tèks • Vwa → Tèks • Reponn kesyon • Detekte emosyon' },
+      { title: 'NLP ak Kreyòl', body: 'ChatGPT, Claude, ak Meta AI ka konprann kèk Kreyòl. KreyòlAIHub ap amelyore sa!' },
+    ],
+    story: { who: 'Sonia nan Brooklyn', text: 'Sonia tradui mesaj pou fanmi. NLP ede li pase Anglè → Kreyòl pi rapid. Sa fè kominikasyon fasil ak granmoun ki pa pale Anglè.' },
+    action: { steps: ['Ouvri Meta AI oswa ChatGPT', 'Di: "Rezime sa a an 3 pwen..."', 'Paste nenpòt tèks', 'Teste ak tèks an Kreyòl!'] }
+  },
+  { day: 19, week: 4, title: 'Sentiman Analiz', quote: '"AI ki santi emosyon... nan tèks!"',
+    content: `<p>Sentiman Analiz se kapasite AI pou detekte si yon tèks eksprime santiman pozitif, negatif, oswa netral.</p>`,
+    concepts: [
+      { title: 'Pozitif / Negatif / Netral', body: '"Manje a te bon!" → Pozitif ✓ • "Sèvis la te mal" → Negatif • "Mwen te la" → Netral' },
+      { title: 'Itil pou biznis', body: 'Analize kòmantè kliyan • Suiv repitasyon mak ou • Wè sa moun di sou ou' },
+    ],
+    story: { who: 'Wendy nan Monreyal', text: 'Wendy gen paj biznis Facebook. Li itilize AI pou analize kòmantè. Li wè kòmantè negatif pi vit epi li reponn. Sèvis li amelyore.' },
+    action: { steps: ['Pran 5 kòmantè sou paj biznis ou (oswa zanmi ou)', 'Klase yo: Pozitif / Negatif / Netral', 'Eseye ak ChatGPT: "Ki santiman nan tèks sa?"'] }
+  },
+  { day: 20, week: 4, title: 'Generative AI', quote: '"AI ki ka KREYE... pa sèlman analize!"',
+    content: `<p>Generative AI se kalite AI ki ka KREYE nouvo kontni — tèks, imaj, son, videyo — baze sou sa ou mande li.</p>`,
+    concepts: [
+      { title: 'Sa ou ka kreye', body: 'Lèt biznis • Post rezo sosyal • Logo ak design • Script videyo • Mizik • Kòd pwogram' },
+      { title: 'Zouti pou kreye', body: 'ChatGPT / Claude (tèks) • Midjourney / DALL-E (imaj) • Suno (mizik) • Canva AI (design)' },
+    ],
+    story: { who: 'Tina nan Miami', text: 'Tina kreye 3 flyer pou biznis li an 1 zèdtan. Anvan sa li te pran 1 jou. AI ede l ak lide, tèks, ak konsepsyon vizyon.' },
+    action: { steps: ['Ouvri Claude.ai oswa ChatGPT', '"Bati yon post pou biznis mwen sou ______"', 'Ranplase ___ ak biznis ou', 'Pataje pi bon post la!'] }
+  },
+  { day: 21, week: 5, title: 'Dataset', quote: '"Bon kalite done = bon rezilta!"',
+    content: `<p>Dataset se yon koleksyon done òganize k ap sèvi pou antrene yon modèl AI. Kalite done = kalite AI.</p>`,
+    concepts: [
+      { title: 'Kalite done enpòtan', body: 'Bon done → bon AI. Move done → move AI. "Garbage in, garbage out".' },
+      { title: 'Kreyòl Dataset', body: 'Hugging Face gen kèk done Kreyòl. KreyòlAIHub ap bati plis. Ou ka kontribye!' },
+    ],
+    story: { who: 'Rico nan Gonaïves', text: 'Rico kenbe yon tablo lavant chak jou. Sa vin "dataset" li pou konprann ki pwodwi ki vann pi byen epi ki mwa ki pi pwofitab.' },
+    action: { steps: ['Kreye yon ti dataset 10 liy', 'Egzanp: 10 depans ou te fè semèn sa a', 'Nòm | Montan | Kategori | Dat', 'Sa se ou k ap vin data scientist!'] }
+  },
+  { day: 22, week: 5, title: 'Prompt Engineering', quote: '"Pale ak AI byen... resevwa sa w vle!"',
+    content: `<p>Prompt Engineering se atizana pou pale ak AI yon fason ki ba ou pi bon rezilta. Men ki kle: klate, kontèks, fòma.</p>`,
+    concepts: [
+      { title: '❌ Move Prompt', body: '"Fè logo" — Two jeneral, AI pa konnen ki biznis, ki estil, ki koulè.' },
+      { title: '✅ Bon Prompt', body: '"Fè yon logo pou restoran griyo, estil modèn, koulè cho (rouge, orange), ak yon ti pye bwa Ayisyen."' },
+    ],
+    story: { who: 'Josué nan Paris', text: 'Josué chanje yon prompt de mo an yon paragraph detaye. Rezilta AI a te 10× pi bon. Menm zouti, diferan rezilta.' },
+    action: { steps: ['Eseye move prompt: "Ekri yon post"', 'Kounye a eseye bon prompt ak detay', 'Konpare 2 rezilta yo', '🎯 Defi: Pataje meye prompt ou sou Discord!'] }
+  },
+  { day: 23, week: 5, title: 'Fòmil Bon Prompt', quote: '"Fòmil sekirè pou repons ekstraòdinè..."',
+    content: `<p>Fòmil 5 etap la se kle pou jwenn repons espesifik, itil, epi pwofesyonèl nan nenpòt AI.</p>`,
+    concepts: [
+      { title: 'Fòmil: Wòl + Objektif + Kontèks + Limit + Fòma', body: '"Ou se yon [wòl]. [Objektif]. [Kontèks/Limit]. Reponn nan fòm [fòma]."' },
+      { title: 'Egzanp konplè', body: '"Ou se yon konseye maketing pou biznis Ayisyen. Ekri 5 ide post Instagram pou boutik rad, piblik: fanm 25-40 an, an Kreyòl, yon fraz chak."' },
+    ],
+    story: { who: 'Tina', text: 'Tina itilize fòmil la pou ekri anons. AI bay repons pi estriktire. Li poste san konfizyon epi vann pi plis.' },
+    action: { steps: ['Teste fòmil la yon fwa jodi a', 'Wòl + Objektif + Kontèks + Limit + Fòma', 'Ekri: "Mwen teste fòmil la!"'] }
+  },
+  { day: 24, week: 5, title: 'LLM — Gwo Modèl Langaj', quote: '"Gwo sèvo ki aprann nan tout tèks entènèt la..."',
+    content: `<p>LLM (Large Language Model) se gwo modèl AI ki te antrene sou plizyè milya mo pou konprann ak jeneere lang imen.</p>`,
+    concepts: [
+      { title: 'Ki LLM ou konnen?', body: 'ChatGPT (OpenAI) • Claude (Anthropic) • Gemini (Google) • Grok (X.AI) • Meta AI' },
+      { title: 'Sa LLM ka fè', body: 'Reponn kesyon konplèks • Ekri & rezime • Tradui • Planifye • Analize done' },
+    ],
+    story: { who: 'Josué nan Paris', text: 'Josué itilize LLM pou prepare entèvyou travay. Li mande 20 kestyon entèvyou + repons + konsèy. Li jwenn djòb la.' },
+    action: { steps: ['Mande yon LLM: "Fè m 5 kestyon entèvyou pou ____"', 'Ranplase ____ ak travay ou vle a', 'Konpare ChatGPT ak Claude'] }
+  },
+  { day: 25, week: 5, title: 'Kijan LLM Fonksyone?', quote: '"Token pa token... mo pa mo..."',
+    content: `<p>LLM travay an kase tèks an "tokens" (ti moso), epi li predi ki token ki pi pwobal apre chak token.</p>`,
+    concepts: [
+      { title: 'Token = ti moso mo', body: '"Bonjou" = 1 token. "KreyòlAIHub" = 3 tokens. Plis tokens = plis kalkil = pi koute chè.' },
+      { title: 'Prediksyon sekans', body: '"Mwen renmen ____" → AI kalkile: "manje" (40%), "muzik" (25%), "Ayiti" (20%)... Li chwazi "manje".' },
+    ],
+    story: { who: 'Mika', text: 'Mika remake repons AI yo depann de fason li poze kestyon. "Eksplike AI tankou mwen gen 10 an" bay repons pi senp. Bon kestyon = bon repons.' },
+    action: { steps: ['Poze menm kestyon 2 fason diferan', 'Fason 1: "Ki sa ki ML?"', 'Fason 2: "Eksplike ML tankou mwen gen 10 an"', 'Konpare repons yo!'] }
+  },
+  { day: 26, week: 6, title: 'AI nan Travay', quote: '"AI = asistan pwofesyonèl... ekonomize tan!"',
+    content: `<p>AI ka ede ou fè travay pou ou pi vit, pi pwofesyonèl, epi ak plis valè — nan tout domèn.</p>`,
+    concepts: [
+      { title: 'Travay AI ka fè', body: 'Ekri email pwofesyonèl • Rezime long dokiman • Prepare rapò • Planifye pwojè • Tradui' },
+      { title: 'Pi bon pratik', body: 'Itilize AI kòm asistan, pa kòm ranplasman. Toujou revize epi adapte rezilta yo.' },
+    ],
+    story: { who: 'Claudine nan Lond', text: 'Claudine itilize AI pou ekri email pi rapid. Li re-li epi adapte. Li ekonomize 30-60 minit pa jou — sa fè diferans!' },
+    action: { steps: ['Pran 1 mesaj ou dwe ekri jodi a', 'Mande AI: "Re-ekri li pi pwofesyonèl, kout"', 'Revize ak adapte', 'Voye!'] }
+  },
+  { day: 27, week: 6, title: 'AI pou Aprann', quote: '"Yon pwofesè prive... 24/7, gratis!"',
+    content: `<p>AI ka sèvi kòm pwofesè pèsonèl ou — eksplike konsèp, kreye egzèsis, korije repons ou, epi adapte a nivo ou.</p>`,
+    concepts: [
+      { title: 'AI kòm pwofesè', body: '"Eksplike m kalkil tankou mwen pa te janm fè maths." AI adapte nivo a ou.' },
+      { title: 'Teknik kle', body: 'Mande AI kreye kwiz • Mande l korije tèks ou • Mande l explike nan Kreyòl' },
+    ],
+    story: { who: 'Samuel nan Hinche', text: 'Samuel ap prepare egzamen. Li itilize AI pou fè kwiz ak koreksyon chak swa. Li aprann 3× pi vit paske li ka pratike nenpòt ki lè.' },
+    action: { steps: ['Mande AI: "Fè m 5 kestyon kwiz sou ____"', 'Ranplase ____ ak matye ou etidye', 'Reponn, epi mande koreksyon', 'Repete chak jou!'] }
+  },
+  { day: 28, week: 6, title: 'AI pou Kreyativite', quote: '"AI = patnè kreyatif... lide san limit!"',
+    content: `<p>AI ka ede kreye pi vit ak plis varyasyon — men kreyativite imen rete fondamantal. AI se zouti, ou se atis la.</p>`,
+    concepts: [
+      { title: 'Domèn kreyatif AI ede', body: 'Design (Canva AI) • Mizik (Suno) • Videyo (Runway) • Tèks (ChatGPT) • Kòd (GitHub Copilot)' },
+      { title: 'Ti Rebel Music kòm egzanp', body: 'Kreye mizik Konpa orijinal ak AI — eksprime kilti Ayisyen atravè nouvo teknoloji.' },
+    ],
+    story: { who: 'Tina nan Miami', text: 'Tina kreye 3 design pou boutik li an 1 zèdtan ak Canva AI. Anvan li ta pran 1 jou. AI pa ranplase kreyativite li — li akselere l.' },
+    action: { steps: ['Ekri 1 lide kontni pou paj ou', 'Mande AI pou 5 varyasyon caption', 'Chwazi pi bon an', 'Poste!'] }
+  },
+  { day: 29, week: 6, title: 'Risk yo', quote: '"Chak zouti gen risk... ann pwoteje tèt nou!"',
+    content: `<p>AI gen gwo pouvwa — men li gen risk reyèl tou. Fò ou konnen risk yo pou pwoteje tèt ou ak fanmi ou.</p>`,
+    concepts: [
+      { title: 'Risk yo', body: 'Fo enfòmasyon (hallucination) • Scam ak phishing AI • Pèt done pèsonèl • Bias ak diskriminasyon • Depandans twòp sou AI' },
+      { title: 'Pwoteksyon', body: 'Verifye enfòmasyon AI bay • Pa janm pataje kòd OTP • Pa ba AI done sansib • Double-check repons enpòtan' },
+    ],
+    story: { who: 'Nadia', text: 'Nadia te prèske voye kòd WhatsApp li bay yon mesaj ki te sanble yon zanmi. Li sonje règ: pa janm pataje OTP. Li evite yon gwo scam.' },
+    action: { steps: ['Ekri 2 risk AI ou te wè oswa ou pè', 'Pou chak risk, ekri 1 solisyon', 'Pataje pwoteksyon ou nan Discord!'] }
+  },
+  { day: 30, week: 6, title: 'Prepare pou Lavni', quote: '"Ou fini 30 jou... men vwayaj la kòmanse!"',
+    content: `<p>Felisitasyon! Ou te fini 30 jou AI an Kreyòl. Men sa ki vin apre...</p>`,
+    concepts: [
+      { title: 'Kontinye aprann', body: 'AI evolye rapid. Suiv KreyòlAIHub pou dènye zouti ak tendans.' },
+      { title: 'Pratike chak jou', body: 'Itilize AI pou yon bagay reyèl chak jou. Pratik = meytrize.' },
+      { title: 'Anseye 1 moun', body: 'Meye fason pou aprann = anseye. Pataje konesans ou ak kominote a.' },
+    ],
+    story: { who: 'Ou menm!', text: 'Ou menm ki fini 30 jou yo, ou deja diferan de moun ki pa te fè efò sa a. Ou ka ede 1 moun konprann AI an Kreyòl. Se konsa mouvman an grandi.' },
+    action: { steps: ['Ekri: "Mwen fini 30 JOU AI!"', 'Pataje seri a ak 1 moun', 'Ale pran Sètifika ou sou platfòm nan', '🇭🇹 Ou se yon pyonye!'] }
+  },
+];
+
+const QUIZ_QUESTIONS = [
+  { q: 'Ki sa ki AI (Entèlijans Atifisyèl)?', opts: ['Yon pwogram ki aprann nan done pou ede moun', 'Yon wòbò fizik', 'Yon kalkilatris avanse', 'Entènèt'], ans: 0, exp: 'AI se sistèm ki aprann nan done epi pran desizyon — pa yon wòbò fizik oswa yon kalkilatris senp.' },
+  { q: 'Ki sa "done" (data) ye nan kontèks AI?', opts: ['Sèlman nimewo ak statistik', 'Foto, tèks, son, videyo, nimewo — tout enfòmasyon', 'Sèlman tèks ekri', 'Sèlman imaj'], ans: 1, exp: 'Done kapab nenpòt enfòmasyon: foto ou pran, mesaj ou ekri, son ou tande, videyo...' },
+  { q: 'Ki diferans ant Machine Learning ak Deep Learning?', opts: ['Pa gen diferans', 'Deep Learning se ML ak anpil "kouch" ki ba li plis kapasite pou pwoblèm konplèks', 'Machine Learning se plis avanse', 'Deep Learning se pou wòbò sèlman'], ans: 1, exp: 'Deep Learning itilize anpil "kouch" nan rezo newonal ki ba li kapasite pou trete imaj, son, ak tèks konplèks.' },
+  { q: 'Kisa ki "Supervised Learning"?', opts: ['AI aprann san done', 'AI aprann ak done ki deja gen repons kòrèkt (etikete)', 'AI aprann nan erè sèlman', 'AI aprann ak vwa imen'], ans: 1, exp: 'Supervised Learning: ou montre AI "Sa se spam / Pa spam". Li aprann pou predi repons nouvo done.' },
+  { q: 'Ki sa Reinforcement Learning fè?', opts: ['Li aprann ak done etikete sèlman', 'Li aprann pou maximize rekonpans atravè eseye-erè', 'Li tradui lang', 'Li rekonesan imaj'], ans: 1, exp: 'RL aprann tankou yon jwè echèk: eseye, resevwa pwen oswa penalite, epi amelyore chak fwa.' },
+  { q: 'Ki sa ki "bias" nan AI?', opts: ['Yon tip pwogram espesyal', 'Lè modèl produi rezilta ki pa jis akoz done pa ekilibre', 'Yon fòm kreyativite AI', 'Yon ekipman fizik'], ans: 1, exp: 'Bias vini lè done fòmasyon pa reprezante tout gwoup egalman — tankou si tout doktè nan done yo se gason.' },
+  { q: 'Ki sa "Prompt Engineering" ye?', opts: ['Bati yon wòbò', 'Atizana pou pale ak AI yon fason ki ba ou pi bon rezilta', 'Pwogramason Python avanse', 'Kreye done pou AI'], ans: 1, exp: 'Bon prompt = bon repons. Prompt Engineering se aprann kijan pou ba AI bon kontèks, klate, ak fòma.' },
+  { q: 'Kisa LLM vle di?', opts: ['Long Language Machine', 'Large Language Model — gwo modèl ki aprann nan milya mo', 'Lakay Language Module', 'Lightweight Learning Module'], ans: 1, exp: 'LLM = Large Language Model. ChatGPT, Claude, Gemini, ak Grok se tout egzanp LLM.' },
+  { q: 'Ki fòmil 5 etap pou bon prompt?', opts: ['Kesyon + Repons + Revize', 'Wòl + Objektif + Kontèks + Limit + Fòma', 'Sujet + Verbe + Objè', 'Tèks + Imaj + Son'], ans: 1, exp: 'Fòmil 5 etap: "Ou se [Wòl]. [Objektif]. [Kontèks/Limit]. Reponn nan fòm [Fòma]."' },
+  { q: 'Ki sa Generative AI ka kreye?', opts: ['Sèlman tèks', 'Tèks, imaj, mizik, videyo, ak kòd', 'Sèlman imaj', 'Sèlman kòd'], ans: 1, exp: 'Generative AI ka kreye: tèks (ChatGPT), imaj (DALL-E), mizik (Suno), videyo (Runway), kòd (Copilot).' },
+  { q: 'Ki risk reyèl nan itilizasyon AI?', opts: ['Okenn risk', 'Fo enfòmasyon, scam, pèt done pèsonèl, ak depandans twòp sou AI', 'AI ka ranplase tout moun nan 1 an', 'Sèlman pwoblèm teknik'], ans: 1, exp: 'Risk reyèl: AI ka bay fo enfòmasyon (hallucination), ka sèvi pou scam, epi nou dwe pwoteje done pèsonèl nou.' },
+  { q: 'Poukisa done an Kreyòl enpòtan pou AI?', opts: ['Li pa enpòtan ditou', 'Plis done Kreyòl = AI ki pi presi ak itil pou kominote Kreyòl la', 'AI pa bezwen done lang', 'Sèlman pou tradiksyon'], ans: 1, exp: 'Done an Kreyòl ede modèl AI aprann lang nou. Chak tèks an Kreyòl nou ekri kontribye pou lavni AI Kreyòl.' },
+];
+
+// ================================================
+// 🗃️  STATE — Variables that track what's happening
+// ================================================
+// currentUser  → the logged-in user object {name, email}
+// progress     → object tracking completed lessons
+// currentLesson → index of currently open lesson
+// ================================================
+let currentUser = null;
+let progress = {};
+let currentLesson = 0;
+let currentView = 'dashboard';
+let kwizState = { current: 0, answers: [], started: false, completed: false };
+
+// ================================================
+// 🔐 AUTH FUNCTIONS
+// ================================================
+// gateSignup()  → creates account, saves to localStorage
+// gateLogin()   → checks saved account, logs user in
+// initUser()    → runs after login, loads progress, shows app
+// logout()      → clears localStorage, reloads page
+// ================================================
+// Reuse SUPABASE_URL/KEY from above
+let sb2 = null;
+try { sb2 = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch {}
+
+function gateTab(t) {
+  const isS = t === 'signup';
+  document.getElementById('gate-tab-signup').classList.toggle('active', isS);
+  document.getElementById('gate-tab-login').classList.toggle('active', !isS);
+  document.getElementById('gate-signup').style.display = isS ? 'block' : 'none';
+  document.getElementById('gate-login').style.display = isS ? 'none' : 'block';
+  document.getElementById('gate-msg').style.display = 'none';
+}
+
+function showGateMsg(msg, type) {
+  const el = document.getElementById('gate-msg');
+  el.textContent = msg; el.className = 'auth-msg ' + type; el.style.display = 'block';
+}
+
+function gateSignup() {
+  const name = document.getElementById('g-name').value.trim();
+  const email = document.getElementById('g-email').value.trim();
+  const pass = document.getElementById('g-pass').value;
+  if (!name || !email || !pass) return showGateMsg('Ranpli tout chan yo.', 'error');
+  if (pass.length < 6) return showGateMsg('Modpas dwe gen omwen 6 karaktè.', 'error');
+
+  // Save account locally — always works, even offline
+  localStorage.setItem('kah_user', JSON.stringify({ name, email, enrolled: new Date().toISOString() }));
+
+  // Fire-and-forget to Gmail — NEVER blocks the user
+  try {
+    const fd = new FormData();
+    fd.append('email', email);
+    fd.append('name', name);
+    fd.append('source', 'course_signup');
+    fd.append('enrolled', new Date().toLocaleString());
+    fd.append('_subject', '🎓 Nouvo Etidyan — KreyolAI Academy: ' + name);
+    fetch('https://formspree.io/f/xojnlklz', {
+      method: 'POST', body: fd, headers: { 'Accept': 'application/json' }
+    }).catch(function() {});
+  } catch(e) {}
+
+  // Go immediately — no waiting
+  initUser({ name, email });
+}
+
+function gateLogin() {
+  const email = document.getElementById('gl-email').value.trim();
+  const pass = document.getElementById('gl-pass').value;
+  if (!email || !pass) return showGateMsg('Ranpli tout chan yo.', 'error');
+
+  const stored = localStorage.getItem('kah_user');
+  if (stored) {
+    const user = JSON.parse(stored);
+    if (user.email === email) { initUser(user); }
+    else showGateMsg('Imèl pa kòrèk. Eseye ankò.', 'error');
+  } else {
+    showGateMsg('Kont pa jwenn. Enskri anvan.', 'error');
+  }
+}
+
+function initUser(user) {
+  currentUser = user;
+  progress = JSON.parse(localStorage.getItem('kah_progress_' + user.email) || '{}');
+  document.getElementById('auth-gate').classList.add('hidden');
+  document.getElementById('app').classList.add('visible');
+  document.getElementById('sidebar-name').textContent = user.name;
+  document.getElementById('user-avatar').textContent = user.name[0].toUpperCase();
+  renderSidebar();
+  showView('dashboard');
+}
+
+function logout() {
+  if (sb2) sb2.auth.signOut();
+  localStorage.removeItem('kah_user');
+  location.reload();
+}
+
+// ================================================
+// 📈 PROGRESS TRACKING
+// ================================================
+// Progress is saved in browser localStorage
+// Key format: "kah_progress_EMAIL" → {day_1: true, day_2: true...}
+// saveProgress() → writes to localStorage
+// markDone(day)  → marks a lesson complete
+// updateProgressBar() → updates the % bar in sidebar
+// ================================================
+function saveProgress() {
+  if (currentUser) localStorage.setItem('kah_progress_' + currentUser.email, JSON.stringify(progress));
+}
+function markDone(day) {
+  progress['day_' + day] = true;
+  saveProgress();
+  updateProgressBar();
+  renderSidebar();
+}
+function updateProgressBar() {
+  const done = Object.keys(progress).filter(k => k.startsWith('day_')).length;
+  const pct = Math.round((done / 30) * 100);
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-bar').style.width = pct + '%';
+}
+
+// ================================================
+// 📋 SIDEBAR RENDERER
+// ================================================
+// renderSidebar() → builds the lesson list HTML
+// Completed lessons show a ✓ checkmark
+// Current lesson is highlighted in blue
+// ================================================
+function renderSidebar() {
+  const nav = document.getElementById('sidebar-nav');
+  let html = '';
+  WEEKS.forEach(w => {
+    html += `<div class="nav-section-title">Semèn ${w.num}: ${w.title}</div>`;
+    LESSONS.filter(l => l.week === w.num).forEach(l => {
+      const done = !!progress['day_' + l.day];
+      html += `<div class="nav-item ${currentLesson === l.day - 1 ? 'active' : ''} ${done ? 'done' : ''}" onclick="openLesson(${l.day - 1})">
+        <span class="day-num">${l.day}</span>
+        <span class="item-title">${l.title}</span>
+        <span class="check">${done ? '✓' : ''}</span>
+      </div>`;
+    });
+  });
+  nav.innerHTML = html;
+  updateProgressBar();
+}
+
+// ================================================
+// 👁️  VIEWS — Which screen to show
+// ================================================
+// showView(v) where v = "dashboard" | "lesson" | "kwiz" | "cert"
+// openLesson(idx) → opens a specific lesson by index
+// ================================================
+function showView(v) {
+  currentView = v;
+  if (v === 'dashboard') renderDashboard();
+  else if (v === 'lesson') renderLesson(currentLesson);
+  else if (v === 'kwiz') renderKwiz();
+  else if (v === 'cert') renderCert();
+}
+
+function openLesson(idx) {
+  currentLesson = idx;
+  currentView = 'lesson';
+  renderSidebar();
+  renderLesson(idx);
+}
+
+// ================================================
+// 🏠 DASHBOARD — Home screen after login
+// ================================================
+// Shows: welcome message, progress %, weekly breakdown
+// renderDashboard() → generates the HTML
+// ================================================
+function renderDashboard() {
+  const done = Object.keys(progress).filter(k => k.startsWith('day_')).length;
+  document.getElementById('main-content').innerHTML = `
+    <div>
+      <h1 style="font-size:2rem;margin-bottom:0.25rem">Bonjou, ${currentUser.name.split(' ')[0]}! 👋</h1>
+      <p style="color:var(--white-dim)">Kontinye aprantisaj ou — ${30 - done} jou rete</p>
+      <div style="display:flex;gap:1.5rem;margin:2rem 0;flex-wrap:wrap">
+        <div style="background:var(--white-faint);border:1px solid var(--border);border-radius:16px;padding:1.25rem 2rem;text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--blue)">${done}</div>
+          <div style="font-size:0.8rem;color:var(--white-dim)">Jou Konplè</div>
+        </div>
+        <div style="background:var(--white-faint);border:1px solid var(--border);border-radius:16px;padding:1.25rem 2rem;text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--gold)">${30-done}</div>
+          <div style="font-size:0.8rem;color:var(--white-dim)">Jou Rete</div>
+        </div>
+        <div style="background:var(--white-faint);border:1px solid var(--border);border-radius:16px;padding:1.25rem 2rem;text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--success)">${Math.round(done/30*100)}%</div>
+          <div style="font-size:0.8rem;color:var(--white-dim)">Konplè</div>
+        </div>
+      </div>
+      ${done < 30 ? `<div style="background:rgba(30,144,255,0.08);border:1px solid var(--border);border-radius:16px;padding:1.25rem;margin-bottom:2rem;cursor:pointer" onclick="openLesson(${done})">
+        <div style="font-size:0.75rem;font-weight:700;color:var(--blue);letter-spacing:0.08em;margin-bottom:0.4rem">▶ KONTINYE</div>
+        <div style="font-weight:700">Jou ${done+1}: ${LESSONS[done].title}</div>
+        <div style="color:var(--white-dim);font-size:0.85rem">${LESSONS[done].quote}</div>
+      </div>` : `<div style="text-align:center;padding:2rem;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:16px;margin-bottom:2rem">
+        <div style="font-size:2rem">🏆</div><h3>Ou fini tout 30 jou! Pran sètifika ou!</h3>
+        <button class="btn-gold" onclick="showView('cert')" style="margin-top:1rem">Telechaje Sètifika →</button>
+      </div>`}
+      <h2 style="font-size:1.2rem;margin-bottom:1rem">Tout Semèn yo</h2>
+      <div class="dashboard-grid">
+        ${WEEKS.map(w => {
+          const wdays = LESSONS.filter(l => l.week === w.num);
+          const wdone = wdays.filter(l => !!progress['day_' + l.day]).length;
+          const wpct = Math.round(wdone/wdays.length*100);
+          return `<div class="week-card ${wpct===100?'completed':''}" onclick="openLesson(${wdays[0].day-1})">
+            <div class="week-num" style="color:${w.color}">${w.num}</div>
+            <div class="week-title">${w.title}</div>
+            <div class="week-days">Jou ${w.days} • ${wdone}/${wdays.length} konplè</div>
+            <div class="week-prog"><div class="week-fill" style="width:${wpct}%;background:${w.color}"></div></div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+// ================================================
+// 📖 LESSON VIEWER
+// ================================================
+// renderLesson(idx) → shows lesson content + action task
+// completeLesson(day) → marks done, moves to next or quiz
+// ✏️  TO CHANGE LESSON CONTENT: edit the lessons[] array above
+// ================================================
+function renderLesson(idx) {
+  const l = LESSONS[idx];
+  const done = !!progress['day_' + l.day];
+  const prev = idx > 0;
+  const next = idx < LESSONS.length - 1;
+
+  let conceptsHtml = (l.concepts || []).map(c => `
+    <div class="concept-box">
+      <div class="concept-title">→ ${c.title}</div>
+      <p>${c.body}</p>
+    </div>`).join('');
+
+  let storyHtml = l.story ? `
+    <div class="real-story">
+      <div class="story-label">📖 ISTWA REYÈL — ${l.story.who}</div>
+      <p>${l.story.text}</p>
+    </div>` : '';
+
+  let actionHtml = l.action ? `
+    <div class="action-box">
+      <div class="action-label">⚡ AKSYON JOU A</div>
+      <ul class="action-steps">
+        ${l.action.steps.map((s,i) => `<li data-n="${i+1}">${s}</li>`).join('')}
+      </ul>
+    </div>` : '';
+
+  let codeHtml = l.code ? `<div class="code-block">${l.code.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : '';
+
+  document.getElementById('main-content').innerHTML = `
+    <div>
+      <div class="lesson-header">
+        <div>
+          <div class="lesson-badge">JOU ${l.day} — SEMÈN ${l.week}</div>
+          <h1 class="lesson-title">${l.title}</h1>
+          <p class="lesson-quote">${l.quote}</p>
+        </div>
+        ${done ? '<div style="color:var(--success);font-weight:700;font-size:1.5rem">✓</div>' : ''}
+      </div>
+      <div class="lesson-body">
+        ${l.content}
+        ${conceptsHtml}
+        ${codeHtml}
+        ${storyHtml}
+        ${actionHtml}
+      </div>
+      <div class="nav-btns" style="margin-top:2.5rem">
+        ${prev ? `<button class="btn-secondary" onclick="openLesson(${idx-1})">← Jou ${l.day-1}</button>` : ''}
+        ${!done ? `<button class="complete-btn" onclick="completeLesson(${l.day})">✓ Mwen fè l! Kontinye →</button>` : ''}
+        ${done && next ? `<button class="btn-primary" onclick="openLesson(${idx+1})">Jou ${l.day+1}: ${LESSONS[idx+1].title} →</button>` : ''}
+        ${done && !next ? `<button class="btn-gold" onclick="showView('kwiz')">Fè Kiz Final →</button>` : ''}
+      </div>
+    </div>`;
+}
+
+function completeLesson(day) {
+  markDone(day);
+  toast('✓ Jou ' + day + ' konplè! Ekselant! 🎉');
+  const idx = day - 1;
+  if (idx < LESSONS.length - 1) openLesson(idx + 1);
+  else showView('kwiz');
+}
+
+// ================================================
+// 📝 KWIZ — Final quiz (30 questions)
+// ================================================
+// Questions are in the kwizQuestions[] array below
+// renderKwiz() → shows questions one by one
+// Score 80%+ → unlocks the certificate
+// ✏️  TO CHANGE QUESTIONS: find kwizQuestions[] below
+// ================================================
+function renderKwiz() {
+  const totalDone = Object.keys(progress).filter(k => k.startsWith('day_')).length;
+  if (kwizState.completed) return renderKwizScore();
+
+  if (!kwizState.started) {
+    document.getElementById('main-content').innerHTML = `
+      <div class="kwiz-container">
+        <h1 style="font-size:2rem;margin-bottom:0.5rem">📝 Kiz Final — 30 Jou AI</h1>
+        <p style="color:var(--white-dim);margin-bottom:2rem">12 kestyon pou teste konesans ou. Ou bezwen 70% pou pase.</p>
+        <div style="background:var(--white-faint);border:1px solid var(--border);border-radius:20px;padding:2rem;margin-bottom:1.5rem">
+          <div style="font-weight:700;margin-bottom:0.5rem">📋 Enfòmasyon</div>
+          <div style="color:var(--white-dim);font-size:0.9rem;line-height:1.8">
+            • 12 kestyon sou tout 30 jou<br>
+            • Yon repons sèl pou chak kestyon<br>
+            • 70% (9/12) = pase<br>
+            • Ou ka repran kiz la si ou echwe
+          </div>
+        </div>
+        ${totalDone < 15 ? '<div style="background:rgba(245,185,66,0.1);border:1px solid rgba(245,185,66,0.25);border-radius:12px;padding:1rem;margin-bottom:1.5rem;color:var(--gold);font-size:0.88rem">⚠️ Rekòmandasyon: Konplete plis leson anvan kiz la pou pi bon chans ou.</div>' : ''}
+        <button class="btn-primary" style="min-width:220px" onclick="startKwiz()">Kòmanse Kiz la →</button>
+      </div>`;
+    return;
+  }
+  renderKwizQuestion();
+}
+
+function startKwiz() {
+  kwizState = { current: 0, answers: new Array(QUIZ_QUESTIONS.length).fill(null), started: true, completed: false };
+  renderKwizQuestion();
+}
+
+function renderKwizQuestion() {
+  const { current, answers } = kwizState;
+  const q = QUIZ_QUESTIONS[current];
+  const answered = answers[current] !== null;
+
+  const dots = QUIZ_QUESTIONS.map((_, i) => `<div class="q-dot ${i < current ? 'done' : i === current ? 'active' : ''}"></div>`).join('');
+
+  const opts = q.opts.map((o, i) => {
+    let cls = 'option';
+    if (answered) {
+      if (i === q.ans) cls += ' correct';
+      else if (i === answers[current]) cls += ' wrong';
+    } else if (answers[current] === i) cls += ' selected';
+    return `<div class="${cls}" onclick="${!answered ? `selectAnswer(${i})` : ''}">
+      <div class="opt-letter">${['A','B','C','D'][i]}</div>
+      <span>${o}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="kwiz-container">
+      <div class="kwiz-header">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+          <span style="font-size:0.85rem;color:var(--white-dim)">Kestyon ${current+1} sou ${QUIZ_QUESTIONS.length}</span>
+          <span style="font-size:0.85rem;color:var(--white-dim)">${kwizState.answers.filter(a=>a!==null).length} reponn</span>
+        </div>
+        <div class="kwiz-progress">${dots}</div>
+      </div>
+      <div class="question-card">
+        <div class="question-text">${q.q}</div>
+        <div class="options">${opts}</div>
+        ${answered ? `<div class="explanation" style="display:block">💡 ${q.exp}</div>` : ''}
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        ${current > 0 ? `<button class="btn-secondary" onclick="kwizNav(${current-1})">← Anvan</button>` : ''}
+        ${answered && current < QUIZ_QUESTIONS.length-1 ? `<button class="btn-primary" onclick="kwizNav(${current+1})">Pwochen →</button>` : ''}
+        ${answered && current === QUIZ_QUESTIONS.length-1 ? `<button class="btn-gold" onclick="finishKwiz()">Wè Rezilta →</button>` : ''}
+      </div>
+    </div>`;
+}
+
+function selectAnswer(i) {
+  kwizState.answers[kwizState.current] = i;
+  renderKwizQuestion();
+}
+
+function kwizNav(idx) { kwizState.current = idx; renderKwizQuestion(); }
+
+function finishKwiz() {
+  kwizState.completed = true;
+  progress['kwiz_done'] = true;
+  const score = kwizState.answers.filter((a,i) => a === QUIZ_QUESTIONS[i].ans).length;
+  progress['kwiz_score'] = score;
+  saveProgress();
+  renderKwizScore();
+}
+
+function renderKwizScore() {
+  const score = progress['kwiz_score'] || 0;
+  const total = QUIZ_QUESTIONS.length;
+  const pct = Math.round((score/total)*100);
+  const passed = pct >= 70;
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="kwiz-container">
+      <div class="score-card">
+        <div class="score-ring ${passed?'pass':'fail'}">
+          <span class="score-num" style="color:${passed?'var(--success)':'#ef4444'}">${pct}%</span>
+        </div>
+        <h2 style="font-size:1.8rem;margin-bottom:0.5rem">${passed ? '🎉 Felisitasyon! Ou Pase!' : '💪 Eseye Ankò!'}</h2>
+        <p style="color:var(--white-dim);margin-bottom:2rem">${score}/${total} kòrèkt — ${passed ? 'Ou merite sètifika ou!' : 'Ou bezwen 70%. Revize leson yo epi eseye ankò.'}</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+          ${passed ? `<button class="btn-gold" onclick="showView('cert')">🏆 Pran Sètifika Ou →</button>` : `<button class="btn-primary" onclick="restartKwiz()">↺ Eseye Ankò</button>`}
+          <button class="btn-secondary" onclick="showView('dashboard')">← Retounen</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function restartKwiz() {
+  kwizState = { current: 0, answers: new Array(QUIZ_QUESTIONS.length).fill(null), started: true, completed: false };
+  delete progress['kwiz_done'];
+  delete progress['kwiz_score'];
+  saveProgress();
+  renderKwizQuestion();
+}
+
+// ============ CERTIFICATE ============
+function renderCert() {
+  const score = progress['kwiz_score'];
+  const passed = score !== undefined && (score / QUIZ_QUESTIONS.length) >= 0.7;
+  const totalDone = Object.keys(progress).filter(k => k.startsWith('day_')).length;
+  const certName = currentUser?.name || '';
+  const today = new Date().toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' });
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="cert-section">
+      <h1 style="font-size:2rem;margin-bottom:0.5rem">🏆 Sètifika Akonplisman</h1>
+      <p style="color:var(--white-dim);margin-bottom:2rem">Antre non ou pou jeneere sètifika pèsonalize ou.</p>
+      <div class="cert-name-input">
+        <input type="text" id="cert-name" value="${certName}" placeholder="Antre non konplè ou..." oninput="updateCertName()" />
+      </div>
+      <div style="position:relative">
+        ${!passed ? `<div class="locked-overlay">
+          <div style="font-size:3rem">🔒</div>
+          <h3>Sètifika vèouye</h3>
+          <p>Konplete omwen 20 jou epi pase Kiz Final la (70%+) pou debwoke sètifika ou.</p>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+            ${totalDone < 20 ? `<button class="btn-primary" onclick="openLesson(${totalDone})">Kontinye Leson →</button>` : `<button class="btn-primary" onclick="showView('kwiz')">Pran Kiz Final →</button>`}
+          </div>
+        </div>` : ''}
+        <div class="cert-frame" id="cert-display">
+          <div class="cert-badge">🏆</div>
+          <div class="cert-brand">K R E Y Ò L A I H U B . C O M</div>
+          <div class="cert-heading">Sètifika Akonplisman</div>
+          <div class="cert-course">30 Jou AI</div>
+          <div class="cert-sub">Premye Kou AI Konplè nan Lang Kreyòl Ayisyen</div>
+          <hr/>
+          <div style="color:var(--white-dim);font-size:0.9rem">Prezante a</div>
+          <div class="student-name" id="cert-name-display">${certName || 'Non Ou'}</div>
+          <div style="margin:0.5rem 0;color:var(--white-dim);font-size:0.88rem">pou akonplisman ekselans nan</div>
+          <div style="font-weight:700;color:var(--white)">Aprantisaj AI Fondamantal • ${totalDone}/30 Leson • ${score}/${QUIZ_QUESTIONS.length} Kiz</div>
+          <hr/>
+          <div class="cert-footer">
+            <div>
+              <div style="font-weight:700">KreyòlAIHub</div>
+              <div>AI an Kreyòl. San limit.</div>
+            </div>
+            <div style="text-align:right">
+              <div class="cert-date">Dat: ${today}</div>
+              <div style="font-size:0.7rem;margin-top:0.25rem;color:var(--blue)">kreyolaihub.com/sertifika</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      ${passed ? `
+      <div class="cert-actions" style="margin-top:1.5rem">
+        <button class="btn-gold" onclick="printCert()">🖨️ Enprime / Sovgade PDF</button>
+        <button class="btn-secondary" onclick="shareCert()">📱 Pataje</button>
+      </div>` : ''}
+    </div>`;
+}
+
+function updateCertName() {
+  const name = document.getElementById('cert-name').value;
+  const disp = document.getElementById('cert-name-display');
+  if (disp) disp.textContent = name || 'Non Ou';
+}
+
+function printCert() {
+  window.print();
+}
+
+function shareCert() {
+  const name = document.getElementById('cert-name').value || currentUser?.name;
+  const text = `🎉 Mwen fini kou 30 Jou AI an Kreyòl sou @KreyolAIHub! AI an Kreyòl. San limit. 🇭🇹 #30JouAI #KreyolAIHub kreyolaihub.com`;
+  if (navigator.share) navigator.share({ title: 'Sètifika 30 Jou AI', text });
+  else { navigator.clipboard.writeText(text); toast('Tèks kopye! Paste l sou rezo sosyal ou 📋'); }
+}
+
+// ============ UTILS ============
+function toast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.style.transform = 'translateY(0)';
+  setTimeout(() => { t.style.transform = 'translateY(100px)'; }, 4000);
+}
+
+// ============ INIT ============
+window.addEventListener('load', () => {
+  // Check if user already logged in
+  const stored = localStorage.getItem('kah_user');
+  if (stored) initUser(JSON.parse(stored));
+});
+</script>
+</body>
+</html>
