@@ -323,6 +323,33 @@
       .vision-content { padding:3rem 1.5rem; }
     }
   </style>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <!-- Course Schema Markup for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "30 Jou AI — Kours AI an Kreyòl Ayisyen",
+    "description": "Premye kours AI gratis an Kreyòl Ayisyen. Aprann AI, ChatGPT, prompt engineering, ak zouti AI an 30 jou.",
+    "provider": {
+      "@type": "Organization",
+      "name": "KreyòlAIHub",
+      "url": "https://kreyolaihub.com"
+    },
+    "url": "https://kreyolaihub.com/course.html",
+    "inLanguage": "ht",
+    "isAccessibleForFree": true,
+    "educationalLevel": "Beginner",
+    "teaches": ["Artificial Intelligence", "ChatGPT", "Prompt Engineering", "Machine Learning"]
+  }
+  </script>
 </head>
 <body>
 
@@ -399,7 +426,7 @@
 
   <!-- HERO IMAGE — AI Academy Woman in armor -->
   <div class="hero-right">
-    <img src="hero-woman.png" alt="KreyòlAIHub" class="hero-woman-img" />
+    <img src="hero-woman.png" loading="lazy" alt="KreyòlAIHub" class="hero-woman-img" />
   </div>
 </section>
 
@@ -446,7 +473,7 @@
 ============================================== -->
 <section id="vision">
   <!-- The Haiti tech collage as full background -->
-  <img src="haiti-collage.png" alt="Ayiti ak AI" class="vision-bg-img" />
+  <img src="haiti-collage.png" loading="lazy" alt="Ayiti ak AI" class="vision-bg-img" />
   <div class="vision-overlay"></div>
   <div class="vision-content">
     <div class="section-label">🇭🇹 Vizyon Nou</div>
@@ -501,8 +528,8 @@
 ============================================== -->
 <section id="demo">
   <div class="section-inner">
-    <div class="section-label">⚡ Teste Direk</div>
-    <h2 class="section-title">Live Demo Wall</h2>
+    <div class="section-label" style="justify-content:center;display:flex">⚡ Teste Direk — Gratis</div>
+    <h2 class="section-title">Live Demo Wall 🤖</h2>
     <p class="section-sub">Teste zouti AI nou yo kounye a — dirèkteman sou sit la, gratis.</p>
 
     <div class="demo-tabs">
@@ -513,23 +540,35 @@
 
     <div class="demo-panel active" id="demo-lakay">
       <!-- Replace this placeholder with: <iframe src="YOUR_APP_URL" class="demo-iframe"></iframe> -->
-      <div class="demo-placeholder">
-        <div style="font-size:4rem">🎙️</div>
-        <span class="coming-badge">BYENTO...</span>
-        <h3 style="font-size:1.5rem">Lakay Pale — Asistan Vwa an Kreyòl</h3>
-        <p style="color:var(--white-dim);max-width:420px;line-height:1.75">Premye asistan AI ki pale Kreyòl natirèlman. Poze kesyon — resevwa repons nan lang ou a.</p>
-        <a href="#" onclick="showNotify('Lakay Pale');return false" class="btn-primary">🔔 Avèti m lè li pare</a>
+      <div class="demo-placeholder" style="max-width:560px;width:100%">
+        <div style="font-size:4rem;margin-bottom:0.5rem">🎙️</div>
+        <span class="coming-badge" style="background:linear-gradient(90deg,var(--blue),var(--gold));color:var(--navy)">🚀 AN DEVLOPMAN</span>
+        <h3 style="font-size:1.5rem;margin:1rem 0 0.5rem">Lakay Pale — Asistan Vwa an Kreyòl</h3>
+        <p style="color:var(--white-dim);max-width:420px;line-height:1.75;margin-bottom:1.5rem">Premye asistan AI ki pale Kreyòl natirèlman. Poze kesyon — resevwa repons nan lang ou a. Enskri pou jwenn aksè an premye.</p>
+        <div style="display:flex;flex-direction:column;gap:0.75rem;align-items:center;width:100%;max-width:360px">
+          <div style="display:flex;gap:0.5rem;width:100%">
+            <input type="email" id="lakay-email" placeholder="Imèl ou a..." style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(30,144,255,0.3);color:var(--white);border-radius:30px;padding:0.6rem 1rem;font-size:0.88rem;outline:none"/>
+            <button onclick="earlyAccess('lakay-email','lakay-success')" style="background:linear-gradient(135deg,var(--blue),#0f6fdf);color:#fff;border:none;border-radius:30px;padding:0.6rem 1.2rem;font-weight:700;font-size:0.85rem;cursor:pointer;white-space:nowrap">🔔 Antre →</button>
+          </div>
+          <div id="lakay-success" style="display:none;color:#22c55e;font-size:0.85rem;font-weight:600">✅ Mèsi! Ou pral premye konnen.</div>
+        </div>
       </div>
     </div>
 
     <div class="demo-panel" id="demo-gran">
       <!-- Replace with: <iframe src="YOUR_GRAN_AI_URL" class="demo-iframe"></iframe> -->
-      <div class="demo-placeholder">
-        <div style="font-size:4rem">👵</div>
-        <span class="coming-badge">BYENTO...</span>
-        <h3 style="font-size:1.5rem">Gran AI — Chatbot Kreyòl pou Timoun</h3>
-        <p style="color:var(--white-dim);max-width:420px;line-height:1.75">Ede timoun dyaspora aprann Kreyòl. Istwa, jwèt mo, konvèsasyon — tout an Kreyòl.</p>
-        <a href="#" onclick="showNotify('Gran AI');return false" class="btn-gold">🔔 Avèti m lè li pare</a>
+      <div class="demo-placeholder" style="max-width:560px;width:100%">
+        <div style="font-size:4rem;margin-bottom:0.5rem">👵</div>
+        <span class="coming-badge" style="background:linear-gradient(90deg,var(--gold),#f97316);color:var(--navy)">🚀 AN DEVLOPMAN</span>
+        <h3 style="font-size:1.5rem;margin:1rem 0 0.5rem">Gran AI — Chatbot Kreyòl pou Timoun</h3>
+        <p style="color:var(--white-dim);max-width:420px;line-height:1.75;margin-bottom:1.5rem">Ede timoun dyaspora aprann Kreyòl. Istwa, jwèt mo, konvèsasyon — tout an Kreyòl. Espesyalman fèt pou timoun 4-12 an.</p>
+        <div style="display:flex;flex-direction:column;gap:0.75rem;align-items:center;width:100%;max-width:360px">
+          <div style="display:flex;gap:0.5rem;width:100%">
+            <input type="email" id="gran-email" placeholder="Imèl ou a..." style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(245,185,66,0.3);color:var(--white);border-radius:30px;padding:0.6rem 1rem;font-size:0.88rem;outline:none"/>
+            <button onclick="earlyAccess('gran-email','gran-success')" style="background:linear-gradient(135deg,var(--gold),#f97316);color:var(--navy);border:none;border-radius:30px;padding:0.6rem 1.2rem;font-weight:700;font-size:0.85rem;cursor:pointer;white-space:nowrap">🔔 Antre →</button>
+          </div>
+          <div id="gran-success" style="display:none;color:#22c55e;font-size:0.85rem;font-weight:600">✅ Mèsi! Ou pral premye konnen.</div>
+        </div>
       </div>
     </div>
 
@@ -570,7 +609,7 @@
     <div class="consulting-layout">
       <!-- AI Robot image -->
       <div class="robot-wrap">
-        <img src="ai-robot.png" alt="KreyòlAI — Konsiltasyon AI" />
+        <img src="ai-robot.png" loading="lazy" alt="KreyòlAI — Konsiltasyon AI" />
       </div>
       <!-- Service cards -->
       <div class="consulting-cards">
@@ -925,6 +964,69 @@
 <div class="divider"></div>
 
 <!-- ================================================
+  ❓ FAQ ACCORDION
+  ================================================ -->
+<section id="faq" style="background:var(--navy-mid);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="section-inner" style="padding-top:4rem;padding-bottom:4rem;max-width:760px">
+    <div style="text-align:center;margin-bottom:2.5rem">
+      <div class="section-label" style="justify-content:center;display:flex">Kesyon Yo</div>
+      <h2 class="section-title">Kesyon Souvan Poze ❓</h2>
+    </div>
+
+    <div id="faq-list" style="display:flex;flex-direction:column;gap:0.75rem">
+
+      <div class="faq-item" style="background:var(--navy);border:1px solid var(--border);border-radius:16px;overflow:hidden">
+        <button onclick="toggleFaq(this)" style="width:100%;text-align:left;background:none;border:none;color:var(--white);padding:1.25rem 1.5rem;font-size:1rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Syne',sans-serif">
+          Èske kours la vrèman gratis? <span class="faq-arrow" style="color:var(--gold);font-size:1.2rem;transition:transform 0.3s">▼</span>
+        </button>
+        <div class="faq-body" style="display:none;padding:0 1.5rem 1.25rem;color:var(--white-dim);line-height:1.8;font-size:0.92rem">
+          Wi, 100% gratis. 30 leson konplè — pa gen kart kredi, pa gen enskri peye. Ou jis bezwen yon imèl pou kreye kont ou epi kòmanse aprann.
+        </div>
+      </div>
+
+      <div class="faq-item" style="background:var(--navy);border:1px solid var(--border);border-radius:16px;overflow:hidden">
+        <button onclick="toggleFaq(this)" style="width:100%;text-align:left;background:none;border:none;color:var(--white);padding:1.25rem 1.5rem;font-size:1rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Syne',sans-serif">
+          Èske mwen bezwen konesans teknoloji anvan? <span class="faq-arrow" style="color:var(--gold);font-size:1.2rem;transition:transform 0.3s">▼</span>
+        </button>
+        <div class="faq-body" style="display:none;padding:0 1.5rem 1.25rem;color:var(--white-dim);line-height:1.8;font-size:0.92rem">
+          Non ditou. Kours la kòmanse soti nan zewo — menm si ou pa janm itilize AI anvan. Tout eksplikasyon yo senp, kla, ak an Kreyòl Ayisyen.
+        </div>
+      </div>
+
+      <div class="faq-item" style="background:var(--navy);border:1px solid var(--border);border-radius:16px;overflow:hidden">
+        <button onclick="toggleFaq(this)" style="width:100%;text-align:left;background:none;border:none;color:var(--white);padding:1.25rem 1.5rem;font-size:1rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Syne',sans-serif">
+          Eske mwen ka vrèman fè lajan ak AI? <span class="faq-arrow" style="color:var(--gold);font-size:1.2rem;transition:transform 0.3s">▼</span>
+        </button>
+        <div class="faq-body" style="display:none;padding:0 1.5rem 1.25rem;color:var(--white-dim);line-height:1.8;font-size:0.92rem">
+          Wi. Moun ki fini 30 Jou AI ap ofri sèvis ChatGPT, kreye kontni, tradui dokiman, ak anseye lòt moun. £20-100 pa gig sou Fiverr se reyalis pou yon debutant.
+        </div>
+      </div>
+
+      <div class="faq-item" style="background:var(--navy);border:1px solid var(--border);border-radius:16px;overflow:hidden">
+        <button onclick="toggleFaq(this)" style="width:100%;text-align:left;background:none;border:none;color:var(--white);padding:1.25rem 1.5rem;font-size:1rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Syne',sans-serif">
+          Nan ki lang kours la ye? <span class="faq-arrow" style="color:var(--gold);font-size:1.2rem;transition:transform 0.3s">▼</span>
+        </button>
+        <div class="faq-body" style="display:none;padding:0 1.5rem 1.25rem;color:var(--white-dim);line-height:1.8;font-size:0.92rem">
+          Kours la 100% an Kreyòl Ayisyen. Sit la disponib tou an Fransè ak Angle — itilize bouton lang nan anwo a pou chanje.
+        </div>
+      </div>
+
+      <div class="faq-item" style="background:var(--navy);border:1px solid var(--border);border-radius:16px;overflow:hidden">
+        <button onclick="toggleFaq(this)" style="width:100%;text-align:left;background:none;border:none;color:var(--white);padding:1.25rem 1.5rem;font-size:1rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Syne',sans-serif">
+          Ki diferans ant KreyòlAIHub ak lòt kours AI? <span class="faq-arrow" style="color:var(--gold);font-size:1.2rem;transition:transform 0.3s">▼</span>
+        </button>
+        <div class="faq-body" style="display:none;padding:0 1.5rem 1.25rem;color:var(--white-dim);line-height:1.8;font-size:0.92rem">
+          Nou sèl platfòm AI ki anseye an Kreyòl Ayisyen. Lòt kours yo an angle oswa fransè. Nou tou konekte aprantisaj ak opòtinite fè lajan reyèl — pa jis teyori.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================================
   🚀 FINAL CTA — Bottom email signup section
   Uses same Formspree form as hero
   ================================================
@@ -1120,5 +1222,16 @@ function showToast(msg){
   setTimeout(()=>{t.style.transform='translateY(120px)';},4500);
 }
 </script>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/message/kreyolaihub" target="_blank" rel="noopener"
+   title="Kontakte nou sou WhatsApp"
+   style="position:fixed;bottom:2rem;right:2rem;z-index:999;background:#25d366;color:#fff;border-radius:50%;width:58px;height:58px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 4px 20px rgba(37,211,102,0.5);text-decoration:none;transition:transform 0.2s,box-shadow 0.2s"
+   onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 6px 28px rgba(37,211,102,0.7)'"
+   onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 20px rgba(37,211,102,0.5)'">
+  💬
+  <span style="position:absolute;top:-6px;right:-6px;background:var(--gold);color:var(--navy);font-size:0.55rem;font-weight:800;padding:2px 5px;border-radius:10px;white-space:nowrap">WhatsApp</span>
+</a>
+
 </body>
 </html>
