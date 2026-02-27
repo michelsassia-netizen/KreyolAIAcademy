@@ -482,7 +482,7 @@
     <p class="section-sub">Test our AI tools right now — directly on the site, for free.</p>
 
     <div class="demo-tabs">
-      <button class="demo-tab active" onclick="switchDemo('lakay',this)">🎙️ Lakay Pale</button>
+      <button class="demo-tab active" onclick="switchDemo('lakay',this)">🎙️ Lakay Pale <span style="font-size:0.65rem;background:rgba(34,197,94,0.2);color:#22c55e;border:1px solid rgba(34,197,94,0.3);border-radius:20px;padding:1px 6px;margin-left:4px">LIVE</span></button>
       <button class="demo-tab" onclick="switchDemo('gran',this)">👵 Gran AI</button>
       <button class="demo-tab" onclick="switchDemo('translate',this)">🌐 Tradiksyon AI</button>
     </div>
@@ -869,6 +869,161 @@
 </section>
 
 <!-- FOOTER -->
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- PASTE THIS SECTION INTO YOUR index.html            -->
+<!-- Put it just before your footer closing tag         -->
+<!-- ═══════════════════════════════════════════════════ -->
+
+<style>
+  .lakay-section {
+    padding: 80px 24px;
+    background: linear-gradient(180deg, #f7f3ee 0%, #fff 100%);
+    text-align: center;
+  }
+
+  .lakay-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,32,159,0.08);
+    border: 1px solid rgba(0,32,159,0.15);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #00209F;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  .lakay-heading {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: #12163A;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .lakay-heading .blue { color: #00209F; }
+  .lakay-heading .red  { color: #D21034; }
+
+  .lakay-sub {
+    font-size: 1rem;
+    color: #4A4D6B;
+    max-width: 520px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+
+  .lakay-features {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+
+  .lakay-feat {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid #E0D8CF;
+    border-radius: 20px;
+    padding: 7px 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #4A4D6B;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .lakay-iframe-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(18,22,58,0.15);
+    border: 1px solid #E0D8CF;
+    background: #F7F3EE;
+  }
+
+  .lakay-iframe-wrap iframe {
+    width: 100%;
+    height: 850px;
+    border: none;
+    display: block;
+  }
+
+  .lakay-open-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    background: #00209F;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 13px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(0,32,159,0.25);
+  }
+
+  .lakay-open-btn:hover {
+    background: #0a2bc4;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(0,32,159,0.35);
+  }
+
+  @media (max-width: 768px) {
+    .lakay-iframe-wrap iframe { height: 600px; }
+    .lakay-section { padding: 48px 16px; }
+  }
+</style>
+
+<section class="lakay-section" id="lakay-pale">
+
+  <div class="lakay-badge">🇭🇹 Nouvo Zouti</div>
+
+  <h2 class="lakay-heading">
+    <span class="blue">Lakay</span> <span class="red">Pale</span>
+  </h2>
+
+  <p class="lakay-sub">
+    Asistan AI ou an Kreyòl — pale, poze kesyon, eskanè dokiman medikal ak legal. 
+    Gratis pou tout kominote ayisyen an. 🇭🇹
+  </p>
+
+  <div class="lakay-features">
+    <span class="lakay-feat">🎙️ Rekonesans Vwa</span>
+    <span class="lakay-feat">🧠 Repons an Kreyòl</span>
+    <span class="lakay-feat">📄 Eskanè Dokiman</span>
+    <span class="lakay-feat">🎨 Jenere Imaj</span>
+    <span class="lakay-feat">🌍 FR · EN · KW</span>
+  </div>
+
+  <!-- IFRAME EMBED -->
+  <div class="lakay-iframe-wrap">
+    <iframe
+      src="https://michelsassia-netizen.github.io/Kreyolaibot/"
+      title="Lakay Pale — Asistan AI Ayisyen"
+      allow="microphone; camera"
+      loading="lazy">
+    </iframe>
+  </div>
+
+  <!-- Open in full page link -->
+  <a class="lakay-open-btn" 
+     href="https://michelsassia-netizen.github.io/Kreyolaibot/" 
+     target="_blank">
+    🚀 Ouvri Lakay Pale an plen ekran
+  </a>
+
+</section>
+
+
 <footer>
   <div class="footer-inner">
     <div class="footer-logo"><img src="LOGO.png" alt="KreyòlAIHub" /></div>
