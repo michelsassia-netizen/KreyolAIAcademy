@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Konsiltasyon AI — AI Consulting — KreyòlAIHub</title>
+<meta name="description" content="AI Consulting for Businesses — Helping organizations adopt AI, automate workflows, and build competitive advantage."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#09090B;--bg2:#111114;--bg3:#16161A;--bg4:#1D1D22;--t100:rgba(250,250,248,1);--t80:rgba(250,250,248,.80);--t55:rgba(250,250,248,.55);--t30:rgba(250,250,248,.30);--t12:rgba(250,250,248,.12);--t07:rgba(250,250,248,.07);--t04:rgba(250,250,248,.04);--ind:#6366F1;--ind2:#818CF8;--ind3:rgba(99,102,241,.15);--iglow:rgba(99,102,241,.22);--ib1:rgba(99,102,241,.20);--amb:#D97706;--amb2:#F59E0B;--amg:rgba(245,158,11,.12);--grn:#10B981;--grn2:#34D399;--b1:rgba(250,250,248,.06);--b2:rgba(250,250,248,.10);--b3:rgba(250,250,248,.16);--fd:'Instrument Serif',Georgia,serif;--fs:'DM Sans',system-ui,sans-serif;--r:10px;--r2:18px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t100);font-family:var(--fs);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}button{cursor:pointer;font-family:var(--fs)}
+.c{max-width:1160px;margin:0 auto;padding:0 1.5rem}
+[data-r]{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s ease}[data-r].on{opacity:1;transform:translateY(0)}
+[data-r][data-d="1"]{transition-delay:.1s}[data-r][data-d="2"]{transition-delay:.2s}[data-r][data-d="3"]{transition-delay:.3s}[data-r][data-d="4"]{transition-delay:.4s}
+.btn{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--fs);font-size:.84rem;font-weight:500;padding:.68rem 1.4rem;border-radius:var(--r);border:none;transition:all .18s;cursor:pointer;white-space:nowrap}
+.btn-p{background:var(--ind);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.35),0 0 0 1px rgba(99,102,241,.45)}.btn-p:hover{background:var(--ind2);transform:translateY(-1px);box-shadow:0 4px 20px var(--iglow)}
+.btn-g{background:var(--t07);color:var(--t80);border:1px solid var(--b2)}.btn-g:hover{background:var(--t12);color:var(--t100)}
+.btn-lg{padding:.82rem 1.85rem;font-size:.9rem}.btn-sm{padding:.45rem .9rem;font-size:.76rem}
+.chip{display:inline-flex;align-items:center;gap:.3rem;font-size:.67rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:99px;padding:.26rem .72rem}
+.chip-i{color:var(--ind2);border:1px solid var(--ib1);background:var(--ind3)}.chip-a{color:var(--amb2);border:1px solid rgba(245,158,11,.28);background:var(--amg)}
+.chip-g{color:var(--grn2);border:1px solid rgba(52,211,153,.28);background:rgba(16,185,129,.06)}.chip-w{color:var(--t55);border:1px solid var(--b1);background:var(--t04)}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;display:flex;align-items:center;padding:0 1.5rem;background:rgba(9,9,11,.9);backdrop-filter:blur(20px) saturate(1.5);border-bottom:1px solid var(--b1)}
+.ni{max-width:1160px;margin:0 auto;width:100%;display:flex;align-items:center}
+.nlogo{font-family:var(--fd);font-size:1.15rem;font-weight:400;flex-shrink:0}.nlogo .dot{color:var(--ind2)}
+.nlinks{display:flex;align-items:center;gap:.05rem;flex:1;margin-left:1.5rem}
+.nlinks a{font-size:.81rem;font-weight:400;color:var(--t55);padding:.35rem .68rem;border-radius:7px;transition:all .15s}
+.nlinks a:hover,.nlinks a.on{color:var(--t100);background:var(--t04)}
+.nright{display:flex;align-items:center;gap:.55rem;margin-left:auto}
+.nlang{display:flex;gap:.15rem;margin-right:.2rem}
+.nlang a{font-size:.69rem;font-weight:600;color:var(--t30);padding:.2rem .4rem;border-radius:5px;border:1px solid transparent;transition:all .15s}
+.nlang a:hover,.nlang a.on{color:var(--t80);background:var(--t07);border-color:var(--b1)}
+.nham{display:none;flex-direction:column;gap:4px;background:none;border:none;padding:6px}
+.nham span{display:block;width:20px;height:1.5px;background:var(--t55);border-radius:2px}
+@media(max-width:860px){.nlinks,.nlang{display:none}.nham{display:flex}.nlinks.open{display:flex;flex-direction:column;position:fixed;top:60px;left:0;right:0;background:rgba(9,9,11,.98);border-bottom:1px solid var(--b1);padding:1.25rem;gap:.22rem;z-index:499}}
+
+/* PAGE HERO */
+.page-hero{padding:8rem 1.5rem 6rem;border-bottom:1px solid var(--b1);background:radial-gradient(ellipse 900px 500px at 80% 50%,rgba(99,102,241,.07),transparent 65%),var(--bg);position:relative;overflow:hidden}
+.ph-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.ph-eyebrow{display:flex;align-items:center;gap:.65rem;margin-bottom:1.5rem}
+.phline{width:22px;height:1px;background:linear-gradient(90deg,var(--ind),transparent)}
+.ph-title{font-family:var(--fd);font-size:clamp(2.8rem,6vw,5.5rem);font-weight:400;line-height:1.0;letter-spacing:-.015em;margin-bottom:1.25rem}
+.ph-sub{font-size:1rem;font-weight:300;color:var(--t55);line-height:1.78;max-width:420px;margin-bottom:2.25rem}
+/* Metrics card */
+.metrics-card{background:var(--bg2);border:1px solid var(--b1);border-radius:22px;padding:2.5rem;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+.mc-title{font-family:var(--fd);font-size:1.15rem;font-weight:400;margin-bottom:.35rem}
+.mc-sub{font-size:.75rem;color:var(--t30);margin-bottom:2rem}
+.mc-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:2rem}
+.mc-stat{background:var(--bg3);border-radius:14px;padding:1.25rem}
+.ms-n{font-family:var(--fd);font-size:2rem;font-weight:400;line-height:1;margin-bottom:.2rem}
+.ms-l{font-size:.7rem;color:var(--t30);font-weight:500}
+.mc-steps{display:flex;flex-direction:column;gap:.65rem}
+.mc-step{display:flex;align-items:center;gap:.85rem;font-size:.82rem;color:var(--t55)}
+.mc-step-n{width:26px;height:26px;border-radius:50%;border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;flex-shrink:0;color:var(--t30)}
+@media(max-width:860px){.ph-grid{grid-template-columns:1fr;gap:3rem}}
+
+/* SERVICES */
+.services{padding:7rem 1.5rem;border-bottom:1px solid var(--b1)}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:3.5rem}
+.svc{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r2);padding:2rem 1.75rem;transition:all .3s;position:relative;overflow:hidden}
+.svc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .3s}
+.svc:hover{border-color:var(--b2);transform:translateY(-3px);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.svc:hover::before{opacity:1}
+.svc.s1::before{background:var(--ind)}.svc.s2::before{background:var(--amb)}.svc.s3::before{background:var(--grn)}.svc.s4::before{background:var(--ind2)}
+.svc-n{font-family:var(--fd);font-size:2.5rem;font-weight:400;color:var(--b1);line-height:1;margin-bottom:1.25rem;transition:color .3s}
+.svc:hover .svc-n{color:rgba(99,102,241,.18)}
+.svc-ico{width:40px;height:40px;border-radius:10px;background:var(--bg4);border:1px solid var(--b1);display:flex;align-items:center;justify-content:center;font-size:1.15rem;margin-bottom:1rem;transition:all .3s}
+.svc:hover .svc-ico{background:var(--ind3);border-color:var(--ib1)}
+.svc-title{font-family:var(--fd);font-size:1.25rem;font-weight:400;margin-bottom:.5rem}
+.svc-desc{font-size:.8rem;color:var(--t55);line-height:1.65}
+.svc-features{margin-top:1.25rem;display:flex;flex-direction:column;gap:.4rem}
+.sf{font-size:.76rem;color:var(--t30);display:flex;align-items:center;gap:.5rem}
+.sf::before{content:'→';color:var(--ind2);font-size:.7rem}
+@media(max-width:760px){.svc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:440px){.svc-grid{grid-template-columns:1fr}}
+
+/* PROJECTS */
+.projects{padding:7rem 1.5rem;background:var(--bg2);border-bottom:1px solid var(--b1)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem}
+.proj-card{background:var(--bg);border:1px solid var(--b1);border-radius:var(--r2);padding:2rem;transition:all .28s;cursor:pointer}
+.proj-card:hover{border-color:var(--b2);transform:translateY(-3px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.pc-ico{font-size:1.6rem;margin-bottom:1rem}
+.pc-name{font-family:var(--fd);font-size:1.3rem;font-weight:400;margin-bottom:.5rem}
+.pc-desc{font-size:.82rem;color:var(--t55);line-height:1.68;margin-bottom:1.25rem}
+.pc-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.ptag{font-size:.62rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--t30);border:1px solid var(--b1);border-radius:5px;padding:.14rem .42rem}
+@media(max-width:760px){.proj-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:440px){.proj-grid{grid-template-columns:1fr}}
+
+/* TESTIMONIALS */
+.testimonials{padding:7rem 1.5rem;border-bottom:1px solid var(--b1)}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem}
+.test-card{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r2);padding:2rem;transition:all .28s}
+.test-card:hover{border-color:var(--b2)}
+.test-q{font-size:.95rem;font-style:italic;color:var(--t80);line-height:1.7;margin-bottom:1.5rem;font-family:var(--fd)}
+.test-author{display:flex;align-items:center;gap:.75rem}
+.test-avatar{width:38px;height:38px;border-radius:50%;background:var(--ind3);border:1px solid var(--ib1);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.test-name{font-size:.84rem;font-weight:600;color:var(--t80)}
+.test-role{font-size:.72rem;color:var(--t30)}
+@media(max-width:760px){.test-grid{grid-template-columns:1fr}}
+
+/* COMMUNITY */
+.community{padding:7rem 1.5rem;background:var(--bg2);border-bottom:1px solid var(--b1)}
+.comm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem}
+.comm-card{background:var(--bg);border:1px solid var(--b1);border-radius:var(--r2);padding:2rem;transition:all .28s}
+.comm-card:hover{border-color:var(--b2);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.cc-ico{font-size:1.6rem;margin-bottom:1rem}
+.cc-title{font-family:var(--fd);font-size:1.3rem;font-weight:400;margin-bottom:.5rem}
+.cc-desc{font-size:.82rem;color:var(--t55);line-height:1.68;margin-bottom:1.5rem}
+@media(max-width:760px){.comm-grid{grid-template-columns:1fr}}
+
+/* FORM */
+.form-section{padding:7rem 1.5rem;border-bottom:1px solid var(--b1)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.form-left .proof{display:flex;flex-direction:column;gap:1rem;margin-top:2.5rem}
+.proof-item{display:flex;align-items:flex-start;gap:.85rem;font-size:.84rem;color:var(--t55);line-height:1.6}
+.proof-ico{width:32px;height:32px;border-radius:8px;background:var(--ind3);border:1px solid var(--ib1);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;margin-top:.1rem}
+.form-card{background:var(--bg2);border:1px solid var(--b1);border-radius:22px;padding:3rem}
+.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ind),var(--ind2))}
+.form-card{position:relative;overflow:hidden}
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.field{display:flex;flex-direction:column;gap:.45rem}
+.field label{font-size:.72rem;font-weight:500;color:var(--t55)}
+.input,.textarea{background:var(--bg3);border:1px solid var(--b1);border-radius:8px;padding:.7rem 1rem;color:var(--t100);font-family:var(--fs);font-size:.85rem;outline:none;transition:border-color .18s;width:100%}
+.input::placeholder,.textarea::placeholder{color:var(--t30)}.input:focus,.textarea:focus{border-color:rgba(99,102,241,.4)}
+.textarea{resize:vertical;min-height:120px}
+.select-field{background:var(--bg3);border:1px solid var(--b1);border-radius:8px;padding:.7rem 1rem;color:var(--t55);font-family:var(--fs);font-size:.85rem;outline:none;transition:border-color .18s;width:100%;cursor:pointer}
+.select-field:focus{border-color:rgba(99,102,241,.4)}
+@media(max-width:860px){.form-grid{grid-template-columns:1fr;gap:3.5rem}.f-grid{grid-template-columns:1fr}}
+
+/* PRICING */
+.pricing{padding:7rem 1.5rem;background:var(--bg2);border-bottom:1px solid var(--b1)}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem}
+.price-card{background:var(--bg);border:1px solid var(--b1);border-radius:var(--r2);padding:2.5rem 2rem;transition:all .3s}
+.price-card:hover{border-color:var(--b2);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.price-card.featured{border-color:var(--ib1);background:rgba(99,102,241,.04);position:relative}
+.price-card.featured::before{content:'Most Popular';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--ind);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .8rem;border-radius:0 0 8px 8px}
+.price-tier{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t30);margin-bottom:.75rem}
+.price-name{font-family:var(--fd);font-size:1.5rem;font-weight:400;margin-bottom:.5rem}
+.price-val{font-family:var(--fd);font-size:2.5rem;font-weight:400;line-height:1;margin-bottom:.25rem}
+.price-val small{font-family:var(--fs);font-size:1rem;color:var(--t30);font-weight:400}
+.price-period{font-size:.75rem;color:var(--t30);margin-bottom:1.75rem}
+.price-features{display:flex;flex-direction:column;gap:.6rem;margin-bottom:2rem}
+.pf{font-size:.82rem;color:var(--t55);display:flex;align-items:center;gap:.6rem}
+.pf-check{color:var(--grn2);flex-shrink:0}
+@media(max-width:760px){.price-grid{grid-template-columns:1fr}}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--b1);padding:5rem 1.5rem 2.5rem}
+.ft-grid{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:4rem}
+.ft-brand{font-family:var(--fd);font-size:1.25rem;font-weight:400;margin-bottom:.75rem}.ftdot{color:var(--ind2)}
+.ft-tag{font-size:.8rem;color:var(--t30);line-height:1.7;max-width:240px}
+.ft-col h6{font-size:.67rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t30);margin-bottom:1rem}
+.ft-col a{display:block;font-size:.8rem;color:var(--t55);padding:.22rem 0;transition:color .15s}.ft-col a:hover{color:var(--t100)}
+.ft-bot{max-width:1160px;margin:0 auto;padding-top:2rem;border-top:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.73rem;color:var(--t30)}
+@media(max-width:700px){.ft-grid{grid-template-columns:1fr 1fr}}@media(max-width:440px){.ft-grid{grid-template-columns:1fr}}
+.wa{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;width:48px;height:48px;border-radius:50%;background:#25D366;color:#fff;font-size:1.3rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.35);transition:transform .2s}.wa:hover{transform:scale(1.1)}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="ni">
+    <a href="index.html" class="nlogo">KreyòlAI<span class="dot">·</span>Hub</a>
+    <div class="nlinks" id="nl">
+      <a href="index.html">Home</a><a href="academy.html">Academy</a>
+      <a href="tools.html">AI Tools</a><a href="consulting.html" class="on">Consulting</a>
+      <a href="index.html#community">Community</a>
+    </div>
+    <div class="nright">
+      <div class="nlang"><a href="#" class="on">EN</a><a href="#">FR</a><a href="#">KW</a></div>
+      <a href="#" class="btn btn-g btn-sm">Sign In</a>
+      <a href="#book" class="btn btn-p btn-sm">Book Consultation →</a>
+    </div>
+    <button class="nham" onclick="document.getElementById('nl').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <div class="c">
+    <div class="ph-grid">
+      <div data-r>
+        <div class="ph-eyebrow"><div class="phline"></div><span style="font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ind2)">AI Consulting for Businesses</span></div>
+        <h1 class="ph-title">Estrateji AI / Stratégie IA / AI strategy for <em style="color:var(--t55)">organizations that lead.</em></h1>
+        <p class="ph-sub">Helping Haitian businesses and global organizations adopt AI, automate workflows, and build competitive advantage for the future.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.65rem;margin-bottom:2rem">
+          <a href="#book" class="btn btn-p btn-lg">Book Free Consultation</a>
+          <a href="#services" class="btn btn-g btn-lg">View Services</a>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <span class="chip chip-g">✓ Free Discovery Call</span>
+          <span class="chip chip-i">24h Response</span>
+          <span class="chip chip-w">Based in London</span>
+        </div>
+      </div>
+      <div data-r data-d="2">
+        <div class="metrics-card">
+          <div class="mc-title">What we deliver</div>
+          <div class="mc-sub">Measurable outcomes, not promises</div>
+          <div class="mc-stats">
+            <div class="mc-stat"><div class="ms-n" style="color:var(--ind2)">40%</div><div class="ms-l">Average cost reduction from AI automation</div></div>
+            <div class="mc-stat"><div class="ms-n" style="color:var(--grn2)">3×</div><div class="ms-l">Faster document processing with AI tools</div></div>
+            <div class="mc-stat"><div class="ms-n" style="color:var(--amb2)">£0</div><div class="ms-l">Cost for initial discovery consultation</div></div>
+            <div class="mc-stat"><div class="ms-n" style="color:var(--t80)">24h</div><div class="ms-l">Response time guaranteed</div></div>
+          </div>
+          <div class="mc-steps">
+            <div class="mc-step"><div class="mc-step-n">1</div><span>Free discovery call — understand your needs</span></div>
+            <div class="mc-step"><div class="mc-step-n">2</div><span>Custom AI strategy proposal within 48 hours</span></div>
+            <div class="mc-step"><div class="mc-step-n">3</div><span>Implementation & ongoing support</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="c">
+    <div style="text-align:center;margin-bottom:.5rem" data-r>
+      <div style="display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:1.25rem"><div style="width:20px;height:1px;background:var(--ind);opacity:.6"></div><span class="chip chip-a">Services</span><div style="width:20px;height:1px;background:var(--ind);opacity:.6"></div></div>
+      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:400;margin-bottom:1rem">What we <em style="color:var(--t55)">deliver.</em></h2>
+      <p style="font-size:1rem;color:var(--t55);max-width:440px;margin:0 auto;line-height:1.75;font-weight:300">Four core services to take your organization from AI-curious to AI-powered.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc s1" data-r data-d="1">
+        <div class="svc-n">01</div>
+        <div class="svc-ico">🧭</div>
+        <h4 class="svc-title">AI Strategy</h4>
+        <p class="svc-desc">Define your AI roadmap, identify highest-value opportunities, and build a competitive strategy tailored to your industry.</p>
+        <div class="svc-features">
+          <div class="sf">Current state assessment</div>
+          <div class="sf">AI opportunity mapping</div>
+          <div class="sf">Implementation roadmap</div>
+          <div class="sf">ROI projections</div>
+        </div>
+      </div>
+      <div class="svc s2" data-r data-d="2">
+        <div class="svc-n">02</div>
+        <div class="svc-ico">⚙️</div>
+        <h4 class="svc-title">AI Automation</h4>
+        <p class="svc-desc">Automate repetitive processes with intelligent AI workflows. Reduce costs, increase throughput, and free your team for higher-value work.</p>
+        <div class="svc-features">
+          <div class="sf">Process audit & mapping</div>
+          <div class="sf">Workflow automation design</div>
+          <div class="sf">Tool integration & setup</div>
+          <div class="sf">Performance monitoring</div>
+        </div>
+      </div>
+      <div class="svc s3" data-r data-d="3">
+        <div class="svc-n">03</div>
+        <div class="svc-ico">🛠️</div>
+        <h4 class="svc-title">Custom AI Tools</h4>
+        <p class="svc-desc">Purpose-built AI tools for your specific business needs — trained on your data, in your language, for your users.</p>
+        <div class="svc-features">
+          <div class="sf">Requirements & design</div>
+          <div class="sf">Custom model training</div>
+          <div class="sf">Integration & deployment</div>
+          <div class="sf">Ongoing maintenance</div>
+        </div>
+      </div>
+      <div class="svc s4" data-r data-d="4">
+        <div class="svc-n">04</div>
+        <div class="svc-ico">🎓</div>
+        <h4 class="svc-title">Corporate Training</h4>
+        <p class="svc-desc">Train your entire team to work effectively with AI. Practical, hands-on workshops for executives, managers, and frontline staff.</p>
+        <div class="svc-features">
+          <div class="sf">AI fundamentals for teams</div>
+          <div class="sf">Prompt engineering workshops</div>
+          <div class="sf">Tool-specific training</div>
+          <div class="sf">Ongoing learning resources</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="c">
+    <div style="margin-bottom:.5rem" data-r>
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1.25rem"><div style="width:20px;height:1px;background:var(--ind);opacity:.6"></div><span class="chip chip-i">Innovation Projects</span></div>
+      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:400;margin-bottom:1rem">Haitian AI <em style="color:var(--t55)">innovation.</em></h2>
+      <p style="font-size:1rem;color:var(--t55);max-width:440px;line-height:1.75;font-weight:300">Showcasing the best of what AI can do for the Haitian community and diaspora.</p>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card" data-r data-d="1">
+        <div class="pc-ico">🏠</div>
+        <div class="pc-name">Lakay Pale / Grann AI</div>
+        <p class="pc-desc">Voice-powered AI assistant in Haitian Creole. Ask anything — culture, history, immigration, business — and get answers in your language.</p>
+        <div class="pc-tags"><span class="ptag">Voice AI</span><span class="ptag">Creole</span><span class="ptag">Live</span></div>
+      </div>
+      <div class="proj-card" data-r data-d="2">
+        <div class="pc-ico">🎮</div>
+        <div class="pc-name">ALASOKID — Haitian AI Games</div>
+        <p class="pc-desc">Traditional Haitian children's games (Oslè, Kay, Mab) rebuilt with AI opponents. Cultural heritage meets modern technology.</p>
+        <div class="pc-tags"><span class="ptag">Games</span><span class="ptag">Education</span><span class="ptag">Culture</span><span class="ptag">Beta</span></div>
+      </div>
+      <div class="proj-card" data-r data-d="3">
+        <div class="pc-ico">🧪</div>
+        <div class="pc-name">AI Experiments Lab</div>
+        <p class="pc-desc">Open experiments in Haitian Creole NLP, cultural AI models, and diaspora-focused AI applications. Built in public.</p>
+        <div class="pc-tags"><span class="ptag">Research</span><span class="ptag">Open Source</span><span class="ptag">NLP</span></div>
+      </div>
+      <div class="proj-card" data-r data-d="1">
+        <div class="pc-ico">💱</div>
+        <div class="pc-name">AyitiWork — Fintech AI</div>
+        <p class="pc-desc">Bridging international payments with local Haitian cash-out. AI-powered fintech for the diaspora's financial needs.</p>
+        <div class="pc-tags"><span class="ptag">Fintech</span><span class="ptag">Payments</span><span class="ptag">Development</span></div>
+      </div>
+      <div class="proj-card" data-r data-d="2">
+        <div class="pc-ico">🎵</div>
+        <div class="pc-name">KonpaPedia AI</div>
+        <p class="pc-desc">The world's first Konpa music AI assistant. Learn the history, artists, and rhythms of Haiti's most beloved music genre.</p>
+        <div class="pc-tags"><span class="ptag">Music</span><span class="ptag">Culture</span><span class="ptag">Konpa</span></div>
+      </div>
+      <div class="proj-card" data-r data-d="3">
+        <div class="pc-ico">📱</div>
+        <div class="pc-name">SwippSoul — Wellness AI</div>
+        <p class="pc-desc">Anonymous emotional wellness app with AI support in Creole, French, and English. Mental health, no stigma.</p>
+        <div class="pc-tags"><span class="ptag">Wellness</span><span class="ptag">Mental Health</span><span class="ptag">Trilingual</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="c">
+    <div style="text-align:center;margin-bottom:.5rem" data-r>
+      <div style="display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:1.25rem"><div style="width:20px;height:1px;background:var(--ind);opacity:.6"></div><span class="chip chip-w">Testimonials</span><div style="width:20px;height:1px;background:var(--ind);opacity:.6"></div></div>
+      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:400;margin-bottom:1rem">Trusted by <em style="color:var(--t55)">the community.</em></h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card" data-r data-d="1">
+        <div class="test-q">"KreyòlAIHub changed how I work. For the first time, I can learn about AI in my own language. This is what the Haitian diaspora has been waiting for."</div>
+        <div class="test-author"><div class="test-avatar">🇭🇹</div><div><div class="test-name">Marie J.</div><div class="test-role">Entrepreneur, Miami</div></div></div>
+      </div>
+      <div class="test-card" data-r data-d="2">
+        <div class="test-q">"The AI consulting team helped us automate 40% of our operations in 3 weeks. The results were immediate and the support was exceptional."</div>
+        <div class="test-author"><div class="test-avatar">💼</div><div><div class="test-name">Jean-Pierre M.</div><div class="test-role">CEO, Montréal Tech</div></div></div>
+      </div>
+      <div class="test-card" data-r data-d="3">
+        <div class="test-q">"Finally — AI education that respects our culture and speaks our language. My team completed the 30-day course and the transformation was real."</div>
+        <div class="test-author"><div class="test-avatar">🎓</div><div><div class="test-name">Dr. Sandra B.</div><div class="test-role">Director, Paris NGO</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="community" id="community">
+  <div class="c">
+    <div data-r>
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1.25rem"><div style="width:20px;height:1px;background:var(--ind);opacity:.6"></div><span class="chip chip-g">Community</span></div>
+      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:400;margin-bottom:1rem">Build the ecosystem. <em style="color:var(--t55)">Together.</em></h2>
+      <p style="font-size:1rem;color:var(--t55);max-width:480px;line-height:1.75;font-weight:300">Join the Haitian AI movement — developers, entrepreneurs, students, and creators worldwide.</p>
+    </div>
+    <div class="comm-grid">
+      <div class="comm-card" data-r data-d="1"><div class="cc-ico">💬</div><h4 class="cc-title">Discord Community</h4><p class="cc-desc">Join 500+ Haitian AI enthusiasts. Share projects, ask questions, find collaborators.</p><a href="#" class="btn btn-g btn-sm">Join Discord</a></div>
+      <div class="comm-card" data-r data-d="2"><div class="cc-ico">📅</div><h4 class="cc-title">Events & Workshops</h4><p class="cc-desc">Online workshops, AI hackathons, and in-person events in London, Paris, Miami, and Montréal.</p><a href="#" class="btn btn-g btn-sm">See Events</a></div>
+      <div class="comm-card" data-r data-d="3"><div class="cc-ico">🚀</div><h4 class="cc-title">Open Source Projects</h4><p class="cc-desc">Contribute to Haitian Creole NLP, cultural AI models, and diaspora-focused open-source tools.</p><a href="#" class="btn btn-g btn-sm">See Projects</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="c">
+    <div style="text-align:center;margin-bottom:.5rem" data-r>
+      <div style="display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:1.25rem"><div style="width:20px;height:1px;background:var(--ind);opacity:.6"></div><span class="chip chip-a">Pricing</span><div style="width:20px;height:1px;background:var(--ind);opacity:.6"></div></div>
+      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:400;margin-bottom:1rem">Transparent <em style="color:var(--t55)">pricing.</em></h2>
+      <p style="font-size:1rem;color:var(--t55);max-width:420px;margin:0 auto;line-height:1.75;font-weight:300">No hidden fees. Start with a free discovery call and choose the package that fits your goals.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card" data-r data-d="1">
+        <div class="price-tier">Starter</div>
+        <div class="price-name">AI Essentials</div>
+        <div class="price-val">£500 <small>/ project</small></div>
+        <div class="price-period">One-time · Ideal for small teams</div>
+        <div class="price-features">
+          <div class="pf"><span class="pf-check">✓</span> 2-hour strategy session</div>
+          <div class="pf"><span class="pf-check">✓</span> AI readiness assessment</div>
+          <div class="pf"><span class="pf-check">✓</span> Customized AI roadmap PDF</div>
+          <div class="pf"><span class="pf-check">✓</span> 30-day email support</div>
+        </div>
+        <a href="#book" class="btn btn-g" style="width:100%;justify-content:center">Get Started →</a>
+      </div>
+      <div class="price-card featured" data-r data-d="2">
+        <div class="price-tier">Professional</div>
+        <div class="price-name">AI Transform</div>
+        <div class="price-val">£2,500 <small>/ month</small></div>
+        <div class="price-period">3-month minimum · Most popular</div>
+        <div class="price-features">
+          <div class="pf"><span class="pf-check">✓</span> Everything in Starter</div>
+          <div class="pf"><span class="pf-check">✓</span> Full automation audit</div>
+          <div class="pf"><span class="pf-check">✓</span> 1 custom AI workflow built</div>
+          <div class="pf"><span class="pf-check">✓</span> Team training (up to 20)</div>
+          <div class="pf"><span class="pf-check">✓</span> Dedicated Slack channel</div>
+          <div class="pf"><span class="pf-check">✓</span> Weekly strategy calls</div>
+        </div>
+        <a href="#book" class="btn btn-p" style="width:100%;justify-content:center">Book Consultation →</a>
+      </div>
+      <div class="price-card" data-r data-d="3">
+        <div class="price-tier">Enterprise</div>
+        <div class="price-name">AI Partner</div>
+        <div class="price-val">Custom</div>
+        <div class="price-period">Tailored for large organizations</div>
+        <div class="price-features">
+          <div class="pf"><span class="pf-check">✓</span> Everything in Professional</div>
+          <div class="pf"><span class="pf-check">✓</span> Custom AI tool development</div>
+          <div class="pf"><span class="pf-check">✓</span> Dedicated AI consultant</div>
+          <div class="pf"><span class="pf-check">✓</span> C-suite AI briefings</div>
+          <div class="pf"><span class="pf-check">✓</span> SLA & priority support</div>
+          <div class="pf"><span class="pf-check">✓</span> Unlimited team training</div>
+        </div>
+        <a href="#book" class="btn btn-g" style="width:100%;justify-content:center">Contact Us →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="book">
+  <div class="c">
+    <div class="form-grid">
+      <div class="form-left" data-r>
+        <div class="chip chip-i" style="margin-bottom:1.1rem">Book a Consultation</div>
+        <h2 style="font-family:var(--fd);font-size:clamp(2rem,3.5vw,3rem);font-weight:400;margin-bottom:1rem;line-height:1.05">Let's build your<br><em style="color:var(--t55)">AI future.</em></h2>
+        <p style="font-size:.92rem;color:var(--t55);line-height:1.78;max-width:380px;font-weight:300">Tell us about your project. We respond within 24 hours with a tailored proposal.</p>
+        <div class="proof">
+          <div class="proof-item"><div class="proof-ico">✓</div><div><strong style="color:var(--t80)">Free discovery call</strong><br>No commitment required. We assess your needs first.</div></div>
+          <div class="proof-item"><div class="proof-ico">24</div><div><strong style="color:var(--t80)">24-hour response guarantee</strong><br>We take your time seriously.</div></div>
+          <div class="proof-item"><div class="proof-ico">🇭🇹</div><div><strong style="color:var(--t80)">Built for Haiti's future</strong><br>Part of every consultation fee goes to the KreyòlAIHub free academy.</div></div>
+        </div>
+      </div>
+      <div data-r data-d="2">
+        <div class="form-card">
+          <h3 style="font-family:var(--fd);font-size:1.8rem;font-weight:400;margin-bottom:.4rem">Request Consultation</h3>
+          <p style="font-size:.82rem;color:var(--t55);margin-bottom:2rem;line-height:1.6">Fill in the form — we'll be in touch within 24 hours.</p>
+          <form onsubmit="submitForm(event)">
+            <div class="f-grid">
+              <div class="field"><label>Full Name *</label><input class="input" placeholder="Marie Dupont" required/></div>
+              <div class="field"><label>Email *</label><input class="input" type="email" placeholder="marie@company.com" required/></div>
+            </div>
+            <div style="margin-bottom:1rem"><div class="field"><label>Company / Organization</label><input class="input" placeholder="Company or NGO name"/></div></div>
+            <div style="margin-bottom:1rem"><div class="field"><label>Service Needed</label>
+              <select class="select-field">
+                <option value="">Select a service...</option>
+                <option>AI Strategy Consulting</option>
+                <option>AI Automation</option>
+                <option>Custom AI Tools</option>
+                <option>Corporate AI Training</option>
+                <option>Not sure — need guidance</option>
+              </select>
+            </div></div>
+            <div style="margin-bottom:1.5rem"><div class="field"><label>Project Description *</label><textarea class="textarea" placeholder="Tell us about your project, goals, team size, and timeline..."></textarea></div></div>
+            <button type="submit" class="btn btn-p btn-lg" id="submitBtn" style="width:100%;justify-content:center">Send Request →</button>
+            <p style="font-size:.7rem;color:var(--t30);margin-top:.85rem;text-align:center">By submitting, you agree to our privacy policy. No spam, ever.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-brand">KreyòlAI<span class="ftdot">·</span>Hub</div>
+      <p class="ft-tag">The AI platform for Haitians. Foundation of AyitiOS — digital AI infrastructure for the global Haitian diaspora.</p>
+      <div style="margin-top:1.5rem"><span class="chip chip-i" style="font-size:.62rem">AyitiOS Platform</span></div>
+    </div>
+    <div class="ft-col"><h6>Platform</h6><a href="academy.html">AI Academy</a><a href="tools.html">AI Tools</a><a href="consulting.html">Consulting</a><a href="#">Demo Wall</a></div>
+    <div class="ft-col"><h6>Community</h6><a href="#">Discord</a><a href="#">Events</a><a href="#">Projects</a><a href="#">Blog</a></div>
+    <div class="ft-col"><h6>Company</h6><a href="#">About</a><a href="https://kreyolaihub.gumroad.com" target="_blank">Shop</a><a href="/cdn-cgi/l/email-protection#5a3b363b29353e333d332e3b361a32352e373b333674393537">Contact</a><a href="#">Privacy</a></div>
+  </div>
+  <div class="ft-bot"><span>© 2025–2026 KreyòlAIHub. All rights reserved.</span><span>Built in London 🇬🇧 · Heart in Haiti 🇭🇹</span></div>
+</footer>
+
+<a href="https://wa.me/447906520032" target="_blank" class="wa">💬</a>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')}),{threshold:0,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
+document.querySelectorAll('[data-r]').forEach(el=>el.classList.add('on'));
+setTimeout(()=>document.querySelectorAll('[data-r]').forEach(el=>el.classList.add('on')),0);
+function submitForm(e){
+  e.preventDefault();
+  const b=document.getElementById('submitBtn');
+  b.textContent='✓ Request Sent! We\'ll respond within 24h.';
+  b.style.background='rgba(16,185,129,.15)'

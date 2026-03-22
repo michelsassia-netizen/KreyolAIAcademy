@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>30 JOU AI — KreyòlAI Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#050d1a;--navy2:#091426;--navy3:#0e1d35;--navy4:#132540;
+  --gold:#c9952a;--gold2:#e8b84b;--gold3:#f5d080;--goldb:rgba(201,149,42,.18);
+  --cream:#f0e8d5;--warm:#d9c9a8;--muted:#7a8fa8;
+  --grn:#1a8a4a;--grn2:#22c55e;--red:#c0392b;--red2:#ef4444;
+  --brd:rgba(201,149,42,.15);--brd2:rgba(201,149,42,.08);
+  --locked:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{font-family:"DM Sans",sans-serif;background:var(--navy);color:var(--cream);height:100%;overflow:hidden;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:"DM Sans",sans-serif}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--navy2)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
+
+/* TOP BAR */
+.topbar{height:52px;background:var(--navy2);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 1.2rem;gap:1rem;flex-shrink:0;z-index:50}
+.tb-logo{font-family:"Playfair Display",serif;font-size:.88rem;font-weight:700;color:var(--gold2);white-space:nowrap}
+.tb-logo span{color:var(--muted);font-weight:400;font-family:"DM Sans",sans-serif}
+.tb-sep{width:1px;height:20px;background:var(--brd);flex-shrink:0}
+.tb-course{font-size:.75rem;color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-prog{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
+.prog-bar{width:120px;height:4px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:4px;transition:width .4s ease}
+.prog-txt{font-size:.68rem;color:var(--gold2);font-weight:600;white-space:nowrap}
+.tb-lang{display:flex;gap:.2rem;margin-left:.5rem}
+.ll{padding:.18rem .44rem;border-radius:5px;border:1px solid rgba(201,149,42,.15);background:transparent;color:var(--muted);font-size:.62rem;font-weight:600;cursor:pointer;transition:all .18s}
+.ll.on{background:rgba(201,149,42,.18);border-color:rgba(201,149,42,.4);color:var(--gold2)}
+.tb-home{font-size:.7rem;color:var(--muted);border:1px solid var(--brd2);border-radius:6px;padding:.22rem .6rem;white-space:nowrap;transition:all .18s}
+.tb-home:hover{color:var(--gold2);border-color:var(--brd)}
+
+/* LAYOUT */
+.layout{display:flex;flex:1;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:280px;flex-shrink:0;background:var(--navy2);border-right:1px solid var(--brd);display:flex;flex-direction:column;overflow:hidden}
+.sb-header{padding:1rem 1rem .75rem;border-bottom:1px solid var(--brd2);flex-shrink:0}
+.sb-title{font-family:"Playfair Display",serif;font-size:.95rem;color:var(--gold2);margin-bottom:.25rem}
+.sb-meta{font-size:.65rem;color:var(--muted)}
+.sb-stats{display:flex;gap:.75rem;margin-top:.65rem}
+.sb-stat{text-align:center}
+.sb-stat-n{font-size:1rem;font-weight:700;color:var(--gold2)}
+.sb-stat-l{font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+.sb-lessons{flex:1;overflow-y:auto;padding:.5rem 0}
+.week-header{padding:.5rem 1rem .35rem;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);opacity:.7;display:flex;align-items:center;gap:.5rem}
+.week-header::after{content:"";flex:1;height:1px;background:var(--brd2)}
+
+.lesson-row{display:flex;align-items:center;gap:.6rem;padding:.55rem 1rem;cursor:pointer;transition:all .18s;position:relative;border-left:2px solid transparent}
+.lesson-row:hover:not(.locked-row){background:rgba(201,149,42,.07);border-left-color:var(--goldb)}
+.lesson-row.active{background:rgba(201,149,42,.12);border-left-color:var(--gold)}
+.lesson-row.locked-row{opacity:.4;cursor:not-allowed}
+.lesson-row.done-row .lr-icon{background:var(--grn);border-color:var(--grn)}
+.lesson-row.done-row .lr-icon::after{content:"✓";color:white;font-size:.65rem}
+.lesson-row.active .lr-icon{background:var(--gold);border-color:var(--gold)}
+.lesson-row.active .lr-icon::after{content:"▶";color:var(--navy);font-size:.55rem}
+.lesson-row.locked-row .lr-icon::after{content:"🔒";font-size:.55rem}
+.lr-icon{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.58rem;color:var(--muted)}
+.lr-num{color:var(--muted);font-size:.58rem;font-weight:500;min-width:14px}
+.lr-info{flex:1;min-width:0}
+.lr-name{font-size:.72rem;font-weight:500;color:var(--warm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
+.lesson-row.active .lr-name{color:var(--gold2)}
+.lr-time{font-size:.58rem;color:var(--muted)}
+
+/* MAIN CONTENT */
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+
+/* LESSON HEADER */
+.lesson-header{padding:1.5rem 2rem 1.2rem;background:linear-gradient(135deg,var(--navy3),var(--navy2));border-bottom:1px solid var(--brd);flex-shrink:0}
+.lh-week{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:.4rem}
+.lh-title{font-family:"Playfair Display",serif;font-size:1.8rem;color:var(--gold2);line-height:1.2;margin-bottom:.5rem}
+.lh-meta{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.lh-chip{display:inline-flex;align-items:center;gap:.3rem;font-size:.65rem;padding:.22rem .65rem;border-radius:99px}
+.chip-time{background:rgba(201,149,42,.12);border:1px solid rgba(201,149,42,.25);color:var(--gold2)}
+.chip-day{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--muted)}
+.chip-done{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);color:var(--grn2)}
+
+/* CONTENT SECTIONS */
+.lesson-body{padding:1.5rem 2rem 3rem;display:flex;flex-direction:column;gap:1.2rem;max-width:780px}
+
+.content-card{background:var(--navy3);border:1px solid var(--brd);border-radius:14px;overflow:hidden}
+.card-label{display:flex;align-items:center;gap:.5rem;padding:.75rem 1.1rem .5rem;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--brd2)}
+.card-label.leson-l{color:#818cf8}
+.card-label.analoji-l{color:var(--gold2)}
+.card-label.egzanp-l{color:var(--grn2)}
+.card-label.lajan-l{color:#fb923c}
+.card-body{padding:.9rem 1.1rem;font-size:.85rem;line-height:1.85;color:var(--warm)}
+.card-body p{margin-bottom:.5rem}
+.money-list{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.money-item{display:flex;align-items:center;gap:.6rem;font-size:.82rem;color:var(--warm)}
+.money-item::before{content:"💰";font-size:.75rem}
+
+/* QUIZ */
+.quiz-card{background:var(--navy3);border:1px solid var(--brd);border-radius:14px;overflow:hidden}
+.quiz-header{padding:.75rem 1.1rem;border-bottom:1px solid var(--brd2);display:flex;align-items:center;gap:.5rem}
+.quiz-title{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#c084fc}
+.quiz-q{padding:.9rem 1.1rem .6rem;font-size:.9rem;font-weight:600;color:var(--cream);line-height:1.5}
+.quiz-opts{padding:0 1.1rem 1rem;display:flex;flex-direction:column;gap:.5rem}
+.quiz-opt{display:flex;align-items:center;gap:.75rem;padding:.7rem .9rem;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);cursor:pointer;transition:all .18s;font-size:.83rem;color:var(--warm)}
+.quiz-opt:hover:not(.answered){background:rgba(201,149,42,.08);border-color:rgba(201,149,42,.25)}
+.quiz-opt.correct{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4);color:#86efac}
+.quiz-opt.wrong{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.3);color:#fca5a5}
+.quiz-opt.answered{cursor:not-allowed}
+.opt-letter{width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;flex-shrink:0;color:var(--muted)}
+.quiz-opt.correct .opt-letter{background:var(--grn2);border-color:var(--grn2);color:white}
+.quiz-opt.wrong .opt-letter{background:var(--red2);border-color:var(--red2);color:white}
+.quiz-feedback{margin:.2rem 1.1rem .8rem;padding:.65rem .9rem;border-radius:8px;font-size:.78rem;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#86efac}
+.quiz-feedback.no{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#fca5a5}
+
+/* NAV BUTTONS */
+.lesson-nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2rem;border-top:1px solid var(--brd);background:var(--navy2);flex-shrink:0;margin-top:auto}
+.btn-nav{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.2rem;border-radius:10px;font-size:.78rem;font-weight:600;border:1px solid var(--brd);background:transparent;color:var(--muted);transition:all .2s}
+.btn-nav:hover{border-color:rgba(201,149,42,.35);color:var(--gold2)}
+.btn-complete{background:linear-gradient(135deg,var(--gold),#b8780f);border:none;color:var(--navy);padding:.65rem 1.5rem;border-radius:10px;font-size:.82rem;font-weight:700;transition:all .22s;box-shadow:0 4px 16px rgba(201,149,42,.3)}
+.btn-complete:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,149,42,.45)}
+.btn-complete:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* WELCOME SCREEN */
+.welcome{padding:2rem;max-width:700px}
+.wlc-eyebrow{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:.75rem}
+.wlc-title{font-family:"Playfair Display",serif;font-size:2.2rem;color:var(--gold2);line-height:1.15;margin-bottom:1rem}
+.wlc-desc{font-size:.88rem;color:var(--warm);line-height:1.8;margin-bottom:1.5rem;max-width:560px}
+.wlc-stats{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.wlc-stat{background:var(--navy3);border:1px solid var(--brd);border-radius:10px;padding:.75rem 1.1rem;text-align:center}
+.wlc-stat-n{font-size:1.4rem;font-weight:700;color:var(--gold2)}
+.wlc-stat-l{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.btn-start{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,var(--gold),#b8780f);border:none;color:var(--navy);padding:.8rem 2rem;border-radius:12px;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .22s;box-shadow:0 4px 18px rgba(201,149,42,.35)}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,149,42,.5)}
+
+/* CERT SCREEN */
+.cert-screen{display:none;padding:2rem;max-width:700px;text-align:center}
+.cert-screen.show{display:block}
+.cert-box{background:linear-gradient(135deg,var(--navy3),var(--navy4));border:2px solid var(--gold);border-radius:20px;padding:2.5rem;margin-bottom:1.5rem}
+
+/* MOBILE */
+.sb-toggle{display:none}
+@media(max-width:768px){
+  .sidebar{position:fixed;left:-280px;top:0;bottom:0;z-index:200;transition:left .3s ease;width:260px}
+  .sidebar.open{left:0}
+  .sb-toggle{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--brd);border-radius:8px;background:transparent;color:var(--muted);font-size:1rem}
+  .lesson-body{padding:1rem 1rem 3rem}
+  .lesson-header{padding:1rem}
+  .lesson-nav{padding:.85rem 1rem}
+  .lh-title{font-size:1.3rem}
+  .prog-bar{width:80px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <button class="sb-toggle" onclick="toggleSidebar()" id="sbToggle">☰</button>
+  <a href="index.html" class="tb-home" id="homeBtn">← Lakay</a>
+  <div class="tb-sep"></div>
+  <div class="tb-logo">KreyòlAI<span>Hub</span></div>
+  <div class="tb-sep"></div>
+  <div class="tb-course" id="courseLabel">30 JOU AI — Kòmanse Imedyatman</div>
+  <div class="tb-prog">
+    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+    <div class="prog-txt" id="progTxt">0 / 30</div>
+  </div>
+  <div class="tb-lang">
+    <button class="ll on" onclick="setLang('ht')" id="llht">🇭🇹</button>
+    <button class="ll" onclick="setLang('fr')" id="llfr">🇫🇷</button>
+    <button class="ll" onclick="setLang('en')" id="llen">🇬🇧</button>
+  </div>
+</div>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sb-header">
+    <div class="sb-title" id="sbTitle">30 JOU AI</div>
+    <div class="sb-meta" id="sbMeta">Aprann AI de zéro an Kreyòl</div>
+    <div class="sb-stats">
+      <div class="sb-stat"><div class="sb-stat-n" id="doneCount">0</div><div class="sb-stat-l" id="doneLabel">Fini</div></div>
+      <div class="sb-stat"><div class="sb-stat-n">30</div><div class="sb-stat-l" id="totalLabel">Total</div></div>
+      <div class="sb-stat"><div class="sb-stat-n" id="pctStat">0%</div><div class="sb-stat-l" id="pctLabel">Pwogrè</div></div>
+    </div>
+  </div>
+  <div class="sb-lessons" id="sbLessons"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="mainArea">
+
+  <!-- WELCOME (shown until first lesson) -->
+  <div class="welcome" id="welcomeScreen">
+    <div class="wlc-eyebrow" id="wlcEyebrow">KreyòlAI Academy</div>
+    <div class="wlc-title" id="wlcTitle">30 Jou pou Domine AI</div>
+    <div class="wlc-desc" id="wlcDesc">Aprann entèlijans atifisyèl de zéro an Kreyòl Ayisyen. Chak jou: yon leson, yon analoji, yon egzanp reyèl, yon fason pou fè lajan — ak yon kiz pou konfime konesans ou.</div>
+    <div class="wlc-stats">
+      <div class="wlc-stat"><div class="wlc-stat-n">30</div><div class="wlc-stat-l" id="wlcLessons">Leson</div></div>
+      <div class="wlc-stat"><div class="wlc-stat-n">3</div><div class="wlc-stat-l" id="wlcLangs">Lang</div></div>
+      <div class="wlc-stat"><div class="wlc-stat-n">🆓</div><div class="wlc-stat-l" id="wlcFree">Gratis</div></div>
+      <div class="wlc-stat"><div class="wlc-stat-n">💰</div><div class="wlc-stat-l" id="wlcMoney">Lajan</div></div>
+    </div>
+    <button class="btn-start" onclick="loadLesson(1)" id="startBtn">🚀 Kòmanse JOU 1 →</button>
+  </div>
+
+  <!-- LESSON VIEW (hidden until lesson selected) -->
+  <div id="lessonView" style="display:none;flex:1;display:none;flex-direction:column">
+
+    <div class="lesson-header" id="lessonHeader">
+      <div class="lh-week" id="lhWeek">SEMÈN 1</div>
+      <div class="lh-title" id="lhTitle">JOU 1</div>
+      <div class="lh-meta">
+        <span class="lh-chip chip-day" id="lhDay">JOU 1 / 30</span>
+        <span class="lh-chip chip-time" id="lhTime">⏱ 15 min</span>
+        <span class="lh-chip chip-done" id="lhDone" style="display:none">✓ Fini</span>
+      </div>
+    </div>
+
+    <div class="lesson-body" id="lessonBody"></div>
+
+    <div class="lesson-nav">
+      <button class="btn-nav" id="btnPrev" onclick="goLesson(-1)">← <span id="prevLabel">Anvan</span></button>
+      <button class="btn-complete" id="btnComplete" onclick="completeLesson()">
+        <span id="completeLabel">✓ Mache Fini — Pwochen Leson →</span>
+      </button>
+      <button class="btn-nav" id="btnNext" onclick="goLesson(1)"><span id="nextLabel">Pwochen</span> →</button>
+    </div>
+  </div>
+
+  <!-- CERTIFICATE -->
+  <div class="cert-screen" id="certScreen">
+    <div class="cert-box">
+      <div style="font-size:3rem;margin-bottom:1rem">🏆</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold2);margin-bottom:.5rem" id="certTitle">Felisitasyon!</div>
+      <div style="font-size:.88rem;color:var(--warm);line-height:1.7" id="certDesc">Ou fini kou 30 JOU AI konplètman! Ou se kounye a yon Ekspè AI Ayisyen sètifye.</div>
+      <div style="margin:1.5rem 0;padding:1rem;background:rgba(201,149,42,.08);border:1px solid var(--brd);border-radius:10px;font-size:.8rem;color:var(--muted)" id="certDate"></div>
+    </div>
+    <button class="btn-start" onclick="window.print()">🎓 <span id="printLabel">Enprime Sètifika</span></button>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+// ─── DATA ───────────────────────────────────────────
+var LESSONS = {"1": {"title": {"ht": "Ki sa ki AI?", "fr": "Qu'est-ce que l'IA?", "en": "What is AI?"}, "time": "15 min", "leson": {"ht": "AI se kapasite yon òdinatè pou aprann, analize, ak pran desizyon.\n\nNan Ayiti AI deja la:\n- YouTube rekòmande mizik kompa\n- Google Maps montre wout\n- Facebook montre piblisite ou renmen", "fr": "L'IA est la capacité d'un ordinateur à apprendre et décider.\n\nEn Haïti l'IA est déjà là:\n- YouTube recommande du kompa\n- Google Maps montre les routes\n- Facebook cible vos pubs", "en": "AI is a computer's ability to learn and make decisions.\n\nIn Haiti AI is already here:\n- YouTube recommends kompa\n- Google Maps shows routes\n- Facebook shows targeted ads"}, "analoji": {"ht": "Panse ak asistan ki pa dòmi, pa fatige, pa mande salè. Li travay 24/7 pou ou.", "fr": "Imaginez un assistant qui ne dort pas, ne se fatigue pas, ne demande pas de salaire. 24/7.", "en": "Think of an assistant that never sleeps, never tires, asks no salary. Works 24/7 for you."}, "egzanp": {"ht": "Jean nan Pòtoprens te chome 6 mwa. Li itilize ChatGPT pou CV li. Apre 2 semèn li jwenn travay $800/mwa.", "fr": "Jean à Port-au-Prince était au chômage 6 mois. Il a utilisé ChatGPT pour son CV. Après 2 semaines: emploi à 800$/mois.", "en": "Jean in Port-au-Prince was unemployed 6 months. Used ChatGPT for his CV. After 2 weeks: job at $800/month."}, "lajan": {"ht": ["CV ak lèt motivasyon $20-$50", "Affiliate zouti AI", "Kontni edikatif Kreyòl", "Asistans biznis ChatGPT"], "fr": ["CV et lettre motivation 20-50$", "Affiliation outils IA", "Contenu éducatif créole", "Assistance business ChatGPT"], "en": ["CV and cover letter $20-$50", "AI tools affiliate", "Creole educational content", "Business assistance ChatGPT"]}, "quiz": {"q": {"ht": "Ki sa ki pi bon defini AI?", "fr": "Meilleure définition de l'IA?", "en": "Best definition of AI?"}, "opts": {"ht": ["Yon robot", "Kapasite òdinatè pou aprann ak desizyon", "Yon jwe videyo", "Entènèt"], "fr": ["Un robot", "Capacité d'un ordinateur à apprendre et décider", "Un jeu vidéo", "Internet"], "en": ["A robot", "Computer ability to learn and decide", "A video game", "The internet"]}, "ans": 1}}, "2": {"title": {"ht": "Kijan AI aprann?", "fr": "Comment l'IA apprend?", "en": "How does AI learn?"}, "time": "18 min", "leson": {"ht": "AI aprann nan done. Chak like, chak videyo gade, chak klik — sistèm anrejistre sa.\n\nPlis done = plis presizyon.", "fr": "L'IA apprend des données. Chaque like, vidéo regardée, clic — le système enregistre.\n\nPlus de données = plus de précision.", "en": "AI learns from data. Every like, video watched, click — the system records it.\n\nMore data = more accuracy."}, "analoji": {"ht": "Tankou machann nan mache: si kliyan achte diri chak vandredi, li mete plis. AI fè sa milyon fwa pi rapid.", "fr": "Comme un vendeur au marché: si les clients achètent du riz le vendredi, il en stocke plus. L'IA fait pareil, des millions de fois plus vite.", "en": "Like a market vendor: if customers buy rice on Fridays, he stocks more. AI does this millions of times faster."}, "egzanp": {"ht": "TikTok remake ou renmen videyo komik Ayisyen. Li montre w plis. Si ou kreye nan niche sa, algoritm pouse l.", "fr": "TikTok remarque que vous aimez les vidéos haïtiennes comiques. Il en montre plus. Créez dans ce créneau, l'algorithme vous pousse.", "en": "TikTok notices you like Haitian comedy. Shows you more. Create in that niche, the algorithm pushes you."}, "lajan": {"ht": ["Kontni pou algoritm", "YouTube monetization", "TikTok affiliate", "Facebook monetize"], "fr": ["Contenu pour algorithme", "Monétisation YouTube", "Affiliation TikTok", "Facebook monétisé"], "en": ["Algorithm content", "YouTube monetization", "TikTok affiliate", "Facebook monetized"]}, "quiz": {"q": {"ht": "Ki sa ki pèmèt AI vin pi presiz?", "fr": "Qu'est-ce qui rend l'IA plus précise?", "en": "What makes AI more accurate?"}, "opts": {"ht": ["Plis pwogramason", "Plis done", "Plis kouran", "Plis moun"], "fr": ["Plus de programmation", "Plus de données", "Plus d'énergie", "Plus de personnes"], "en": ["More programming", "More data", "More power", "More people"]}, "ans": 1}}, "3": {"title": {"ht": "Ki kote AI itilize?", "fr": "Où utilise-t-on l'IA?", "en": "Where is AI used?"}, "time": "18 min", "leson": {"ht": "AI nan:\n- Bank (detekte fo tranzaksyon)\n- Lopital (analize radyografi)\n- Rezo sosyal\n- E-commerce\n\nAI pa lavni. Li prezan.", "fr": "L'IA dans:\n- Banques (détecter fraudes)\n- Hôpitaux (analyser radios)\n- Réseaux sociaux\n- E-commerce\n\nL'IA n'est pas le futur. C'est le présent.", "en": "AI in:\n- Banks (detect fraud)\n- Hospitals (analyze X-rays)\n- Social media\n- E-commerce\n\nAI is not the future. It's the present."}, "analoji": {"ht": "Tankou elektrisite. Moun ki te konprann li te bati biznis. AI se nouvo elektrisite dijital la.", "fr": "Comme l'électricité. Ceux qui la comprenaient ont bâti des entreprises. L'IA est la nouvelle électricité.", "en": "Like electricity. Those who understood it built businesses. AI is the new electricity."}, "egzanp": {"ht": "Restoran Pétion-Ville itilize chatbot pou kòmand, kestyon. Ekonomize 4 èdtan/jou.", "fr": "Restaurant Pétion-Ville utilise chatbot pour commandes, questions. 4h économisées/jour.", "en": "Pétion-Ville restaurant uses chatbot for orders, questions. Saves 4 hours/day."}, "lajan": {"ht": ["Chatbot pou restoran $200-$500", "Otomatizasyon klinik", "Konsiltasyon dijital", "Analiz mache"], "fr": ["Chatbot restaurant 200-500$", "Automatisation clinique", "Consultation numérique", "Analyse marché"], "en": ["Restaurant chatbot $200-$500", "Clinic automation", "Digital consulting", "Market analysis"]}, "quiz": {"q": {"ht": "Ki domèn AI pa itilize kounye a?", "fr": "Domaine où l'IA n'est pas utilisée?", "en": "Field where AI is NOT used?"}, "opts": {"ht": ["Bank", "Lopital", "Rezo sosyal", "Okenn — AI itilize toupatou"], "fr": ["Banques", "Hôpitaux", "Réseaux sociaux", "Aucun — l'IA est partout"], "en": ["Banks", "Hospitals", "Social media", "None — AI is everywhere"]}, "ans": 3}}, "4": {"title": {"ht": "Ki sa ki Done?", "fr": "Les Données", "en": "What is Data?"}, "time": "15 min", "leson": {"ht": "Done = enfòmasyon.\n- Lis kliyan WhatsApp\n- Email kliyan\n- Istorik acha\n\nAI manje done. Bon done = bon rezilta.", "fr": "Données = informations.\n- Liste clients WhatsApp\n- Emails clients\n- Historique achats\n\nL'IA se nourrit de données.", "en": "Data = information.\n- WhatsApp customer list\n- Customer emails\n- Purchase history\n\nAI feeds on data."}, "analoji": {"ht": "Tankou manje. Move manje = move sante. Bon manje = bon rezilta. Done se manje AI.", "fr": "Comme la nourriture. Mauvaise nourriture = mauvaise santé. Bonne = bons résultats.", "en": "Like food. Bad food = bad health. Good food = good results. Data is AI's food."}, "egzanp": {"ht": "Boutik ki konnen ki pwodwi vann plis, ki jou gen plis kliyan ka itilize AI pou optimize.", "fr": "Boutique connaissant ses meilleures ventes et jours d'affluence peut optimiser avec l'IA.", "en": "Shop knowing top products and busiest days can use AI to optimize sales."}, "lajan": {"ht": ["Analiz mache pou biznis", "Kolekte done kliyan", "Estrateji baze sou done", "Done = kapital dijital"], "fr": ["Analyse marché entreprises", "Collecte données clients", "Stratégie basée données", "Données = capital numérique"], "en": ["Business market analysis", "Customer data collection", "Data-driven strategy", "Data = digital capital"]}, "quiz": {"q": {"ht": "Ki sa done reprezante pou AI?", "fr": "Que sont les données pour l'IA?", "en": "What is data to AI?"}, "opts": {"ht": ["Pwogram", "Manje / Konbistib", "Memwa fizik", "Kouran"], "fr": ["Programme", "Nourriture / Carburant", "Mémoire physique", "Électricité"], "en": ["Program", "Food / Fuel", "Physical memory", "Electricity"]}, "ans": 1}}, "5": {"title": {"ht": "Kijan AI pran desizyon?", "fr": "Comment l'IA décide?", "en": "How does AI decide?"}, "time": "20 min", "leson": {"ht": "AI pran desizyon sou baz pwobabilite. Li pa panse. Li kalkile. Li chwazi opsyon ki gen plis chans.", "fr": "L'IA décide par probabilités. Elle ne pense pas. Elle calcule. Elle choisit l'option la plus probable.", "en": "AI decides by probability. It doesn't think. It calculates. It picks the most likely option."}, "analoji": {"ht": "Tankou machann: si lapli tonbe, lavant bese. Eksperyans + estatistik. AI fè sa ak milya done.", "fr": "Comme un commerçant: si la pluie tombe, les ventes baissent. Expérience + stats. L'IA fait ça avec des milliards.", "en": "Like a merchant: if it rains, sales drop. Experience + stats. AI does this with billions of data points."}, "egzanp": {"ht": "Antreprenè mande AI: Ki biznis gen potansyèl nan Pòtoprens? Sa ki koute $1,000 konsiltan vin gratis.", "fr": "Entrepreneur demande à l'IA: Quel business à Port-au-Prince? Ce qui coûtait 1000$ au consultant est gratuit.", "en": "Entrepreneur asks AI: Which business in Port-au-Prince? What cost $1,000 from consultant is now free."}, "lajan": {"ht": ["Plan biznis AI", "Analiz konpetisyon", "Estrateji piblisite", "Konsiltasyon dijital"], "fr": ["Plans business IA", "Analyse concurrence", "Stratégie pub", "Consultation numérique"], "en": ["AI business plans", "Competition analysis", "Ad strategy", "Digital consulting"]}, "quiz": {"q": {"ht": "Kijan AI chwazi yon repons?", "fr": "Comment l'IA choisit une réponse?", "en": "How does AI choose a response?"}, "opts": {"ht": ["Li panse tankou moun", "Li kalkile pwobabilite", "Li devine", "Li itilize chanson"], "fr": ["Elle pense comme humain", "Elle calcule les probabilités", "Elle devine", "Elle utilise des chansons"], "en": ["Thinks like human", "Calculates probabilities", "Guesses", "Uses songs"]}, "ans": 1}}, "6": {"title": {"ht": "Ki sa ki Modèl AI?", "fr": "Modèle IA", "en": "AI Model"}, "time": "20 min", "leson": {"ht": "Modèl AI = sistèm antrene sou done pou fè preddiksyon. ChatGPT, Claude, Gemini se modèl.", "fr": "Modèle IA = système entraîné sur données pour prédictions. ChatGPT, Claude, Gemini sont des modèles.", "en": "AI model = system trained on data to make predictions. ChatGPT, Claude, Gemini are models."}, "analoji": {"ht": "Tankou ekspè ki te etidye milya done. Li ba w konsèy sou tout sa li te aprann.", "fr": "Comme un expert ayant étudié des milliards de données. Il vous donne des conseils basés sur tout ça.", "en": "Like an expert who studied billions of data points. Gives advice based on everything learned."}, "egzanp": {"ht": "ChatGPT = modèl tèks. Midjourney = modèl imaj. Suno = modèl odyo. Chak gen spesyalite li.", "fr": "ChatGPT = modèle texte. Midjourney = modèle image. Suno = modèle audio. Chacun a sa spécialité.", "en": "ChatGPT = text model. Midjourney = image model. Suno = audio model. Each has its specialty."}, "lajan": {"ht": ["Chwazi bon modèl pou travay", "Vann konsiltasyon AI", "Kòmanse ak modèl gratis"], "fr": ["Choisir bon modèle par tâche", "Vendre consultations IA", "Commencer avec modèles gratuits"], "en": ["Choose right model for task", "Sell AI consulting", "Start with free models"]}, "quiz": {"q": {"ht": "Ki sa ki yon modèl AI?", "fr": "Qu'est-ce qu'un modèle IA?", "en": "What is an AI model?"}, "opts": {"ht": ["Pwogram ki chante", "Sistèm antrene pou preddiksyon", "Yon telefòn", "Yon moun"], "fr": ["Programme qui chante", "Système entraîné pour prédictions", "Un téléphone", "Un humain"], "en": ["A singing program", "System trained for predictions", "A phone", "A human"]}, "ans": 1}}, "7": {"title": {"ht": "Ki sa ki Algoritm?", "fr": "Algorithme", "en": "Algorithm"}, "time": "18 min", "leson": {"ht": "Algoritm = seri enstriksyon klè pou rezoud yon pwoblèm. YouTube, TikTok, Facebook itilize algoritm pou deside ki kontni montre w.", "fr": "Algorithme = série d'instructions claires pour résoudre un problème. YouTube, TikTok, Facebook utilisent des algorithmes.", "en": "Algorithm = clear set of instructions to solve a problem. YouTube, TikTok, Facebook use algorithms to decide what to show you."}, "analoji": {"ht": "Tankou resèt griyo: swiv chak etap, ou jwenn griyo. Algoritm se resèt AI.", "fr": "Comme une recette de griot: suivez chaque étape, vous obtenez du griot. L'algorithme est la recette de l'IA.", "en": "Like a griot recipe: follow each step, you get griot. The algorithm is AI's recipe."}, "egzanp": {"ht": "Algoritm YouTube deside ki videyo montre w. Bon videyo = algoritm pouse l bay plis moun.", "fr": "L'algorithme YouTube décide quelles vidéos montrer. Bonne vidéo = l'algorithme la pousse vers plus de personnes.", "en": "YouTube's algorithm decides what videos to show. Good video = algorithm pushes it to more people."}, "lajan": {"ht": ["Konprann algoritm = kontni viral", "Optimize rezo sosyal", "Bati odyans rapid"], "fr": ["Comprendre algorithmes = contenu viral", "Optimiser réseaux sociaux", "Construire audience rapidement"], "en": ["Understand algorithms = viral content", "Optimize social media", "Build audience fast"]}, "quiz": {"q": {"ht": "Ki egzanp pou eksplike algoritm?", "fr": "Exemple pour expliquer un algorithme?", "en": "Example to explain an algorithm?"}, "opts": {"ht": ["Yon majisyen", "Resèt manje etap pa etap", "Yon machin", "Yon rèv"], "fr": ["Un magicien", "Recette de cuisine étape par étape", "Une machine", "Un rêve"], "en": ["A magician", "Step-by-step cooking recipe", "A machine", "A dream"]}, "ans": 1}}, "8": {"title": {"ht": "Machine Learning", "fr": "Machine Learning", "en": "Machine Learning"}, "time": "22 min", "leson": {"ht": "ML = sous-kategori AI kote sistèm aprann poukont li nan done, san pwogramason espesifik pou chak sitiyasyon.", "fr": "ML = sous-catégorie IA où le système apprend seul des données, sans programmation spécifique par situation.", "en": "ML = AI subcategory where the system learns on its own from data, without specific programming per situation."}, "analoji": {"ht": "Tankou timoun ki aprann nan eksperyans. Pèsonn pa di li chak règ. Li aprann nan pratike.", "fr": "Comme un enfant apprenant par expérience. Personne ne lui dicte chaque règle. Il apprend en pratiquant.", "en": "Like a child learning from experience. No one dictates every rule. They learn by doing."}, "egzanp": {"ht": "Netflix aprann ki fim ou renmen san ou pa di l. Li obsève epi rekòmande.", "fr": "Netflix apprend vos préférences sans que vous le disiez. Il observe et recommande.", "en": "Netflix learns your preferences without being told. It observes and recommends."}, "lajan": {"ht": ["Sistèm rekòmandasyon boutik", "Analiz konpòtman kliyan", "Pwogram fidelite entelijan"], "fr": ["Système recommandation boutiques", "Analyse comportement clients", "Programme fidélité intelligent"], "en": ["Shop recommendation system", "Customer behavior analysis", "Smart loyalty program"]}, "quiz": {"q": {"ht": "Ki diferans ML ak pwogramason klasik?", "fr": "Différence ML vs programmation classique?", "en": "Difference between ML and classic programming?"}, "opts": {"ht": ["ML bezwen plis kouran", "ML aprann nan done san règ espesifik", "ML toujou pi rapid", "ML bezwen entènèt"], "fr": ["ML consomme plus d'énergie", "ML apprend des données sans règles spécifiques", "ML est toujours plus rapide", "ML nécessite Internet"], "en": ["ML needs more power", "ML learns from data without specific rules", "ML is always faster", "ML needs internet"]}, "ans": 1}}, "9": {"title": {"ht": "Deep Learning", "fr": "Deep Learning", "en": "Deep Learning"}, "time": "22 min", "leson": {"ht": "Deep Learning = sous-kategori ML ki itilize rezo neral pou modèl konplèks. ChatGPT, DALL-E, Siri tout itilize Deep Learning.", "fr": "Deep Learning = sous-catégorie ML utilisant réseaux de neurones. ChatGPT, DALL-E, Siri utilisent tous le Deep Learning.", "en": "Deep Learning = ML subcategory using neural networks. ChatGPT, DALL-E, Siri all use Deep Learning."}, "analoji": {"ht": "Tankou sèvo imen ak plizyè kouch. Chak kouch trete enfòmasyon diferan.", "fr": "Comme le cerveau humain avec plusieurs couches. Chaque couche traite l'information différemment.", "en": "Like the human brain with multiple layers. Each layer processes information differently."}, "egzanp": {"ht": "ChatGPT konprann kontèks, DALL-E kreye imaj, Siri konprann vwa — tout gras ak Deep Learning.", "fr": "ChatGPT comprend le contexte, DALL-E crée des images, Siri comprend la voix — grâce au Deep Learning.", "en": "ChatGPT understands context, DALL-E creates images, Siri understands voice — all via Deep Learning."}, "lajan": {"ht": ["Sèvis imaj AI logo", "Chatbot avanse", "Transkripson odyo"], "fr": ["Services images IA logos", "Chatbot avancé", "Transcription audio"], "en": ["AI image services logos", "Advanced chatbot", "Audio transcription"]}, "quiz": {"q": {"ht": "Ki teknoloji ChatGPT itilize?", "fr": "Quelle technologie utilise ChatGPT?", "en": "What technology does ChatGPT use?"}, "opts": {"ht": ["ML sèlman", "Deep Learning ak rezo neral", "Pwogramason klasik", "Yon moun ki reponn"], "fr": ["ML uniquement", "Deep Learning et réseaux de neurones", "Programmation classique", "Un humain qui répond"], "en": ["ML only", "Deep Learning and neural networks", "Classic programming", "A human answering"]}, "ans": 1}}, "10": {"title": {"ht": "Kreye Logo ak AI", "fr": "Créer Logo avec IA", "en": "Create Logo with AI"}, "time": "25 min", "leson": {"ht": "Aksyon! Ak AI kreye logo, menu, bann, branding konplè an 3 minit. Zouti: Canva AI, Midjourney, DALL-E.", "fr": "Action! Avec l'IA créez logo, menu, bannière, branding complet en 3 minutes. Outils: Canva IA, Midjourney, DALL-E.", "en": "Action! With AI create logos, menus, banners, full branding in 3 minutes. Tools: Canva AI, Midjourney, DALL-E."}, "analoji": {"ht": "Tankou aprann fè griyo lakay. Lè ou metriza zouti a, ou pa depann sou lòt moun.", "fr": "Comme apprendre à cuisiner chez soi. Une fois maîtrisé, vous ne dépendez plus des autres.", "en": "Like learning to cook at home. Once you master the tool, you depend on no one."}, "egzanp": {"ht": "Jèn Carrefour kreye logo pou 5 biznis katye li. $40/logo = $200 nan yon semèn.", "fr": "Jeune de Carrefour crée logos pour 5 entreprises du quartier. 40$/logo = 200$ en une semaine.", "en": "Youth from Carrefour creates logos for 5 neighborhood businesses. $40/logo = $200 in one week."}, "lajan": {"ht": ["Fiverr logo $40-$150", "Facebook Marketplace", "WhatsApp Business", "2 logo/jou = $2,000/mwa"], "fr": ["Fiverr logo 40-150$", "Facebook Marketplace", "WhatsApp Business", "2 logos/jour = 2000$/mois"], "en": ["Fiverr logo $40-$150", "Facebook Marketplace", "WhatsApp Business", "2 logos/day = $2,000/month"]}, "quiz": {"q": {"ht": "Ki zouti pou kreye logo ak AI?", "fr": "Outils pour créer logos avec IA?", "en": "Tools to create logos with AI?"}, "opts": {"ht": ["Microsoft Word", "Canva AI, Midjourney, DALL-E", "Excel", "Calculatrice"], "fr": ["Microsoft Word", "Canva IA, Midjourney, DALL-E", "Excel", "Calculatrice"], "en": ["Microsoft Word", "Canva AI, Midjourney, DALL-E", "Excel", "Calculator"]}, "ans": 1}}, "11": {"title": {"ht": "Supervised Learning", "fr": "Apprentissage Supervisé", "en": "Supervised Learning"}, "time": "20 min", "leson": {"ht": "AI aprann ak egzanp klè. Ou montre li sa ki kòrèk, sa ki pa kòrèk.", "fr": "L'IA apprend avec des exemples clairs. Vous lui montrez ce qui est correct et incorrect.", "en": "AI learns with clear examples. You show it what is correct and what is not."}, "analoji": {"ht": "Tankou pwofesè k ap montre timoun ekri lèt A. Premye fwa erè. Apre 20 fwa metrize.", "fr": "Comme un professeur montrant à écrire la lettre A. Première fois erreurs. Après 20 fois maîtrisé.", "en": "Like a teacher showing how to write letter A. First time mistakes. After 20 times mastered."}, "egzanp": {"ht": "Bank kreye modèl pou detekte fo chèk. Yo ba l mil egzanp chèk reyèl ak fo. Sistèm aprann.", "fr": "Banque crée modèle pour détecter faux chèques. On lui donne mille exemples. Le système apprend.", "en": "Bank creates model to detect fake checks. Given a thousand examples. System learns the difference."}, "lajan": {"ht": ["Anseye AI nan kous", "Fòmasyon lekòl", "Workshop AI", "Konesans = kapital"], "fr": ["Enseigner IA en cours", "Formation écoles", "Ateliers IA", "Connaissance = capital"], "en": ["Teach AI courses", "School training", "AI workshops", "Knowledge = capital"]}, "quiz": {"q": {"ht": "Ki sa Supervised Learning ye?", "fr": "Qu'est-ce que le Supervised Learning?", "en": "What is Supervised Learning?"}, "opts": {"ht": ["AI ki aprann poukont li", "AI ki aprann ak egzanp etikte", "AI ki refize aprann", "AI ki itilize videyo"], "fr": ["IA apprenant seule", "IA apprenant avec exemples étiquetés", "IA refusant d'apprendre", "IA utilisant vidéos"], "en": ["AI learning alone", "AI learning with labeled examples", "AI refusing to learn", "AI using videos"]}, "ans": 1}}, "12": {"title": {"ht": "Unsupervised Learning", "fr": "Apprentissage Non-Supervisé", "en": "Unsupervised Learning"}, "time": "20 min", "leson": {"ht": "AI pa resevwa repons pare. Li analize done epi dekouvri modèl poukont li.", "fr": "L'IA ne reçoit pas de réponses. Elle analyse et découvre des modèles par elle-même.", "en": "AI receives no answers. It analyzes data and discovers patterns on its own."}, "analoji": {"ht": "Tankou komèsan ki remake: moun ki achte diri achte lwil tou. Pèsonn pa di l sa. Li obsève.", "fr": "Comme commerçant remarquant: acheteurs de riz achètent aussi de l'huile. Personne ne lui dit. Il observe.", "en": "Like a merchant noticing: rice buyers also buy oil. No one told him. He observes."}, "egzanp": {"ht": "Boutik analize acha. AI dekouvri: kliyan ki achte telefòn achte kask 3 jou apre. Pwomosyon entelijan!", "fr": "Boutique analyse achats. L'IA découvre: acheteurs de téléphone achètent écouteurs 3 jours après. Promotion intelligente!", "en": "Shop analyzes purchases. AI discovers: phone buyers buy headphones 3 days later. Smart promotion!"}, "lajan": {"ht": ["Analiz kliyan", "Estrateji pwomosyon", "Konsiltasyon mache"], "fr": ["Analyse clients", "Stratégie promotions", "Consultation marché"], "en": ["Customer analysis", "Promotion strategy", "Market consulting"]}, "quiz": {"q": {"ht": "Ki karakteristik Unsupervised Learning?", "fr": "Caractéristique de l'Unsupervised Learning?", "en": "Characteristic of Unsupervised Learning?"}, "opts": {"ht": ["AI resevwa repons", "AI dekouvri modèl san etikèt", "AI rezoud kalkil", "AI pa itilize done"], "fr": ["IA reçoit réponses", "IA découvre modèles sans étiquettes", "IA résout calculs", "IA n'utilise pas données"], "en": ["AI receives answers", "AI discovers patterns without labels", "AI solves calculations", "AI doesn't use data"]}, "ans": 1}}, "13": {"title": {"ht": "Reinforcement Learning", "fr": "Apprentissage par Renforcement", "en": "Reinforcement Learning"}, "time": "22 min", "leson": {"ht": "AI aprann nan erè. Li teste, wè rezilta, ajiste. Chak erè vin amelyorasyon.", "fr": "L'IA apprend des erreurs. Elle teste, voit, s'ajuste. Chaque erreur devient amélioration.", "en": "AI learns from mistakes. Tests, sees results, adjusts. Every mistake becomes improvement."}, "analoji": {"ht": "Tankou timoun aprann monte bisiklèt. Li tonbe 10 fwa. Apre sa li metrize.", "fr": "Comme enfant apprenant à vélo. Il tombe 10 fois. Ensuite il maîtrise.", "en": "Like a child learning to bike. Falls 10 times. Then masters it."}, "egzanp": {"ht": "Biznis teste 3 piblisite Facebook. AI remake kiyès ki pi bon. Li optimize otomatikman.", "fr": "Entreprise teste 3 pubs Facebook. L'IA voit laquelle est meilleure. Elle optimise automatiquement.", "en": "Business tests 3 Facebook ads. AI sees which works best. It optimizes automatically."}, "lajan": {"ht": ["Optimize piblisite kliyan", "Jesyon ads", "Marketing AI"], "fr": ["Optimiser pubs clients", "Gestion annonces", "Marketing IA"], "en": ["Optimize client ads", "Ad management", "AI marketing"]}, "quiz": {"q": {"ht": "Kijan Reinforcement Learning travay?", "fr": "Comment fonctionne le Reinforcement Learning?", "en": "How does Reinforcement Learning work?"}, "opts": {"ht": ["Li aprann nan liv", "Li aprann nan erè ak rekonpans", "Li devine", "Li imite moun"], "fr": ["Il apprend dans livres", "Il apprend erreurs et récompenses", "Il devine", "Il imite humains"], "en": ["It learns from books", "It learns from mistakes and rewards", "It guesses", "It imitates humans"]}, "ans": 1}}, "14": {"title": {"ht": "Transfer Learning", "fr": "Apprentissage par Transfert", "en": "Transfer Learning"}, "time": "18 min", "leson": {"ht": "Transfer Learning: AI itilize sa li deja konnen pou aprann nouvo bagay pi rapid.", "fr": "Transfer Learning: l'IA utilise ses connaissances pour apprendre de nouvelles choses plus vite.", "en": "Transfer Learning: AI uses existing knowledge to learn new things faster."}, "analoji": {"ht": "Si ou deja konn Franse, Espayòl vin pi fasil. Gen mo ki sanble.", "fr": "Si vous connaissez le français, l'espagnol est plus facile. Des mots se ressemblent.", "en": "If you know French, Spanish is easier. Similar words exist."}, "egzanp": {"ht": "Moun ki metrize ChatGPT aprann Claude pi rapid. Li pa kòmanse nan zewo.", "fr": "Quelqu'un maîtrisant ChatGPT apprend Claude plus vite. Il ne repart pas de zéro.", "en": "ChatGPT expert learns Claude faster. They don't start from zero."}, "lajan": {"ht": ["Adapte sèvis rapid", "Lanse pwodwi pi vit", "Rete devan konpetisyon"], "fr": ["Adapter services vite", "Lancer produits plus vite", "Rester devant concurrence"], "en": ["Adapt services fast", "Launch products faster", "Stay ahead of competition"]}, "quiz": {"q": {"ht": "Ki avantaj Transfer Learning?", "fr": "Avantage Transfer Learning?", "en": "Advantage of Transfer Learning?"}, "opts": {"ht": ["Li pi chè", "Ou aprann nouvo bagay pi rapid", "Li bezwen plis done", "Li toujou pi lent"], "fr": ["C'est plus cher", "On apprend plus vite", "Nécessite plus données", "Toujours plus lent"], "en": ["It's more expensive", "You learn faster", "Needs more data", "Always slower"]}, "ans": 1}}, "15": {"title": {"ht": "Revni Pasif ak AI", "fr": "Revenus Passifs IA", "en": "Passive Income with AI"}, "time": "30 min", "leson": {"ht": "Revni pasif = lajan ki antre menm lè ou pa travay. AI pèmèt sa paske li otomatik.\n\n5 FASON:\n1. Affiliate marketing\n2. Mini-kous Kreyòl\n3. Chatbot / CV otomatik\n4. Kontni monetize\n5. AI consulting", "fr": "Revenu passif = argent entrant même sans travailler. L'IA le permet car automatique.\n\n5 FAÇONS:\n1. Marketing affiliation\n2. Mini-cours créole\n3. Chatbot / CV automatique\n4. Contenu monétisé\n5. Consulting IA", "en": "Passive income = money coming in even without working. AI enables this.\n\n5 WAYS:\n1. Affiliate marketing\n2. Creole mini-course\n3. Chatbot / CV automation\n4. Monetized content\n5. AI consulting"}, "analoji": {"ht": "Tankou pyebwa fig. Frui a ap donnen chak ane san replante. Sistèm AI travay menm jan.", "fr": "Comme un figuier. Il donne des fruits chaque année sans replanter. Les systèmes IA pareil.", "en": "Like a fig tree. Bears fruit every year without replanting. AI systems work the same way."}, "egzanp": {"ht": "Samuel kreye PDF 10 paj sou AI. Li vann $17. 200 moun achte = $3,400 san travay anplis.", "fr": "Samuel crée PDF 10 pages sur IA. Il vend 17$. 200 personnes achètent = 3400$ sans travail supplémentaire.", "en": "Samuel creates 10-page AI PDF. Sells for $17. 200 people buy = $3,400 without extra work."}, "lajan": {"ht": ["Mini-kous $47/jou = $940/mwa", "E-book Kreyòl AI", "Prompt template pake", "Coaching mensyèl"], "fr": ["Mini-cours 47$/jour = 940$/mois", "E-book IA créole", "Pack templates prompts", "Coaching mensuel"], "en": ["Mini-course $47/day = $940/month", "Creole AI e-book", "Prompt template pack", "Monthly coaching"]}, "quiz": {"q": {"ht": "Ki sa revni pasif vle di?", "fr": "Que signifie revenu passif?", "en": "What does passive income mean?"}, "opts": {"ht": ["Lajan pa èdtan", "Lajan ki antre san travay dirèk", "Lajan nan bank sèlman", "Salè gouvènman"], "fr": ["Argent à l'heure", "Argent entrant sans travailler directement", "Argent banque seulement", "Salaire gouvernement"], "en": ["Hourly money", "Money coming in without working directly", "Bank money only", "Government salary"]}, "ans": 1}}, "16": {"title": {"ht": "NLP — Ekri pou Lajan", "fr": "NLP — Écrire pour Gagner", "en": "NLP — Write to Earn"}, "time": "25 min", "leson": {"ht": "NLP pèmèt AI konprann ak ekri lang moun. ChatGPT, tradiksyon otomatik se NLP.", "fr": "NLP permet à l'IA de comprendre et écrire comme un humain. ChatGPT, traduction automatique = NLP.", "en": "NLP lets AI understand and write human language. ChatGPT, auto-translation = NLP."}, "analoji": {"ht": "Tankou entèprèt ki pa janm fatige. Li tradui, ekri, reponn 24/7.", "fr": "Comme interprète ne se fatiguant jamais. Il traduit, écrit, répond 24h/24.", "en": "Like an interpreter who never tires. Translates, writes, responds 24/7."}, "egzanp": {"ht": "Redaktè Pòtoprens itilize ChatGPT pou 10 atik/jou. $30 chak = $300/jou.", "fr": "Rédacteur Port-au-Prince utilise ChatGPT pour 10 articles/jour. 30$ chacun = 300$/jour.", "en": "Writer in Port-au-Prince uses ChatGPT for 10 articles/day. $30 each = $300/day."}, "lajan": {"ht": ["Rédaction $30-$100/atik", "Tradiksyon Kreyòl-Angle", "Chatbot sèvis kliyan", "Kopi piblisite"], "fr": ["Rédaction 30-100$/article", "Traduction créole-anglais", "Chatbot service client", "Copywriting"], "en": ["Writing $30-$100/article", "Creole-English translation", "Customer service chatbot", "Ad copywriting"]}, "quiz": {"q": {"ht": "Ki teknoloji ChatGPT itilize pou tèks?", "fr": "Technologie de ChatGPT pour le texte?", "en": "ChatGPT technology for text?"}, "opts": {"ht": ["Computer Vision", "NLP", "Reinforcement Learning", "Supervised sèlman"], "fr": ["Computer Vision", "NLP", "Reinforcement Learning", "Supervisé seulement"], "en": ["Computer Vision", "NLP", "Reinforcement Learning", "Supervised only"]}, "ans": 1}}, "17": {"title": {"ht": "Computer Vision", "fr": "Computer Vision", "en": "Computer Vision"}, "time": "22 min", "leson": {"ht": "Computer Vision pèmèt AI wè ak analize imaj ak videyo. Li rekonèt figi, objè, tèks.", "fr": "Computer Vision permet à l'IA de voir et analyser images et vidéos. Elle reconnaît visages, objets, textes.", "en": "Computer Vision lets AI see and analyze images and videos. Recognizes faces, objects, text."}, "analoji": {"ht": "Tankou moun ki wè mil foto nan yon segonn epi idantifye sa ladan yo.", "fr": "Comme quelqu'un voyant mille photos en une seconde et identifiant leur contenu.", "en": "Like someone seeing a thousand photos in one second and identifying their contents."}, "egzanp": {"ht": "Fotograf Ayisyen itilize AI pou retire fon imaj, amelyore foto. Ekonomize 3 èdtan/jou.", "fr": "Photographe haïtien utilise IA pour supprimer fonds, améliorer photos. 3h économisées/jour.", "en": "Haitian photographer uses AI to remove backgrounds, enhance photos. Saves 3 hours/day."}, "lajan": {"ht": ["Editasyon foto $15-$50", "Retire fon imaj", "Grafik pou biznis", "Restourasyon foto"], "fr": ["Édition photo 15-50$", "Suppression fond image", "Graphiques entreprises", "Restauration photos"], "en": ["Photo editing $15-$50", "Background removal", "Business graphics", "Photo restoration"]}, "quiz": {"q": {"ht": "Computer Vision fè kisa?", "fr": "Que fait Computer Vision?", "en": "What does Computer Vision do?"}, "opts": {"ht": ["Tradui tèks sèlman", "Rekonèt objè, figi, tèks nan imaj", "Ekri imel", "Ranje Excel"], "fr": ["Traduire texte seulement", "Reconnaître objets, visages, textes dans images", "Écrire emails", "Corriger Excel"], "en": ["Translate text only", "Recognize objects, faces, text in images", "Write emails", "Fix Excel"]}, "ans": 1}}, "18": {"title": {"ht": "AI Audio — Vwa Atifisyèl", "fr": "IA Audio — Voix Artificielle", "en": "AI Audio — Artificial Voice"}, "time": "20 min", "leson": {"ht": "AI Audio kreye vwa atifisyèl, tradui odyo, klonan vwa reyèl. Zouti: ElevenLabs, Suno, Udio.", "fr": "IA Audio crée voix artificielles, traduit audio, clone voix réelles. Outils: ElevenLabs, Suno, Udio.", "en": "AI Audio creates artificial voices, translates audio, clones real voices. Tools: ElevenLabs, Suno, Udio."}, "analoji": {"ht": "Tankou studio anrejistreman gratis. Ou ekri tèks, AI pale.", "fr": "Comme studio d'enregistrement gratuit. Vous écrivez le texte, l'IA parle.", "en": "Like a free recording studio. You write text, AI speaks."}, "egzanp": {"ht": "Kreayatè Ayisyen fè podcast Kreyòl ak vwa AI. Monetize sou Spotify. $500/mwa san mikwofòn.", "fr": "Créateur haïtien fait podcast créole avec voix IA. Monétisé sur Spotify. 500$/mois sans micro.", "en": "Haitian creator makes Creole podcast with AI voice. Monetized on Spotify. $500/month without mic."}, "lajan": {"ht": ["Voiceover $50-$200", "Doublaj", "Mizik AI Suno", "Podcast monetize"], "fr": ["Voix off 50-200$", "Doublage", "Musique IA Suno", "Podcast monétisé"], "en": ["Voiceover $50-$200", "Dubbing", "AI music Suno", "Monetized podcast"]}, "quiz": {"q": {"ht": "Ki zouti pou vwa AI?", "fr": "Outils pour voix IA?", "en": "Tools for AI voice?"}, "opts": {"ht": ["Microsoft Word", "ElevenLabs, Suno, Udio", "Excel", "Google Maps"], "fr": ["Microsoft Word", "ElevenLabs, Suno, Udio", "Excel", "Google Maps"], "en": ["Microsoft Word", "ElevenLabs, Suno, Udio", "Excel", "Google Maps"]}, "ans": 1}}, "19": {"title": {"ht": "AI Video — Viral + Revni", "fr": "IA Vidéo — Viral + Revenus", "en": "AI Video — Viral + Revenue"}, "time": "25 min", "leson": {"ht": "AI Video kreye videyo san kamera, anime tèks, montaj otomatik. Zouti: Runway, Pika, HeyGen.", "fr": "IA Vidéo crée vidéos sans caméra, anime texte, montage auto. Outils: Runway, Pika, HeyGen.", "en": "AI Video creates videos without camera, animates text, auto-editing. Tools: Runway, Pika, HeyGen."}, "analoji": {"ht": "Tankou stidyo Hollywood nan yon telefòn. Ou ekri script, AI fè videyo.", "fr": "Comme studio Hollywood dans un téléphone. Vous écrivez le script, l'IA fait la vidéo.", "en": "Like a Hollywood studio in your phone. Write the script, AI makes the video."}, "egzanp": {"ht": "Kreayatè fè videyo edikasyon ak AI sou YouTube. 100,000 abòne nan 6 mwa. $2,000/mwa.", "fr": "Créateur fait vidéos éducatives IA sur YouTube. 100 000 abonnés en 6 mois. 2000$/mois.", "en": "Creator makes AI educational videos on YouTube. 100,000 subscribers in 6 months. $2,000/month."}, "lajan": {"ht": ["YouTube monetization", "TikTok affiliate", "Videyo biznis $200-$500", "Kous videyo Kreyòl"], "fr": ["Monétisation YouTube", "Affiliation TikTok", "Vidéos entreprises 200-500$", "Cours vidéo créole"], "en": ["YouTube monetization", "TikTok affiliate", "Business videos $200-$500", "Creole video courses"]}, "quiz": {"q": {"ht": "Zouti pou videyo AI?", "fr": "Outils vidéo IA?", "en": "AI video tools?"}, "opts": {"ht": ["Canva sèlman", "Runway, Pika, HeyGen", "WhatsApp", "Facebook sèlman"], "fr": ["Canva seulement", "Runway, Pika, HeyGen", "WhatsApp", "Facebook seulement"], "en": ["Canva only", "Runway, Pika, HeyGen", "WhatsApp", "Facebook only"]}, "ans": 1}}, "20": {"title": {"ht": "Chatbot — Vann 24/7", "fr": "Chatbot — Vendre 24/7", "en": "Chatbot — Sell 24/7"}, "time": "30 min", "leson": {"ht": "Chatbot = asistan dijital ki reponn kliyan otomatikman. Pa dòmi, pa fatige, pa mande salè.", "fr": "Chatbot = assistant numérique répondant automatiquement. Ne dort pas, ne se fatigue pas, ne demande pas de salaire.", "en": "Chatbot = digital assistant that automatically responds. Doesn't sleep, tire, or ask for salary."}, "analoji": {"ht": "Tankou anplwaye ki travay 24/7 gratis. Yon fwa enstale, li okipe kliyan pou ou.", "fr": "Comme employé travaillant 24/7 gratuitement. Une fois installé, il gère les clients.", "en": "Like an employee working 24/7 for free. Once installed, handles customers for you."}, "egzanp": {"ht": "Salèn Ayisyen enstale chatbot WhatsApp. Reponn kestyon pri, pran randevou. 5 èdtan ekonomize/jou.", "fr": "Salon haïtien installe chatbot WhatsApp. Répond questions prix, prend RDV. 5h économisées/jour.", "en": "Haitian salon installs WhatsApp chatbot. Answers price questions, books appointments. 5 hours saved/day."}, "lajan": {"ht": ["Chatbot WhatsApp $200-$500", "Chatbot sit wèb $300-$800", "Chatbot Facebook Messenger", "Mant chatbot $100/mwa"], "fr": ["Chatbot WhatsApp 200-500$", "Chatbot site web 300-800$", "Chatbot Facebook Messenger", "Maintenance chatbot 100$/mois"], "en": ["WhatsApp chatbot $200-$500", "Website chatbot $300-$800", "Facebook Messenger chatbot", "Chatbot maintenance $100/month"]}, "quiz": {"q": {"ht": "Ki pi gwo avantaj chatbot?", "fr": "Plus grand avantage chatbot?", "en": "Biggest chatbot advantage?"}, "opts": {"ht": ["Li pi chè pase anplwaye", "Li reponn 24/7 san salè", "Li bezwen entènèt", "Li remplace tout moun"], "fr": ["Il coûte plus qu'employé", "Il répond 24/7 sans salaire", "Il nécessite Internet", "Il remplace tout le monde"], "en": ["Costs more than employee", "Responds 24/7 without salary", "Needs internet", "Replaces everyone"]}, "ans": 1}}, "21": {"title": {"ht": "Dataset", "fr": "Dataset", "en": "Dataset"}, "time": "20 min", "leson": {"ht": "Dataset = koleksyon done òganize pou antrene AI. Plis done = pi bon modèl.", "fr": "Dataset = collection de données organisées pour entraîner l'IA. Plus données = meilleur modèle.", "en": "Dataset = organized data collection to train AI. More data = better model."}, "analoji": {"ht": "Tankou bibliyotèk pou etidyan. Plis liv = plis konesans.", "fr": "Comme bibliothèque pour étudiant. Plus de livres = plus de connaissances.", "en": "Like a library for a student. More books = more knowledge."}, "egzanp": {"ht": "Dataset Kreyòl Ayisyen va pèmèt kreye AI ki konprann lang nou. Opòtinite istorik!", "fr": "Dataset créole haïtien permettrait de créer IA comprenant notre langue. Opportunité historique!", "en": "Haitian Creole dataset would enable AI understanding our language. Historic opportunity!"}, "lajan": {"ht": ["Kolekte vann dataset Kreyòl", "Anotasyon done $15-$30/è", "Konsiltasyon done"], "fr": ["Collecter vendre datasets créoles", "Annotation données 15-30$/h", "Consultation données"], "en": ["Collect sell Creole datasets", "Data annotation $15-$30/hour", "Data consulting"]}, "quiz": {"q": {"ht": "Poukisa dataset enpòtan?", "fr": "Importance des datasets?", "en": "Why are datasets important?"}, "opts": {"ht": ["Fè entènèt rapid", "Plis done = pi bon modèl", "Remplace kode", "Ekonomize kouran"], "fr": ["Accélère Internet", "Plus données = meilleur modèle", "Remplace programmation", "Économise énergie"], "en": ["Speeds up internet", "More data = better model", "Replaces coding", "Saves electricity"]}, "ans": 1}}, "22": {"title": {"ht": "Prompt Engineering", "fr": "Prompt Engineering", "en": "Prompt Engineering"}, "time": "30 min", "leson": {"ht": "Prompt Engineering = lespri pou ba AI bon enstriksyon pou jwenn egzakteman sa ou vle. Konesans ki ka fè ou rich.", "fr": "Prompt Engineering = art de donner bonnes instructions à l'IA pour obtenir exactement ce qu'on veut.", "en": "Prompt Engineering = skill of giving AI good instructions to get exactly what you want."}, "analoji": {"ht": "Tankou chèf ki ba kizinye egzak enstriksyon. Pi kler ou ye, pi bon rezilta.", "fr": "Comme chef donnant instructions précises. Plus vous êtes clair, meilleurs les résultats.", "en": "Like a chef giving precise instructions. Clearer you are, better the results."}, "egzanp": {"ht": "Prompt Engineer nan NY touche $150,000-$300,000/ane. Kòmanse $50-$200/gig sou Fiverr.", "fr": "Prompt Engineer à NY gagne 150 000-300 000$/an. Commencez à 50-200$/mission sur Fiverr.", "en": "Prompt Engineer in NY earns $150,000-$300,000/year. Start at $50-$200/gig on Fiverr."}, "lajan": {"ht": ["Vann prompt pake $20-$200", "Konsiltasyon AI $100-$500/è", "Kous Prompt Engineering", "Freelance"], "fr": ["Vendre packs prompts 20-200$", "Consulting IA 100-500$/h", "Cours Prompt Engineering", "Freelance"], "en": ["Sell prompt packs $20-$200", "AI consulting $100-$500/h", "Prompt Engineering courses", "Freelancing"]}, "quiz": {"q": {"ht": "Ki avantaj bon prompt?", "fr": "Avantage d'un bon prompt?", "en": "Advantage of a good prompt?"}, "opts": {"ht": ["Rezilta plis presiz", "Ekonomize kouran", "Fè entènèt rapid", "Kreye modèl"], "fr": ["Résultats plus précis", "Économiser énergie", "Accélérer Internet", "Créer modèle"], "en": ["More precise results", "Save electricity", "Speed up internet", "Create model"]}, "ans": 0}}, "23": {"title": {"ht": "Fòmil CRAFT", "fr": "Formule CRAFT", "en": "CRAFT Formula"}, "time": "25 min", "leson": {"ht": "Fòmil CRAFT:\nC - Kontèks\nR - Wòl\nA - Aksyon\nF - Fòma\nT - Ton\n\nPi kler ou ye, pi bon rezilta AI a.", "fr": "Formule CRAFT:\nC - Contexte\nR - Rôle\nA - Action\nF - Format\nT - Ton\n\nPlus vous êtes précis, meilleurs les résultats.", "en": "CRAFT Formula:\nC - Context\nR - Role\nA - Action\nF - Format\nT - Tone\n\nClearer you are, better the AI results."}, "analoji": {"ht": "Tankou kòd sekrè pou kominike ak AI pafètman. Metrize fòmil la, vin dominan.", "fr": "Comme code secret pour communiquer parfaitement avec l'IA. Maîtrisez la formule, devenez dominant.", "en": "Like a secret code for perfect AI communication. Master the formula, become dominant."}, "egzanp": {"ht": "Moun ki itilize CRAFT jwenn rezilta 10x pi bon pase moun ki tape: ede m.", "fr": "Quelqu'un utilisant CRAFT obtient 10x de meilleurs résultats que quelqu'un tapant: aide-moi.", "en": "Someone using CRAFT gets 10x better results than someone who just types: help me."}, "lajan": {"ht": ["Vann prompt template", "Fòmasyon Prompt Engineering", "Asistan AI pèsonalize", "Kous online"], "fr": ["Vendre templates prompts", "Formation Prompt Engineering", "Assistant IA personnalisé", "Cours en ligne"], "en": ["Sell prompt templates", "Prompt Engineering training", "Personalized AI assistant", "Online courses"]}, "quiz": {"q": {"ht": "Nan CRAFT, R = ?", "fr": "Dans CRAFT, R = ?", "en": "In CRAFT, R = ?"}, "opts": {"ht": ["Reponn", "Wòl", "Rechèch", "Rezilta"], "fr": ["Réponse", "Rôle", "Recherche", "Résultat"], "en": ["Reply", "Role", "Research", "Result"]}, "ans": 1}}, "24": {"title": {"ht": "Ki sa ki LLM?", "fr": "Qu'est-ce qu'un LLM?", "en": "What is a LLM?"}, "time": "22 min", "leson": {"ht": "LLM = Large Language Model. Modèl AI trè gwo antrene sou milya tèks. ChatGPT, Claude, Gemini se LLM.", "fr": "LLM = Grand Modèle de Langage. Modèle IA très grand entraîné sur des milliards de textes. ChatGPT, Claude, Gemini sont des LLM.", "en": "LLM = Large Language Model. Very large AI model trained on billions of texts. ChatGPT, Claude, Gemini are LLMs."}, "analoji": {"ht": "Tankou bibliyotèk ki li tout liv ki ekri epi reponn nenpòt kestyon.", "fr": "Comme bibliothèque ayant lu tous les livres jamais écrits et pouvant répondre à toute question.", "en": "Like a library that read every book ever written and can answer any question."}, "egzanp": {"ht": "Claude (Anthropic), GPT-4 (OpenAI), Gemini (Google): LLM pi popilè. Chak gen fòs ak feblès.", "fr": "Claude (Anthropic), GPT-4 (OpenAI), Gemini (Google): les LLM les plus populaires. Chacun a ses forces.", "en": "Claude (Anthropic), GPT-4 (OpenAI), Gemini (Google): most popular LLMs. Each has strengths."}, "lajan": {"ht": ["Tès diferan LLM", "Chwazi bon LLM pa travay", "Vann konsiltasyon LLM", "Aplikasyon LLM API"], "fr": ["Tester différents LLM", "Choisir bon LLM par tâche", "Vendre consultations LLM", "Applications API LLM"], "en": ["Test different LLMs", "Choose right LLM per task", "Sell LLM consulting", "LLM API applications"]}, "quiz": {"q": {"ht": "Ki egzanp LLM?", "fr": "Exemple de LLM?", "en": "Example of an LLM?"}, "opts": {"ht": ["Microsoft Excel", "Claude, ChatGPT, Gemini", "Google Maps", "Facebook"], "fr": ["Microsoft Excel", "Claude, ChatGPT, Gemini", "Google Maps", "Facebook"], "en": ["Microsoft Excel", "Claude, ChatGPT, Gemini", "Google Maps", "Facebook"]}, "ans": 1}}, "25": {"title": {"ht": "Estrateji Lajan Masiv", "fr": "Stratégie Revenus Massifs", "en": "Massive Revenue Strategy"}, "time": "30 min", "leson": {"ht": "5 NIVO REVNI:\n1. Sèvis $100-$1,000/mwa\n2. Kontni $500-$5,000/mwa\n3. Pwodwi $1,000-$10,000/mwa\n4. Agency $5,000-$50,000/mwa\n5. SaaS $10,000+/mwa", "fr": "5 NIVEAUX DE REVENUS:\n1. Services 100-1000$/mois\n2. Contenu 500-5000$/mois\n3. Produits 1000-10000$/mois\n4. Agence 5000-50000$/mois\n5. SaaS 10000+$/mois", "en": "5 INCOME LEVELS:\n1. Services $100-$1,000/month\n2. Content $500-$5,000/month\n3. Products $1,000-$10,000/month\n4. Agency $5,000-$50,000/month\n5. SaaS $10,000+/month"}, "analoji": {"ht": "Tankou piramid. Ou kòmanse anba, monte pi wo avèk tan.", "fr": "Comme une pyramide. Vous commencez en bas, montez avec le temps.", "en": "Like a pyramid. Start at the bottom, climb higher over time."}, "egzanp": {"ht": "Marie kòmanse ak logo ($200/mwa). 6 mwa: kous ($2,000/mwa). 1 an: agency ($10,000/mwa).", "fr": "Marie commence avec logos (200$/mois). 6 mois: cours (2000$/mois). 1 an: agence (10 000$/mois).", "en": "Marie starts with logos ($200/month). 6 months: course ($2,000/month). 1 year: agency ($10,000/month)."}, "lajan": {"ht": ["Kòmanse nivo 1 imedyatman", "Bati pòtfolyo", "Sèvis -> Pwodwi", "Agency lè ou pare"], "fr": ["Commencer niveau 1 immédiatement", "Construire portfolio", "Services -> Produits", "Agence quand prêt"], "en": ["Start level 1 immediately", "Build portfolio", "Services -> Products", "Agency when ready"]}, "quiz": {"q": {"ht": "Ki premye nivo pou kòmanse?", "fr": "Premier niveau pour commencer?", "en": "First level to start?"}, "opts": {"ht": ["SaaS", "Agency", "Sèvis (Logo, CV, Chatbot)", "Investissement"], "fr": ["SaaS", "Agence", "Services (Logo, CV, Chatbot)", "Investissement"], "en": ["SaaS", "Agency", "Services (Logo, CV, Chatbot)", "Investment"]}, "ans": 2}}, "26": {"title": {"ht": "AI nan Travay", "fr": "IA au Travail", "en": "AI at Work"}, "time": "20 min", "leson": {"ht": "AI ap chanje mache travay la. Kèk travay pral disparèt. Men plis travay kreye pou moun ki itilize AI.", "fr": "L'IA change le marché du travail. Certains emplois disparaîtront. Mais plus d'emplois créés pour ceux utilisant l'IA.", "en": "AI is changing the job market. Some jobs will disappear. But more jobs created for those using AI."}, "analoji": {"ht": "Tankou machin endistryèl yo. Yo retire kèk travay men kreye plis travay pi peye.", "fr": "Comme les machines industrielles. Elles ont supprimé certains emplois mais créé de mieux payés.", "en": "Like industrial machines. They removed some jobs but created better-paying ones."}, "egzanp": {"ht": "Editè ki itilize AI ekri 3x plis kontni. Kontab ki itilize AI trete 10x plis kliyan.", "fr": "Éditeur utilisant IA écrit 3x plus de contenu. Comptable utilisant IA traite 10x plus de clients.", "en": "Editor using AI writes 3x more content. Accountant using AI handles 10x more clients."}, "lajan": {"ht": ["Mete AI nan travay ou", "Vin pi produktif", "Mande ogmantasyon", "Ofri sèvis AI nan konpayi ou"], "fr": ["Intégrer IA dans votre travail", "Devenir plus productif", "Demander augmentation", "Offrir services IA dans entreprise"], "en": ["Add AI to your work", "Become more productive", "Ask for a raise", "Offer AI services in company"]}, "quiz": {"q": {"ht": "Pi bon estrateji pou fè fas ak AI nan travay?", "fr": "Meilleure stratégie face à l'IA au travail?", "en": "Best strategy facing AI at work?"}, "opts": {"ht": ["Ignore AI", "Itilize AI pou vin pi produktif", "Kite travay ou", "Blame AI"], "fr": ["Ignorer l'IA", "Utiliser IA pour être plus productif", "Quitter son emploi", "Blâmer l'IA"], "en": ["Ignore AI", "Use AI to become more productive", "Quit your job", "Blame AI"]}, "ans": 1}}, "27": {"title": {"ht": "AI pou Aprann", "fr": "IA pour Apprendre", "en": "AI for Learning"}, "time": "20 min", "leson": {"ht": "AI personalize aprantisaj pou chak moun. Zouti: Khan Academy AI, Duolingo, Coursera AI.", "fr": "L'IA personnalise l'apprentissage pour chacun. Outils: Khan Academy IA, Duolingo, Coursera IA.", "en": "AI personalizes learning for each person. Tools: Khan Academy AI, Duolingo, Coursera AI."}, "analoji": {"ht": "Tankou pwofesè prive ki adapte leson pou ou spesifikman. Pa gen klas. Se ou sèlman.", "fr": "Comme tuteur privé adaptant les cours spécialement pour vous. Pas de classe. Juste vous.", "en": "Like a private tutor adapting lessons specifically for you. No class. Just you."}, "egzanp": {"ht": "Etidyan Ayisyen aprann Python ak ChatGPT. Nan 3 mwa li jwenn travay freelance $500/mwa.", "fr": "Étudiant haïtien apprend Python avec ChatGPT. En 3 mois il trouve travail freelance 500$/mois.", "en": "Haitian student learns Python with ChatGPT. In 3 months finds freelance work at $500/month."}, "lajan": {"ht": ["Aprann Python pou freelance", "Kous personalize", "Vann mentor AI", "Platfòm aprantisaj"], "fr": ["Apprendre Python pour freelance", "Cours personnalisés", "Vendre mentorat IA", "Plateforme d'apprentissage"], "en": ["Learn Python for freelancing", "Personalized courses", "Sell AI mentoring", "Learning platform"]}, "quiz": {"q": {"ht": "Zouti pou aprann ak AI?", "fr": "Outils pour apprendre avec IA?", "en": "Tools to learn with AI?"}, "opts": {"ht": ["Televizyon sèlman", "Khan Academy AI, Duolingo, ChatGPT", "Liv sèlman", "Radyo"], "fr": ["Télévision seulement", "Khan Academy IA, Duolingo, ChatGPT", "Livres seulement", "Radio"], "en": ["Television only", "Khan Academy AI, Duolingo, ChatGPT", "Books only", "Radio"]}, "ans": 1}}, "28": {"title": {"ht": "AI pou Kreyativite", "fr": "IA pour la Créativité", "en": "AI for Creativity"}, "time": "22 min", "leson": {"ht": "AI ka ede kreye mizik, imaj, tèks, videyo. Men moun ki gen vizyon toujou pi enpòtan pase AI.", "fr": "L'IA peut aider à créer musique, images, textes, vidéos. Mais les personnes avec vision restent plus importantes.", "en": "AI can help create music, images, text, videos. But people with vision remain more important than AI."}, "analoji": {"ht": "Tankou pinso pou atis. Pinso pa kreye. Atis la kreye. AI se nouvo pinso.", "fr": "Comme pinceau pour artiste. Le pinceau ne crée pas. L'artiste crée. L'IA est le nouveau pinceau.", "en": "Like a paintbrush for an artist. The brush doesn't create. The artist creates. AI is the new brush."}, "egzanp": {"ht": "Suno kreye mizik Ayisyen an segonn. Men se ou ki mete emosyon ak sans kiltirèl ladan.", "fr": "Suno crée de la musique haïtienne en secondes. Mais c'est vous qui y mettez émotion et sens culturel.", "en": "Suno creates Haitian music in seconds. But it's you who adds emotion and cultural meaning."}, "lajan": {"ht": ["Mizik Suno monetize", "Imaj Midjourney NFT", "Istwa ak AI", "Prezantasyon pwofesyonèl"], "fr": ["Musique Suno monétisée", "Images Midjourney NFT", "Histoires avec IA", "Présentations professionnelles"], "en": ["Suno music monetized", "Midjourney images NFT", "Stories with AI", "Professional presentations"]}, "quiz": {"q": {"ht": "Ki limit AI nan kreyativite?", "fr": "Limite de l'IA en créativité?", "en": "AI limit in creativity?"}, "opts": {"ht": ["AI pa ka kreye mizik", "AI pa gen emosyon imen", "AI pa ka ekri", "AI pa ka fè imaj"], "fr": ["IA ne peut créer musique", "IA n'a pas d'émotions humaines", "IA ne peut écrire", "IA ne peut faire images"], "en": ["AI can't create music", "AI has no human emotions", "AI can't write", "AI can't make images"]}, "ans": 1}}, "29": {"title": {"ht": "Risk yo ak Etik AI", "fr": "Risques et Éthique IA", "en": "AI Risks and Ethics"}, "time": "20 min", "leson": {"ht": "Risk AI:\n- Dezenfòmasyon\n- Pèt konfidansyalite\n- Diskriminasyon\n\nEtik AI: Itilize AI pou ede, pa twonpe moun.", "fr": "Risques IA:\n- Désinformation\n- Perte confidentialité\n- Discrimination\n\nÉthique IA: Utiliser l'IA pour aider, pas tromper.", "en": "AI Risks:\n- Misinformation\n- Privacy loss\n- Discrimination\n\nAI Ethics: Use AI to help, not to deceive."}, "analoji": {"ht": "Tankou kouto. Li ka tranché manje. Li ka blese. Depan sou moun ki itilize l.", "fr": "Comme un couteau. Il peut couper de la nourriture. Il peut blesser. Cela dépend de qui l'utilise.", "en": "Like a knife. Can cut food. Can hurt. Depends on who uses it."}, "egzanp": {"ht": "Yon moun kreye fo videyo ak AI pou twonpe moun. Sa se yon zak ilegal ak pa etik.", "fr": "Quelqu'un crée de fausses vidéos avec IA pour tromper. C'est illégal et contraire à l'éthique.", "en": "Someone creates fake videos with AI to deceive. That is illegal and unethical."}, "lajan": {"ht": ["Ekspè etik AI", "Konsiltasyon etik AI", "Fòmasyon bon itilizasyon AI"], "fr": ["Expert éthique IA", "Consultation éthique IA", "Formation bon usage IA"], "en": ["AI ethics expert", "AI ethics consulting", "Responsible AI training"]}, "quiz": {"q": {"ht": "Ki responsablite ou kòm itilizatè AI?", "fr": "Votre responsabilité en tant qu'utilisateur IA?", "en": "Your responsibility as an AI user?"}, "opts": {"ht": ["Fè plis lajan posib", "Itilize AI etikman pou ede moun", "Remplace tout anplwaye", "Vann done moun"], "fr": ["Gagner maximum d'argent", "Utiliser IA éthiquement pour aider", "Remplacer tous les employés", "Vendre données des gens"], "en": ["Make as much money as possible", "Use AI ethically to help people", "Replace all employees", "Sell people's data"]}, "ans": 1}}, "30": {"title": {"ht": "Plan Dominasyon Mache AI", "fr": "Plan Domination Marché IA", "en": "AI Market Domination Plan"}, "time": "30 min", "leson": {"ht": "POU DOMINE MACHE AI AN AYITI:\n1. Niche klè\n2. Prezans rezo sosyal\n3. Pwodwi oswa sèvis estriktire\n\nPLAN 6 MWA:\n- Mwa 1-2: Kontni AI Kreyòl\n- Mwa 3-4: Sèvis (logo, chatbot, CV)\n- Mwa 5-6: Premye pwodwi dijital", "fr": "POUR DOMINER LE MARCHÉ IA EN HAÏTI:\n1. Niche claire\n2. Présence réseaux sociaux\n3. Produit ou service structuré\n\nPLAN 6 MOIS:\n- Mois 1-2: Contenu IA créole\n- Mois 3-4: Services (logo, chatbot, CV)\n- Mois 5-6: Premier produit numérique", "en": "TO DOMINATE THE AI MARKET IN HAITI:\n1. Clear niche\n2. Social media presence\n3. Structured product or service\n\n6-MONTH PLAN:\n- Months 1-2: AI content in Creole\n- Months 3-4: Services (logo, chatbot, CV)\n- Months 5-6: First digital product"}, "analoji": {"ht": "Tankou jèn chèf ki bati restoran li yon etap apre lòt. Ou pa louvri 10 branch an menm tan.", "fr": "Comme jeune chef bâtissant son restaurant étape par étape. On n'ouvre pas 10 succursales simultanément.", "en": "Like a young chef building their restaurant one step at a time. You don't open 10 branches at once."}, "egzanp": {"ht": "Marie kòmanse niche AI pou salèn. 5,000 abòne Instagram. Kous $97. $4,850 premye mwa!", "fr": "Marie commence niche IA pour salons. 5000 abonnés Instagram. Cours à 97$. 4850$ le premier mois!", "en": "Marie starts AI niche for salons. 5,000 Instagram followers. $97 course. $4,850 first month!"}, "lajan": {"ht": ["Vin referans AI Ayiti", "Ayiti bezwen lidè dijital", "#KreyolAIHub #30JouAI"], "fr": ["Devenir référence IA Haïti", "Haïti a besoin de leaders numériques", "#KreyolAIHub #30JoursIA"], "en": ["Become AI reference in Haiti", "Haiti needs digital leaders", "#KreyolAIHub #30DayAI"]}, "quiz": {"q": {"ht": "3 eleman kle pou domine mache AI?", "fr": "3 éléments clés pour dominer marché IA?", "en": "3 key elements to dominate AI market?"}, "opts": {"ht": ["Lajan, Koneksyon, Chans", "Niche + Rezo sosyal + Pwodwi", "Deplase yon lòt peyi", "Tann gouvènman"], "fr": ["Argent, Connexions, Chance", "Niche + Réseaux sociaux + Produit", "Déménager ailleurs", "Attendre gouvernement"], "en": ["Money, Connections, Luck", "Niche + Social media + Product", "Move to another country", "Wait for government"]}, "ans": 1}}};
+
+var WEEKS = {
+  ht:[{n:"Semèn 1",l:"Fondasyon AI",r:[1,10]},{n:"Semèn 2",l:"Kapital + Revni Pasif",r:[11,15]},{n:"Semèn 3",l:"Aplikasyon Konkrè",r:[16,25]},{n:"Semèn 4",l:"Dominasyon Mache",r:[26,30]}],
+  fr:[{n:"Semaine 1",l:"Fondations IA",r:[1,10]},{n:"Semaine 2",l:"Capital + Revenus Passifs",r:[11,15]},{n:"Semaine 3",l:"Applications Concrètes",r:[16,25]},{n:"Semaine 4",l:"Domination Marché",r:[26,30]}],
+  en:[{n:"Week 1",l:"AI Foundations",r:[1,10]},{n:"Week 2",l:"Capital + Passive Income",r:[11,15]},{n:"Week 3",l:"Concrete Applications",r:[16,25]},{n:"Week 4",l:"Market Domination",r:[26,30]}]
+};
+
+var TR = {
+  ht:{homeBtn:"← Lakay",sbTitle:"30 JOU AI",sbMeta:"Aprann AI de zéro an Kreyòl",doneLabel:"Fini",totalLabel:"Total",pctLabel:"Pwogrè",wlcEyebrow:"KreyòlAI Academy",wlcTitle:"30 Jou pou Domine AI",wlcDesc:"Aprann entèlijans atifisyèl de zéro an Kreyòl Ayisyen. Chak jou: yon leson, yon analoji, yon egzanp reyèl, yon fason pou fè lajan — ak yon kiz pou konfime konesans ou.",wlcLessons:"Leson",wlcLangs:"Lang",wlcFree:"Gratis",wlcMoney:"Lajan",startBtn:"Kòmanse JOU 1 →",lesonLabel:"Leson",analojiLabel:"Analoji",egzanpLabel:"Egzanp Reyèl",lajanLabel:"Fè Lajan",quizLabel:"Kiz",prevLabel:"Anvan",nextLabel:"Pwochen",completeLabel:"Mache Fini — Pwochen Leson →",alreadyDone:"Leson Fini ✓",lockedMsg:"Fini leson anvan an pou debloke sa a",certTitle:"Felisitasyon!",certDesc:"Ou fini kou 30 JOU AI konplètman! Ou se kounye a yon Ekspè AI Ayisyen sètifye.",printLabel:"Enprime Sètifika",lhDone:"✓ Fini"},
+  fr:{homeBtn:"← Accueil",sbTitle:"30 JOURS IA",sbMeta:"Apprendre l'IA de zéro en créole",doneLabel:"Terminé",totalLabel:"Total",pctLabel:"Progrès",wlcEyebrow:"KreyòlAI Academy",wlcTitle:"30 Jours pour Dominer l'IA",wlcDesc:"Apprenez l'intelligence artificielle de zéro en créole haïtien. Chaque jour: une leçon, une analogie, un exemple réel, une façon de gagner — et un quiz.",wlcLessons:"Leçons",wlcLangs:"Langues",wlcFree:"Gratuit",wlcMoney:"Revenus",startBtn:"Commencer JOUR 1 →",lesonLabel:"Leçon",analojiLabel:"Analogie",egzanpLabel:"Exemple Réel",lajanLabel:"Gagner de l'Argent",quizLabel:"Quiz",prevLabel:"Précédent",nextLabel:"Suivant",completeLabel:"Terminer — Leçon Suivante →",alreadyDone:"Leçon Terminée ✓",lockedMsg:"Terminez la leçon précédente pour débloquer celle-ci",certTitle:"Félicitations!",certDesc:"Vous avez complété le cours 30 JOURS IA! Vous êtes maintenant certifié Expert IA.",printLabel:"Imprimer Certificat",lhDone:"✓ Terminé"},
+  en:{homeBtn:"← Home",sbTitle:"30 DAY AI",sbMeta:"Learn AI from scratch in Creole",doneLabel:"Done",totalLabel:"Total",pctLabel:"Progress",wlcEyebrow:"KreyòlAI Academy",wlcTitle:"30 Days to Master AI",wlcDesc:"Learn artificial intelligence from scratch in Haitian Creole. Each day: a lesson, an analogy, a real example, a way to earn — and a quiz to test your knowledge.",wlcLessons:"Lessons",wlcLangs:"Languages",wlcFree:"Free",wlcMoney:"Revenue",startBtn:"Start DAY 1 →",lesonLabel:"Lesson",analojiLabel:"Analogy",egzanpLabel:"Real Example",lajanLabel:"Make Money",quizLabel:"Quiz",prevLabel:"Previous",nextLabel:"Next",completeLabel:"Complete — Next Lesson →",alreadyDone:"Lesson Complete ✓",lockedMsg:"Complete the previous lesson to unlock this one",certTitle:"Congratulations!",certDesc:"You have completed the 30 Day AI course! You are now a certified Haitian AI Expert.",printLabel:"Print Certificate",lhDone:"✓ Complete"}
+};
+
+// ─── STATE ───────────────────────────────────────────
+var lang = "ht";
+var currentLesson = 0;
+var quizAnswered = false;
+var completed = [];
+
+try {
+  completed = JSON.parse(localStorage.getItem("kah_c") || "[]");
+  lang = localStorage.getItem("kah_lang") || "ht";
+} catch(e) {}
+
+function save() {
+  try {
+    localStorage.setItem("kah_c", JSON.stringify(completed));
+    localStorage.setItem("kah_lang", lang);
+  } catch(e) {}
+}
+
+function isDone(n) { return completed.indexOf(n) !== -1; }
+function isUnlocked(n) { return n === 1 || isDone(n - 1); }
+function t(k) { return (TR[lang] && TR[lang][k]) || TR.ht[k] || k; }
+
+// ─── LANG ────────────────────────────────────────────
+function setLang(l) {
+  lang = l;
+  save();
+  ["ht","fr","en"].forEach(function(x) {
+    document.getElementById("ll"+x).className = "ll" + (x===l?" on":"");
+  });
+  applyTR();
+  buildSidebar();
+  if (currentLesson > 0) renderLesson(currentLesson);
+}
+
+function applyTR() {
+  var keys = ["homeBtn","sbTitle","sbMeta","doneLabel","totalLabel","pctLabel",
+    "wlcEyebrow","wlcTitle","wlcDesc","wlcLessons","wlcLangs","wlcFree","wlcMoney"];
+  keys.forEach(function(k) {
+    var el = document.getElementById(k);
+    if (el) el.textContent = t(k);
+  });
+  var sb = document.getElementById("startBtn");
+  if (sb) sb.textContent = t("startBtn");
+}
+
+// ─── SIDEBAR ─────────────────────────────────────────
+function buildSidebar() {
+  var wks = WEEKS[lang] || WEEKS.ht;
+  var html = "";
+  wks.forEach(function(wk) {
+    html += '<div class="week-header">' + wk.n + ' — ' + wk.l + '</div>';
+    for (var d = wk.r[0]; d <= wk.r[1]; d++) {
+      var L = LESSONS[d];
+      if (!L) continue;
+      var done = isDone(d);
+      var unlocked = isUnlocked(d);
+      var active = (d === currentLesson);
+      var cls = "lesson-row";
+      if (active) cls += " active";
+      else if (done) cls += " done-row";
+      else if (!unlocked) cls += " locked-row";
+      html += '<div class="' + cls + '" onclick="clickLesson(' + d + ')">' +
+        '<div class="lr-icon"></div>' +
+        '<span class="lr-num">' + d + '</span>' +
+        '<div class="lr-info">' +
+          '<div class="lr-name">' + (L.title[lang] || L.title.ht) + '</div>' +
+          '<div class="lr-time">' + L.time + '</div>' +
+        '</div>' +
+      '</div>';
+    }
+  });
+  document.getElementById("sbLessons").innerHTML = html;
+  updateProgress();
+}
+
+function updateProgress() {
+  var n = completed.length;
+  var pct = Math.round((n / 30) * 100);
+  document.getElementById("progFill").style.width = pct + "%";
+  document.getElementById("progTxt").textContent = n + " / 30";
+  document.getElementById("doneCount").textContent = n;
+  document.getElementById("pctStat").textContent = pct + "%";
+}
+
+// ─── LESSON ──────────────────────────────────────────
+function clickLesson(n) {
+  if (!isUnlocked(n)) {
+    alert(t("lockedMsg"));
+    return;
+  }
+  loadLesson(n);
+  if (window.innerWidth <= 768) {
+    document.getElementById("sidebar").classList.remove("open");
+  }
+}
+
+function loadLesson(n) {
+  currentLesson = n;
+  quizAnswered = false;
+  document.getElementById("welcomeScreen").style.display = "none";
+  document.getElementById("certScreen").classList.remove("show");
+  var lv = document.getElementById("lessonView");
+  lv.style.display = "flex";
+  renderLesson(n);
+  buildSidebar();
+  document.getElementById("mainArea").scrollTop = 0;
+}
+
+function renderLesson(n) {
+  var L = LESSONS[n];
+  if (!L) return;
+  var tl = L.title[lang] || L.title.ht;
+  var done = isDone(n);
+
+  // Find week
+  var wks = WEEKS[lang] || WEEKS.ht;
+  var wkLabel = "";
+  wks.forEach(function(wk) { if (n >= wk.r[0] && n <= wk.r[1]) wkLabel = wk.n + " — " + wk.l; });
+
+  document.getElementById("lhWeek").textContent = wkLabel;
+  document.getElementById("lhTitle").textContent = tl;
+  document.getElementById("lhDay").textContent = "JOU " + n + " / 30";
+  document.getElementById("lhTime").textContent = "⏱ " + L.time;
+  var doneChip = document.getElementById("lhDone");
+  doneChip.textContent = t("lhDone");
+  doneChip.style.display = done ? "inline-flex" : "none";
+
+  // Body
+  var leson = (L.leson[lang] || L.leson.ht).replace(/\n/g, "<br>");
+  var analoji = (L.analoji[lang] || L.analoji.ht).replace(/\n/g, "<br>");
+  var egzanp = (L.egzanp[lang] || L.egzanp.ht).replace(/\n/g, "<br>");
+  var lajan = L.lajan[lang] || L.lajan.ht;
+  var quiz = L.quiz;
+  var q = quiz.q[lang] || quiz.q.ht;
+  var opts = quiz.opts[lang] || quiz.opts.ht;
+  var letters = ["A","B","C","D"];
+
+  var optsHtml = opts.map(function(o, i) {
+    return '<div class="quiz-opt" id="qopt' + i + '" onclick="answerQuiz(' + n + ',' + i + ',' + quiz.ans + ')">' +
+      '<span class="opt-letter">' + letters[i] + '</span>' + o +
+    '</div>';
+  }).join("");
+
+  document.getElementById("lessonBody").innerHTML =
+    '<div class="content-card">' +
+      '<div class="card-label leson-l">📘 ' + t("lesonLabel") + '</div>' +
+      '<div class="card-body">' + leson + '</div>' +
+    '</div>' +
+    '<div class="content-card">' +
+      '<div class="card-label analoji-l">💡 ' + t("analojiLabel") + '</div>' +
+      '<div class="card-body">' + analoji + '</div>' +
+    '</div>' +
+    '<div class="content-card">' +
+      '<div class="card-label egzanp-l">🌍 ' + t("egzanpLabel") + '</div>' +
+      '<div class="card-body">' + egzanp + '</div>' +
+    '</div>' +
+    '<div class="content-card">' +
+      '<div class="card-label lajan-l">💰 ' + t("lajanLabel") + '</div>' +
+      '<div class="card-body"><ul class="money-list">' +
+        lajan.map(function(item) { return '<li class="money-item">' + item + '</li>'; }).join("") +
+      '</ul></div>' +
+    '</div>' +
+    '<div class="quiz-card">' +
+      '<div class="quiz-header"><div class="quiz-title">🎯 ' + t("quizLabel") + '</div></div>' +
+      '<div class="quiz-q">' + q + '</div>' +
+      '<div class="quiz-opts">' + optsHtml + '</div>' +
+      '<div class="quiz-feedback" id="qfeedback"></div>' +
+    '</div>';
+
+  // Nav buttons
+  document.getElementById("btnPrev").style.display = n > 1 ? "inline-flex" : "none";
+  document.getElementById("btnNext").style.display = n < 30 ? "inline-flex" : "none";
+  document.getElementById("prevLabel").textContent = t("prevLabel");
+  document.getElementById("nextLabel").textContent = t("nextLabel");
+
+  var completeBtn = document.getElementById("btnComplete");
+  if (done) {
+    completeBtn.textContent = t("alreadyDone");
+    completeBtn.disabled = true;
+    completeBtn.style.opacity = ".7";
+  } else {
+    completeBtn.textContent = t("completeLabel");
+    completeBtn.disabled = false;
+    completeBtn.style.opacity = "1";
+  }
+  document.getElementById("courseLabel").textContent = tl;
+}
+
+function answerQuiz(day, chosen, correct) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  var opts = document.querySelectorAll(".quiz-opt");
+  opts.forEach(function(o) { o.classList.add("answered"); });
+  opts[chosen].classList.add(chosen === correct ? "correct" : "wrong");
+  if (chosen !== correct) opts[correct].classList.add("correct");
+  var fb = document.getElementById("qfeedback");
+  fb.classList.add("show");
+  if (chosen === correct) {
+    fb.classList.add("ok");
+    fb.textContent = lang === "ht" ? "✓ Kòrèk! Egzèlan!" : lang === "fr" ? "✓ Correct! Excellent!" : "✓ Correct! Excellent!";
+  } else {
+    fb.classList.add("no");
+    fb.textContent = lang === "ht" ? "✗ Pa kòrèk. Repons la se " + String.fromCharCode(65+correct) + "." : lang === "fr" ? "✗ Incorrect. La réponse est " + String.fromCharCode(65+correct) + "." : "✗ Incorrect. The answer is " + String.fromCharCode(65+correct) + ".";
+  }
+}
+
+function completeLesson() {
+  if (!isDone(currentLesson)) {
+    completed.push(currentLesson);
+    save();
+  }
+  if (currentLesson === 30) {
+    showCert();
+    return;
+  }
+  loadLesson(currentLesson + 1);
+}
+
+function goLesson(dir) {
+  var next = currentLesson + dir;
+  if (next < 1 || next > 30) return;
+  if (!isUnlocked(next)) { alert(t("lockedMsg")); return; }
+  loadLesson(next);
+}
+
+function showCert() {
+  document.getElementById("lessonView").style.display = "none";
+  var cs = document.getElementById("certScreen");
+  cs.classList.add("show");
+  document.getElementById("certTitle").textContent = t("certTitle");
+  document.getElementById("certDesc").textContent = t("certDesc");
+  document.getElementById("certDate").textContent = new Date().toLocaleDateString();
+  document.getElementById("printLabel").textContent = t("printLabel");
+}
+
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("open");
+}
+
+// ─── INIT ────────────────────────────────────────────
+setLang(lang);
+buildSidebar();
+updateProgress();
+
+// Resume if in progress
+var lastDone = Math.max.apply(null, completed.length ? completed : [0]);
+if (lastDone > 0 && lastDone < 30) {
+  // Show welcome still, but update start button to resume
+  var sb2 = document.getElementById("startBtn");
+  var nextUp = lastDone + 1;
+  if (sb2) sb2.textContent = (lang === "fr" ? "Reprendre JOU " : lang === "en" ? "Resume DAY " : "Kontinye JOU ") + nextUp + " →";
+  if (sb2) sb2.onclick = function() { loadLesson(nextUp); };
+} else if (lastDone >= 30) {
+  showCert();
+}
+</script>
+</body>
+</html>
