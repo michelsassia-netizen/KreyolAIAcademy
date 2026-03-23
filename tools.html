@@ -310,6 +310,15 @@ footer{border-top:1px solid var(--b1);padding:2rem 0;margin-top:4rem}
 
 <script>
 var WORKER = "https://kreyolaihub-proxy.kreyolaihub.workers.dev";
+var DEMO_MODE = true; // Set to false when Worker is deployed
+var DEMO_RESPONSES = {
+  translate: "🌐 **Kreyòl**: Bonjou, kijan ou ye?<br/>🇫🇷 **Français**: Bonjour, comment allez-vous?<br/>🇬🇧 **English**: Hello, how are you?<br/><em>Note: Full AI translation requires Worker deployment.</em>",
+  grann: "Cheri, moun yo pale: \"Dòmi sou fatra, reveye sou latranp.\" Sa vle di, chwa ou fè jòdi ap detèmine kote ou ye demen. Lagès se kontinyèl! 🙏",
+  lekol: "<strong>What is AI?</strong><br/>AI is like giving a computer a brain that can learn from examples. It starts by recognizing patterns, then using those patterns to make predictions or solve problems. <br/><em>Demo mode: Full tutoring available when Worker is active.</em>",
+  biznis: "**Your Business Pitch:**<br/>📈 *Market Opportunity:* Ayisyen yo sou entènèt - $2B+ diaspora buying power<br/>💡 *Solution:* Kreyòl-first AI tools<br/>🎯 *Revenue:* Subscriptions, consulting, B2B partnerships<br/><em>Full AI generation requires Worker setup.</em>",
+  document: "<strong>Document Analysis</strong><br/>This tool helps you understand complex documents like visas, contracts, and permits. In demo mode, here's what it can do:<br/>✓ Break down key requirements<br/>✓ Highlight important deadlines<br/>✓ Identify potential issues<br/><em>Activate Worker for full AI-powered analysis.</em>"
+};
+
 var PROMPTS = {
   translate: "You are KreyolTranslate, an expert trilingual translator for Haitian Creole, French, and English. Detect the input language and translate it into the other two languages. Format clearly: flag KW: ... | flag FR: ... | flag EN: ... Add a brief cultural note if relevant. Be concise.",
   grann: "Ou se Grann AI, yon grann Ayisyen saj ak cho ki konnen tout richEs kilti Ayisyen. Reponn kesyon sou istwa, pwovEb, manje, mizik, remEd, kont. Toujou kite yon pwovEb nan repons ou. Reponn nan lang moun nan pale avEk ou.",
@@ -325,7 +334,23 @@ async function runTool(type, val, outId, inputEl) {
   out.innerHTML = '<span style="opacity:.5">Ap travay... ⏳</span>';
   out.classList.remove('has-result');
   if (inputEl) inputEl.disabled = true;
+  
+  // Use demo mode if enabled or Worker not available
+  if (DEMO_MODE) {
+    setTimeout(function() {
+      var demoReply = DEMO_RESPONSES[type] || DEMO_RESPONSES.translate;
+      out.innerHTML = demoReply
+        .replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>")
+        .replace(/\*(.*?)\*/g,"<em>$1</em>");
+      out.classList.add('has-result');
+      if (inputEl) inputEl.disabled = false;
+    }, 800);
+    return;
+  }
+  
+  // Try real API if demo mode is off
   try {
+    console.log('🚀 Sending to Worker:', WORKER);
     var res = await fetch(WORKER, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -336,8 +361,12 @@ async function runTool(type, val, outId, inputEl) {
         messages: [{ role: "user", content: val }]
       })
     });
+    console.log('Response:', res.status);
+    if (!res.ok) {
+      throw new Error(`API error: ${res.status}`);
+    }
     var data = await res.json();
-    var reply = (data.content && data.content[0]) ? data.content[0].text : "Eseye ankò / Try again.";
+    var reply = (data.content && data.content[0]) ? data.content[0].text : "Eseye ankò.";
     out.innerHTML = reply
       .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
       .replace(/\n\n/g,"<br><br>").replace(/\n/g,"<br>")
@@ -345,7 +374,8 @@ async function runTool(type, val, outId, inputEl) {
       .replace(/\*(.*?)\*/g,"<em>$1</em>");
     out.classList.add('has-result');
   } catch(e) {
-    out.innerHTML = '<span style="color:#f87171">Koneksyon echwe. Eseye ankò. / Connection failed.</span>';
+    console.error('Error:', e);
+    out.innerHTML = '<span style="color:#f87171">⚠️ Worker unavailable. Enable DEMO_MODE in console.</span>';
   }
   if (inputEl) inputEl.disabled = false;
 }
