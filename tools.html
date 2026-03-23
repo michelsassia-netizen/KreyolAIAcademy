@@ -101,9 +101,9 @@ footer{border-top:1px solid var(--b1);padding:2rem 0;margin-top:4rem}
     <a href="index.html#community">Community</a>
   </div>
   <div class="nav-r">
-    <button id="tl-en" class="lang-btn active" onclick="switchLang('en')">EN</button>
-    <button id="tl-fr" class="lang-btn" onclick="switchLang('fr')">FR</button>
-    <button id="tl-ht" class="lang-btn" onclick="switchLang('ht')">KW</button>
+    <button type="button" id="tl-en" class="lang-btn active" onclick="switchLang('en')">EN</button>
+    <button type="button" id="tl-fr" class="lang-btn" onclick="switchLang('fr')">FR</button>
+    <button type="button" id="tl-ht" class="lang-btn" onclick="switchLang('ht')">KW</button>
     <a href="academy.html" class="btn btn-p btn-sm">Get Started →</a>
   </div>
 </div></nav>
@@ -163,8 +163,8 @@ footer{border-top:1px solid var(--b1);padding:2rem 0;margin-top:4rem}
     <div class="tf-demo">
       <div class="tfd-label">Try it now</div>
       <div class="demo-input-wrap">
-        <input class="demo-input" id="t1-in" placeholder="Kreyòl, English ou Français..." onkeydown="if(event.key==='Enter')runTool('translate',this.value,'t1-out',this)"/>
-        <button class="btn btn-p btn-sm" onclick="runTool('translate',document.getElementById('t1-in').value,'t1-out',document.getElementById('t1-in'))">Tradui →</button>
+        <input class="demo-input" id="t1-in" type="text" placeholder="Kreyòl, English ou Français..." onkeydown="if(event.key==='Enter')runTool('translate',this.value,'t1-out',this)"/>
+        <button type="button" class="btn btn-p btn-sm" onclick="runTool('translate',document.getElementById('t1-in').value,'t1-out',document.getElementById('t1-in'))">Tradui →</button>
       </div>
       <div class="demo-output" id="t1-out">Translation will appear here...</div>
     </div>
@@ -184,8 +184,8 @@ footer{border-top:1px solid var(--b1);padding:2rem 0;margin-top:4rem}
     <div class="tf-demo">
       <div class="tfd-label">Ask Grann anything</div>
       <div class="demo-input-wrap">
-        <input class="demo-input" id="t2-in" placeholder="Poze Grann yon kesyon..." onkeydown="if(event.key==='Enter')runTool('grann',this.value,'t2-out',this)"/>
-        <button class="btn btn-p btn-sm" style="background:linear-gradient(135deg,#d4a017,#e8891a)" onclick="runTool('grann',document.getElementById('t2-in').value,'t2-out',document.getElementById('t2-in'))">Ask →</button>
+        <input class="demo-input" id="t2-in" type="text" placeholder="Poze Grann yon kesyon..." onkeydown="if(event.key==='Enter')runTool('grann',this.value,'t2-out',this)"/>
+        <button type="button" class="btn btn-p btn-sm" style="background:linear-gradient(135deg,#d4a017,#e8891a)" onclick="runTool('grann',document.getElementById('t2-in').value,'t2-out',document.getElementById('t2-in'))">Ask →</button>
       </div>
       <div class="demo-output" id="t2-out">Grann AI will respond here...</div>
       <a href="grann.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;font-size:.74rem;color:#d4a017;text-decoration:none;font-weight:600">👵🏾 Ouvri Grann AI konplè →</a>
@@ -206,8 +206,8 @@ footer{border-top:1px solid var(--b1);padding:2rem 0;margin-top:4rem}
     <div class="tf-demo">
       <div class="tfd-label">Ask any school question</div>
       <div class="demo-input-wrap">
-        <input class="demo-input" id="t3-in" placeholder="Ex: Ki sa ki fotwosyntèz? / What is gravity?" onkeydown="if(event.key==='Enter')runTool('lekol',this.value,'t3-out',this)"/>
-        <button class="btn btn-p btn-sm" style="background:var(--grn)" onclick="runTool('lekol',document.getElementById('t3-in').value,'t3-out',document.getElementById('t3-in'))">Eksplike →</button>
+        <input class="demo-input" id="t3-in" type="text" placeholder="Ex: Ki sa ki fotwosyntèz? / What is gravity?" onkeydown="if(event.key==='Enter')runTool('lekol',this.value,'t3-out',this)"/>
+        <button type="button" class="btn btn-p btn-sm" style="background:var(--grn)" onclick="runTool('lekol',document.getElementById('t3-in').value,'t3-out',document.getElementById('t3-in'))">Eksplike →</button>
       </div>
       <div class="demo-output" id="t3-out">Explanation will appear here...</div>
     </div>
@@ -227,8 +227,8 @@ footer{border-top:1px solid var(--b1);padding:2rem 0;margin-top:4rem}
     <div class="tf-demo">
       <div class="tfd-label">Describe your business need</div>
       <div class="demo-input-wrap">
-        <input class="demo-input" id="t4-in" placeholder="Ex: Ekri yon pitch pou biznis mwen..." onkeydown="if(event.key==='Enter')runTool('biznis',this.value,'t4-out',this)"/>
-        <button class="btn btn-p btn-sm" onclick="runTool('biznis',document.getElementById('t4-in').value,'t4-out',document.getElementById('t4-in'))">Kreye →</button>
+        <input class="demo-input" id="t4-in" type="text" placeholder="Ex: Ekri yon pitch pou biznis mwen..." onkeydown="if(event.key==='Enter')runTool('biznis',this.value,'t4-out',this)"/>
+        <button type="button" class="btn btn-p btn-sm" onclick="runTool('biznis',document.getElementById('t4-in').value,'t4-out',document.getElementById('t4-in'))">Kreye →</button>
       </div>
       <div class="demo-output" id="t4-out">Business content will appear here...</div>
     </div>
@@ -248,8 +248,8 @@ footer{border-top:1px solid var(--b1);padding:2rem 0;margin-top:4rem}
     <div class="tf-demo">
       <div class="tfd-label">Describe a document</div>
       <div class="demo-input-wrap">
-        <input class="demo-input" id="t5-in" placeholder="Ex: Green card, visa, kontra travay..." onkeydown="if(event.key==='Enter')runTool('document',this.value,'t5-out',this)"/>
-        <button class="btn btn-p btn-sm" style="background:var(--amb)" onclick="runTool('document',document.getElementById('t5-in').value,'t5-out',document.getElementById('t5-in'))">Rezime →</button>
+        <input class="demo-input" id="t5-in" type="text" placeholder="Ex: Green card, visa, kontra travay..." onkeydown="if(event.key==='Enter')runTool('document',this.value,'t5-out',this)"/>
+        <button type="button" class="btn btn-p btn-sm" style="background:var(--amb)" onclick="runTool('document',document.getElementById('t5-in').value,'t5-out',document.getElementById('t5-in'))">Rezime →</button>
       </div>
       <div class="demo-output" id="t5-out">Summary will appear here...</div>
     </div>
@@ -309,6 +309,9 @@ footer{border-top:1px solid var(--b1);padding:2rem 0;margin-top:4rem}
 <a href="https://wa.me/447906520032" class="wa-btn" target="_blank">💬</a>
 
 <script>
+console.log('✅ Tools.html script loaded');
+console.log('📝 To enable real AI: DEMO_MODE = false; in console');
+
 var WORKER = "https://kreyolaihub-proxy.kreyolaihub.workers.dev";
 var DEMO_MODE = true; // Set to false when Worker is deployed
 var DEMO_RESPONSES = {
@@ -385,6 +388,19 @@ function switchLang(l) {
     document.getElementById("tl-"+x).className="lang-btn"+(x===l?" active":"");
   });
 }
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('✅ DOM loaded - buttons should be clickable');
+  console.log('🔍 Testing click detection:');
+  var buttons = document.querySelectorAll('button');
+  console.log('Found ' + buttons.length + ' buttons on page');
+  buttons.forEach(function(btn, idx) {
+    btn.addEventListener('click', function() {
+      console.log('✅ Button clicked:', btn.textContent.trim());
+    });
+  });
+});
 </script>
 </body>
 </html>
