@@ -496,4 +496,9 @@ function submitForm(e){
   e.preventDefault();
   const b=document.getElementById('submitBtn');
   b.textContent='✓ Request Sent! We\'ll respond within 24h.';
-  b.style.background='rgba(16,185,129,.15)'
+  b.style.background='rgba(16,185,129,.15)';
+  setTimeout(()=>{const frm=document.getElementById('consultForm');if(frm)frm.reset();b.textContent='Submit Request';b.style.background='';},2000);
+}
+</script>
+</body>
+</html>

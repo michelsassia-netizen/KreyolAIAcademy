@@ -969,4 +969,4 @@ function qTr(){
 }
 
 /* NL */
-function subNL(){const e=document.getElementById('nle');if(!e
+function subNL(){const e=document.getElementById('nle');if(!e.value.trim()){alert('Please enter a valid email');return;}const email=e.value.trim();console.log('Newsletter subscription:',email);e.value='';const btn=event.target;const origText=btn.textContent;btn.textContent='✓ Subscribed!';btn.disabled=true;setTimeout(()=>{btn.textContent=origText;btn.disabled=false;},3000);}
