@@ -803,7 +803,7 @@ footer{background:var(--bg2);border-top:1px solid var(--brd2);padding:5rem 0 2re
       <p style="font-size:.94rem;color:var(--t55);font-weight:300;line-height:1.82;margin:.75rem 0 0">Weekly AI insights, new tools, and community highlights — in Creole, French, and English.</p>
       <div class="nl-form">
         <input class="nl-in" type="email" id="nle" placeholder="Enter your email address"/>
-        <button class="btn btn-p" onclick="subNL()">Subscribe →</button>
+        <button type="button" class="btn btn-p" onclick="subNL()">Subscribe →</button>
       </div>
       <div class="nl-note">Free. No spam. Unsubscribe anytime.</div>
     </div>
@@ -852,19 +852,19 @@ footer{background:var(--bg2);border-top:1px solid var(--brd2);padding:5rem 0 2re
 <a href="https://wa.me/447906520032" target="_blank" class="wa">💬</a>
 
 <!-- Sticky demo toggle -->
-<button id="sd-toggle" onclick="toggleSD()">⚡ Try AI Now</button>
+<button type="button" id="sd-toggle" onclick="toggleSD()">⚡ Try AI Now</button>
 <div id="sticky-demo">
   <div class="sd-card">
     <div class="sd-top">
       <div class="sd-ttl">⚡ Try KreyòlAI Instantly</div>
-      <button class="sd-x" onclick="toggleSD()">✕</button>
+      <button type="button" class="sd-x" onclick="toggleSD()">✕</button>
     </div>
     <div class="sd-body">
       <div class="sd-lbl">Type in Haitian Creole</div>
       <textarea class="sd-inp" id="sdi" rows="2" placeholder="Bonjou, kijan ou rele?"></textarea>
       <div class="sd-res" id="sdr">Translation will appear here...</div>
       <div class="sd-btn-row">
-        <button class="btn btn-p btn-sm" style="width:100%" onclick="qTr()">Translate →</button>
+        <button type="button" class="btn btn-p btn-sm" style="width:100%" onclick="qTr()">Translate →</button>
       </div>
     </div>
   </div>
@@ -872,6 +872,8 @@ footer{background:var(--bg2);border-top:1px solid var(--brd2);padding:5rem 0 2re
 
 <!-- ══════════════ SCRIPTS ══════════════ -->
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+console.log('✅ index.html script loaded');
+
 /* NAV */
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
@@ -886,6 +888,19 @@ const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
 document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
 // Fallback: show all if observer doesn't fire within 800ms
 setTimeout(()=>document.querySelectorAll('[data-r]').forEach(el=>el.classList.add('on')),0);
+
+// DOM ready debugging
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('✅ DOM loaded - buttons should be clickable');
+  console.log('🔍 Testing click detection:');
+  var buttons = document.querySelectorAll('button');
+  console.log('Found ' + buttons.length + ' buttons on page');
+  buttons.forEach(function(btn, idx) {
+    btn.addEventListener('click', function() {
+      console.log('✅ Button clicked:', btn.textContent.trim());
+    });
+  });
+});
 
 /* NEURAL CANVAS */
 (()=>{
