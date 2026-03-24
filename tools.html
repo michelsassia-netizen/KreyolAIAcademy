@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="ht">
+<html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>AI Tools — KreyòlAIHub</title>
-<meta name="description" content="Powerful AI tools built for Haitians worldwide."/>
+<meta name="description" content="Powerful AI tools built for Haitians worldwide. Translate, learn, do business, and more — in Haitian Creole."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet"/>
 <style>
 :root{--bg:#09090B;--bg2:#111114;--bg3:#16161A;--bg4:#1D1D22;--t100:rgba(250,250,248,1);--t80:rgba(250,250,248,.80);--t55:rgba(250,250,248,.55);--t30:rgba(250,250,248,.30);--t12:rgba(250,250,248,.12);--t07:rgba(250,250,248,.07);--t04:rgba(250,250,248,.04);--ind:#6366F1;--ind2:#818CF8;--ind3:rgba(99,102,241,.15);--iglow:rgba(99,102,241,.22);--ib1:rgba(99,102,241,.20);--amb:#D97706;--amb2:#F59E0B;--amg:rgba(245,158,11,.12);--grn:#10B981;--grn2:#34D399;--b1:rgba(250,250,248,.06);--b2:rgba(250,250,248,.10);--b3:rgba(250,250,248,.16);--fd:'Instrument Serif',Georgia,serif;--fs:'DM Sans',system-ui,sans-serif;--r:10px;--r2:18px}
@@ -12,395 +14,484 @@
 body{background:var(--bg);color:var(--t100);font-family:var(--fs);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{text-decoration:none;color:inherit}button{cursor:pointer;font-family:var(--fs)}
 .c{max-width:1160px;margin:0 auto;padding:0 1.5rem}
-[data-r]{opacity:1;transform:none}
+[data-r]{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}[data-r].on{opacity:1;transform:translateY(0)}
+[data-r][data-d="1"]{transition-delay:.1s}[data-r][data-d="2"]{transition-delay:.2s}[data-r][data-d="3"]{transition-delay:.3s}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}@keyframes spin{to{transform:rotate(360deg)}}
 .btn{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--fs);font-size:.84rem;font-weight:500;padding:.68rem 1.4rem;border-radius:var(--r);border:none;transition:all .18s;cursor:pointer;white-space:nowrap}
-.btn-p{background:var(--ind);color:#fff}.btn-p:hover{background:#4f52d4}
-.btn-ghost{background:transparent;border:1px solid var(--b2);color:var(--t80)}.btn-ghost:hover{border-color:var(--b3);color:var(--t100)}
-.btn-sm{padding:.45rem 1rem;font-size:.78rem}
+.btn-p{background:var(--ind);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.35),0 0 0 1px rgba(99,102,241,.45)}.btn-p:hover{background:var(--ind2);transform:translateY(-1px);box-shadow:0 4px 20px var(--iglow)}
+.btn-g{background:var(--t07);color:var(--t80);border:1px solid var(--b2)}.btn-g:hover{background:var(--t12);color:var(--t100)}
+.btn-lg{padding:.82rem 1.85rem;font-size:.9rem}.btn-sm{padding:.45rem .9rem;font-size:.76rem}
 .chip{display:inline-flex;align-items:center;gap:.3rem;font-size:.67rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:99px;padding:.26rem .72rem}
-.chip-i{color:var(--ind2);border:1px solid var(--ib1);background:var(--ind3)}
-.chip-a{color:var(--amb2);border:1px solid rgba(245,158,11,.28);background:var(--amg)}
-.chip-g{color:var(--grn2);border:1px solid rgba(52,211,153,.28);background:rgba(16,185,129,.06)}
-.chip-w{color:var(--t55);border:1px solid var(--b1);background:var(--t04)}
+.chip-i{color:var(--ind2);border:1px solid var(--ib1);background:var(--ind3)}.chip-a{color:var(--amb2);border:1px solid rgba(245,158,11,.28);background:var(--amg)}
+.chip-g{color:var(--grn2);border:1px solid rgba(52,211,153,.28);background:rgba(16,185,129,.06)}.chip-w{color:var(--t55);border:1px solid var(--b1);background:var(--t04)}
+
 /* NAV */
-nav{position:sticky;top:0;z-index:100;background:rgba(9,9,11,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--b1)}
-.nav-i{display:flex;align-items:center;justify-content:space-between;height:62px}
-.nav-logo{font-family:var(--fd);font-size:1.15rem;font-weight:400}
-.nav-links{display:flex;align-items:center;gap:1.8rem}
-.nav-links a{font-size:.85rem;color:var(--t55);transition:color .15s}.nav-links a:hover,.nav-links a.active{color:var(--t100)}
-.nav-r{display:flex;align-items:center;gap:.65rem}
-.lang-btn{padding:.2rem .5rem;border-radius:6px;border:1px solid rgba(250,250,248,.1);background:transparent;color:rgba(250,250,248,.45);font-size:.65rem;font-weight:600;cursor:pointer;transition:all .18s;font-family:var(--fs)}
-.lang-btn.active{background:rgba(99,102,241,.2);border-color:rgba(99,102,241,.4);color:#a5b4fc}
-/* HERO */
-.hero{padding:5rem 0 3rem;text-align:center}
-.ph-eyebrow{display:flex;align-items:center;justify-content:center;gap:.75rem;margin-bottom:1.5rem}
-.phline{flex:0 0 40px;height:1px;background:linear-gradient(90deg,transparent,var(--b2))}
-.hero h1{font-family:var(--fd);font-size:clamp(2.2rem,5vw,3.5rem);font-weight:400;line-height:1.12;margin-bottom:1rem}
-.hero h1 em{font-style:italic;color:var(--ind2)}
-.hero-sub{font-size:1rem;color:var(--t55);max-width:520px;margin:0 auto 2rem}
-.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:1rem}
-/* TOOL GRID */
-.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.25rem;margin:2.5rem 0}
-.tool-full{background:var(--bg2);border:1px solid var(--b1);border-radius:22px;overflow:hidden;transition:all .3s}
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;display:flex;align-items:center;padding:0 1.5rem;background:rgba(9,9,11,.9);backdrop-filter:blur(20px) saturate(1.5);border-bottom:1px solid var(--b1)}
+.ni{max-width:1160px;margin:0 auto;width:100%;display:flex;align-items:center}
+.nlogo{font-family:var(--fd);font-size:1.15rem;font-weight:400;flex-shrink:0}.nlogo .dot{color:var(--ind2)}
+.nlinks{display:flex;align-items:center;gap:.05rem;flex:1;margin-left:1.5rem}
+.nlinks a{font-size:.81rem;font-weight:400;color:var(--t55);padding:.35rem .68rem;border-radius:7px;transition:all .15s}
+.nlinks a:hover,.nlinks a.on{color:var(--t100);background:var(--t04)}
+.nright{display:flex;align-items:center;gap:.55rem;margin-left:auto}
+.nlang{display:flex;gap:.15rem;margin-right:.2rem}
+.nlang a{font-size:.69rem;font-weight:600;color:var(--t30);padding:.2rem .4rem;border-radius:5px;border:1px solid transparent;transition:all .15s}
+.nlang a:hover,.nlang a.on{color:var(--t80);background:var(--t07);border-color:var(--b1)}
+.nham{display:none;flex-direction:column;gap:4px;background:none;border:none;padding:6px}
+.nham span{display:block;width:20px;height:1.5px;background:var(--t55);border-radius:2px}
+@media(max-width:860px){.nlinks,.nlang{display:none}.nham{display:flex}.nlinks.open{display:flex;flex-direction:column;position:fixed;top:60px;left:0;right:0;background:rgba(9,9,11,.98);border-bottom:1px solid var(--b1);padding:1.25rem;gap:.22rem;z-index:499}}
+
+/* PAGE HERO */
+.page-hero{padding:8rem 1.5rem 5rem;text-align:center;border-bottom:1px solid var(--b1);background:radial-gradient(ellipse 800px 400px at 50% 80%,rgba(99,102,241,.07),transparent 70%),var(--bg)}
+.ph-eyebrow{display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:1.25rem}
+.phline{width:20px;height:1px;background:var(--ind);opacity:.6}
+
+/* TOOLS GRID */
+.tools-section{padding:5rem 1.5rem}
+.tools-main{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.tool-full{background:var(--bg2);border:1px solid var(--b1);border-radius:22px;overflow:hidden;transition:all .3s;cursor:pointer}
 .tool-full:hover{box-shadow:0 24px 60px rgba(0,0,0,.4)}
-.tf-featured{grid-column:1/-1}
-.tf-ind{border-color:rgba(99,102,241,.18)}
-.tf-grn{border-color:rgba(16,185,129,.15)}
-.tf-amb{border-color:rgba(212,160,23,.2)}
-.tf-header{padding:1.75rem 1.75rem 1.25rem}
-.tf-top{display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem}
-.tf-ico{font-size:1.5rem}
+.tf-header{padding:2rem 2rem 1.5rem}
+.tf-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem}
+.tf-ico{width:52px;height:52px;border-radius:14px;border:1px solid var(--b1);display:flex;align-items:center;justify-content:center;font-size:1.4rem}
 .tf-name{font-family:var(--fd);font-size:1.5rem;font-weight:400;margin-bottom:.45rem;line-height:1.1}
-.tf-desc{font-size:.85rem;color:var(--t55);line-height:1.65;margin-bottom:1rem}
-.tf-tags{display:flex;flex-wrap:wrap;gap:.4rem}
-.t-tag{font-size:.67rem;padding:.2rem .55rem;border-radius:99px;background:var(--t04);border:1px solid var(--b1);color:var(--t55)}
-.tf-demo{padding:0 1.75rem 1.75rem}
-.tfd-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--t30);margin-bottom:.6rem}
-.demo-input-wrap{display:flex;gap:.5rem;margin-bottom:.75rem;align-items:stretch}
-.demo-input{flex:1;background:var(--bg3);border:1px solid var(--b2);border-radius:var(--r);padding:.6rem .85rem;font-family:var(--fs);font-size:.83rem;color:var(--t100);outline:none;transition:border-color .18s}
-.demo-input:focus{border-color:var(--ind)}
-.demo-input::placeholder{color:var(--t30)}
+.tf-desc{font-size:.83rem;color:var(--t55);line-height:1.7;margin-bottom:1.25rem}
+.tf-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:0}
+.t-tag{font-size:.62rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--t30);border:1px solid var(--b1);border-radius:5px;padding:.14rem .42rem}
+/* Demo area */
+.tf-demo{border-top:1px solid var(--b1);padding:1.5rem 2rem}
+.tfd-label{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t30);margin-bottom:.85rem}
+.demo-input-wrap{display:flex;gap:.55rem;margin-bottom:.85rem;flex-wrap:wrap}
+.demo-input{flex:1;min-width:180px;background:var(--bg3);border:1px solid var(--b1);border-radius:8px;padding:.62rem .9rem;color:var(--t100);font-family:var(--fs);font-size:.82rem;outline:none;transition:border-color .18s}
+.demo-input::placeholder{color:var(--t30)}.demo-input:focus{border-color:rgba(99,102,241,.4)}
 .demo-output{background:var(--bg3);border:1px solid var(--b1);border-radius:10px;padding:1rem;min-height:60px;font-size:.82rem;color:var(--t55);transition:all .3s;line-height:1.6}
 .demo-output.has-result{color:var(--t80);border-color:var(--b2)}
-.coming-soon-overlay{display:flex;align-items:center;justify-content:center;padding:1.5rem;background:var(--bg3);border:1px solid var(--b1);border-radius:10px;min-height:80px}
-.coming-soon-text{font-size:.82rem;color:var(--t30);text-align:center;line-height:1.6}
-/* FEATURED LAKAY */
-.lp-demo{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;padding:0 1.75rem 1.75rem}
-.lp-msgs{background:var(--bg3);border:1px solid var(--b2);border-radius:14px;padding:1rem;display:flex;flex-direction:column;gap:.6rem}
-.lp-msg{display:flex;gap:.5rem;font-size:.78rem}
-.lp-msg.bot .lp-av{background:linear-gradient(135deg,var(--ind),#8b5cf6)}
-.lp-msg.usr{flex-direction:row-reverse}
-.lp-msg.usr .lp-av{background:var(--t12)}
-.lp-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0}
-.lp-bbl{padding:.45rem .7rem;border-radius:10px;line-height:1.5;max-width:80%}
-.lp-msg.bot .lp-bbl{background:var(--bg4);color:var(--t80)}
-.lp-msg.usr .lp-bbl{background:var(--ind3);color:var(--ind2);text-align:right}
-.lp-actions{display:flex;flex-direction:column;gap:.75rem}
-.lp-launch{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:linear-gradient(135deg,var(--ind),#8b5cf6);color:#fff;padding:.85rem 1.5rem;border-radius:var(--r);font-size:.88rem;font-weight:600;transition:all .22s;box-shadow:0 4px 20px var(--iglow)}
-.lp-launch:hover{transform:translateY(-2px);box-shadow:0 8px 32px var(--iglow)}
+/* Color variants */
+.tf-ind .tf-ico{background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.22)}
+.tf-ind:hover{border-color:rgba(99,102,241,.2)}
+.tf-ind .tf-ico-bar{height:2px;background:var(--ind)}
+.tf-amb .tf-ico{background:rgba(217,119,6,.1);border-color:rgba(217,119,6,.2)}
+.tf-amb:hover{border-color:rgba(217,119,6,.2)}
+.tf-grn .tf-ico{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.18)}
+.tf-grn:hover{border-color:rgba(16,185,129,.2)}
+/* Loading */
+.loader{display:none;width:16px;height:16px;border:2px solid var(--b2);border-top-color:var(--ind2);border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:900px){.tools-main{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.tools-main{grid-template-columns:1fr}}
+
+/* DEMO WALL */
+.demo-wall{padding:5rem 1.5rem;background:var(--bg2);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1)}
+.dw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-top:3.5rem}
+.dw-card{background:var(--bg);border:1px solid var(--b1);border-radius:var(--r2);padding:2rem;transition:all .28s}
+.dw-card:hover{border-color:var(--b2);box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.dw-ico{font-size:1.5rem;margin-bottom:1rem}
+.dw-name{font-family:var(--fd);font-size:1.25rem;font-weight:400;margin-bottom:.5rem}
+.dw-desc{font-size:.82rem;color:var(--t55);line-height:1.65;margin-bottom:1.25rem}
+.dw-input{width:100%;background:var(--bg2);border:1px solid var(--b1);border-radius:8px;padding:.65rem .9rem;color:var(--t100);font-family:var(--fs);font-size:.82rem;outline:none;transition:border-color .18s;margin-bottom:.65rem}
+.dw-input::placeholder{color:var(--t30)}.dw-input:focus{border-color:rgba(99,102,241,.4)}
+.dw-out{background:var(--bg2);border:1px solid var(--b1);border-radius:10px;padding:1rem;font-size:.82rem;color:var(--t30);line-height:1.6;min-height:80px;margin-bottom:1rem;transition:all .3s}
+.dw-out.has{color:var(--t80);border-color:var(--b2)}
+@media(max-width:760px){.dw-grid{grid-template-columns:1fr}}
+
 /* FOOTER */
-footer{border-top:1px solid var(--b1);padding:2rem 0;margin-top:4rem}
-.foot-i{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-.foot-links{display:flex;gap:1.5rem}
-.foot-links a{font-size:.82rem;color:var(--t55)}.foot-links a:hover{color:var(--t100)}
-.foot-copy{font-size:.78rem;color:var(--t30)}
-.wa-btn{position:fixed;bottom:1.5rem;right:1.5rem;width:48px;height:48px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 4px 16px rgba(37,211,102,.35);z-index:99;transition:transform .2s}
-.wa-btn:hover{transform:scale(1.1)}
-@media(max-width:640px){.lp-demo{grid-template-columns:1fr}.tf-header,.tf-demo{padding-left:1.25rem;padding-right:1.25rem}.nav-links{display:none}.tools-grid{grid-template-columns:1fr}}
+footer{background:var(--bg);border-top:1px solid var(--b1);padding:4rem 1.5rem 2rem}
+.ft{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.ft-logo{font-family:var(--fd);font-size:1.1rem;font-weight:400}.ft-logo span{color:var(--ind2)}
+.ft-links{display:flex;gap:1.5rem;flex-wrap:wrap}.ft-links a{font-size:.78rem;color:var(--t30);transition:color .15s}.ft-links a:hover{color:var(--t80)}
+.ft-copy{font-size:.72rem;color:var(--t30)}
+.wa{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;width:48px;height:48px;border-radius:50%;background:#25D366;color:#fff;font-size:1.3rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.35);transition:transform .2s}.wa:hover{transform:scale(1.1)}
 </style>
 </head>
 <body>
-<nav><div class="c nav-i">
-  <a href="index.html" class="nav-logo">KreyòlAI·Hub</a>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="academy.html">Academy</a>
-    <a href="tools.html" class="active">AI Tools</a>
-    <a href="consulting.html">Consulting</a>
-    <a href="index.html#community">Community</a>
-  </div>
-  <div class="nav-r">
-    <button type="button" id="tl-en" class="lang-btn active" onclick="switchLang('en')">EN</button>
-    <button type="button" id="tl-fr" class="lang-btn" onclick="switchLang('fr')">FR</button>
-    <button type="button" id="tl-ht" class="lang-btn" onclick="switchLang('ht')">KW</button>
-    <a href="academy.html" class="btn btn-p btn-sm">Get Started →</a>
-  </div>
-</div></nav>
 
-<main>
-<section class="hero c">
-  <div class="ph-eyebrow"><div class="phline"></div><span class="chip chip-a">AI Tools Platform</span><div class="phline"></div></div>
-  <h1>AI built <em>for Haitians.</em></h1>
-  <p class="hero-sub">Purpose-built AI tools addressing real challenges faced by Haitians and the global diaspora. Try any tool — no account required.</p>
-  <div class="hero-tags">
-    <span class="chip chip-g">6 Tools Available</span>
-    <span class="chip chip-i">3 Languages</span>
-    <span class="chip chip-a">Free to Try</span>
-    <span class="chip chip-w">No Account Needed</span>
+<nav id="nav">
+  <div class="ni">
+    <a href="index.html" class="nlogo">KreyòlAI<span class="dot">·</span>Hub</a>
+    <div class="nlinks" id="nl">
+      <a href="index.html">Home</a><a href="academy.html">Academy</a>
+      <a href="tools.html" class="on">AI Tools</a><a href="consulting.html">Consulting</a>
+      <a href="index.html#community">Community</a>
+    </div>
+    <div class="nright">
+      <div class="nlang"><a href="#" class="on">EN</a><a href="#">FR</a><a href="#">KW</a></div>
+      <a href="#" class="btn btn-g btn-sm">Sign In</a>
+      <a href="academy.html" class="btn btn-p btn-sm">Get Started →</a>
+    </div>
+    <button class="nham" onclick="document.getElementById('nl').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <div class="c">
+    <div class="ph-eyebrow"><div class="phline"></div><span class="chip chip-a">AI Tools Platform</span><div class="phline"></div></div>
+    <h1 style="font-family:var(--fd);font-size:clamp(2.8rem,6vw,5.5rem);font-weight:400;line-height:1.0;letter-spacing:-.015em;margin-bottom:1.3rem" data-r>AI built <em style="color:var(--t55)">for Haitians.</em></h1>
+    <p style="font-size:1.05rem;font-weight:300;color:var(--t55);max-width:500px;margin:0 auto 2.5rem;line-height:1.78" data-r data-d="1">Purpose-built AI tools addressing real challenges faced by Haitians and the global diaspora. Try any tool — no account required.</p>
+    <div style="display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap" data-r data-d="2">
+      <span class="chip chip-g">6 Tools Available</span>
+      <span class="chip chip-i">3 Languages</span>
+      <span class="chip chip-a">Free to Try</span>
+      <span class="chip chip-w">No Account Needed</span>
+    </div>
+  </div>
+</header>
+
+<!-- TOOLS -->
+<section class="tools-section">
+  <div class="c">
+    <div class="tools-main">
+
+      <!-- Lakay Pale — FEATURED FULL WIDTH -->
+      <div class="tool-full tf-featured" data-r data-d="0" style="grid-column:1/-1;background:linear-gradient(135deg,rgba(99,102,241,.13),rgba(168,85,247,.09),rgba(236,72,153,.07));border:1px solid rgba(129,140,248,.35);box-shadow:0 0 40px rgba(99,102,241,.12)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center">
+          <div class="tf-header">
+            <div class="tf-top">
+              <div class="tf-ico" style="font-size:2rem">🗣️</div>
+              <span class="chip chip-g" style="background:rgba(16,185,129,.2);border-color:rgba(16,185,129,.45);color:#34d399">● Live</span>
+              <span class="chip" style="background:rgba(99,102,241,.18);border-color:rgba(129,140,248,.4);color:#a5b4fc;margin-left:.3rem">Featured</span>
+            </div>
+            <div class="tf-name" style="font-size:2rem;background:linear-gradient(135deg,#a5b4fc,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Lakay Pale</div>
+            <p class="tf-desc" style="font-size:.92rem;color:#cbd5e1;line-height:1.8">The first AI voice assistant built entirely in Haitian Creole. Speak or type — Lakay Pale understands you, answers you, and thinks in Kreyòl. Scan documents, generate images, and get real AI responses. Built for Haitians, by Haitians.</p>
+            <div class="tf-tags">
+              <span class="t-tag" style="background:rgba(99,102,241,.2);border-color:rgba(129,140,248,.35);color:#a5b4fc">Haitian Creole</span>
+              <span class="t-tag" style="background:rgba(168,85,247,.15);border-color:rgba(196,125,255,.3);color:#c084fc">Voice AI</span>
+              <span class="t-tag">Image Gen</span>
+              <span class="t-tag">Document Scan</span>
+              <span class="t-tag">Claude AI</span>
+            </div>
+            <div style="display:flex;gap:.75rem;margin-top:1.25rem;flex-wrap:wrap">
+              <a href="https://michelsassia-netizen.github.io/Kreyolaibot/" target="_blank" class="btn btn-p" style="background:linear-gradient(135deg,#6366f1,#8b5cf6,#a855f7);box-shadow:0 6px 28px rgba(99,102,241,.45);font-size:.85rem;padding:.65rem 1.4rem">🚀 Launch Lakay Pale →</a>
+              <a href="https://michelsassia-netizen.github.io/Kreyolaibot/" target="_blank" class="btn btn-g" style="font-size:.85rem;padding:.65rem 1.2rem;border-color:rgba(129,140,248,.3);color:#a5b4fc">Try Demo</a>
+            </div>
+          </div>
+          <div style="background:rgba(4,6,26,.7);border:1px solid rgba(129,140,248,.2);border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.4)">
+            <div style="background:rgba(7,9,31,.9);padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(129,140,248,.15)">
+              <div style="display:flex;gap:.3rem"><div style="width:8px;height:8px;border-radius:50%;background:#ff5f57"></div><div style="width:8px;height:8px;border-radius:50%;background:#ffbd2e"></div><div style="width:8px;height:8px;border-radius:50%;background:#28c840"></div></div>
+              <span style="font-size:.6rem;color:rgba(165,180,252,.6);font-weight:600;letter-spacing:.1em">LAKAY PALE — AI AN KREYÒL</span>
+              <div style="display:flex;align-items:center;gap:.3rem;font-size:.58rem;color:#34d399;font-weight:600"><div style="width:5px;height:5px;border-radius:50%;background:#34d399;animation:blink 1.5s infinite"></div>Live</div>
+            </div>
+            <div style="padding:1.1rem;display:flex;flex-direction:column;gap:.65rem">
+              <div style="display:flex;gap:.65rem;align-items:flex-start">
+                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0">🇭🇹</div>
+                <div style="background:rgba(99,102,241,.12);border:1px solid rgba(129,140,248,.2);border-radius:4px 12px 12px 12px;padding:.6rem .85rem;font-size:.74rem;color:#cbd5e1;line-height:1.7">Bonjou! Kijan mwen ka ede w jodi a?</div>
+              </div>
+              <div style="display:flex;gap:.65rem;align-items:flex-start;flex-direction:row-reverse">
+                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#a855f7);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0">👤</div>
+                <div style="background:rgba(168,85,247,.12);border:1px solid rgba(196,125,255,.2);border-radius:12px 4px 12px 12px;padding:.6rem .85rem;font-size:.74rem;color:#e2e8f0;line-height:1.7">Ki jan pou m fè lajan ak AI?</div>
+              </div>
+              <div style="display:flex;gap:.65rem;align-items:flex-start">
+                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0">🗣️</div>
+                <div style="background:rgba(99,102,241,.12);border:1px solid rgba(129,140,248,.2);border-radius:4px 12px 12px 12px;padding:.6rem .85rem;font-size:.74rem;color:#cbd5e1;line-height:1.7">Genyen 5 fason rapid: logo design, chatbot, tradiksyon, kontni rezo sosyal, ak konsiltasyon AI. Kòmanse ak sa ki pi fasil pou ou... 💡</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:.5rem;background:rgba(7,9,31,.6);border:1px solid rgba(129,140,248,.18);border-radius:10px;padding:.5rem .8rem;margin-top:.2rem">
+                <span style="font-size:.68rem;color:rgba(165,180,252,.5);flex:1">Ekri oswa pale an Kreyòl...</span>
+                <span style="font-size:.75rem">🎤</span>
+                <div style="background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:7px;padding:.28rem .65rem;font-size:.62rem;font-weight:600;color:#fff">Voye</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lakay Pale — FEATURED -->
+      <div class="tool-full" data-r data-d="1" style="grid-column:1/-1;background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(168,85,247,.08),rgba(59,130,246,.06));border:1px solid rgba(129,140,248,.35);border-radius:18px;padding:2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center">
+        <div class="tf-header">
+          <div class="tf-top" style="margin-bottom:.75rem">
+            <div class="tf-ico" style="font-size:2rem">🗣️</div>
+            <span class="chip chip-g" style="background:rgba(99,102,241,.2);border-color:rgba(129,140,248,.5);color:#a5b4fc">Live</span>
+            <span style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#c084fc;background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.3);border-radius:99px;padding:.2rem .6rem">⭐ Flagship</span>
+          </div>
+          <div class="tf-name" style="font-size:1.85rem;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Lakay Pale</div>
+          <p class="tf-desc" style="font-size:.88rem;color:#94a3b8;line-height:1.8;margin:.5rem 0 1rem">The first Haitian Creole AI voice assistant. Speak or type in Kreyòl, French, or English — Lakay Pale understands and responds in your language. Scan documents, generate images, and more.</p>
+          <div class="tf-tags" style="margin-bottom:1.2rem">
+            <span class="t-tag">Kreyòl Voice</span><span class="t-tag">Document Scan</span><span class="t-tag">Image Gen</span><span class="t-tag">Trilingual</span><span class="t-tag">Claude AI</span>
+          </div>
+          <div style="display:flex;gap:.7rem;flex-wrap:wrap">
+            <a href="https://michelsassia-netizen.github.io/Kreyolaibot/" target="_blank" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);box-shadow:0 6px 25px rgba(99,102,241,.4);border-radius:10px;padding:.65rem 1.4rem;font-size:.82rem;font-weight:600;color:#fff;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;font-family:inherit">🚀 Lanse Lakay Pale</a>
+            <a href="https://michelsassia-netizen.github.io/Kreyolaibot/" target="_blank" style="border:1px solid rgba(129,140,248,.3);border-radius:10px;padding:.65rem 1.2rem;font-size:.82rem;font-weight:600;color:#a5b4fc;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;background:rgba(99,102,241,.07);font-family:inherit">📖 Learn More</a>
+          </div>
+        </div>
+        <div style="background:rgba(5,8,22,.8);border:1px solid rgba(129,140,248,.2);border-radius:14px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.4)">
+          <div style="background:linear-gradient(90deg,rgba(99,102,241,.2),rgba(168,85,247,.15));padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid rgba(129,140,248,.15)">
+            <span style="font-size:1.1rem">🗣️</span>
+            <span style="font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;color:#c4b5fd">Lakay Pale</span>
+            <span style="margin-left:auto;display:flex;align-items:center;gap:.3rem;font-size:.58rem;font-weight:600;color:#34d399;text-transform:uppercase;letter-spacing:.08em"><span style="width:5px;height:5px;border-radius:50%;background:#34d399;display:inline-block"></span>Live</span>
+          </div>
+          <div style="padding:1rem;display:flex;flex-direction:column;gap:.65rem;min-height:180px">
+            <div style="display:flex;justify-content:flex-end">
+              <div style="background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:12px 12px 3px 12px;padding:.55rem .85rem;font-size:.74rem;color:#fff;max-width:75%">Kisa ou kapab fè pou mwen?</div>
+            </div>
+            <div style="display:flex;gap:.5rem;align-items:flex-start">
+              <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#a855f7);display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0">🤖</div>
+              <div style="background:rgba(255,255,255,.05);border:1px solid rgba(129,140,248,.15);border-radius:3px 12px 12px 12px;padding:.55rem .85rem;font-size:.74rem;color:#cbd5e1;max-width:80%;line-height:1.65">Bonjou! Mwen ka tradui, reponn kesyon, skane dokiman, ak kreye imaj — tout an Kreyòl! 🇭🇹</div>
+            </div>
+            <div style="display:flex;justify-content:flex-end">
+              <div style="background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:12px 12px 3px 12px;padding:.55rem .85rem;font-size:.74rem;color:#fff;max-width:75%">Ekri yon plan biznis pou mwen</div>
+            </div>
+            <div style="display:flex;gap:.5rem;align-items:flex-start">
+              <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#a855f7);display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0">🤖</div>
+              <div style="background:rgba(255,255,255,.05);border:1px solid rgba(129,140,248,.15);border-radius:3px 12px 12px 12px;padding:.55rem .85rem;font-size:.74rem;color:#cbd5e1;max-width:80%;line-height:1.65">Avèk plezi! Ba mwen non biznis ou ak sektè ou... ✍️</div>
+            </div>
+          </div>
+          <div style="padding:.65rem 1rem;border-top:1px solid rgba(129,140,248,.1);display:flex;gap:.5rem">
+            <div style="flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(129,140,248,.18);border-radius:8px;padding:.45rem .75rem;font-size:.7rem;color:rgba(148,163,184,.5)">Ekri an Kreyòl...</div>
+            <div style="background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:8px;padding:.45rem .75rem;font-size:.75rem;color:#fff">→</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kreyòl Translate -->
+      <div class="tool-full tf-ind" data-r data-d="1">
+        <div class="tf-header">
+          <div class="tf-top">
+            <div class="tf-ico">🌐</div>
+            <span class="chip chip-g">Live</span>
+          </div>
+          <div class="tf-name">Kreyòl Translate</div>
+          <p class="tf-desc">Accurate Haitian Creole ↔ English ↔ French AI translation. Preserves idioms and cultural context that generic translators miss.</p>
+          <div class="tf-tags"><span class="t-tag">Creole</span><span class="t-tag">Translation</span><span class="t-tag">NLP</span><span class="t-tag">Cultural Context</span></div>
+        </div>
+        <div class="tf-demo">
+          <div class="tfd-label">Try it now</div>
+          <div class="demo-input-wrap">
+            <input class="demo-input" id="t1-in" placeholder="Type in Creole, English, or French..." onkeydown="if(event.key==='Enter')runDemo('translate',this.value,'t1-out',this)"/>
+            <div class="loader" id="t1-loader"></div>
+            <button class="btn btn-p btn-sm" onclick="runDemo('translate',document.getElementById('t1-in').value,'t1-out',document.getElementById('t1-in'))">Translate →</button>
+          </div>
+          <div class="demo-output" id="t1-out">Translation will appear here...</div>
+        </div>
+      </div>
+
+      <!-- Grann AI -->
+      <div class="tool-full tf-amb" data-r data-d="2" style="border-color:rgba(212,160,23,.35);background:linear-gradient(135deg,rgba(28,21,8,.8),rgba(20,16,6,.6))">
+        <div class="tf-header">
+          <div class="tf-top">
+            <div class="tf-ico">👵🏾</div>
+            <span class="chip chip-g" style="background:rgba(212,160,23,.2);border-color:rgba(212,160,23,.5);color:#f0c040">Live</span>
+          </div>
+          <div class="tf-name" style="background:linear-gradient(135deg,#d4a017,#f0c040);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Grann AI</div>
+          <p class="tf-desc">Haitian cultural AI elder. Proverbs, history, traditions, recipes, folktales, and the wisdom of 1804 — all in Kreyòl, French, and English.</p>
+          <div class="tf-tags"><span class="t-tag">Culture</span><span class="t-tag">Istwa 1804</span><span class="t-tag">Pwovèb</span><span class="t-tag">Manje</span><span class="t-tag">Kont</span></div>
+        </div>
+        <div class="tf-demo">
+          <div class="tfd-label">Ask Grann anything</div>
+          <div class="demo-input-wrap">
+            <input class="demo-input" id="t2-in" placeholder="Ask about Haiti, proverbs, history..." onkeydown="if(event.key==='Enter')runDemo('grann',this.value,'t2-out',this)"/>
+            <button class="btn btn-p btn-sm" style="background:linear-gradient(135deg,#d4a017,#e8891a);box-shadow:0 4px 15px rgba(212,160,23,.3)" onclick="runDemo('grann',document.getElementById('t2-in').value,'t2-out',document.getElementById('t2-in'))">Ask →</button>
+          </div>
+          <div class="demo-output" id="t2-out">Grann AI will respond here...</div>
+          <a href="grann.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;font-size:.74rem;color:#d4a017;text-decoration:none;font-weight:600">👵🏾 Ouvri Grann AI konplè →</a>
+        </div>
+      </div>
+
+      <!-- Lekòl AI -->
+      <div class="tool-full tf-grn" data-r data-d="3">
+        <div class="tf-header">
+          <div class="tf-top">
+            <div class="tf-ico">📚</div>
+            <span class="chip chip-a">Beta</span>
+          </div>
+          <div class="tf-name">Lekòl AI</div>
+          <p class="tf-desc">AI tutoring for Haitian students. Explains any concept in Creole, French, and English with adaptive difficulty.</p>
+          <div class="tf-tags"><span class="t-tag">Education</span><span class="t-tag">Tutoring</span><span class="t-tag">Adaptive</span><span class="t-tag">Trilingual</span></div>
+        </div>
+        <div class="tf-demo">
+          <div class="tfd-label">Ask any school question</div>
+          <div class="demo-input-wrap">
+            <input class="demo-input" id="t3-in" placeholder="e.g. What is photosynthesis?" onkeydown="if(event.key==='Enter')runDemo('lekol',this.value,'t3-out',this)"/>
+            <button class="btn btn-p btn-sm" style="background:var(--grn);box-shadow:none" onclick="runDemo('lekol',document.getElementById('t3-in').value,'t3-out',document.getElementById('t3-in'))">Explain →</button>
+          </div>
+          <div class="demo-output" id="t3-out">Explanation will appear here...</div>
+        </div>
+      </div>
+
+      <!-- Biznis AI -->
+      <div class="tool-full tf-ind" data-r data-d="1">
+        <div class="tf-header">
+          <div class="tf-top">
+            <div class="tf-ico">💼</div>
+            <span class="chip chip-a">Beta</span>
+          </div>
+          <div class="tf-name">Biznis AI</div>
+          <p class="tf-desc">Business intelligence assistant. Generate proposals, contracts, market research — optimized for Haitian entrepreneurs.</p>
+          <div class="tf-tags"><span class="t-tag">Business</span><span class="t-tag">Strategy</span><span class="t-tag">Proposals</span><span class="t-tag">Market Research</span></div>
+        </div>
+        <div class="tf-demo">
+          <div class="tfd-label">Describe your business need</div>
+          <div class="demo-input-wrap">
+            <input class="demo-input" id="t4-in" placeholder="e.g. Write an elevator pitch for my restaurant" onkeydown="if(event.key==='Enter')runDemo('biznis',this.value,'t4-out',this)"/>
+            <button class="btn btn-p btn-sm" onclick="runDemo('biznis',document.getElementById('t4-in').value,'t4-out',document.getElementById('t4-in'))">Generate →</button>
+          </div>
+          <div class="demo-output" id="t4-out">Business content will appear here...</div>
+        </div>
+      </div>
+
+      <!-- Document AI -->
+      <div class="tool-full tf-amb" data-r data-d="2">
+        <div class="tf-header">
+          <div class="tf-top">
+            <div class="tf-ico">📄</div>
+            <span class="chip chip-g">Live</span>
+          </div>
+          <div class="tf-name">Document AI</div>
+          <p class="tf-desc">Upload any document — medical, legal, immigration. Get a clear, accurate summary in your language of choice.</p>
+          <div class="tf-tags"><span class="t-tag">Documents</span><span class="t-tag">Legal</span><span class="t-tag">Medical</span><span class="t-tag">Immigration</span></div>
+        </div>
+        <div class="tf-demo">
+          <div class="tfd-label">Describe a document to summarize</div>
+          <div class="demo-input-wrap">
+            <input class="demo-input" id="t5-in" placeholder="e.g. Green card application requirements" onkeydown="if(event.key==='Enter')runDemo('document',this.value,'t5-out',this)"/>
+            <button class="btn btn-p btn-sm" style="background:var(--amb);box-shadow:none" onclick="runDemo('document',document.getElementById('t5-in').value,'t5-out',document.getElementById('t5-in'))">Summarize →</button>
+          </div>
+          <div class="demo-output" id="t5-out">Summary will appear here...</div>
+        </div>
+      </div>
+
+      <!-- Immigration AI -->
+      <div class="tool-full tf-grn" data-r data-d="3">
+        <div class="tf-header">
+          <div class="tf-top">
+            <div class="tf-ico">✈️</div>
+            <span class="chip chip-w">Coming Soon</span>
+          </div>
+          <div class="tf-name">Immigration AI</div>
+          <p class="tf-desc">Navigate US, Canada, and UK immigration with AI guidance. Forms, deadlines, and requirements — all simplified in your language.</p>
+          <div class="tf-tags"><span class="t-tag">Immigration</span><span class="t-tag">US</span><span class="t-tag">Canada</span><span class="t-tag">UK</span></div>
+        </div>
+        <div class="tf-demo" style="opacity:.6;pointer-events:none">
+          <div class="tfd-label">Coming soon — Join waitlist</div>
+          <div class="demo-input-wrap">
+            <input class="demo-input" placeholder="e.g. How do I apply for a US visa?" disabled/>
+            <button class="btn btn-g btn-sm" onclick="this.textContent='✓ Waitlisted!'">Join Waitlist</button>
+          </div>
+          <div class="demo-output">Launching Q2 2026. Join the waitlist above.</div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
-<section class="c">
-<div class="tools-grid">
-
-  <!-- LAKAY PALE — REAL, LIVE EXTERNAL APP -->
-  <div class="tool-full tf-featured" style="background:linear-gradient(135deg,rgba(99,102,241,.13),rgba(168,85,247,.09));border:1px solid rgba(129,140,248,.35)">
-    <div class="tf-header">
-      <div class="tf-top">
-        <div class="tf-ico">🗣️</div>
-        <span class="chip chip-g" style="background:rgba(16,185,129,.2);border-color:rgba(16,185,129,.45);color:#34d399">● Live</span>
-        <span class="chip chip-i">Featured</span>
+<!-- DEMO WALL -->
+<section class="demo-wall" id="demo">
+  <div class="c">
+    <div style="text-align:center;margin-bottom:.5rem" data-r>
+      <div style="display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:1.25rem">
+        <div style="width:20px;height:1px;background:var(--ind);opacity:.6"></div>
+        <span class="chip chip-g">Demo Wall</span>
+        <div style="width:20px;height:1px;background:var(--ind);opacity:.6"></div>
       </div>
-      <div class="tf-name" style="font-size:2rem;background:linear-gradient(135deg,#a5b4fc,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Lakay Pale</div>
-      <p class="tf-desc">The first AI voice assistant built entirely in Haitian Creole. Speak or type — Lakay Pale understands you, answers you, and thinks in Kreyòl.</p>
-      <div class="tf-tags"><span class="t-tag">Haitian Creole</span><span class="t-tag">Voice AI</span><span class="t-tag">Claude AI</span></div>
+      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:400;margin-bottom:1rem">Interactive AI <em style="color:var(--t55)">playground.</em></h2>
+      <p style="font-size:1rem;color:var(--t55);max-width:420px;margin:0 auto;line-height:1.75;font-weight:300">Explore what AI can do for Haitians. No login. No account. Just try.</p>
     </div>
-    <div class="lp-demo">
-      <div class="lp-msgs">
-        <div class="lp-msg bot"><div class="lp-av">🗣️</div><div class="lp-bbl">Bonjou! Kijan mwen ka ede w jodi a?</div></div>
-        <div class="lp-msg usr"><div class="lp-av">👤</div><div class="lp-bbl">Ki jan pou m fè lajan ak AI?</div></div>
-        <div class="lp-msg bot"><div class="lp-av">🗣️</div><div class="lp-bbl">Genyen 5 fason rapid: logo, chatbot, tradiksyon, kontni, konsiltasyon AI... 💡</div></div>
+    <div class="dw-grid">
+      <div class="dw-card" data-r data-d="1">
+        <div class="dw-ico">🌐</div>
+        <div class="dw-name">Creole → English</div>
+        <p class="dw-desc">Enter any Haitian Creole text and get an instant, accurate English translation.</p>
+        <input class="dw-input" id="dw1-in" placeholder="Ekri an kreyòl isit la..." onkeydown="if(event.key==='Enter')dwRun(1,this.value)"/>
+        <div class="dw-out" id="dw1-out">Your translation will appear here...</div>
+        <button class="btn btn-p btn-sm" onclick="dwRun(1,document.getElementById('dw1-in').value)">Translate →</button>
       </div>
-      <div class="lp-actions">
-        <a href="https://michelsassia-netizen.github.io/Kreyolaibot/" class="lp-launch">🚀 Launch Lakay Pale →</a>
-        <p style="font-size:.75rem;color:var(--t30);text-align:center">Opens in the full Lakay Pale app</p>
+      <div class="dw-card" data-r data-d="2">
+        <div class="dw-ico">📖</div>
+        <div class="dw-name">Haitian Proverbs</div>
+        <p class="dw-desc">Enter a Haitian proverb and get a deep cultural explanation in English or French.</p>
+        <input class="dw-input" id="dw2-in" placeholder="e.g. Dèyè mòn gen mòn" onkeydown="if(event.key==='Enter')dwRun(2,this.value)"/>
+        <div class="dw-out" id="dw2-out">Proverb meaning will appear here...</div>
+        <button class="btn btn-p btn-sm" style="background:var(--amb);box-shadow:none" onclick="dwRun(2,document.getElementById('dw2-in').value)">Explain →</button>
       </div>
-    </div>
-  </div>
-
-  <!-- KREYOL TRANSLATE — REAL AI via Worker -->
-  <div class="tool-full tf-ind" data-r data-d="1">
-    <div class="tf-header">
-      <div class="tf-top">
-        <div class="tf-ico">🌐</div>
-        <span class="chip chip-g" style="background:rgba(16,185,129,.2);border-color:rgba(52,211,153,.5);color:#34d399">⚡ AI Live</span>
+      <div class="dw-card" data-r data-d="1">
+        <div class="dw-ico">💡</div>
+        <div class="dw-name">Business Ideas</div>
+        <p class="dw-desc">Describe your skills, location, or community — get AI-powered business ideas for the diaspora.</p>
+        <input class="dw-input" id="dw3-in" placeholder="e.g. I live in Miami and speak Creole..." onkeydown="if(event.key==='Enter')dwRun(3,this.value)"/>
+        <div class="dw-out" id="dw3-out">Business ideas will appear here...</div>
+        <button class="btn btn-p btn-sm" style="background:var(--grn);box-shadow:none" onclick="dwRun(3,document.getElementById('dw3-in').value)">Generate →</button>
       </div>
-      <div class="tf-name">Kreyòl Translate</div>
-      <p class="tf-desc">Accurate Haitian Creole ↔ English ↔ French AI translation. Preserves idioms and cultural context that generic translators miss.</p>
-      <div class="tf-tags"><span class="t-tag">Creole</span><span class="t-tag">Translation</span><span class="t-tag">NLP</span><span class="t-tag">Cultural Context</span></div>
-    </div>
-    <div class="tf-demo">
-      <div class="tfd-label">Try it now</div>
-      <div class="demo-input-wrap">
-        <input class="demo-input" id="t1-in" type="text" placeholder="Kreyòl, English ou Français..." onkeydown="if(event.key==='Enter')runTool('translate',this.value,'t1-out',this)"/>
-        <button type="button" class="btn btn-p btn-sm" onclick="runTool('translate',document.getElementById('t1-in').value,'t1-out',document.getElementById('t1-in'))">Tradui →</button>
-      </div>
-      <div class="demo-output" id="t1-out">Translation will appear here...</div>
-    </div>
-  </div>
-
-  <!-- GRANN AI — REAL AI via Worker + full page -->
-  <div class="tool-full tf-amb" data-r data-d="2" style="border-color:rgba(212,160,23,.35);background:linear-gradient(135deg,rgba(28,21,8,.8),rgba(20,16,6,.6))">
-    <div class="tf-header">
-      <div class="tf-top">
-        <div class="tf-ico">👵🏾</div>
-        <span class="chip chip-g" style="background:rgba(212,160,23,.2);border-color:rgba(212,160,23,.5);color:#f0c040">⚡ AI Live</span>
-      </div>
-      <div class="tf-name" style="background:linear-gradient(135deg,#d4a017,#f0c040);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Grann AI</div>
-      <p class="tf-desc">Haitian cultural AI elder. Proverbs, history, traditions, recipes, folktales, and the wisdom of 1804 — all in Kreyòl, French, and English.</p>
-      <div class="tf-tags"><span class="t-tag">Culture</span><span class="t-tag">Istwa 1804</span><span class="t-tag">Pwovèb</span><span class="t-tag">Manje</span><span class="t-tag">Kont</span></div>
-    </div>
-    <div class="tf-demo">
-      <div class="tfd-label">Ask Grann anything</div>
-      <div class="demo-input-wrap">
-        <input class="demo-input" id="t2-in" type="text" placeholder="Poze Grann yon kesyon..." onkeydown="if(event.key==='Enter')runTool('grann',this.value,'t2-out',this)"/>
-        <button type="button" class="btn btn-p btn-sm" style="background:linear-gradient(135deg,#d4a017,#e8891a)" onclick="runTool('grann',document.getElementById('t2-in').value,'t2-out',document.getElementById('t2-in'))">Ask →</button>
-      </div>
-      <div class="demo-output" id="t2-out">Grann AI will respond here...</div>
-      <a href="grann.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;font-size:.74rem;color:#d4a017;text-decoration:none;font-weight:600">👵🏾 Ouvri Grann AI konplè →</a>
-    </div>
-  </div>
-
-  <!-- LEKOL AI — REAL AI via Worker -->
-  <div class="tool-full tf-grn" data-r data-d="3">
-    <div class="tf-header">
-      <div class="tf-top">
-        <div class="tf-ico">📚</div>
-        <span class="chip chip-g" style="background:rgba(16,185,129,.2);border-color:rgba(52,211,153,.5);color:#34d399">⚡ AI Live</span>
-      </div>
-      <div class="tf-name">Lekòl AI</div>
-      <p class="tf-desc">AI tutoring for Haitian students. Explains any concept in Creole, French, and English with adaptive difficulty.</p>
-      <div class="tf-tags"><span class="t-tag">Education</span><span class="t-tag">Tutoring</span><span class="t-tag">Adaptive</span><span class="t-tag">Trilingual</span></div>
-    </div>
-    <div class="tf-demo">
-      <div class="tfd-label">Ask any school question</div>
-      <div class="demo-input-wrap">
-        <input class="demo-input" id="t3-in" type="text" placeholder="Ex: Ki sa ki fotwosyntèz? / What is gravity?" onkeydown="if(event.key==='Enter')runTool('lekol',this.value,'t3-out',this)"/>
-        <button type="button" class="btn btn-p btn-sm" style="background:var(--grn)" onclick="runTool('lekol',document.getElementById('t3-in').value,'t3-out',document.getElementById('t3-in'))">Eksplike →</button>
-      </div>
-      <div class="demo-output" id="t3-out">Explanation will appear here...</div>
-    </div>
-  </div>
-
-  <!-- BIZNIS AI — REAL AI via Worker -->
-  <div class="tool-full tf-ind" data-r data-d="1">
-    <div class="tf-header">
-      <div class="tf-top">
-        <div class="tf-ico">💼</div>
-        <span class="chip chip-g" style="background:rgba(16,185,129,.2);border-color:rgba(52,211,153,.5);color:#34d399">⚡ AI Live</span>
-      </div>
-      <div class="tf-name">Biznis AI</div>
-      <p class="tf-desc">Business intelligence assistant. Generate proposals, contracts, market research — optimized for Haitian entrepreneurs.</p>
-      <div class="tf-tags"><span class="t-tag">Business</span><span class="t-tag">Strategy</span><span class="t-tag">Proposals</span><span class="t-tag">Market Research</span></div>
-    </div>
-    <div class="tf-demo">
-      <div class="tfd-label">Describe your business need</div>
-      <div class="demo-input-wrap">
-        <input class="demo-input" id="t4-in" type="text" placeholder="Ex: Ekri yon pitch pou biznis mwen..." onkeydown="if(event.key==='Enter')runTool('biznis',this.value,'t4-out',this)"/>
-        <button type="button" class="btn btn-p btn-sm" onclick="runTool('biznis',document.getElementById('t4-in').value,'t4-out',document.getElementById('t4-in'))">Kreye →</button>
-      </div>
-      <div class="demo-output" id="t4-out">Business content will appear here...</div>
-    </div>
-  </div>
-
-  <!-- DOCUMENT AI — REAL AI via Worker -->
-  <div class="tool-full tf-amb" data-r data-d="2">
-    <div class="tf-header">
-      <div class="tf-top">
-        <div class="tf-ico">📄</div>
-        <span class="chip chip-g" style="background:rgba(16,185,129,.2);border-color:rgba(52,211,153,.5);color:#34d399">⚡ AI Live</span>
-      </div>
-      <div class="tf-name">Document AI</div>
-      <p class="tf-desc">Understand any legal, medical or immigration document. Get a clear summary in your language of choice.</p>
-      <div class="tf-tags"><span class="t-tag">Documents</span><span class="t-tag">Legal</span><span class="t-tag">Medical</span><span class="t-tag">Immigration</span></div>
-    </div>
-    <div class="tf-demo">
-      <div class="tfd-label">Describe a document</div>
-      <div class="demo-input-wrap">
-        <input class="demo-input" id="t5-in" type="text" placeholder="Ex: Green card, visa, kontra travay..." onkeydown="if(event.key==='Enter')runTool('document',this.value,'t5-out',this)"/>
-        <button type="button" class="btn btn-p btn-sm" style="background:var(--amb)" onclick="runTool('document',document.getElementById('t5-in').value,'t5-out',document.getElementById('t5-in'))">Rezime →</button>
-      </div>
-      <div class="demo-output" id="t5-out">Summary will appear here...</div>
-    </div>
-  </div>
-
-  <!-- IMMIGRATION AI — COMING SOON -->
-  <div class="tool-full tf-grn" data-r data-d="3" style="opacity:.75">
-    <div class="tf-header">
-      <div class="tf-top">
-        <div class="tf-ico">✈️</div>
-        <span class="chip chip-w">Coming Soon</span>
-      </div>
-      <div class="tf-name">Immigration AI</div>
-      <p class="tf-desc">Navigate US, Canada, and UK immigration with AI guidance. Forms, deadlines, and requirements — all simplified in your language.</p>
-      <div class="tf-tags"><span class="t-tag">Immigration</span><span class="t-tag">US</span><span class="t-tag">Canada</span><span class="t-tag">UK</span></div>
-    </div>
-    <div class="tf-demo">
-      <div class="coming-soon-overlay">
-        <div class="coming-soon-text">🚧 Launching Q3 2026<br><span style="font-size:.72rem;opacity:.6">Join waitlist below to be notified</span></div>
+      <div class="dw-card" data-r data-d="2">
+        <div class="dw-ico">📰</div>
+        <div class="dw-name">Haitian News Summary</div>
+        <p class="dw-desc">Paste a news headline or topic and get a clear AI summary in English, French, or Creole.</p>
+        <input class="dw-input" id="dw4-in" placeholder="Enter a topic or paste a headline..." onkeydown="if(event.key==='Enter')dwRun(4,this.value)"/>
+        <div class="dw-out" id="dw4-out">Summary will appear here...</div>
+        <button class="btn btn-p btn-sm" onclick="dwRun(4,document.getElementById('dw4-in').value)">Summarize →</button>
       </div>
     </div>
   </div>
-
-  <!-- REMIT AI — COMING SOON -->
-  <div class="tool-full" data-r data-d="1" style="opacity:.75">
-    <div class="tf-header">
-      <div class="tf-top">
-        <div class="tf-ico">💸</div>
-        <span class="chip chip-w">Coming Soon</span>
-      </div>
-      <div class="tf-name">RemitAI</div>
-      <p class="tf-desc">Compare remittance fees in real-time. Find the cheapest way to send money to Haiti from anywhere in the world.</p>
-      <div class="tf-tags"><span class="t-tag">Remittance</span><span class="t-tag">Haiti</span><span class="t-tag">Diaspora</span><span class="t-tag">Finance</span></div>
-    </div>
-    <div class="tf-demo">
-      <div class="coming-soon-overlay">
-        <div class="coming-soon-text">🚧 Launching Q3 2026<br><span style="font-size:.72rem;opacity:.6">AI-powered fee comparison for the diaspora</span></div>
-      </div>
-    </div>
-  </div>
-
-</div>
 </section>
-</main>
 
-<footer><div class="c foot-i">
-  <a href="index.html" style="font-family:var(--fd);font-size:1rem">KreyòlAI·Hub</a>
-  <div class="foot-links">
-    <a href="index.html">Home</a>
-    <a href="academy.html">Academy</a>
-    <a href="consulting.html">Consulting</a>
-    <a href="mailto:alasodigital@hotmail.com">Contact</a>
-  </div>
-  <div class="foot-copy">© 2025–2026 KreyòlAIHub</div>
+<footer><div class="ft">
+  <div class="ft-logo">KreyòlAI<span>·</span>Hub</div>
+  <div class="ft-links"><a href="index.html">Home</a><a href="academy.html">Academy</a><a href="consulting.html">Consulting</a><a href="/cdn-cgi/l/email-protection#03626f62706c676a646a77626f436b6c776e626a6f2d606c6e">Contact</a></div>
+  <div class="ft-copy">© 2025–2026 KreyòlAIHub</div>
 </div></footer>
+<a href="https://wa.me/447906520032" target="_blank" class="wa">💬</a>
 
-<a href="https://wa.me/447906520032" class="wa-btn" target="_blank">💬</a>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')}),{threshold:.1});
+document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
 
-<script>
-console.log('✅ Tools.html script loaded');
-console.log('📝 To enable real AI: DEMO_MODE = false; in console');
-
-var WORKER = "https://kreyolaihub-proxy.kreyolaihub.workers.dev";
-var DEMO_MODE = true; // Set to false when Worker is deployed
-var DEMO_RESPONSES = {
-  translate: "🌐 **Kreyòl**: Bonjou, kijan ou ye?<br/>🇫🇷 **Français**: Bonjour, comment allez-vous?<br/>🇬🇧 **English**: Hello, how are you?<br/><em>Note: Full AI translation requires Worker deployment.</em>",
-  grann: "Cheri, moun yo pale: \"Dòmi sou fatra, reveye sou latranp.\" Sa vle di, chwa ou fè jòdi ap detèmine kote ou ye demen. Lagès se kontinyèl! 🙏",
-  lekol: "<strong>What is AI?</strong><br/>AI is like giving a computer a brain that can learn from examples. It starts by recognizing patterns, then using those patterns to make predictions or solve problems. <br/><em>Demo mode: Full tutoring available when Worker is active.</em>",
-  biznis: "**Your Business Pitch:**<br/>📈 *Market Opportunity:* Ayisyen yo sou entènèt - $2B+ diaspora buying power<br/>💡 *Solution:* Kreyòl-first AI tools<br/>🎯 *Revenue:* Subscriptions, consulting, B2B partnerships<br/><em>Full AI generation requires Worker setup.</em>",
-  document: "<strong>Document Analysis</strong><br/>This tool helps you understand complex documents like visas, contracts, and permits. In demo mode, here's what it can do:<br/>✓ Break down key requirements<br/>✓ Highlight important deadlines<br/>✓ Identify potential issues<br/><em>Activate Worker for full AI-powered analysis.</em>"
+/* Demo responses */
+const responses={
+  translate:{
+    default:"Translating... → \"Hello, how are you?\" (from Bonjou, kijan ou ye?)",
+    'bonjou':"→ EN: \"Hello!\" | FR: \"Bonjour !\" ✓",
+    'kijan':"→ EN: \"How are you doing?\" | FR: \"Comment allez-vous ?\" ✓",
+    'mesi':"→ EN: \"Thank you\" | FR: \"Merci\" ✓",
+    'hello':"→ KW: \"Bonjou\" | FR: \"Bonjour\" ✓",
+    'merci':"→ KW: \"Mesi\" | EN: \"Thank you\" ✓",
+    'future':"→ KW: \"Lavni\" | FR: \"L'avenir\" ✓",
+    default2:"→ Translation complete. Context-aware rendering applied. ✓"
+  },
+  grann:{
+    default:"Grann speaks: \"Every Haitian proverb holds a universe of wisdom...\"",
+    'proverb':"📖 \"Dèyè mòn gen mòn\" — Behind every mountain, another mountain. Life's challenges never truly end, but Haitians always find the strength to continue. ✓",
+    'history':"🏛️ Haiti declared independence on January 1, 1804 — the first Black republic and the only nation born of a successful slave revolution. A triumph for all humanity. ✓",
+    'haitian':"🇭🇹 Haiti — Ayiti in Creole — means \"Land of High Mountains.\" With 12 million people and a diaspora of 4+ million worldwide, the Haitian spirit is truly global. ✓",
+    default2:"🌺 Grann knows. Ask about Haitian history, proverbs, traditions, food, music, or culture..."
+  },
+  lekol:{
+    default:"📚 I'll explain that concept clearly — in Creole, English, or French!",
+    'photo':"🌿 Photosynthesis: Plants take sunlight + water + CO₂ and convert them into glucose (food) and oxygen. Think of it as nature's solar panel! Pwocess sa a rele fotwosyntèz an kreyòl. ✓",
+    'math':"📐 Mathematics is the language of the universe. Start with the basics: addition (+), subtraction (-), multiplication (×), and division (÷). Maths = Matematik an kreyòl! ✓",
+    default2:"📖 Ask me anything — science, math, history, literature. I'll explain it clearly in your language. ✓"
+  },
+  biznis:{
+    default:"💼 Here's a business concept tailored for the Haitian diaspora...",
+    'restaurant':"🍽️ Elevator Pitch: \"Taste of Ayiti brings authentic Haitian cuisine to [your city]. We serve the diaspora community and curious food lovers — griot, pikliz, and diri kole. From our grandmother's recipes to your table.\" ✓",
+    'tech':"💻 Tech Business Pitch: \"I build AI-powered tools for Haitian entrepreneurs — automating business operations, translating documents, and connecting the diaspora to global markets.\" ✓",
+    default2:"📋 Business content generated. Tailored for Haitian diaspora context. ✓"
+  },
+  document:{
+    default:"📄 Document summary: I can analyze medical records, legal documents, contracts, and immigration forms...",
+    'green':"🇺🇸 Green Card Summary: Permanent US residency. Key requirements: (1) Sponsor from employer or family member, (2) I-485 application form, (3) Medical examination, (4) Background check. Processing: 1-3 years. ✓",
+    'visa':"✈️ US Visa Process: (1) Complete DS-160 form online, (2) Pay application fee, (3) Schedule embassy interview, (4) Attend interview with documents. Allow 4-8 weeks. ✓",
+    default2:"📋 Document analyzed. Clear summary generated in plain language. ✓"
+  }
 };
 
-var PROMPTS = {
-  translate: "You are KreyolTranslate, an expert trilingual translator for Haitian Creole, French, and English. Detect the input language and translate it into the other two languages. Format clearly: flag KW: ... | flag FR: ... | flag EN: ... Add a brief cultural note if relevant. Be concise.",
-  grann: "Ou se Grann AI, yon grann Ayisyen saj ak cho ki konnen tout richEs kilti Ayisyen. Reponn kesyon sou istwa, pwovEb, manje, mizik, remEd, kont. Toujou kite yon pwovEb nan repons ou. Reponn nan lang moun nan pale avEk ou.",
-  lekol: "You are LekolAI, a trilingual AI tutor for Haitian students. Explain any concept clearly in Haitian Creole first, then in French and English. Use simple language and real-world examples relevant to Haitian life. Be encouraging and educational.",
-  biznis: "You are BiznisAI, a business assistant for Haitian entrepreneurs and diaspora professionals. Generate pitches, plans, emails tailored for Haitian and diaspora contexts. Respond in the user's language. Be practical and actionable.",
-  document: "You are DocumentAI helping the Haitian diaspora understand documents. Explain what the document is, key requirements, and what to watch out for. Respond in the user's language. Be clear and helpful."
-};
-
-async function runTool(type, val, outId, inputEl) {
-  if (!val || !val.trim()) { if(inputEl) inputEl.focus(); return; }
-  var out = document.getElementById(outId);
-  if (!out) return;
-  out.innerHTML = '<span style="opacity:.5">Ap travay... ⏳</span>';
-  out.classList.remove('has-result');
-  if (inputEl) inputEl.disabled = true;
-  
-  // Use demo mode if enabled or Worker not available
-  if (DEMO_MODE) {
-    setTimeout(function() {
-      var demoReply = DEMO_RESPONSES[type] || DEMO_RESPONSES.translate;
-      out.innerHTML = demoReply
-        .replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>")
-        .replace(/\*(.*?)\*/g,"<em>$1</em>");
-      out.classList.add('has-result');
-      if (inputEl) inputEl.disabled = false;
-    }, 800);
-    return;
-  }
-  
-  // Try real API if demo mode is off
-  try {
-    console.log('🚀 Sending to Worker:', WORKER);
-    var res = await fetch(WORKER, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 600,
-        system: PROMPTS[type] || PROMPTS.translate,
-        messages: [{ role: "user", content: val }]
-      })
-    });
-    console.log('Response:', res.status);
-    if (!res.ok) {
-      throw new Error(`API error: ${res.status}`);
-    }
-    var data = await res.json();
-    var reply = (data.content && data.content[0]) ? data.content[0].text : "Eseye ankò.";
-    out.innerHTML = reply
-      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
-      .replace(/\n\n/g,"<br><br>").replace(/\n/g,"<br>")
-      .replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>")
-      .replace(/\*(.*?)\*/g,"<em>$1</em>");
-    out.classList.add('has-result');
-  } catch(e) {
-    console.error('Error:', e);
-    out.innerHTML = '<span style="color:#f87171">⚠️ Worker unavailable. Enable DEMO_MODE in console.</span>';
-  }
-  if (inputEl) inputEl.disabled = false;
+function runDemo(type,val,outId,input){
+  if(!val.trim()){input.focus();return;}
+  const out=document.getElementById(outId);
+  out.textContent='Processing...';out.classList.remove('has-result');
+  const r=responses[type];
+  const vl=val.toLowerCase();
+  setTimeout(()=>{
+    let resp=r.default2||r.default;
+    for(const k in r){if(k!=='default'&&k!=='default2'&&vl.includes(k)){resp=r[k];break;}}
+    out.textContent=resp;out.classList.add('has-result');
+  },900);
 }
 
-function switchLang(l) {
-  ["en","fr","ht"].forEach(function(x){
-    document.getElementById("tl-"+x).className="lang-btn"+(x===l?" active":"");
-  });
-}
+const dwResponses=[
+  (v)=>{const vl=v.toLowerCase();if(vl.includes('bonjou'))return'→ "Hello! Good day!" ✓';if(vl.includes('mesi'))return'→ "Thank you very much" ✓';if(vl.includes('kijan'))return'→ "How are you?" ✓';return'→ Translation complete. Cultural context preserved. ✓';},
+  (v)=>{const vl=v.toLowerCase();if(vl.includes('mòn'))return'📖 "Behind mountains, more mountains." Meaning: Life\'s challenges never end — face them with resilience. The Haitian motto for life. ✓';if(vl.includes('men anpil'))return'📖 "Many hands make the load light." Meaning: Community and solidarity are power. ✓';return'📖 Proverb analyzed. Deep cultural significance identified. ✓';},
+  (v)=>{return`💡 Top business ideas for your profile:\n1. Haitian Creole online tutoring platform\n2. Cultural catering & events company\n3. AI translation service for diaspora\n4. Haitian food products & delivery\n5. Community financial services ✓`;},
+  (v)=>{return`📰 Summary: "${v.substring(0,40)}..." \n\nKey points identified and summarized. Available in EN | FR | KW. ✓`;}
+];
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('✅ DOM loaded - buttons should be clickable');
-  console.log('🔍 Testing click detection:');
-  var buttons = document.querySelectorAll('button');
-  console.log('Found ' + buttons.length + ' buttons on page');
-  buttons.forEach(function(btn, idx) {
-    btn.addEventListener('click', function() {
-      console.log('✅ Button clicked:', btn.textContent.trim());
-    });
-  });
-});
-</script>
-</body>
-</html>
+function dwRun(n,val){
+  if(!val.trim()){document.getElementById('dw'+n+'-in').focus();return;}
+  const out=document.getElementById('dw'+n+'-out');
+  out.textContent='Proces

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ht">
+<html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Konsiltasyon AI — AI Consulting — KreyòlAIHub</title>
+<title>AI Consulting — KreyòlAIHub</title>
 <meta name="description" content="AI Consulting for Businesses — Helping organizations adopt AI, automate workflows, and build competitive advantage."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -14,7 +14,7 @@
 body{background:var(--bg);color:var(--t100);font-family:var(--fs);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{text-decoration:none;color:inherit}button{cursor:pointer;font-family:var(--fs)}
 .c{max-width:1160px;margin:0 auto;padding:0 1.5rem}
-[data-r]{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s ease}[data-r].on{opacity:1;transform:translateY(0)}
+[data-r]{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}[data-r].on{opacity:1;transform:translateY(0)}
 [data-r][data-d="1"]{transition-delay:.1s}[data-r][data-d="2"]{transition-delay:.2s}[data-r][data-d="3"]{transition-delay:.3s}[data-r][data-d="4"]{transition-delay:.4s}
 .btn{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--fs);font-size:.84rem;font-weight:500;padding:.68rem 1.4rem;border-radius:var(--r);border:none;transition:all .18s;cursor:pointer;white-space:nowrap}
 .btn-p{background:var(--ind);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.35),0 0 0 1px rgba(99,102,241,.45)}.btn-p:hover{background:var(--ind2);transform:translateY(-1px);box-shadow:0 4px 20px var(--iglow)}
@@ -187,7 +187,7 @@ footer{background:var(--bg);border-top:1px solid var(--b1);padding:5rem 1.5rem 2
     <div class="ph-grid">
       <div data-r>
         <div class="ph-eyebrow"><div class="phline"></div><span style="font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ind2)">AI Consulting for Businesses</span></div>
-        <h1 class="ph-title">Estrateji AI / Stratégie IA / AI strategy for <em style="color:var(--t55)">organizations that lead.</em></h1>
+        <h1 class="ph-title">AI strategy for <em style="color:var(--t55)">organizations that lead.</em></h1>
         <p class="ph-sub">Helping Haitian businesses and global organizations adopt AI, automate workflows, and build competitive advantage for the future.</p>
         <div style="display:flex;flex-wrap:wrap;gap:.65rem;margin-bottom:2rem">
           <a href="#book" class="btn btn-p btn-lg">Book Free Consultation</a>
@@ -488,17 +488,10 @@ footer{background:var(--bg);border-top:1px solid var(--b1);padding:5rem 1.5rem 2
 <a href="https://wa.me/447906520032" target="_blank" class="wa">💬</a>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')}),{threshold:0,rootMargin:'0px 0px -20px 0px'});
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')}),{threshold:.1});
 document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
-document.querySelectorAll('[data-r]').forEach(el=>el.classList.add('on'));
-setTimeout(()=>document.querySelectorAll('[data-r]').forEach(el=>el.classList.add('on')),0);
 function submitForm(e){
   e.preventDefault();
   const b=document.getElementById('submitBtn');
   b.textContent='✓ Request Sent! We\'ll respond within 24h.';
-  b.style.background='rgba(16,185,129,.15)';
-  setTimeout(()=>{const frm=document.getElementById('consultForm');if(frm)frm.reset();b.textContent='Submit Request';b.style.background='';},2000);
-}
-</script>
-</body>
-</html>
+  b.style.background='rgba(16,185,129,.15)'

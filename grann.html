@@ -233,7 +233,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--cream);ov
 </div>
 
 <script>
-var WORKER_URL = "https://kreyolaihub-proxy.kreyolaihub.workers.dev";
+var WORKER_URL = "WORKER_URL";
 var lang = "ht";
 var history = [];
 var isLoading = false;
@@ -381,7 +381,7 @@ async function sendMessage() {
   history.push({role:"user", content:text});
   showTyping();
 
-  if(false) { // Worker is configured
+  if(WORKER_URL === "WORKER_URL") {
     hideTyping();
     var demo = "Bonjou cheri! Grann kontan tande ou! 🌟<br><br>";
     var tl = text.toLowerCase();
@@ -461,8 +461,6 @@ if(ci) {
 // INIT
 setLang(lang);
 showWelcome();
-
-setTimeout(function(){document.querySelectorAll('[data-r]').forEach(function(el){el.classList.add('on');});},600);
 </script>
 </body>
 </html>
