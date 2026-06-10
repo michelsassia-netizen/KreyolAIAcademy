@@ -1,0 +1,13 @@
+# Cloudflare Worker config for the KreyòlAIHub AI proxy.
+#
+# Deploy:
+#   cd worker
+#   npm i -g wrangler && wrangler login
+#   wrangler deploy
+#   wrangler secret put ANTHROPIC_API_KEY      # paste your sk-ant-... key
+#   wrangler secret put OPENAI_API_KEY         # optional: voice transcription
+#
+# Then copy the printed *.workers.dev URL into site/config.js → WORKER_URL.
+name = "kreyolaihubproxy"
+main = "worker.js"
+compatibility_date = "2024-11-01"

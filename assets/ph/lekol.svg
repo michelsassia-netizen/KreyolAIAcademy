@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#070b15"/><stop offset="1" stop-color="#0b1322"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="30%" cy="20%" r="75%">
+    <stop offset="0" stop-color="#4d8bff" stop-opacity="0.30"/>
+    <stop offset="55%" stop-color="#4d8bff" stop-opacity="0.06"/>
+    <stop offset="100%" stop-color="#4d8bff" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="vig" cx="50%" cy="42%" r="75%">
+    <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+  </radialGradient>
+  <pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse">
+    <path d="M46 0H0V46" fill="none" stroke="rgba(208,224,255,0.05)" stroke-width="1"/>
+  </pattern>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<rect width="1200" height="900" fill="url(#grid)"/>
+<rect width="1200" height="900" fill="url(#glow)"/>
+
+  <rect x="144" y="144" width="600" height="360" rx="8" fill="#131d31" stroke="#4d8bff" stroke-width="2" stroke-opacity="0.5"/>
+  <path d="M216 414 q72 -162 144 0" fill="none" stroke="#2f6bff" stroke-width="3"/>
+  <circle cx="552" cy="270" r="63.00000000000001" fill="none" stroke="#4d8bff" stroke-width="3"/>
+  <g transform="translate(360,855) scale(0.5)">
+    <circle cx="0" cy="-150" r="46" fill="#eaf1fd" opacity="0.92"/>
+    <path d="M-70 0 Q-70 -110 0 -110 Q70 -110 70 0 Z" fill="#eaf1fd" opacity="0.9"/>
+    <path d="M-70 0 Q-70 -110 0 -110 Q70 -110 70 0 Z" fill="#4d8bff" opacity="0.18"/>
+  </g><g transform="translate(600,855) scale(0.5)">
+    <circle cx="0" cy="-150" r="46" fill="#eaf1fd" opacity="0.92"/>
+    <path d="M-70 0 Q-70 -110 0 -110 Q70 -110 70 0 Z" fill="#eaf1fd" opacity="0.9"/>
+    <path d="M-70 0 Q-70 -110 0 -110 Q70 -110 70 0 Z" fill="#4d8bff" opacity="0.18"/>
+  </g><g transform="translate(840,855) scale(0.5)">
+    <circle cx="0" cy="-150" r="46" fill="#eaf1fd" opacity="0.92"/>
+    <path d="M-70 0 Q-70 -110 0 -110 Q70 -110 70 0 Z" fill="#eaf1fd" opacity="0.9"/>
+    <path d="M-70 0 Q-70 -110 0 -110 Q70 -110 70 0 Z" fill="#4d8bff" opacity="0.18"/>
+  </g>
+
+<rect width="1200" height="900" fill="url(#vig)"/>
+<g opacity="0.85"><rect x="0" y="894" width="120" height="6" fill="#002D62"/>
+<rect x="120" y="894" width="120" height="6" fill="#CE1126"/>
+<rect x="240" y="894" width="120" height="6" fill="#00A651"/></g>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#04060e"/><stop offset="1" stop-color="#070c1a"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="50%" cy="35%" r="75%">
+    <stop offset="0" stop-color="#2f6bff" stop-opacity="0.30"/>
+    <stop offset="55%" stop-color="#2f6bff" stop-opacity="0.06"/>
+    <stop offset="100%" stop-color="#2f6bff" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="vig" cx="50%" cy="42%" r="75%">
+    <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+  </radialGradient>
+  <pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse">
+    <path d="M46 0H0V46" fill="none" stroke="rgba(47,107,255,0.06)" stroke-width="1"/>
+  </pattern>
+</defs>
+<rect width="1000" height="1000" fill="url(#bg)"/>
+<rect width="1000" height="1000" fill="url(#grid)"/>
+<rect width="1000" height="1000" fill="url(#glow)"/>
+
+  <g transform="translate(500,620)">
+    <path d="M-150 60 Q-150 -120 0 -120 Q150 -120 150 60 Z" fill="#eaf1fd" opacity="0.9"/>
+    <path d="M-150 60 Q-150 -120 0 -120 Q150 -120 150 60 Z" fill="#2f6bff" opacity="0.16"/>
+    <circle cx="0" cy="-150" r="92" fill="#eaf1fd" opacity="0.95"/>
+    <path d="M-96 -150 Q-96 -260 0 -260 Q96 -260 96 -150 Q60 -200 0 -200 Q-60 -200 -96 -150 Z" fill="#3f74ff" opacity="0.7"/>
+    <path d="M-96 -150 Q-96 -260 0 -260 Q96 -260 96 -150" fill="none" stroke="#2f6bff" stroke-width="6" opacity="0.8"/>
+  </g>
+  <line x1="320" y1="250" x2="102.91796067500631" y2="320.5342302750968" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="320" y1="250" x2="237.08203932499367" y2="135.87321804458156" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="237.0820393249937" y1="364.12678195541844" x2="102.91796067500631" y2="320.5342302750968" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="237.0820393249937" y1="364.12678195541844" x2="237.08203932499367" y2="135.87321804458156" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="102.91796067500631" y1="320.5342302750968" x2="102.9179606750063" y2="179.46576972490323" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="102.9179606750063" y1="179.46576972490323" x2="237.08203932499367" y2="135.87321804458156" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="102.9179606750063" y1="179.46576972490323" x2="200" y2="250" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="237.08203932499367" y1="135.87321804458156" x2="200" y2="250" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><circle cx="320" cy="250" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="237.0820393249937" cy="364.12678195541844" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="102.91796067500631" cy="320.5342302750968" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="102.9179606750063" cy="179.46576972490323" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="237.08203932499367" cy="135.87321804458156" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="200" cy="250" r="9" fill="#2f6bff" opacity="1"/>
+  <line x1="940" y1="700" x2="722.9179606750063" y2="629.4657697249032" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="722.9179606750063" y1="770.5342302750968" x2="820" y2="700" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="722.9179606750063" y1="629.4657697249032" x2="857.0820393249936" y2="585.8732180445816" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><circle cx="940" cy="700" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="857.0820393249937" cy="814.1267819554184" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="722.9179606750063" cy="770.5342302750968" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="722.9179606750063" cy="629.4657697249032" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="857.0820393249936" cy="585.8732180445816" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="820" cy="700" r="9" fill="#2f6bff" opacity="1"/>
+
+<rect width="1000" height="1000" fill="url(#vig)"/>
+<g opacity="0.85"><rect x="0" y="994" width="100" height="6" fill="#002D62"/>
+<rect x="100" y="994" width="100" height="6" fill="#CE1126"/>
+<rect x="200" y="994" width="100" height="6" fill="#00A651"/></g>
+</svg>

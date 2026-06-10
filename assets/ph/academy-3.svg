@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="600" viewBox="0 0 1400 600">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#070b15"/><stop offset="1" stop-color="#0b1322"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="50%" cy="30%" r="75%">
+    <stop offset="0" stop-color="#27e0ff" stop-opacity="0.30"/>
+    <stop offset="55%" stop-color="#27e0ff" stop-opacity="0.06"/>
+    <stop offset="100%" stop-color="#27e0ff" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="vig" cx="50%" cy="42%" r="75%">
+    <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+  </radialGradient>
+  <pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse">
+    <path d="M46 0H0V46" fill="none" stroke="rgba(208,224,255,0.05)" stroke-width="1"/>
+  </pattern>
+</defs>
+<rect width="1400" height="600" fill="url(#bg)"/>
+<rect width="1400" height="600" fill="url(#grid)"/>
+<rect width="1400" height="600" fill="url(#glow)"/>
+
+  <line x1="420" y1="210" x2="979.9999999999999" y2="210" stroke="#27e0ff" stroke-width="1.6" opacity="0.35"/><line x1="420" y1="210" x2="812" y2="432" stroke="#27e0ff" stroke-width="1.6" opacity="0.35"/><line x1="420" y1="210" x2="560" y2="420" stroke="#27e0ff" stroke-width="1.6" opacity="0.35"/><line x1="700" y1="330" x2="812" y2="432" stroke="#27e0ff" stroke-width="1.6" opacity="0.35"/><line x1="700" y1="330" x2="560" y2="420" stroke="#27e0ff" stroke-width="1.6" opacity="0.35"/><line x1="979.9999999999999" y1="210" x2="812" y2="432" stroke="#27e0ff" stroke-width="1.6" opacity="0.35"/><line x1="979.9999999999999" y1="210" x2="560" y2="420" stroke="#27e0ff" stroke-width="1.6" opacity="0.35"/><line x1="812" y1="432" x2="560" y2="420" stroke="#27e0ff" stroke-width="1.6" opacity="0.35"/>
+  <g transform="translate(420,210)"><circle r="24" fill="#131d31" stroke="#2f6bff" stroke-width="2.5"/><circle r="8" fill="#2f6bff"/></g><g transform="translate(700,330)"><circle r="24" fill="#131d31" stroke="#27e0ff" stroke-width="2.5"/><circle r="8" fill="#27e0ff"/></g><g transform="translate(979.9999999999999,210)"><circle r="24" fill="#131d31" stroke="#4d8bff" stroke-width="2.5"/><circle r="8" fill="#4d8bff"/></g><g transform="translate(812,432)"><circle r="24" fill="#131d31" stroke="#27e0ff" stroke-width="2.5"/><circle r="8" fill="#27e0ff"/></g><g transform="translate(560,420)"><circle r="24" fill="#131d31" stroke="#3f74ff" stroke-width="2.5"/><circle r="8" fill="#3f74ff"/></g>
+
+<rect width="1400" height="600" fill="url(#vig)"/>
+<g opacity="0.85"><rect x="0" y="594" width="140" height="6" fill="#002D62"/>
+<rect x="140" y="594" width="140" height="6" fill="#CE1126"/>
+<rect x="280" y="594" width="140" height="6" fill="#00A651"/></g>
+</svg>

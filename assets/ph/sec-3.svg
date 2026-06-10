@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200" width="360" height="200" role="img">
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffb028"/><stop offset="1" stop-color="#ff7a3d"/>
+    </linearGradient>
+    <radialGradient id="r3" cx="0.75" cy="0.25" r="0.9">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.28"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="360" height="200" rx="0" fill="url(#g3)"/>
+  <rect width="360" height="200" fill="url(#r3)"/>
+  <circle cx="314" cy="46" r="64" fill="#ffffff" fill-opacity="0.10"/>
+  <circle cx="40" cy="170" r="46" fill="#000000" fill-opacity="0.08"/>
+  <g><line x1="137" y1="96" x2="227" y2="36" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.5"/><line x1="227" y1="36" x2="129" y2="86" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.5"/><line x1="129" y1="86" x2="232" y2="31" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.5"/><line x1="232" y1="31" x2="160" y2="121" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.5"/><line x1="160" y1="121" x2="121" y2="36" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.5"/><line x1="121" y1="36" x2="180" y2="48" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.5"/><line x1="180" y1="48" x2="137" y2="96" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.5"/><circle cx="137" cy="96" r="5" fill="#ffffff" fill-opacity="0.35"/><circle cx="227" cy="36" r="3" fill="#ffffff" fill-opacity="0.55"/><circle cx="129" cy="86" r="5" fill="#ffffff" fill-opacity="0.55"/><circle cx="232" cy="31" r="3" fill="#ffffff" fill-opacity="0.55"/><circle cx="160" cy="121" r="5" fill="#ffffff" fill-opacity="0.55"/><circle cx="121" cy="36" r="3" fill="#ffffff" fill-opacity="0.55"/><circle cx="180" cy="48" r="6" fill="#ffffff" fill-opacity="0.55"/></g>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#070b15"/><stop offset="1" stop-color="#0b1322"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="50%" cy="25%" r="75%">
+    <stop offset="0" stop-color="#2f6bff" stop-opacity="0.30"/>
+    <stop offset="55%" stop-color="#2f6bff" stop-opacity="0.06"/>
+    <stop offset="100%" stop-color="#2f6bff" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="vig" cx="50%" cy="42%" r="75%">
+    <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+  </radialGradient>
+  <pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse">
+    <path d="M46 0H0V46" fill="none" stroke="rgba(208,224,255,0.05)" stroke-width="1"/>
+  </pattern>
+</defs>
+<rect width="1200" height="700" fill="url(#bg)"/>
+<rect width="1200" height="700" fill="url(#grid)"/>
+<rect width="1200" height="700" fill="url(#glow)"/>
+
+  <g transform="translate(600,350)">
+    <rect x="-108" y="-224" width="216" height="448" rx="20" fill="#131d31" stroke="#2f6bff" stroke-width="2.5" stroke-opacity="0.6"/>
+    <rect x="-84.00000000000001" y="-112" width="168.00000000000003" height="22" rx="11" fill="#2f6bff" opacity="0.7"/>
+    <rect x="-84.00000000000001" y="-82" width="120" height="18" rx="9" fill="#eaf1fd" opacity="0.25"/>
+    <rect x="-36" y="-56" width="120" height="18" rx="9" fill="#4d8bff" opacity="0.5"/>
+    <rect x="-84.00000000000001" y="-30" width="96" height="18" rx="9" fill="#eaf1fd" opacity="0.25"/>
+  </g>
+  <line x1="1058" y1="196.00000000000003" x2="990.2836654487448" y2="289.2035385969251" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="1058" y1="196.00000000000003" x2="880.7163345512552" y2="253.60295472466242" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="1058" y1="196.00000000000003" x2="990.2836654487448" y2="102.79646140307496" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="1058" y1="196.00000000000003" x2="960" y2="196.00000000000003" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="990.2836654487448" y1="289.2035385969251" x2="990.2836654487448" y2="102.79646140307496" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="880.7163345512552" y1="253.60295472466242" x2="880.7163345512552" y2="138.39704527533766" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="880.7163345512552" y1="253.60295472466242" x2="990.2836654487448" y2="102.79646140307496" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="880.7163345512552" y1="138.39704527533766" x2="990.2836654487448" y2="102.79646140307496" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><line x1="990.2836654487448" y1="102.79646140307496" x2="960" y2="196.00000000000003" stroke="#2f6bff" stroke-width="1.4" opacity="0.35"/><circle cx="1058" cy="196.00000000000003" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="990.2836654487448" cy="289.2035385969251" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="880.7163345512552" cy="253.60295472466242" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="880.7163345512552" cy="138.39704527533766" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="990.2836654487448" cy="102.79646140307496" r="5.5" fill="#2f6bff" opacity="0.85"/><circle cx="960" cy="196.00000000000003" r="9" fill="#2f6bff" opacity="1"/>
+
+<rect width="1200" height="700" fill="url(#vig)"/>
+<g opacity="0.85"><rect x="0" y="694" width="120" height="6" fill="#002D62"/>
+<rect x="120" y="694" width="120" height="6" fill="#CE1126"/>
+<rect x="240" y="694" width="120" height="6" fill="#00A651"/></g>
+</svg>

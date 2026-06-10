@@ -1,0 +1,127 @@
+/* ============================================================
+   AISHARE THEME — electric-blue / black sci-fi
+   Shared override layer. Link AFTER styles.css and after each
+   page's own <style> block so it wins on equal specificity.
+   ============================================================ */
+:root {
+  /* main accents remapped to electric blue + cyan
+     (flag aliases --navy-deep / --*-2 are kept for the certificate) */
+  --amber:#2f6bff; --amber-3:#5b8cff; --gold:#2f6bff; --yellow:#2f6bff;
+  --green:#27e0ff;
+  --red:#3f74ff;
+  --blue:#2f6bff; --navy:#2f6bff; --cream:#eaf2ff;
+  --bg:#04060e; --bg-2:#070c1a; --bg-3:#0c1426;
+  --line:rgba(47,107,255,0.14); --line-2:rgba(47,107,255,0.09); --hairline:rgba(47,107,255,0.30);
+  --glow-amber:0 0 60px rgba(47,107,255,0.35), 0 0 120px rgba(47,107,255,0.18);
+  --glow-blue:0 0 60px rgba(47,107,255,0.42), 0 0 120px rgba(47,107,255,0.20);
+  --glow-green:0 0 60px rgba(39,224,255,0.32), 0 0 120px rgba(39,224,255,0.16);
+}
+
+body {
+  background:#04060e;
+  background-image:
+    linear-gradient(rgba(47,107,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47,107,255,0.04) 1px, transparent 1px),
+    radial-gradient(ellipse 1100px 620px at 14% -6%, rgba(47,107,255,0.20), transparent 60%),
+    radial-gradient(ellipse 950px 600px at 102% 2%, rgba(39,224,255,0.10), transparent 60%),
+    linear-gradient(180deg,#04060e,#04060e);
+  background-size:48px 48px,48px 48px,auto,auto,auto;
+  background-attachment:fixed;
+}
+
+/* ---- Condensed uppercase titles with metallic fill ---- */
+h1, h2 {
+  font-family:'Rajdhani','Poppins',sans-serif;
+  text-transform:uppercase; font-weight:700; letter-spacing:0.012em; line-height:1.04;
+  color:#dCE6FF;
+  background:linear-gradient(180deg,#ffffff 0%, #cfe0ff 46%, rgba(120,150,220,0.55) 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+/* accent spans inside titles stay solid (not clipped to transparent) */
+h1 span, h2 span {
+  -webkit-text-fill-color:initial; background:none; color:#27e0ff;
+}
+.hero h1 .accent, .hero h1 .accent-2, h2 .accent {
+  -webkit-text-fill-color:initial; color:#27e0ff; background:none;
+  text-shadow:0 0 28px rgba(39,224,255,0.35);
+}
+/* certificate stays light + printable — opt it out of the metallic fill */
+.certificate h2 { -webkit-text-fill-color:initial; background:none; color:#002D62; }
+
+.who-card h3, .pillar h3, .week-card h3, .tool-card h3,
+.svc h3, .soon-card h3, .tool-meta h2, .step h4 {
+  font-family:'Rajdhani','Poppins',sans-serif; text-transform:uppercase;
+  letter-spacing:0.04em; font-weight:700; color:#eaf2ff;
+}
+.eyebrow, .tag, .hero-stats, .trust-row, .hero-media-badge, .pillar .num,
+.week-card .w-num, .tool-card .status, .haiti-caption .num, .l-head .crumb,
+.l-meta, .chat-header .sub {
+  font-family:'Share Tech Mono', ui-monospace, monospace !important;
+}
+.eyebrow { color:#2f6bff; }
+
+/* ---- Buttons: angular ---- */
+.btn { border-radius:4px; }
+.btn-primary { background:var(--blue); color:#fff; box-shadow:0 0 26px rgba(47,107,255,0.5); }
+.btn-primary:hover { background:#4d83ff; }
+.btn-ghost { border-color:rgba(47,107,255,0.5); color:#cfe0ff; }
+.btn-ghost:hover { border-color:var(--blue); color:#fff; background:rgba(47,107,255,0.12); }
+.btn-secondary { background:#eaf2ff; color:#06101f; border-radius:4px; }
+
+/* ---- Nav / flag ---- */
+.flag-stripe { background:linear-gradient(90deg,#2f6bff 0 42%, #27e0ff 42% 72%, #1e49d6 72%); opacity:0.85; }
+.nav-brand .mark { background:linear-gradient(135deg,#2f6bff,#16308f); box-shadow:var(--glow-blue); border-radius:5px; }
+.nav-brand .mark::after { background:linear-gradient(to right,#2f6bff 0 50%, #27e0ff 50%); }
+.nav { background:rgba(4,6,14,0.78); border-bottom:1px solid rgba(47,107,255,0.18); }
+
+/* ---- HUD feature cards ---- */
+.who-card, .pillar, .week-card, .tool-card, .tm-card,
+.svc, .step, .stat-card, .team-card {
+  position:relative;
+  background:linear-gradient(180deg, rgba(13,21,40,0.82), rgba(7,12,26,0.85));
+  border:1px solid rgba(47,107,255,0.26);
+  border-radius:3px;
+}
+.soon-card { border:1px dashed rgba(47,107,255,0.3); border-radius:3px; background:linear-gradient(180deg, rgba(13,21,40,0.7), rgba(7,12,26,0.75)); }
+/* top-right corner bracket */
+.who-card::before, .pillar::before, .week-card::before, .tool-card::before,
+.svc::before, .step::before, .stat-card::before, .team-card::before {
+  content:""; position:absolute; top:10px; right:10px; width:16px; height:16px;
+  border-top:2px solid var(--blue); border-right:2px solid var(--blue);
+  opacity:0.7; background:none; left:auto; box-shadow:none;
+}
+/* bottom HUD progress bar */
+.who-card::after, .pillar::after, .week-card::after, .tool-card::after,
+.svc::after, .step::after, .stat-card::after, .team-card::after, .soon-card::after {
+  content:""; position:absolute; left:0; right:0; bottom:0; height:3px;
+  background:linear-gradient(90deg, var(--blue) 0 70%, rgba(47,107,255,0.12) 70%);
+  box-shadow:0 0 10px rgba(47,107,255,0.45);
+}
+.who-card .icon { background:rgba(47,107,255,0.14) !important; color:#5b8cff !important; border-radius:4px; }
+.who-card.c2 .icon { background:rgba(39,224,255,0.14) !important; color:#27e0ff !important; }
+.tool-card .status.live, .badge-live { background:rgba(39,224,255,0.15) !important; color:#27e0ff !important; border-color:rgba(39,224,255,0.3) !important; }
+
+/* ---- Panels / chat / lesson cards: blue border, no extra HUD ---- */
+.chat-panel, .grann-chat, .l-section, .disabled-chat, .grann-info-card, .demo-strip, .demo-strip .live-card {
+  border-color:rgba(47,107,255,0.24) !important;
+}
+.l-section.analogy { background:linear-gradient(180deg, rgba(47,107,255,0.06), var(--surface)); }
+.l-section.analogy .s-icon { box-shadow:0 0 20px rgba(47,107,255,0.2); }
+
+/* ---- Academy LMS specifics ---- */
+.lms-side .lesson-btn.active { background:rgba(47,107,255,0.14); }
+.lms-side .lesson-btn.active .num,
+.lms-side .lesson-btn.done .num { box-shadow:0 0 10px rgba(47,107,255,0.4); }
+.prog-mini .bar > div { box-shadow:0 0 10px rgba(47,107,255,0.5); }
+.quiz-opt:hover { border-color:var(--blue); }
+.cert-btn.unlocked { box-shadow:var(--glow-blue); }
+
+/* ---- Tools chat bubbles ---- */
+.chat-header .dot, .demo-strip .live-card .pulse { background:#27e0ff !important; box-shadow:0 0 10px #27e0ff; }
+
+/* ---- Misc recolors ---- */
+.trust-row .item::before { background:#27e0ff; }
+.haiti-bg { filter:hue-rotate(168deg) saturate(1.15) brightness(0.9); opacity:0.42; }
+.newsletter { background:linear-gradient(135deg,#2f6bff,#16308f); }
+.newsletter .pic > div.big { color:#2f6bff; }
+.wa-float { box-shadow:0 12px 40px rgba(47,107,255,0.4); }

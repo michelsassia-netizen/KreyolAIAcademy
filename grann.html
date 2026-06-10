@@ -1,466 +1,615 @@
 <!DOCTYPE html>
-<html lang="ht">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Grann AI — Aprann Kreyòl | KreyòlAIHub</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<html lang="ht"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grann AI · KreyòlAIHub</title>
+<meta name="description" content="Pale ak Grann AI — sajès, pwovèb ak istwa Ayisyen. Talk to Grann AI for Haitian wisdom, proverbs and stories in Kreyòl, French, or English.">
+<meta property="og:title" content="Grann AI · KreyòlAIHub">
+<meta property="og:description" content="Haitian wisdom, proverbs, and stories — for your kids, for you, for parents passing the culture on.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&amp;family=Noto+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,700;9..144,800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-:root{
-  --bg:#0c0a06;--bg2:#141008;--bg3:#1c1508;
-  --gold:#d4a017;--gold2:#f0c040;--amber:#e8891a;
-  --cream:#fef9ed;--warm:#f5e6c8;--muted:#a89060;
-  --grn:#10b981;--grn2:#34d399;--grn3:#6ee7b7;
-  --brd:rgba(212,160,23,.18);--brd2:rgba(212,160,23,.08);
-  --gl:rgba(212,160,23,.06);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--cream);overflow-x:hidden;min-height:100vh}
-::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+  /* ── AISHARE electric-blue palette (Grann keeps its Fraunces character) ── */
+  :root {
+    --yellow:#2f6bff; --gold:#2f6bff; --amber:#2f6bff; --amber-3:#5b8cff; --cream:#dbe6ff;
+    --blue:#2f6bff; --navy:#2f6bff;
+    --bg:#04060e; --bg-2:#070c1a;
+  }
+  /* ── Grann page overrides ── */
+  body {
+    background: linear-gradient(180deg, #04060e 0%, #070c1a 100%);
+    min-height: 100vh;
+    color: #dbe6ff;
+    background-attachment: fixed;
+    background-image:
+      radial-gradient(ellipse 900px 500px at 20% 0%, rgba(47,107,255,0.12), transparent 55%),
+      radial-gradient(ellipse 700px 600px at 90% 30%, rgba(39,224,255,0.08), transparent 55%),
+      linear-gradient(180deg, #04060e 0%, #070c1a 100%);
+  }
 
-/* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:rgba(12,10,6,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd)}
-.logo{font-family:"Playfair Display",serif;font-size:.95rem;font-weight:700;color:var(--gold2);letter-spacing:.02em}
-.logo span{color:var(--muted);font-weight:400}
-.nav-r{display:flex;align-items:center;gap:.6rem}
-.lflags{display:flex;gap:.2rem}
-.lf{padding:.22rem .52rem;border-radius:7px;font-size:.68rem;font-weight:600;cursor:pointer;border:1px solid rgba(212,160,23,.15);background:transparent;color:var(--muted);transition:all .2s;font-family:"DM Sans",sans-serif}
-.lf.on{background:rgba(212,160,23,.15);border-color:rgba(212,160,23,.45);color:var(--gold2)}
-.btn-back{display:inline-flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--muted);border:1px solid var(--brd);border-radius:8px;padding:.3rem .75rem;text-decoration:none;font-family:"DM Sans",sans-serif;transition:all .2s;background:transparent}
-.btn-back:hover{color:var(--gold2);border-color:rgba(212,160,23,.35)}
+  /* Nav overrides */
+  .nav {
+    background: rgba(7,12,26, 0.85) !important;
+    border-bottom: 1px solid rgba(47,107,255,0.18);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .nav-brand { color: var(--yellow) !important; }
+  .nav-links a { color: rgba(219,230,255,0.75); }
+  .nav-links a:hover { color: var(--yellow); background: rgba(47,107,255,0.10); }
+  .nav-links a.active { background: var(--yellow); color: #04060e; }
+  .lang-switch { background: rgba(47,107,255,0.10); border-color: rgba(47,107,255,0.2); }
+  .lang-switch button { color: rgba(219,230,255,0.75); }
+  .lang-switch button.active { background: var(--yellow); color: #04060e; }
+  .nav-right .btn-primary { background: var(--yellow); color: #04060e; }
+  .nav-right .btn-primary:hover { background: #4d83ff; }
+  .flag-stripe { display: none; }
 
-/* LAYOUT */
-.layout{display:grid;grid-template-columns:290px 1fr;height:100vh;padding-top:58px}
+  /* ── Hero ── */
+  .grann-hero {
+    padding: 64px 0 40px;
+    text-align: center;
+  }
 
-/* SIDEBAR */
-.sidebar{background:var(--bg2);border-right:1px solid var(--brd);display:flex;flex-direction:column;overflow:hidden}
+  .av-big-wrap {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2f6bff, #16308f);
+    box-shadow:
+      0 0 0 4px rgba(47,107,255,0.35),
+      0 0 0 8px rgba(47,107,255,0.10),
+      0 18px 50px rgba(47,107,255,0.45);
+    overflow: hidden;
+  }
 
-.grann-profile{padding:1.5rem 1.25rem 1.25rem;border-bottom:1px solid var(--brd2);text-align:center}
-.grann-avatar-inner{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#3d2e0a,#5c4415);border:2px solid rgba(212,160,23,.35);display:flex;align-items:center;justify-content:center;font-size:2.6rem;margin:0 auto .75rem;box-shadow:0 0 28px rgba(212,160,23,.2),0 6px 20px rgba(0,0,0,.5);position:relative}
-.grann-glow{position:absolute;inset:-6px;border-radius:50%;background:radial-gradient(circle,rgba(212,160,23,.15),transparent 70%);animation:pulse 3s ease-in-out infinite;pointer-events:none}
-@keyframes pulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
-.grann-name{font-family:"Playfair Display",serif;font-size:1.3rem;font-weight:700;color:var(--gold2);margin-bottom:.15rem}
-.grann-title{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.6rem}
-.grann-status{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;color:var(--grn2);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:99px;padding:.15rem .55rem}
-.status-dot{width:5px;height:5px;border-radius:50%;background:var(--grn2);animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+  .av-big-wrap image-slot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
 
-.kids-badge{margin:.7rem 1.25rem 0;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:8px;padding:.5rem .75rem;text-align:center}
-.kids-badge-title{font-size:.62rem;font-weight:700;color:var(--grn2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.15rem}
-.kids-badge-sub{font-size:.63rem;color:rgba(110,231,183,.75)}
+  .av-big-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 84px;
+    z-index: 1;
+    line-height: 1;
+  }
 
-.sidebar-info{padding:1rem 1.25rem .75rem;border-top:1px solid var(--brd2)}
-.info-label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.55rem}
-.topic-pills{display:flex;flex-wrap:wrap;gap:.3rem}
-.pill{font-size:.62rem;padding:.2rem .6rem;border-radius:99px;background:rgba(212,160,23,.08);border:1px solid rgba(212,160,23,.18);color:rgba(254,249,237,.6);cursor:pointer;transition:all .2s}
-.pill:hover{background:rgba(212,160,23,.18);border-color:rgba(212,160,23,.4);color:var(--gold2)}
-.pill.kids{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.28);color:var(--grn3)}
-.pill.kids:hover{background:rgba(16,185,129,.2);border-color:rgba(16,185,129,.5);color:var(--grn2)}
-.pill.fun{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#fcd34d}
-.pill.fun:hover{background:rgba(245,158,11,.18);border-color:rgba(245,158,11,.45);color:#fef08a}
+  .av-big-wrap image-slot[data-filled] ~ .av-big-fallback { display: none; }
 
-.suggested{padding:.75rem 1.25rem;flex:1;overflow-y:auto}
-.sugg-title{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.65rem}
-.sugg-q{display:block;width:100%;text-align:left;padding:.6rem .8rem;border-radius:9px;border:1px solid var(--brd2);background:var(--gl);color:rgba(254,249,237,.65);font-size:.72rem;font-family:"DM Sans",sans-serif;cursor:pointer;transition:all .2s;margin-bottom:.38rem;line-height:1.5}
-.sugg-q:hover{background:rgba(212,160,23,.1);border-color:rgba(212,160,23,.28);color:var(--gold2);transform:translateX(2px)}
-.sugg-q.kids-q{border-color:rgba(16,185,129,.18);color:rgba(110,231,183,.75)}
-.sugg-q.kids-q:hover{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.35);color:var(--grn2)}
+  .grann-hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-style: italic;
+    color: var(--yellow);
+    font-size: clamp(48px, 7vw, 80px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 8px;
+    text-shadow: 0 0 60px rgba(47,107,255,0.35);
+  }
 
-.sidebar-footer{padding:.85rem 1.25rem;border-top:1px solid var(--brd2)}
-.powered{font-size:.57rem;color:var(--muted);text-align:center;opacity:.55}
-.powered span{color:var(--gold)}
+  .grann-tagline {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-style: italic;
+    color: rgba(219,230,255,0.65);
+    font-size: clamp(18px, 2.5vw, 24px);
+    margin-bottom: 14px;
+    letter-spacing: 0.01em;
+  }
 
-/* CHAT AREA */
-.chat-area{display:flex;flex-direction:column;background:var(--bg);overflow:hidden}
+  .grann-sub {
+    color: rgba(219,230,255,0.6);
+    max-width: 560px;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 1.6;
+  }
 
-.haiti-accent{height:2px;background:linear-gradient(90deg,#003087 50%,#c0392b 50%);opacity:.45}
+  /* ── Mode selector ── */
+  .modes {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 36px auto 28px;
+    flex-wrap: wrap;
+    padding: 0 var(--pad-x);
+  }
 
-.proverb-strip{padding:.5rem 1.5rem;background:rgba(212,160,23,.05);border-bottom:1px solid var(--brd2);font-family:"Playfair Display",serif;font-size:.68rem;color:var(--muted);font-style:italic;text-align:center}
-.proverb-strip strong{color:var(--gold)}
+  .mode {
+    background: rgba(47,107,255,0.07);
+    border: 1.5px solid rgba(47,107,255,0.22);
+    color: var(--yellow);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, transform .15s, box-shadow .15s;
+    letter-spacing: -0.01em;
+  }
 
-.chat-header{padding:.85rem 1.5rem;border-bottom:1px solid var(--brd2);display:flex;align-items:center;justify-content:space-between;background:rgba(20,16,8,.85)}
-.ch-left{display:flex;align-items:center;gap:.7rem}
-.ch-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3d2e0a,#5c4415);border:1px solid rgba(212,160,23,.3);display:flex;align-items:center;justify-content:center;font-size:1rem}
-.ch-name{font-family:"Playfair Display",serif;font-size:.88rem;font-weight:700;color:var(--gold2)}
-.ch-sub{font-size:.6rem;color:var(--muted);margin-top:.04rem}
-.ch-btn{background:transparent;border:1px solid var(--brd2);border-radius:7px;padding:.28rem .6rem;font-size:.64rem;color:var(--muted);cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .2s}
-.ch-btn:hover{border-color:rgba(212,160,23,.3);color:var(--gold2)}
+  .mode:hover {
+    background: rgba(47,107,255,0.15);
+    border-color: rgba(47,107,255,0.45);
+    transform: translateY(-1px);
+  }
 
-/* MESSAGES */
-.messages{flex:1;overflow-y:auto;padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:.9rem}
-.msg{display:flex;gap:.65rem;align-items:flex-start;animation:fadeUp .3s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.msg.user{flex-direction:row-reverse}
-.msg-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.9rem}
-.msg.grann .msg-avatar{background:linear-gradient(135deg,#3d2e0a,#5c4415);border:1px solid rgba(212,160,23,.28)}
-.msg.user .msg-avatar{background:rgba(212,160,23,.12);border:1px solid rgba(212,160,23,.2)}
-.msg-bubble{max-width:74%;padding:.75rem 1rem;font-size:.82rem;line-height:1.82;position:relative}
-.msg.grann .msg-bubble{background:linear-gradient(135deg,rgba(28,21,8,.95),rgba(20,16,6,.9));border:1px solid rgba(212,160,23,.16);color:var(--warm);border-radius:4px 15px 15px 15px}
-.msg.user .msg-bubble{background:linear-gradient(135deg,rgba(212,160,23,.18),rgba(232,137,26,.13));border:1px solid rgba(212,160,23,.28);color:var(--cream);border-radius:15px 4px 15px 15px;text-align:right}
-.msg-time{font-size:.56rem;color:var(--muted);margin-top:.3rem;opacity:.5}
+  .mode.active {
+    background: var(--yellow);
+    color: #04060e;
+    border-color: var(--yellow);
+    box-shadow: 0 0 24px rgba(47,107,255,0.35);
+  }
 
-.msg.grann.welcome .msg-bubble{background:linear-gradient(135deg,rgba(40,28,5,.95),rgba(28,21,8,.9));border-color:rgba(212,160,23,.25);padding:1rem 1.2rem}
-.krik-box{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:8px;padding:.55rem .75rem;margin:.5rem 0;font-size:.78rem;color:var(--grn3);font-style:italic}
+  /* ── Chat container ── */
+  .grann-chat-wrap {
+    padding: 0 var(--pad-x) 80px;
+  }
 
-.typing{display:flex;align-items:center;gap:.3rem;padding:.55rem .85rem;background:rgba(28,21,8,.9);border:1px solid rgba(212,160,23,.14);border-radius:4px 13px 13px 13px;width:fit-content}
-.typing span{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:bounce .8s infinite}
-.typing span:nth-child(2){animation-delay:.15s}
-.typing span:nth-child(3){animation-delay:.3s}
-@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+  .grann-chat {
+    max-width: 720px;
+    margin: 0 auto;
+    background: rgba(7,12,26,0.55);
+    border: 1px solid rgba(47,107,255,0.18);
+    border-radius: 24px;
+    box-shadow:
+      0 30px 80px rgba(0,0,0,0.45),
+      0 0 0 1px rgba(47,107,255,0.06) inset,
+      0 0 80px -30px rgba(47,107,255,0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 560px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
 
-/* INPUT */
-.chat-input-area{padding:.9rem 1.5rem;border-top:1px solid var(--brd2);background:rgba(20,16,8,.92)}
-.lang-bar{display:flex;align-items:center;gap:.45rem;margin-bottom:.6rem;font-size:.62rem;color:var(--muted)}
-.li{padding:.16rem .48rem;border-radius:6px;border:1px solid transparent;font-size:.6rem;cursor:pointer;transition:all .18s;color:var(--muted)}
-.li.on{background:rgba(212,160,23,.15);border-color:rgba(212,160,23,.35);color:var(--gold2)}
-.input-wrap{display:flex;gap:.5rem;align-items:flex-end}
-.chat-input{flex:1;background:rgba(28,21,8,.92);border:1px solid rgba(212,160,23,.2);border-radius:11px;padding:.7rem .95rem;font-family:"DM Sans",sans-serif;font-size:.83rem;color:var(--cream);outline:none;resize:none;min-height:44px;max-height:120px;line-height:1.55;transition:border-color .2s}
-.chat-input::placeholder{color:rgba(168,144,96,.45)}
-.chat-input:focus{border-color:rgba(212,160,23,.48);box-shadow:0 0 0 3px rgba(212,160,23,.06)}
-.send-btn{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--amber));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .22s;flex-shrink:0;box-shadow:0 4px 16px rgba(212,160,23,.32)}
-.send-btn:hover{transform:translateY(-2px);box-shadow:0 7px 24px rgba(212,160,23,.48)}
-.send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.input-hint{font-size:.58rem;color:var(--muted);margin-top:.42rem;opacity:.5;text-align:center}
+  /* Chat header */
+  .chat-header {
+    padding: 16px 22px;
+    border-bottom: 1px solid rgba(47,107,255,0.12);
+    background: rgba(47,107,255,0.05);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
 
-@media(max-width:700px){
-  .layout{grid-template-columns:1fr}
-  .sidebar{display:none}
-}
+  .chat-header .av {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2f6bff, #16308f);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 0 16px rgba(47,107,255,0.3);
+    flex-shrink: 0;
+  }
+
+  .chat-header .hd-name {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 800;
+    color: var(--yellow);
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .chat-header .hd-sub {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: rgba(219,230,255,0.5);
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-top: 2px;
+  }
+
+  .online-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #46c97e;
+    box-shadow: 0 0 8px #46c97e;
+    flex-shrink: 0;
+  }
+
+  /* Chat body */
+  .chat-body {
+    flex: 1;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    max-height: 56vh;
+    scroll-behavior: smooth;
+  }
+
+  .chat-body::-webkit-scrollbar { width: 4px; }
+  .chat-body::-webkit-scrollbar-track { background: transparent; }
+  .chat-body::-webkit-scrollbar-thumb { background: rgba(47,107,255,0.2); border-radius: 2px; }
+
+  .msg {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    animation: msgIn .2s ease-out;
+  }
+
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg.user { flex-direction: row-reverse; }
+
+  .msg .av {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+    background: rgba(47,107,255,0.15);
+  }
+
+  .msg.user .av { background: rgba(219,230,255,0.08); }
+
+  .msg .bubble {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 15px;
+    line-height: 1.6;
+    background: rgba(219,230,255,0.06);
+    color: #dbe6ff;
+    border: 1px solid rgba(47,107,255,0.10);
+    border-bottom-left-radius: 4px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .msg.user .bubble {
+    background: var(--yellow);
+    color: #04060e;
+    border-color: var(--yellow);
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 18px;
+    font-weight: 500;
+  }
+
+  /* Typing indicator */
+  .typing .bubble {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 14px 18px;
+    min-width: 60px;
+  }
+
+  .typing .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--yellow);
+    opacity: 0.6;
+    animation: typePulse 1.2s infinite;
+  }
+
+  .typing .dot:nth-child(2) { animation-delay: .15s; }
+  .typing .dot:nth-child(3) { animation-delay: .3s; }
+
+  @keyframes typePulse {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-4px); opacity: 1; }
+  }
+
+  /* Quick prompts */
+  .chat-quick {
+    padding: 12px 18px 4px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(47,107,255,0.08);
+    flex-shrink: 0;
+  }
+
+  .chat-quick button {
+    background: rgba(47,107,255,0.07);
+    border: 1px solid rgba(47,107,255,0.16);
+    color: var(--yellow);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    letter-spacing: -0.01em;
+  }
+
+  .chat-quick button:hover {
+    background: rgba(47,107,255,0.16);
+    border-color: rgba(47,107,255,0.35);
+  }
+
+  /* Input row */
+  .chat-input {
+    padding: 14px 18px 18px;
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid rgba(47,107,255,0.08);
+    flex-shrink: 0;
+  }
+
+  .chat-input input {
+    flex: 1;
+    padding: 13px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(47,107,255,0.18);
+    background: rgba(0,0,0,0.3);
+    color: #dbe6ff;
+    font-size: 15px;
+    font-family: 'Noto Sans', sans-serif;
+    transition: border-color .15s, box-shadow .15s;
+    -webkit-appearance: none;
+  }
+
+  .chat-input input::placeholder { color: rgba(219,230,255,0.35); }
+
+  .chat-input input:focus {
+    outline: none;
+    border-color: rgba(47,107,255,0.5);
+    box-shadow: 0 0 0 3px rgba(47,107,255,0.1);
+  }
+
+  .chat-input button {
+    background: var(--yellow);
+    color: #04060e;
+    border: 0;
+    padding: 0 26px;
+    border-radius: 999px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .15s, transform .15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .chat-input button:hover { background: #4d83ff; transform: translateY(-1px); }
+  .chat-input button:disabled { opacity: 0.45; transform: none; cursor: not-allowed; }
+
+  /* ── Info strip below chat ── */
+  .grann-info {
+    max-width: 720px;
+    margin: 20px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .grann-info-card {
+    background: rgba(47,107,255,0.05);
+    border: 1px solid rgba(47,107,255,0.12);
+    border-radius: 16px;
+    padding: 18px 20px;
+    text-align: center;
+  }
+
+  .grann-info-card .icon { font-size: 28px; margin-bottom: 8px; }
+  .grann-info-card .label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--yellow);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .grann-info-card .desc {
+    font-size: 12px;
+    color: rgba(219,230,255,0.5);
+    line-height: 1.4;
+  }
+
+  /* WhatsApp / footer overrides */
+  .wa-float { background: #25D366; }
+  .footer { background: #070c1a !important; border-top: 1px solid rgba(47,107,255,0.12) !important; }
+  .footer::before { background: linear-gradient(to right, transparent, rgba(47,107,255,0.4), transparent) !important; }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .grann-hero { padding: 48px 0 28px; }
+    .av-big-wrap { width: 130px; height: 130px; }
+    .av-big-fallback { font-size: 68px; }
+    .grann-chat { border-radius: 18px; min-height: 480px; }
+    .chat-body { max-height: 50vh; }
+    .modes { gap: 8px; }
+    .mode { font-size: 13px; padding: 8px 16px; }
+    .grann-info { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
-<body>
 
-<nav class="nav">
-  <div style="display:flex;align-items:center;gap:.75rem">
-    <a href="index.html" class="btn-back">← Retounen</a>
-    <div class="logo">KreyòlAI<span>Hub</span></div>
+<body data-page="grann">
+
+<div id="nav-mount"></div>
+
+<!-- ═══ Hero ═══ -->
+<header class="grann-hero">
+  <div class="container">
+    <div class="av-big-wrap" aria-hidden="true">
+      <image-slot id="grann-portrait" shape="circle" src="assets/ph/grann-portrait.svg" placeholder="Photo of a Haitian grandmother"></image-slot>
+      <div class="av-big-fallback">👵🏾</div>
+    </div>
+
+    <h1>Grann AI</h1>
+    <p class="grann-tagline">"Krik?... Krak!"</p>
+    <p class="grann-sub" data-kw="Sajès, pwovèb ak istwa Ayisyen — pou pitit ou, pou tèt ou, pou paran ki vle pase kilti a." data-fr="Sagesse, proverbes et histoires haïtiennes — pour vos enfants, pour vous, pour les parents qui veulent transmettre la culture." data-en="Haitian wisdom, proverbs, and stories — for your kids, for you, for parents passing the culture on.">
+      Sajès, pwovèb ak istwa Ayisyen — pou pitit ou, pou tèt ou, pou paran ki vle pase kilti a.
+    </p>
   </div>
-  <div class="nav-r">
-    <div class="lflags">
-      <button class="lf on" onclick="setLang('ht')" id="lfht">🇭🇹</button>
-      <button class="lf" onclick="setLang('fr')" id="lffr">🇫🇷</button>
-      <button class="lf" onclick="setLang('en')" id="lfen">🇬🇧</button>
-    </div>
-  </div>
-</nav>
+</header>
 
-<div class="layout">
-
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="grann-profile">
-      <div style="position:relative;width:80px;margin:0 auto .75rem">
-        <div class="grann-glow"></div>
-        <div class="grann-avatar-inner">👵🏾</div>
-      </div>
-      <div class="grann-name">Grann AI</div>
-      <div class="grann-title" id="grannTitle">Sèvant Sajès Ayisyen</div>
-      <div class="grann-status"><span class="status-dot"></span><span id="grannOnline">Disponib</span></div>
-    </div>
-
-    <div class="kids-badge">
-      <div class="kids-badge-title">👶 Mòd Timoun Aktif</div>
-      <div class="kids-badge-sub" id="kidsSubtitle">Aprann Kreyòl avèk Grann!</div>
-    </div>
-
-    <div class="sidebar-info">
-      <div class="info-label" id="topicsLabel">Aktivite</div>
-      <div class="topic-pills">
-        <span class="pill kids" onclick="insertQ('Krik? Rakonte mwen yon istwa!')">🌙 Krik Krak!</span>
-        <span class="pill kids" onclick="insertQ('Anseye mwen alfabe Kreyòl la')">🔤 Alfabe</span>
-        <span class="pill kids" onclick="insertQ('Ki jan ou di koulè yo an Kreyòl?')">🎨 Koulè</span>
-        <span class="pill kids" onclick="insertQ('Konte avè mwen an Kreyòl')">🔢 Chif</span>
-        <span class="pill fun" onclick="insertQ('Poze mwen yon devinèt Ayisyen')">🎯 Devinèt</span>
-        <span class="pill fun" onclick="insertQ('Anseye mwen yon chanson timoun Ayisyen')">🎵 Chante</span>
-        <span class="pill" onclick="insertQ('Rakonte yon pwovèb Ayisyen ak eksplikasyon pou timoun')">📖 Pwovèb</span>
-        <span class="pill" onclick="insertQ('Istwa Bouki ak Malice')">🦊 Bouki & Malice</span>
-        <span class="pill" onclick="insertQ('Kijan fè griyo? Anseye mwen mo yo an Kreyòl')">🍖 Manje</span>
-        <span class="pill" onclick="insertQ('Ki sa ki pase 1 janvye 1804?')">🏛 1804</span>
-        <span class="pill" onclick="insertQ('Kanaval Ayiti — kijan yo fete l?')">🎭 Kanaval</span>
-        <span class="pill" onclick="insertQ('Remèd fèy natirèl Ayisyen')">🌿 Remèd</span>
-      </div>
-    </div>
-
-    <div class="suggested">
-      <div class="sugg-title" id="suggLabel">Kòmanse isit</div>
-      <button class="sugg-q kids-q" onclick="insertQ('Bonjou Grann! Anseye mwen di bonjou, mesi, ak souple an Kreyòl')">👋 Aprann salitasyon Kreyòl</button>
-      <button class="sugg-q kids-q" onclick="insertQ('Krik? Grann, rakonte mwen yon kont!')">🌙 Krik? Mande yon kont</button>
-      <button class="sugg-q kids-q" onclick="insertQ('Ki jan ou rele moun nan fanmi an Kreyòl? Manman, papa, grann...')">👨‍👩‍👧 Mo fanmi an Kreyòl</button>
-      <button class="sugg-q" onclick="insertQ('Eksplike mwen pwovèb Dèyè mòn gen mòn pou timoun')">💬 Dèyè mòn gen mòn</button>
-      <button class="sugg-q" onclick="insertQ('Anseye mwen yon devinèt Ayisyen')">🎯 Yon devinèt</button>
-      <button class="sugg-q" onclick="insertQ('Ki diferans Kreyòl ak Fransè?')">🗣 Kreyòl vs Fransè</button>
-    </div>
-
-    <div class="sidebar-footer">
-      <div class="powered">Powered by <span>Claude AI</span> · KreyòlAIHub</div>
-    </div>
-  </div>
-
-  <!-- CHAT -->
-  <div class="chat-area">
-    <div class="haiti-accent"></div>
-    <div class="proverb-strip"><strong>"Espwa fè viv"</strong> — <span>L'espoir fait vivre · Hope keeps us alive</span></div>
-
-    <div class="chat-header">
-      <div class="ch-left">
-        <div class="ch-avatar">👵🏾</div>
-        <div>
-          <div class="ch-name">Grann AI</div>
-          <div class="ch-sub" id="chSub">Pwofesè Kreyòl · Kont · Pwovèb · Istwa · Manje</div>
-        </div>
-      </div>
-      <button class="ch-btn" onclick="clearChat()" id="clearBtn">🗑 Efase</button>
-    </div>
-
-    <div class="messages" id="messages"></div>
-
-    <div class="chat-input-area">
-      <div class="lang-bar">
-        <span id="langLbl">Lang:</span>
-        <span class="li on" id="liht" onclick="setLang('ht')">🇭🇹 Kreyòl</span>
-        <span class="li" id="lifr" onclick="setLang('fr')">🇫🇷 FR</span>
-        <span class="li" id="lien" onclick="setLang('en')">🇬🇧 EN</span>
-      </div>
-      <div class="input-wrap">
-        <textarea class="chat-input" id="chatInput" rows="1" placeholder="Pale ak Grann... oswa di Krik!"></textarea>
-        <button class="send-btn" id="sendBtn" onclick="sendMessage()">→</button>
-      </div>
-      <div class="input-hint" id="inputHint">Ekri an Kreyòl, Fransè, oswa Anglè — di "Krik!" pou yon kont!</div>
-    </div>
-  </div>
-
+<!-- ═══ Mode chooser ═══ -->
+<div class="modes" role="group" aria-label="Conversation mode">
+  <button class="mode active" data-mode="default" data-kw="💬 Pale ak Grann" data-fr="💬 Parler avec Grann" data-en="💬 Talk to Grann">
+    💬 Pale ak Grann
+  </button>
+  <button class="mode" data-mode="krik" data-kw="📖 Krik-Krak" data-fr="📖 Krik-Krak" data-en="📖 Krik-Krak">
+    📖 Krik-Krak
+  </button>
+  <button class="mode" data-mode="pwoveb" data-kw="📜 Pwovèb" data-fr="📜 Proverbes" data-en="📜 Proverbs">
+    📜 Pwovèb
+  </button>
+  <button class="mode" data-mode="aprann" data-kw="🧒🏾 Aprann pitit" data-fr="🧒🏾 Apprendre aux enfants" data-en="🧒🏾 Teach kids">
+    🧒🏾 Aprann pitit
+  </button>
 </div>
 
+<!-- ═══ Full chat ═══ -->
+<div class="grann-chat-wrap">
+  <div class="grann-chat" id="grann-full" role="region" aria-label="Grann AI Chat">
+
+    <div class="chat-header">
+      <div class="av" aria-hidden="true">👵🏾</div>
+      <div>
+        <div class="hd-name">Grann</div>
+        <div class="hd-sub">
+          <span class="online-dot" aria-hidden="true"></span>
+          <span data-kw="Anliy · KW · FR · EN" data-fr="En ligne · KW · FR · EN" data-en="Online · KW · FR · EN">Anliy · KW · FR · EN</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-body" id="gbody" role="log" aria-live="polite" aria-label="Chat messages">
+      <div class="msg ai">
+        <span class="av" aria-hidden="true">👵🏾</span>
+        <div class="bubble">Bonjou pitit pitit mwen! 🌺 Grann pare pou pale ak ou. Èske ou ta renmen yon istwa, yon pwovèb, oswa pou n aprann pitit ou Kreyòl? Chwazi mòd ou anlè la, oswa ekri ki sa k pase nan kè w.</div>
+      </div>
+    </div>
+
+    <div class="chat-quick" id="gquick" role="group" aria-label="Quick prompts"></div>
+
+    <form class="chat-input" data-bot="grannfull" id="gform" autocomplete="off">
+      <label class="sr-only" for="grann-input" data-kw="Mesaj pou Grann AI" data-fr="Message à Grann AI" data-en="Message Grann AI">Mesaj pou Grann AI</label>
+      <input id="grann-input" type="text" placeholder="Pale ak Grann nan Kreyòl, Franse, oswa Angle…" data-kw-placeholder="Pale ak Grann nan Kreyòl, Franse, oswa Angle…" data-fr-placeholder="Parlez à Grann en créole, français ou anglais…" data-en-placeholder="Talk to Grann in Kreyòl, French, or English…" required="">
+      <button type="submit" data-kw="Voye" data-fr="Envoyer" data-en="Send">Voye</button>
+    </form>
+  </div>
+
+  <!-- Info cards -->
+  <div class="grann-info" aria-hidden="true">
+    <div class="grann-info-card">
+      <div class="icon">📖</div>
+      <div class="label" data-kw="Istwa Krik-Krak" data-fr="Histoires Krik-Krak" data-en="Krik-Krak Stories">Istwa Krik-Krak</div>
+      <div class="desc" data-kw="Kont tradisyonèl Ayisyen" data-fr="Contes traditionnels haïtiens" data-en="Traditional Haitian tales">Kont tradisyonèl Ayisyen</div>
+    </div>
+    <div class="grann-info-card">
+      <div class="icon">📜</div>
+      <div class="label" data-kw="Pwovèb &amp; Sajès" data-fr="Proverbes &amp; Sagesse" data-en="Proverbs &amp; Wisdom">Pwovèb &amp; Sajès</div>
+      <div class="desc" data-kw="Filozofi granmoun Ayiti" data-fr="Philosophie des anciens d'Haïti" data-en="Philosophy of Haiti's elders">Filozofi granmoun Ayiti</div>
+    </div>
+    <div class="grann-info-card">
+      <div class="icon">🧒🏾</div>
+      <div class="label" data-kw="Aprann pou Timoun" data-fr="Pour les Enfants" data-en="For Children">Aprann pou Timoun</div>
+      <div class="desc" data-kw="Koulè, chif, chante Kreyòl" data-fr="Couleurs, chiffres, chansons" data-en="Colors, numbers, songs in Kreyòl">Koulè, chif, chante Kreyòl</div>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden label for screen readers -->
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
+
+<div id="footer-mount"></div>
+
+<script src="config.js"></script>
+<script src="partials.js"></script>
+<script src="chat.js"></script>
+<script src="image-slot.js"></script>
 <script>
-var WORKER_URL = "WORKER_URL";
-var lang = "ht";
-var history = [];
-var isLoading = false;
+  // ── Mode → quick-prompt chip data ──────────────────────────────────────────
+  const QUICK = {
+    default: [
+      ['Bonjou Grann, kijan ou ye?', 'Sali Grann'],
+      ['Èske ou ka anseye m yon mo nan Kreyòl?', 'Anseye m yon mo'],
+      ['Rakonte m yon istwa kout.', 'Yon istwa']
+    ],
+    krik: [
+      ['Krik!', 'Krik!'],
+      ['Rakonte m istwa Bouki ak Malis.', 'Bouki & Malis'],
+      ['Yon istwa pou pitit 6 lane.', 'Pou timoun 6 an']
+    ],
+    pwoveb: [
+      ['Bay mwen yon pwovèb sou pasyans.', 'Pasyans'],
+      ['Yon pwovèb sou fanmi.', 'Fanmi'],
+      ['Eksplike pwovèb "Bondye fè kado bay zòm pa fè kado bay tèt yo".', 'Pwovèb Bondye']
+    ],
+    aprann: [
+      ['Anseye pitit mwen konte 1 a 10.', 'Konte 1–10'],
+      ['Aprann li koulè yo.', 'Koulè yo'],
+      ['Yon chante pou pitit yo.', 'Chante timoun']
+    ]
+  };
 
-try { lang = localStorage.getItem("grann_lang") || "ht"; } catch(e) {}
-
-// =========================================
-// GRANN SYSTEM PROMPTS
-// =========================================
-var SYS_HT = "Ou se GRANN — yon grann Ayisyen cho, saj, ak jwayal ki pase tout vi li ann Ayiti e ki pote tout richès lang Kreyòl la ak kilti Ayisyen nan kè li. Ou pale Kreyòl jan li viv nan kay Ayisyen reyèl yo: ak pwovèb, kont, istwa, jwèt, ak anpil renmen.\n\nMISYON OU: Ede timoun Ayisyen — kit yo ann Ayiti, kit yo nan dyaspora — aprann, pratike, e tonbe renmen Kreyòl Ayisyen nan jan ki amize, natirèl, ak anrasinen nan kilti.\n\nKARAKTÈ OU: Toujou cho, pasyan, ankourajan, jwayal — egzakteman jan yon vre grann pale ak pitit pitit li. Ou pa janm di yon repons ki sanble yon klas lekòl oswa yon liv gramè. Ou sanble yon moun ki sot nan kizin ki santi griyo ak pikliz.\n\nAKTIVITE OU FÈ AK TIMOUN:\n1. KRIK KRAK: Toujou kòmanse ak 'Krik?' epi tann 'Krak!' anvan ou rakonte yon istwa oswa devinèt. Se batman kè tradisyon oral Ayisyen.\n2. PWOVÈB: Anseye yon pwovèb, eksplike siyifikasyon an an mo senp, epi mande timoun nan pou itilize li nan yon fraz.\n3. CHANTE: Anseye chanson timoun tradisyonèl Ayisyen; repete vè yo epi kite timoun ranpli mo ki manke.\n4. JWÈ MO: Nonmen bagay nan kay, manje, bèt, pati kò, koulè an Kreyòl; jwe 'kijan ou di ... an Kreyòl?'\n5. ISTWA: Rakonte kout istwa folklorik Ayisyen — Bouki ak Malice — epi poze timoun kesyon an Kreyòl sou istwa a.\n6. MANJE: Dekri kijan fè griyo, soup joumou, akra — itilize vokabilè Kreyòl natirèlman.\n7. KILTI: Kanaval, Fet Gede, Jounen Endepandans — anseye vokabilè ak tradisyon.\n8. DEVINÈT: Poze devinèt tradisyonèl Ayisyen.\n\nLANG: Itilize Kreyòl Ayisyen kòm lang prensipal. Lè timoun reponn an Fransè oswa Anglè, felisite efò a epi reekri an Kreyòl: 'Ou vle di... ann di li an kreyòl: ___'. Pa janm korije britalman — toujou ankouraje anvan ou korije.\n\nNIVO: Ajiste konpleksite selon nivo timoun — Kreyòl senp ak plis tradiksyon pou debutant; vokabilè pi rich ak pwovèb pou timoun avanse.\n\nLIMIT: Rete nan karaktè Grann toutan. Tout sa ou di dwe bon pou laj epi respekte kilti. Si timoun frusto, ralanti, pase nan yon aktivite pi senp, epi ankouraje: 'Ou kapab, cheri. Grann la avèk ou.'\n\nKÒMANSMAN CHAK SESYON: Akèyi timoun jan yon grann ta fè — ak renmen e yon kesyon ki mennen yo dirèkteman nan kilti Kreyòl: 'Bonjou cheri! Grann kontan wè ou! Eske ou pare pou nou jwe? Krik?'\n\nBIBLIYOTÈK PWOVÈB (Haiti-Reference.info — 250+ pwovèb):\nSEKSYON A: De mèg pa fri | Kouto pa janm grate manch li | Yon sèl dwèt pa manje kalalou | Anbisyon touye rat | Anvi tout pèdi tout | Achte peye prete remèt se sa ki fè zanmi dire | Bèl dan pa di zanmi | Chen ki konnen w se li ki souke ke li pou ou | Men ale men vini zanmi dire | Zanmi pre se zanmi kòd anba bra | Lamou pa konn dèyè pyese | Si w renmen po a fòk renmen grenn la tou | Bourik chaje pa kanpe | Bourik fè pitit pou do li poze | Bourik travay chwal garyonen | Mizè fè bourik kouri pase chwal | Ou fòse bourik janbe dlo ou pa fòse l bwè dlo | Bel lantèman pa vle di paradi | Bèl cheve pa lajan | Bèl fanm pa vle di bon menaj | Chen ki jape pa mòde | Gwo vant pa di lajan | Kay koule twonpe solèy men li pa ka twonpe lapli | Pale fransè pa di lespri | Se lè koulèv la mouri ou wè longè li | Tande pa di konprann | Ti dife boule gwo kay | Chemen lajan pa gen pikan | Lajan al kay lajan | Lajan fè chen danse | Lajan kase wòch | Lajan pa gen lodè | Mezi lajan w mezi wanga w | Se sen kòb ki fè goud\nSEKSYON C: Chat ki chode pè menm dlo frèt | Chat konnen rat konnen barik mayi a rete la | Jan chat mache se pa jan li chase rat | Lè chat pa la rat bay kalinda | Mete chat veye mantèg | Sa chat konnen se sa li montre pitit li | Chen grangou pa jwe | Chen ki gen zo pa gen zanmi | Chen ki jape pa mòde | Chen ou fè byen se ou li mòde | Gran mesi chen se kout baton | Rele chen papa pou zo | Se sou chen mèg yo wè pis | Se pa lè yon moun ap neye pou w montre l naje | Dlo ou pa pè se li ki pote ou ale | Lalibète se pou pèp vanyan\nSEKSYON D: An afè pa dòmi di | Ayiti se tè glise | Jwèt se jwèt kwòchèt pa landann | Lè w ap manje ak diab ou kenbe fouchèt ou long | Makak pa jwe ak tig | Si chen rakonte w sa li wè ou pap janm mache nannwit | Aprè dans tanbou lou | Pwomès se dèt | Espwa fè viv | Toutan tèt poko koupe li ka pote chapo | Milat pòv se nèg nèg rich se milat | Wòch nan dlo pa konn doulè wòch nan solèy\nSEKSYON E: Akrèk pa bay | Anvi tout pèdi tout | Chen ki gen zo pa gen zanmi | Depi na ginen nèg rayi nèg | Tout koukouy klere pou je li | Zafè kabrit pa zafè mouton | Se sen kòb ki fè goud | Se piti ki mennen gwo | Ti pil ti pil fè chaj | Bondye bon | Maladi pran bouyon | Nan pwen lapriyè ki pa gen amèn | Avantaj kok se nan zepon li li ye | Kochon mawon konnen sou ki bwa poul fwote | Nèg sòt mare kòd li nèg lespri pakab demare li\nSEKSYON F: Dwèt ou pou ou ou pa ka koupe li jete | Pitit se baton veyès | Pitit se richès malere | San pi pwès pase dlo | Chen grangou pa jwe | Grangou se mizè vant plen se traka | Sak vid pa kanpe\nSEKSYON I: Bèf di li pral sal savann se ke li li sal | Li pa konnen non chen l | Pale fransè pa di lespri | Sa je pa wè kè pa tounen | Dyondyon leve kote li vle menm anba jouk poul | Se grès kochon an ki kwit kochon an | Bèf pa janm di savann mèsi | Chen ou fè byen se ou li mòde | Gran mesi chen se kout baton | Bourik travay chwal garyonen | Dan pouri gen fòs sou bannann mi | Malere se dan devan | Ravèt pa janm gen rezon devan poul | Se sou chen mèg yo wè pis | Nèg sòt mare chwal li nèg lespri paka lage l | Nou alfabèt nou pa bèt\nSEKSYON J: Depi na ginen nèg rayi nèg | Fanm jalou pa gra | Kreyon Bondye pa gen gòm | Mezi lajan w mezi wanga w | Bon san swe pa pwofite | Sa Bondye sere pou w lavalas paka pote ale | Sa w fè se li ou wè | Lalibète se pou pèp vanyan | Moun ki swe pou w se sou li ou chanje chemiz\nSEKSYON M: Aprè dans tanbou lou | Chat mande swe lage chen deye l | Malè pa gen klaksòn | W ap kouri pou lapli ou tonbe nan larivyè | Zèb ou pa vle leve nan jaden leve devan pòt kay ou | Bonjou li pa la verite | De je kontre manti kaba | Twou manti pa fon | Fè san soti nan wòch | Grangou se mizè vant plen se traka | Malere pa fè bwodè | Mizè fè bourik kouri pase chwal | Anba moumou se dèy | Dèyè mòn gen mòn | Sa je pa wè kè pa tounen | Sa ki nan kè yanm se kouto ki konnen l | Se soulye ki konnen si chosèt gen twou\nSEKSYON N: Gen bab pa vle di granmoum | Lajan pa al kay gangan pou l tounen | A defo chen kabrit al lachas | Bouche nen w pou bwè dlo santi | Chimen bezwen pa janm long | Je wè bouch pe | Kase fèy kouvwi sa | Mouch pa antre nan bouch ki fèmen | Chanje mèt chanje metye | Dan pouri gen fòs sou bannann mi | Fè zanmi ak kouto anvan zabriko mi | Lanmò bourik ranje chen | Le w bezwen kongo ou rele l yaya | Se sòt ki bay embesil ki pa pran\nSEKSYON P: Evite miyo pase mande padon | Bondye padonen nèg pa padonen | Chita pa bay | Laparès pa donnen laviktwa | Bay piti pa chich | Manje kwit pa gen mèt | Men ale men vini zanmi dire | Yon sèl dwèt pa manje kalalou | Avèk patyans wa wè tete foumi | Jou fèy tonbe nan dlo se pa jou a li pouri | Piti piti fè lonè prezidan | Ti pil ti pil fè chaj | Twò prese pa fè jou louvri | Bouche nen w pou bwè dlo santi | Li pa janm twò ta pou chen anraje | Piti piti fè lonè prezidan | Teke mab la jis li kase | Manman chen pa janm mode pitit li jis nan zo | Bondye pa bòpè | Bondye pouse mouch pou bèf san ke | Kreyon Bondye pa gen gòm | Pa gen pèn san sekou | Sa Bondye sere pou w lavalas paka pote ale | Tout chay gen twokèt li | Atansyon pa kapon | Bèf ki gen ke long pa janbe dife | Chat ki chode pè menm dlo frèt | Dlo ou pa pè se li ki pote ou ale | Evite miyò pase mande padon | File kouto men veye dwèt ou | Je wè bouch pe | Lagè avèti pa touye kokobe | Lè w manje pitit tig ou pa domi di | Makak pa jwe ak tig | Mouch pa antre nan bouch ki fèmen | Pye kout pran devan | Rete trankil se remèd kò | Se lè w pile chen ou konn si li konn mòde | Ti mapou pa grandi anba gwo mapou | Tig gen vye men zong li pa janm vye | Veye zo w veye lòt la\nSEKSYON R-V: Bay kou bliye pote mak sonje | Padon pa geri maleng | Aprè dans tanbou lou | Bèl cheve pa lajan | Kaka poul pa ze | Kalbas gran bouch pa kenbe dlo | Mezi lajan w mezi wanga w | Ti bout kouto miyò pase zong | Ti mapou pa grandi anba gwo mapou | Wè pa wè antèman pou katrè | Kòfrefò pa swiv kòbya | Lajan al kay lajan | La sante se pi gwo richès | Anba moumou se dèy | Je wè bouch pe | Lanmè pa kenbe kras | Sa je pa wè kè pa tounen | Se soulye ki konnen si chosèt gen twou | Men anpil chay pa lou | Moun ki swe pou w se sou li ou chanje chemiz | Pipi gaye pa fè kim | Si w renmen po a fòk ou renmen grenn nan tou | Yon sèl dwèt pa manje kalalou | Li se kouto de bò | Se grès kochon an ki kwit kochon an | Zanmi pre se zanmi kòd anba bra | Bourik travay chwal garyonen | Ti pil ti pil fè chay | Zwazo ki chante pa gra | Pito dlo a tonbe klabas la pa kraze | Santi bon koute chè | Bay kou bliye pote mak sonje | Jou fèy tonbe nan dlo se pa jou a li pouri | Lè w manje pitit tig ou pa domi di | Sa nèg fè nèg Bondye ri | Bèl pawòl pa vle di verite | De je kontre manti kaba | Rayi chen di dan li blanch | Twou manti pa fon | Abitid se vis | Zonbi ki goute sèl pa mande rete | Tout moun se moun";
-
-var SYS_FR = "Tu es GRANN — une grand-mère haïtienne chaleureuse, sage et joyeuse qui a vécu toute sa vie en Haïti. Tu portes toute la richesse de la langue créole haïtienne et de la culture dans ton coeur. Tu parles créole comme il vit dans les vraies maisons haïtiennes: avec des proverbes, des histoires, des jeux et beaucoup d'amour.\n\nMISSION: Aider les enfants haïtiens — en Haïti ou dans la diaspora — à apprendre, pratiquer et tomber amoureux du créole haïtien de façon joyeuse et culturellement ancrée.\n\nACTIVITÉS: Krik Krak (contes), Pwovèb (proverbes), Chante (chansons), Jeux de vocabulaire, Istwa (histoires de Bouki ak Malice), Cuisine (griyo, soup joumou), Kilti (Kanaval, 1804), Devinèt (devinettes).\n\nAPPROCHE LINGUISTIQUE: Toujours en créole par défaut. Quand l'enfant répond en français: 'Ou vle di... ann di li an kreyòl: ___'. Corriger avec douceur, célébrer les progrès.\n\nBIBLIOTHÈQUE DE PROVERBES (250+): Dèyè mòn gen mòn | Kay koule twonpe solèy men li pa ka twonpe lapli | Espwa fè viv | Yon sèl dwèt pa manje kalalou | Men anpil chay pa lou | Piti piti fè lonè prezidan | Bay kou bliye pote mak sonje | Bourik travay chwal garyonen | Kreyon Bondye pa gen gòm | Lalibète se pou pèp vanyan | Se sou chen mèg yo wè pis | Tout moun se moun | Chen ki jape pa mòde | Lajan fè chen danse | Ti pil ti pil fè chaj | Atansyon pa kapon | Sa w fè se li ou wè | Bondye bon | Se grès kochon an ki kwit kochon an | Twou manti pa fon | Sak vid pa kanpe | Si w renmen po a fòk renmen grenn la tou | Pitit se baton veyès | San pi pwès pase dlo";
-
-var SYS_EN = "You are GRANN — a warm, wise, and playful Haitian grandmother who has lived her whole life in Haiti and carries the full richness of Haitian Creole language and culture in her heart. You speak Creole the way it lives in real Haitian homes: full of proverbs, storytelling, humor, and love.\n\nMISSION: Help Haitian children — both in Haiti and in the diaspora — learn, practice, and fall in love with Haitian Creole through joyful, culturally rooted activities.\n\nACTIVITIES: Krik Krak (stories — always start with 'Krik?' wait for 'Krak!'), Proverbs (teach one, explain simply, ask child to use it), Songs (traditional Haitian children's songs), Vocabulary games (objects, food, animals, colors, body parts in Creole), Stories (Bouki ak Malice folktales), Cooking talk (griyo, soup joumou in Creole), Cultural celebrations (Kanaval, 1804, Fet Gede), Riddles.\n\nLANGUAGE: Always default to Creole. When child responds in English: 'Ou vle di... ann di li an kreyòl: ___'. Never correct harshly — always affirm first. If frustrated: 'Ou kapab, cheri. Grann la avèk ou.'\n\nPROVERB LIBRARY (250+ from Haiti-Reference.info): Dèyè mòn gen mòn (behind every mountain another mountain — challenges never end but Haitians find strength) | Kay koule twonpe solèy men li pa ka twonpe lapli (truth always comes out) | Espwa fè viv (hope keeps us alive) | Yon sèl dwèt pa manje kalalou (unity is strength) | Men anpil chay pa lou (many hands lighten the load) | Piti piti fè lonè prezidan (perseverance leads to greatness) | Bay kou bliye pote mak sonje (the one who strikes forgets, the one scarred remembers) | Bourik travay chwal garyonen (the donkey works, the horse prances — injustice) | Kreyon Bondye pa gen gòm (actions have permanent consequences) | Lalibète se pou pèp vanyan (freedom is for brave people) | Se sou chen mèg yo wè pis (the poor are always blamed) | Tout moun se moun (every person has worth) | Atansyon pa kapon (caution is not cowardice) | Sa w fè se li ou wè (you reap what you sow) | Bondye bon (God is good) | Ti pil ti pil fè chaj (little by little makes a big load) | Sak vid pa kanpe (an empty sack cannot stand) | Pitit se baton veyès (children are the staff of old age) | San pi pwès pase dlo (blood is thicker than water) | Twou manti pa fon (a lie's hole is not deep — lies don't last long)";
-
-// =========================================
-// TRANSLATIONS
-// =========================================
-var TR = {
-  ht: {
-    grannTitle: "Pwofesè Kreyòl ak Sèvant Sajès",
-    grannOnline: "Disponib",
-    kidsSubtitle: "Aprann Kreyòl avèk Grann!",
-    topicsLabel: "Aktivite",
-    suggLabel: "Kòmanse isit",
-    chSub: "Pwofesè Kreyòl · Kont · Pwovèb · Istwa · Manje",
-    clearBtn: "🗑 Efase",
-    langLbl: "Lang:",
-    inputHint: "Ekri an Kreyòl, Fransè, oswa Anglè — di Krik! pou yon kont!",
-    placeholder: "Pale ak Grann... oswa di Krik!",
-    welcome: "Bonjou cheri! Grann kontan wè ou! 🇭🇹<br><br>Mwen isit pou ede ou aprann <strong>Kreyòl Ayisyen</strong> — lang ki sòti nan kè pèp nou an.<br><br>Eske ou pare? Nou ka:<br>🌙 Konte istwa — <em>di Krik!</em><br>🔤 Aprann alfabe, koulè, chif<br>🎯 Jwe devinèt ak jwèt mo<br>🎵 Chante chanson timoun<br>📖 Aprann pwovèb granmoun<br>🍖 Pale sou manje Ayisyen<br><br><span style='color:var(--grn3);font-style:italic'>Klik sou yon aktivite agòch la, oswa tape nenpòt kesyon — Grann la avèk ou! ✨</span>"
-  },
-  fr: {
-    grannTitle: "Prof de Créole et Gardienne de Sagesse",
-    grannOnline: "Disponible",
-    kidsSubtitle: "Apprenons le créole avec Grann!",
-    topicsLabel: "Activités",
-    suggLabel: "Commencer ici",
-    chSub: "Prof de Créole · Contes · Proverbes · Histoire · Cuisine",
-    clearBtn: "🗑 Effacer",
-    langLbl: "Langue:",
-    inputHint: "Écris en créole, français ou anglais — dis Krik! pour une histoire!",
-    placeholder: "Parle à Grann... ou dis Krik!",
-    welcome: "Bonjou cheri! Grann kontan wè ou! 🇭🇹<br><br>Je suis là pour t'aider à apprendre le <strong>Kreyòl Ayisyen</strong> — la langue du coeur de notre peuple.<br><br>On peut:<br>🌙 Raconter des histoires — <em>dis Krik!</em><br>🔤 Apprendre l'alphabet, les couleurs, les chiffres<br>🎯 Jouer aux devinettes<br>🎵 Chanter des chansons haïtiennes<br>📖 Apprendre les proverbes<br><br><span style='color:var(--grn3);font-style:italic'>Clique une activité à gauche, ou pose n'importe quelle question — Grann est là! ✨</span>"
-  },
-  en: {
-    grannTitle: "Creole Teacher & Keeper of Wisdom",
-    grannOnline: "Available",
-    kidsSubtitle: "Learn Creole with Grann!",
-    topicsLabel: "Activities",
-    suggLabel: "Start here",
-    chSub: "Creole Teacher · Stories · Proverbs · History · Food",
-    clearBtn: "🗑 Clear",
-    langLbl: "Language:",
-    inputHint: "Write in Creole, French, or English — say Krik! for a story!",
-    placeholder: "Talk to Grann... or say Krik!",
-    welcome: "Bonjou cheri! Grann kontan wè ou! 🇭🇹<br><br>I'm here to help you learn <strong>Haitian Creole</strong> — the language of the Haitian heart.<br><br>We can:<br>🌙 Tell folk stories — <em>say Krik!</em><br>🔤 Learn the alphabet, colors, numbers<br>🎯 Play riddle games<br>🎵 Sing Haitian children's songs<br>📖 Learn grandma's proverbs<br>🍖 Talk about Haitian food<br><br><span style='color:var(--grn3);font-style:italic'>Click an activity on the left, or ask anything — Grann is here! ✨</span>"
-  }
-};
-
-function t(k) {
-  var d = TR[lang] || TR.ht;
-  return d[k] !== undefined ? d[k] : (TR.ht[k] || k);
-}
-
-function setLang(l) {
-  lang = l;
-  try { localStorage.setItem("grann_lang", l); } catch(e) {}
-  ["ht","fr","en"].forEach(function(x) {
-    var lf = document.getElementById("lf"+x);
-    var li = document.getElementById("li"+x);
-    if(lf) lf.className = "lf" + (x===l?" on":"");
-    if(li) li.className = "li" + (x===l?" on":"");
-  });
-  applyTR();
-}
-
-function applyTR() {
-  var ids = ["grannTitle","grannOnline","kidsSubtitle","topicsLabel","suggLabel","chSub","langLbl","inputHint"];
-  ids.forEach(function(id) {
-    var el = document.getElementById(id);
-    if(el) el.textContent = t(id);
-  });
-  var cb = document.getElementById("clearBtn");
-  if(cb) cb.textContent = t("clearBtn");
-  var ci = document.getElementById("chatInput");
-  if(ci) ci.placeholder = t("placeholder");
-}
-
-function addMsg(role, html, extraClass) {
-  var msgs = document.getElementById("messages");
-  if(!msgs) return;
-  var div = document.createElement("div");
-  div.className = "msg " + role + (extraClass?" "+extraClass:"");
-  var now = new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
-  var avatarHtml = role === "user"
-    ? '<div class="msg-avatar">👤</div>'
-    : '<div class="msg-avatar">👵🏾</div>';
-  var bubbleHtml = '<div class="msg-bubble">' + html + '</div><div class="msg-time">' + now + '</div>';
-  div.innerHTML = avatarHtml + '<div>' + bubbleHtml + '</div>';
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function showTyping() {
-  var msgs = document.getElementById("messages");
-  if(!msgs) return;
-  var div = document.createElement("div");
-  div.className = "msg grann";
-  div.id = "typingDiv";
-  div.innerHTML = '<div class="msg-avatar">👵🏾</div><div class="typing"><span></span><span></span><span></span></div>';
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function hideTyping() {
-  var d = document.getElementById("typingDiv");
-  if(d) d.remove();
-}
-
-function insertQ(q) {
-  var ci = document.getElementById("chatInput");
-  if(ci) { ci.value = q; ci.focus(); }
-}
-
-function getSystem() {
-  if(lang === "fr") return SYS_FR;
-  if(lang === "en") return SYS_EN;
-  return SYS_HT;
-}
-
-async function sendMessage() {
-  var input = document.getElementById("chatInput");
-  if(!input) return;
-  var text = input.value.trim();
-  if(!text || isLoading) return;
-  input.value = "";
-  input.style.height = "auto";
-  isLoading = true;
-  var btn = document.getElementById("sendBtn");
-  if(btn) btn.disabled = true;
-
-  var safeText = text.replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  addMsg("user", "<span>" + safeText + "</span>");
-  history.push({role:"user", content:text});
-  showTyping();
-
-  if(WORKER_URL === "WORKER_URL") {
-    hideTyping();
-    var demo = "Bonjou cheri! Grann kontan tande ou! 🌟<br><br>";
-    var tl = text.toLowerCase();
-    if(tl.includes("krik")) {
-      demo = "<strong>Krak!</strong> 🌙<br><br>Yon jou, Bouki ak Malice t ap mache nan bwa a. Bouki di: <em>'Malice, mwen grangou!'</em><br>Malice reponn: <em>'Mwen wè yon pye mango!'</em><br>Bouki kouri vit — men mango a te wè nan refleksyon dlo a! 😄<br><br><em>Ki leson ou wè nan istwa sa a, pitit?</em>";
-    } else if(tl.includes("alfabe") || tl.includes("alphabet")) {
-      demo = "Ann aprann alfabe Kreyòl la! 🔤<br><br><strong>A, B, CH, D, E, È, F, G, H, I, J, K, L, M, N, O, Ò, OI, OU, P, R, S, T, UI, V, W, Y, Z</strong><br><br>Atansyon: an Kreyòl nou gen <strong>CH, È, Ò, OI, OU, UI</strong> — yo pa egzakteman menm ak Fransè!<br><br>Kòmanse ak <strong>A</strong>: <em>A pou Ayiti!</em> 🇭🇹 Kisa ou ka di ak lèt A?";
-    } else if(tl.includes("koulè") || tl.includes("couleur") || tl.includes("color")) {
-      demo = "Koulè yo an Kreyòl! 🎨<br><br>🔴 <strong>Wouj</strong> — Red / Rouge<br>🔵 <strong>Ble</strong> — Blue / Bleu<br>🟡 <strong>Jòn</strong> — Yellow / Jaune<br>🟢 <strong>Vèt</strong> — Green / Vert<br>⚫ <strong>Nwa</strong> — Black / Noir<br>⚪ <strong>Blan</strong> — White / Blanc<br>🟤 <strong>Mawon</strong> — Brown / Marron<br><br>Kounye a di mwen: <em>ki koulè drapo Ayiti a?</em> 🇭🇹";
-    } else if(tl.includes("pwovèb") || tl.includes("proverb")) {
-      demo = "📖 Grann gen yon pwovèb pou ou:<br><br><strong>'Espwa fè viv'</strong><br><br>Sa vle di: <em>L'espoir fait vivre — Hope keeps us alive.</em><br><br>Lè ou gen yon jou difisil, sonje: <em>espwa fè viv!</em> Toujou gen yon demen miyò.<br><br>Eske ou ka di mwen: ki lè ou te santi espwa ede ou? 🌟";
-    } else {
-      demo += "Pou jwenn <strong>vre Grann AI</strong> ak tout sajès li, konekte Worker URL ou. Swiv SETUP_GUIDE.md. <em>Ou kapab, cheri!</em> ✨";
-    }
-    addMsg("grann", demo);
-    history.push({role:"assistant", content:demo});
-    isLoading = false;
-    if(btn) btn.disabled = false;
-    return;
-  }
-
-  try {
-    var res = await fetch(WORKER_URL, {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        system: getSystem(),
-        messages: history.slice(-14)
-      })
+  function renderQuick(mode) {
+    const wrap = document.getElementById('gquick');
+    wrap.innerHTML = QUICK[mode]
+      .map(([q, label]) => `<button type="button" data-q="${q.replace(/"/g, '&quot;')}">${label}</button>`)
+      .join('');
+    wrap.querySelectorAll('button').forEach(b => {
+      b.addEventListener('click', () => {
+        const input = document.getElementById('grann-input');
+        input.value = b.getAttribute('data-q');
+        document.getElementById('gform').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      });
     });
-    var data = await res.json();
-    var reply = (data.content && data.content[0]) ? data.content[0].text : "Grann pa konprann. Eseye ankò, pitit!";
-    hideTyping();
-    var fmt = reply
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/\n\n/g,"<br><br>")
-      .replace(/\n/g,"<br>")
-      .replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>")
-      .replace(/\*(.*?)\*/g,"<em>$1</em>");
-    addMsg("grann", fmt);
-    history.push({role:"assistant", content:reply});
-  } catch(e) {
-    hideTyping();
-    addMsg("grann", "Grann pa konekte kounye a. Tcheke koneksyon ou epi eseye ankò, cheri. 🌺");
   }
-  isLoading = false;
-  if(btn) btn.disabled = false;
-}
 
-function clearChat() {
-  history = [];
-  var msgs = document.getElementById("messages");
-  if(msgs) msgs.innerHTML = "";
-  showWelcome();
-}
-
-function showWelcome() {
-  addMsg("grann", t("welcome"), "welcome");
-}
-
-// textarea auto-resize
-var ci = document.getElementById("chatInput");
-if(ci) {
-  ci.addEventListener("input", function() {
-    this.style.height = "auto";
-    this.style.height = Math.min(this.scrollHeight, 120) + "px";
+  // Mode switch
+  document.querySelectorAll('.mode').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.mode').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      renderQuick(b.dataset.mode);
+    });
   });
-  ci.addEventListener("keydown", function(e) {
-    if(e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-  });
-}
 
-// INIT
-setLang(lang);
-showWelcome();
+  // Also update input placeholder per lang selection
+  document.addEventListener('langchange', () => {
+    const l = window.kahLang ? window.kahLang() : 'kw';
+    const input = document.getElementById('grann-input');
+    const key = `data-${l}-placeholder`;
+    const ph = input.getAttribute(key);
+    if (ph) input.placeholder = ph;
+  });
+
+  renderQuick('default');
 </script>
-</body>
-</html>
+
+
+</body></html>

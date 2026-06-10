@@ -1,970 +1,1817 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>KreyòlAI·Hub — The AI Academy & Platform in Haitian Creole</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<html lang="ht"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KreyòlAIHub — The AI Academy &amp; Platform in Haitian Creole</title>
+<meta name="description" content="The first AI platform in Haitian Creole. 30-day academy, real AI tools, and consulting for Haitians worldwide.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&amp;family=Noto+Sans:wght@400;500;600;700&amp;family=Rajdhani:wght@500;600;700&amp;family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-/* ════════════════ TOKENS ════════════════ */
-:root {
-  --bg:    #050816;
-  --bg2:   #080d1e;
-  --bg3:   #0F172A;
-  --bg4:   #111827;
-  --blue:  #3B82F6;
-  --blue2: #60a5fa;
-  --blue3: #93c5fd;
-  --red:   #EF4444;
-  --red2:  #f87171;
-  --prp:   #7C3AED;
-  --prp2:  #a78bfa;
-  --cyan:  #06b6d4;
-  --grn:   #10b981;
-  --grn2:  #34d399;
-  --t100:  #F8FAFC;
-  --t80:   rgba(248,250,252,.82);
-  --t55:   #94A3B8;
-  --t30:   rgba(148,163,184,.38);
-  --glass: rgba(255,255,255,0.055);
-  --gl2:   rgba(255,255,255,0.028);
-  --brd:   rgba(255,255,255,0.10);
-  --brd2:  rgba(255,255,255,0.06);
-  --gB:    0 0 40px rgba(59,130,246,.4);
-  --gP:    0 0 40px rgba(124,58,237,.35);
-  --fd:    'Syne', sans-serif;
-  --fs:    'Outfit', sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--fs);background:var(--bg);color:var(--t100);overflow-x:hidden;line-height:1.6}
-a{text-decoration:none;color:inherit}
-img{max-width:100%}
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--blue);border-radius:3px}
+  /* ===================================================================
+     GLOBAL TYPOGRAPHY — catch-all writing system (stabilized)
+     Headings → Poppins · body → Noto Sans · code/mono → JetBrains Mono.
+     Placed first so text nodes inherit reliably regardless of i18n swaps.
+     (Backgrounds, neon borders, grids, and hover transforms untouched.)
+     =================================================================== */
+  h1, h2, h3, h4, h5, h6, .logo, .btn {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 700;
+  }
+  body, p, li, input, textarea,
+  span:not([class*="mono"]):not([class*="icon"]) {
+    font-family: 'Noto Sans', sans-serif;
+  }
+  pre, code, .api-card code, [class*="mono"] {
+    font-family: 'JetBrains Mono', 'Share Tech Mono', monospace !important;
+  }
 
-/* ════════════════ UTILS ════════════════ */
-.c{max-width:1160px;margin:0 auto;padding:0 1.75rem}
-.grad{background:linear-gradient(135deg,var(--blue2) 0%,var(--prp2) 50%,var(--blue3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.haiti-grad{background:linear-gradient(135deg,var(--blue2),var(--red2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.67rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);background:rgba(59,130,246,.09);border:1px solid rgba(59,130,246,.22);border-radius:99px;padding:.28rem .85rem;margin-bottom:1.35rem}
-.eyebrow::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue);display:block;animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.glass{background:var(--glass);border:1px solid var(--brd);border-radius:20px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-.sec-title{font-family:var(--fd);font-size:clamp(1.9rem,3.8vw,2.9rem);font-weight:800;line-height:1.1;letter-spacing:-.022em;margin-bottom:.9rem}
-.sec-sub{font-size:.97rem;color:var(--t55);font-weight:300;max-width:500px;margin:0 auto;line-height:1.82}
+  /* ===== Hero ===== */
+  .hero {
+    position: relative; overflow: hidden;
+    padding: clamp(60px, 9vw, 120px) 0 clamp(40px, 6vw, 80px);
+    background: transparent;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    overflow: hidden;
+  }
+  .hero-bg::before,
+  .hero-bg::after {
+    content:""; position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4;
+  }
+  .hero-bg::before { width: 600px; height: 600px; background: var(--amber); top: -200px; right: -120px; opacity: 0.18; }
+  .hero-bg::after  { width: 500px; height: 500px; background: var(--green); bottom: -200px; left: -150px; opacity: 0.10; }
+  .hero-grid {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1.15fr 1fr; gap: 60px;
+    align-items: center;
+  }
+  .hero h1 .accent { color: var(--amber); }
+  .hero h1 .accent-2 { color: var(--green); }
+  .hero-lead {
+    font-size: clamp(17px, 1.4vw, 19px); color: var(--ink-2);
+    max-width: 540px; margin-top: 24px; line-height: 1.6;
+  }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+  .hero-stats {
+    display: flex; gap: 22px; flex-wrap: wrap;
+    margin-top: 28px; font-size: 13px; color: var(--ink-3);
+    font-family: 'Poppins'; font-weight: 500;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .hero-stats span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-stats span::before { content:"·"; color: var(--ink-3); }
+  .hero-stats span:first-child::before { display:none; }
+  .hero-stats b { color: var(--amber); font-weight: 700; }
 
-/* ════════════════ BUTTONS ════════════════ */
-.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fs);font-size:.88rem;font-weight:600;border-radius:12px;padding:.75rem 1.55rem;cursor:pointer;border:none;transition:all .25s ease;text-decoration:none}
-.btn-p{background:linear-gradient(135deg,var(--blue),var(--prp));color:#fff;box-shadow:0 4px 28px rgba(59,130,246,.32)}
-.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 38px rgba(59,130,246,.52)}
-.btn-g{background:var(--glass);color:var(--t80);border:1px solid var(--brd);backdrop-filter:blur(10px)}
-.btn-g:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18);transform:translateY(-2px)}
-.btn-sm{padding:.5rem 1.05rem;font-size:.76rem;border-radius:10px}
+  /* Hero visual — animated AI card stack */
+  .hero-visual {
+    position: relative;
+    width: 100%;
+    max-width: 470px; margin-left: auto;
+  }
+  .hero-media { width: 100%; aspect-ratio: 1000 / 1500; height: auto; }
+  .hero-media img { height: 100%; }
+  .hero-media-badge {
+    position: absolute; left: 14px; bottom: 14px; z-index: 3;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 13px; border-radius: 999px;
+    background: rgba(7,11,21,0.72); border: 1px solid var(--hairline);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em;
+    color: var(--ink); text-transform: uppercase;
+  }
+  .hero-media-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+  .hv-card {
+    position: absolute; background: rgba(20, 17, 15, 0.85);
+    border-radius: 22px; padding: 22px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--hairline);
+    backdrop-filter: blur(20px);
+    transition: transform .3s;
+  }
+  .hv-flag {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    border-radius: 22px 0 0 22px;
+    background: linear-gradient(to bottom, var(--amber) 0 33%, var(--red) 33% 66%, var(--green) 66%);
+    box-shadow: 0 0 20px rgba(255, 181, 71, 0.4);
+  }
+  .hv-chat {
+    top: 4%; left: 0; right: 18%;
+    transform: rotate(-3deg);
+  }
+  .hv-chat .row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+  .hv-chat .av { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    background: var(--surface-3); color: var(--ink); display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; font-family: 'Poppins'; border: 1px solid var(--line); }
+  .hv-chat .av.ai { background: var(--amber); color: var(--bg); border: 0; box-shadow: 0 0 16px rgba(255,181,71,0.4); }
+  .hv-chat .bubble {
+    background: var(--surface-2); padding: 10px 14px; border-radius: 14px;
+    font-size: 14px; color: var(--ink); max-width: 280px; line-height: 1.4;
+    border: 1px solid var(--line);
+  }
+  .hv-chat .bubble.user { background: var(--amber); color: var(--bg); border: 0; }
+  .hv-stats {
+    bottom: 6%; right: 0; left: 22%;
+    transform: rotate(3deg);
+    padding: 20px 22px;
+  }
+  .hv-stats .label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); font-family: 'Poppins'; font-weight: 700; }
+  .hv-stats .big { font-family: 'Poppins'; font-weight: 800; font-size: 36px; color: var(--amber); margin: 4px 0 2px; }
+  .hv-stats .progress { height: 6px; background: var(--surface-2); border-radius: 999px; overflow: hidden; margin-top: 14px; border: 1px solid var(--line); }
+  .hv-stats .bar { height: 100%; width: 73%; background: linear-gradient(to right, var(--green), var(--amber)); border-radius: 999px; box-shadow: 0 0 12px rgba(52,224,140,0.5); }
+  .hv-stats .row2 { display: flex; justify-content: space-between; font-size: 12px; margin-top: 8px; color: var(--ink-3); }
+  .hv-stats .row2 b { color: var(--green); }
+  .hv-badge {
+    position: absolute; top: 38%; right: -16px;
+    background: linear-gradient(135deg, var(--amber), #d8870f);
+    color: var(--bg);
+    width: 96px; height: 96px; border-radius: 50%;
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'Poppins'; font-weight: 800; font-size: 12px; line-height: 1;
+    box-shadow: var(--glow-amber), 0 16px 40px rgba(0,0,0,0.5);
+    transform: rotate(8deg);
+    border: 2px solid rgba(255,255,255,0.1);
+  }
+  .hv-badge .big { font-size: 28px; margin-bottom: 2px; }
 
-/* ════════════════ REVEAL ════════════════ */
-[data-r]{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
-[data-r].on{opacity:1;transform:none}
-[data-r][data-d="1"]{transition-delay:.1s}[data-r][data-d="2"]{transition-delay:.2s}
-[data-r][data-d="3"]{transition-delay:.3s}[data-r][data-d="4"]{transition-delay:.4s}
-[data-r][data-d="5"]{transition-delay:.5s}
+  /* ===== Trust strip ===== */
+  .trust {
+    background: var(--bg-2); border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2);
+    padding: 28px 0;
+  }
+  .trust-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 30px;
+    flex-wrap: wrap;
+    font-family: 'Poppins'; font-size: 13px; color: var(--ink-3);
+    letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600;
+  }
+  .trust-row .item { display: inline-flex; align-items: center; gap: 8px; }
+  .trust-row .item::before { content:""; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
 
-/* ════════════════ NAVBAR ════════════════ */
-#nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.75rem;height:70px;display:flex;align-items:center;justify-content:space-between;transition:all .3s}
-#nav.scrolled{background:rgba(5,8,22,.92);backdrop-filter:blur(22px);border-bottom:1px solid var(--brd2)}
-.n-logo{font-family:var(--fd);font-size:1.18rem;font-weight:800;background:linear-gradient(90deg,var(--blue2),var(--prp2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.01em;white-space:nowrap}
-.n-menu{display:flex;align-items:center;gap:1.85rem;list-style:none}
-.n-menu a{font-size:.83rem;font-weight:500;color:var(--t55);transition:color .2s}
-.n-menu a:hover{color:var(--t100)}
-.n-actions{display:flex;align-items:center;gap:.7rem}
-.n-sign{font-size:.82rem;font-weight:500;color:var(--t55);cursor:pointer;transition:color .2s}
-.n-sign:hover{color:var(--t100)}
-.n-ham{display:none;flex-direction:column;gap:5px;cursor:pointer}
-.n-ham span{width:22px;height:2px;background:var(--t80);border-radius:2px}
+  /* ===== Who it's for ===== */
+  .who { background: transparent; }
+  .who-head { text-align: center; max-width: 700px; margin: 0 auto 56px; }
+  .who-head .lead { font-size: 18px; color: var(--ink-2); margin-top: 14px; }
+  .who-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px;
+  }
+  .who-card { background: var(--surface); border-radius: var(--r-lg); padding: 28px 24px; border: 1px solid var(--line); backdrop-filter: blur(20px); transition: border-color .2s; }
+  .who-card:hover { border-color: var(--hairline); }
+  .who-card .icon {
+    width: 50px; height: 50px; border-radius: 14px;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .who-card.c1 .icon { background: rgba(255,77,94,0.15); color: var(--red); }
+  .who-card.c2 .icon { background: rgba(52,224,140,0.15); color: var(--green); }
+  .who-card.c3 .icon { background: rgba(255,181,71,0.18); color: var(--amber); }
+  .who-card.c4 .icon { background: rgba(91,135,255,0.15); color: var(--navy); }
+  .who-card h3 { font-size: 19px; margin-bottom: 8px; }
+  .who-card p { font-size: 14.5px; color: var(--ink-3); margin: 0; line-height: 1.55; }
 
-/* ════════════════ HERO ════════════════ */
-#hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:70px}
-#cv{position:absolute;inset:0;z-index:0;pointer-events:none}
-.orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
-.orb-a{width:700px;height:700px;top:-220px;right:-180px;background:radial-gradient(circle,rgba(59,130,246,.14) 0%,transparent 68%);animation:pulse 7s ease-in-out infinite}
-.orb-b{width:500px;height:500px;bottom:-120px;left:-120px;background:radial-gradient(circle,rgba(239,68,68,.08) 0%,transparent 68%);animation:pulse 9s ease-in-out infinite reverse}
-.orb-c{width:360px;height:360px;top:35%;left:42%;background:radial-gradient(circle,rgba(124,58,237,.1) 0%,transparent 68%);animation:pulse 11s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.12);opacity:1}}
-.hero-inner{position:relative;z-index:2;width:100%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:3.5rem;padding:5.5rem 0 3.5rem}
-.hero-tag{display:inline-flex;align-items:center;gap:.6rem;font-size:.68rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--blue2);margin-bottom:1.4rem}
-.tag-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:blink 2s infinite}
-.hero-h1{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4rem);font-weight:800;line-height:1.05;letter-spacing:-.025em;margin-bottom:1.4rem}
-.hero-sub{font-size:1.02rem;font-weight:300;color:var(--t55);line-height:1.88;max-width:470px;margin-bottom:2rem}
-.hero-sub strong{color:var(--t80);font-weight:500}
-.hero-ctas{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:2.8rem}
-.hero-stats{display:flex;gap:2.4rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid var(--brd2)}
-.st-n{font-family:var(--fd);font-size:1.65rem;font-weight:700;background:linear-gradient(135deg,var(--blue2),var(--prp2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-.st-l{font-size:.68rem;font-weight:400;color:var(--t30);margin-top:.2rem;text-transform:uppercase;letter-spacing:.07em}
+  /* ===== Pillars ===== */
+  .pillars {
+    background: var(--bg-2); color: var(--ink); position: relative; overflow: hidden;
+    border-top: 1px solid var(--line-2);
+    border-bottom: 1px solid var(--line-2);
+  }
+  .pillars::before {
+    content:""; position: absolute; inset:0;
+    background:
+      radial-gradient(ellipse 600px 400px at 10% 100%, rgba(255,181,71,0.10), transparent 60%),
+      radial-gradient(ellipse 600px 400px at 100% 0%, rgba(52,224,140,0.08), transparent 60%);
+    pointer-events: none;
+  }
+  .pillars-inner { position: relative; }
+  .pillars h2 { color: var(--ink); }
+  .pillars-head { text-align: center; max-width: 700px; margin: 0 auto 56px; }
+  .pillars-head p { color: var(--ink-3); font-size: 18px; margin-top: 14px; max-width: 640px; margin-left: auto; margin-right: auto; }
+  .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .pillar {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 40px 34px;
+    position: relative;
+    transition: border-color .25s, transform .25s;
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+  }
+  .pillar::before {
+    content:""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, var(--amber), transparent);
+    opacity: 0.3;
+  }
+  .pillar:hover { border-color: var(--hairline); transform: translateY(-4px); }
+  .pillar .num {
+    font-family: 'Poppins'; font-weight: 700; font-size: 12px;
+    letter-spacing: 0.3em; color: var(--amber);
+    margin-bottom: 22px;
+    text-transform: uppercase;
+  }
+  .pillar h3 { color: var(--ink); margin-bottom: 14px; font-size: 28px; }
+  .pillar p { color: var(--ink-3); font-size: 15px; margin-bottom: 24px; line-height: 1.6; }
+  .pillar ul { list-style: none; padding: 0; margin: 0 0 28px; }
+  .pillar li { font-size: 14px; padding: 8px 0; padding-left: 26px; position: relative; color: var(--ink-2); }
+  .pillar li::before { content:"→"; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+  .pillar .link {
+    color: var(--amber); font-family: 'Poppins'; font-weight: 600; font-size: 14px;
+    display: inline-flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid transparent; padding-bottom: 2px;
+    transition: gap .2s, border-color .2s;
+  }
+  .pillar .link:hover { border-color: var(--amber); gap: 12px; }
 
-/* ─── HERO VISUAL ─── */
-.hero-vis{position:relative;height:560px;display:flex;align-items:center;justify-content:center}
-.r-glow{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,.28) 0%,transparent 68%);top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;animation:pulse 3.5s ease-in-out infinite}
-.robot{position:relative;z-index:5;animation:float 4.2s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+  /* ===== Academy preview ===== */
+  .academy-pv h2 { max-width: 760px; }
+  .academy-pv .head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .academy-pv .head-row p { color: var(--ink-3); font-size: 17px; max-width: 540px; line-height: 1.6; }
 
-/* floating cards */
-.fc{position:absolute;z-index:6;display:flex;align-items:center;gap:.7rem;padding:.82rem 1rem;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);backdrop-filter:blur(14px);box-shadow:0 8px 32px rgba(0,0,0,.38),var(--gB);white-space:nowrap;font-size:.76rem;font-weight:500}
-.fc-ico{font-size:1.15rem}
-.fc-nm{font-size:.74rem;font-weight:600;color:var(--t100)}
-.fc-tg{font-size:.61rem;color:var(--t30);margin-top:.08rem}
-.fc-bge{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;background:rgba(59,130,246,.18);color:var(--blue2);border-radius:5px;padding:.14rem .4rem}
-.fc-bge-y{background:rgba(251,191,36,.14);color:#fbbf24}
-.fc1{top:6%;left:-10%;animation:cf1 5s ease-in-out infinite}
-.fc2{top:18%;right:-6%;animation:cf2 4.5s ease-in-out infinite}
-.fc3{bottom:22%;left:-12%;animation:cf3 6s ease-in-out infinite}
-.fc4{bottom:7%;right:-4%;animation:cf4 5.5s ease-in-out infinite}
-@keyframes cf1{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(1deg)}}
-@keyframes cf2{0%,100%{transform:translateY(0) rotate(1deg)}50%{transform:translateY(-8px) rotate(-2deg)}}
-@keyframes cf3{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(2deg)}}
-@keyframes cf4{0%,100%{transform:translateY(0) rotate(2deg)}50%{transform:translateY(-9px) rotate(-1deg)}}
+  .week-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 28px; }
+  .week-card {
+    background: var(--surface); border-radius: var(--r-lg); padding: 32px 28px;
+    border: 1px solid var(--line);
+    position: relative; overflow: hidden;
+    backdrop-filter: blur(20px);
+    transition: border-color .2s, transform .2s;
+  }
+  .week-card:hover { border-color: var(--hairline); transform: translateY(-3px); }
+  .week-card::before {
+    content:""; position: absolute; left: 0; right: 0; top: 0; height: 4px;
+  }
+  .week-card.w1::before { background: var(--red); box-shadow: 0 0 24px rgba(255,77,94,0.4); }
+  .week-card.w2::before { background: var(--amber); box-shadow: var(--glow-amber); }
+  .week-card.w3::before { background: var(--green); box-shadow: var(--glow-green); }
+  .week-card.w4::before { background: var(--navy); }
+  .week-card .w-num { font-family: 'Poppins'; font-weight: 700; font-size: 11px; letter-spacing: 0.22em; color: var(--amber); text-transform: uppercase; }
+  .week-card h3 { font-size: 22px; margin: 10px 0 8px; color: var(--ink); }
+  .week-card .range { font-size: 12px; color: var(--ink-4); margin-bottom: 16px; letter-spacing: 0.05em; }
+  .week-card .items { font-size: 13px; color: var(--ink-3); line-height: 1.7; }
 
-/* ════════════════ TRUST STRIP ════════════════ */
-#trust{border-top:1px solid var(--brd2);border-bottom:1px solid var(--brd2);padding:5.5rem 0;background:linear-gradient(90deg,transparent,rgba(59,130,246,.025),transparent)}
-.trust-inner{display:flex;flex-direction:column;align-items:center;gap:3rem}
-.trust-lbl{font-size:.63rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--t30)}
-.who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;width:100%}
-.wc{background:var(--gl2);border:1px solid var(--brd2);border-radius:18px;padding:1.4rem;transition:all .3s;cursor:default}
-.wc:hover{background:var(--glass);border-color:rgba(59,130,246,.28);transform:translateY(-4px);box-shadow:var(--gB)}
-.wc-ico{font-size:1.55rem;margin-bottom:.85rem}
-.wc-title{font-size:.83rem;font-weight:600;margin-bottom:.3rem}
-.wc-desc{font-size:.74rem;color:var(--t55);line-height:1.62}
-.trusted-row{display:flex;flex-wrap:wrap;justify-content:center;gap:1.25rem}
-.tbadge{background:var(--gl2);border:1px solid var(--brd2);border-radius:10px;padding:.5rem 1.15rem;font-size:.72rem;font-weight:500;color:var(--t30);transition:all .2s}
-.tbadge:hover{border-color:rgba(59,130,246,.28);color:var(--t55)}
-.tbadge.cta{border-color:rgba(59,130,246,.28);color:var(--blue2)}
+  /* ===== Tools grid ===== */
+  .tools-pv { background: transparent; }
+  .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .tool-card {
+    background: var(--surface); border-radius: var(--r-lg); padding: 28px;
+    border: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 10px;
+    backdrop-filter: blur(20px);
+    transition: border-color .2s, transform .2s;
+  }
+  .tool-card .row1 { display: flex; align-items: center; justify-content: space-between; }
+  .tool-card .emoji { font-size: 32px; }
+  .tool-card .status {
+    font-family: 'Poppins'; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px;
+  }
+  .tool-card .status.live { background: rgba(52,224,140,0.15); color: var(--green); border: 1px solid rgba(52,224,140,0.25); }
+  .tool-card .status.soon { background: var(--surface-2); color: var(--ink-4); border: 1px solid var(--line); }
+  .tool-card h3 { font-size: 20px; margin-top: 6px; color: var(--ink); }
+  .tool-card p { font-size: 14px; color: var(--ink-3); margin: 0; line-height: 1.55; }
+  .tool-card .cta {
+    margin-top: 16px; font-family: 'Poppins'; font-weight: 600; font-size: 14px;
+    color: var(--amber); display: inline-flex; align-items: center; gap: 8px;
+    transition: gap .2s;
+  }
+  .tool-card .cta:hover { gap: 12px; }
+  .tool-card .cta.muted { color: var(--ink-4); cursor: not-allowed; }
 
-/* ════════════════ FLAGSHIP ════════════════ */
-#flagship{padding:9rem 0;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 50%,var(--bg) 100%);position:relative;overflow:hidden}
-#flagship::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,.045) 0%,transparent 65%);pointer-events:none}
-.fl-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.fl-h{font-family:var(--fd);font-size:clamp(2.2rem,4vw,3.4rem);font-weight:800;line-height:1.05;letter-spacing:-.02em;margin-bottom:.65rem}
-.fl-pos{font-size:.92rem;color:var(--blue2);font-weight:500;line-height:1.65;margin-bottom:1.8rem}
-.badges{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:2rem}
-.fbg{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:600;letter-spacing:.06em;border-radius:99px;padding:.32rem .85rem}
-.fbg-b{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.23);color:var(--blue2)}
-.fbg-g{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.22);color:var(--grn2)}
-.fbg-r{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.22);color:var(--red2)}
+  /* ===== Demo strip ===== */
+  .demo-strip {
+    background: var(--bg-2); color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg); padding: 48px 52px;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px;
+    align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .demo-strip::before {
+    content:""; position: absolute; right: -20%; top: -50%; width: 70%; height: 200%;
+    background: radial-gradient(circle, rgba(255,181,71,0.18), transparent 60%);
+    pointer-events: none;
+  }
+  .demo-strip::after {
+    content:""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+    background: linear-gradient(to right, transparent, var(--amber), transparent);
+    opacity: 0.4;
+  }
+  .demo-strip h2 { color: var(--ink); position: relative; }
+  .demo-strip p { color: var(--ink-3); margin-top: 12px; font-size: 16px; position: relative; line-height: 1.6; }
+  .demo-strip .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; position: relative; }
+  .demo-strip .live-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 26px; position: relative;
+    backdrop-filter: blur(20px);
+  }
+  .demo-strip .live-card .row { font-size: 14px; color: var(--ink-2); margin: 8px 0; display: flex; justify-content: space-between; gap: 16px; }
+  .demo-strip .live-card .row b { color: var(--amber); }
+  .demo-strip .live-card .pulse {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+    display: inline-block; margin-right: 8px;
+    box-shadow: 0 0 0 0 rgba(0,166,81,0.7);
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(0,166,81,0.7);} 70%{box-shadow:0 0 0 12px rgba(0,166,81,0);} 100%{box-shadow:0 0 0 0 rgba(0,166,81,0);}}
 
-/* Dashboard */
-.dash{background:rgba(8,13,30,.96);border:1px solid rgba(59,130,246,.2);border-radius:22px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55),var(--gB)}
-.dash-top{background:var(--bg3);padding:.8rem 1.2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--brd2)}
-.dash-dots{display:flex;gap:.42rem}
-.dd{width:10px;height:10px;border-radius:50%}
-.dd1{background:#ff5f57}.dd2{background:#ffbd2e}.dd3{background:#28c840}
-.dash-lbl{font-size:.7rem;color:var(--t30);font-weight:500}
-.dash-live{display:flex;align-items:center;gap:.38rem;font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--grn2)}
-.ld{width:6px;height:6px;border-radius:50%;background:var(--grn2);animation:blink 1.5s infinite}
-.dash-body{padding:1.5rem}
-.d-course-title{font-family:var(--fd);font-size:.95rem;font-weight:700;margin-bottom:.2rem}
-.d-course-sub{font-size:.7rem;color:var(--t30);margin-bottom:1.15rem}
-.d-prog-row{display:flex;justify-content:space-between;font-size:.7rem;color:var(--t55);margin-bottom:.45rem}
-.d-prog-bar{background:rgba(255,255,255,.07);border-radius:99px;height:7px;overflow:hidden;margin-bottom:1.2rem}
-.d-prog-fill{height:100%;width:68%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--prp));animation:pgld 1.5s ease-out .5s both}
-@keyframes pgld{from{width:0}}
-.l-item{display:flex;align-items:center;gap:.82rem;padding:.62rem .72rem;border-radius:10px;margin-bottom:.38rem;font-size:.78rem}
-.l-item.dn{color:var(--t55)}
-.l-item.ac{background:rgba(59,130,246,.1);color:var(--t80)}
-.l-item.nx{color:var(--t30)}
-.l-ic{width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;flex-shrink:0;font-weight:700}
-.l-ic.dn{background:rgba(16,185,129,.2);color:var(--grn2)}
-.l-ic.ac{background:rgba(59,130,246,.2);color:var(--blue2)}
-.l-ic.nx{background:var(--gl2);color:var(--t30);border:1px dashed var(--brd2)}
-.d-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid var(--brd2);text-align:center}
-.dm-n{font-family:var(--fd);font-size:1.15rem;font-weight:700}
-.dm-l{font-size:.6rem;color:var(--t30);margin-top:.12rem;text-transform:uppercase;letter-spacing:.06em}
+  .demo-strip .live-card { margin-top: 22px; }
+  .demo-media { display: flex; align-items: center; justify-content: center; position: relative; }
+  .demo-media .media-frame { width: 100%; max-width: 300px; aspect-ratio: 940 / 1410; }
 
-/* ════════════════ PILLARS ════════════════ */
-#pillars{padding:9rem 0;background:var(--bg3);border-top:1px solid var(--brd2);border-bottom:1px solid var(--brd2)}
-.pil-head{text-align:center;margin-bottom:4rem}
-.pil-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
-.pil-card{background:var(--gl2);border:1px solid var(--brd2);border-radius:22px;padding:2.1rem 1.9rem;transition:all .35s;position:relative;overflow:hidden;cursor:default}
-.pil-card::before{content:'';position:absolute;inset:0;border-radius:22px;opacity:0;transition:opacity .35s;background:var(--pc-glow,linear-gradient(135deg,rgba(59,130,246,.07),transparent))}
-.pil-card:hover::before{opacity:1}
-.pil-card:hover{border-color:rgba(59,130,246,.28);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,.3),var(--gB)}
-.p-num{font-size:.67rem;font-weight:700;color:var(--t30);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.3rem}
-.p-ico{font-size:2.1rem;margin-bottom:1.1rem}
-.p-step{font-size:.68rem;font-weight:600;color:var(--blue2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.45rem}
-.p-title{font-family:var(--fd);font-size:1.3rem;font-weight:700;margin-bottom:.68rem}
-.p-desc{font-size:.83rem;color:var(--t55);line-height:1.78;font-weight:300;margin-bottom:.9rem}
-.p-tags{display:flex;flex-wrap:wrap;gap:.38rem;margin-bottom:1.65rem}
-.p-tag{font-size:.61rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;background:rgba(255,255,255,.05);border:1px solid var(--brd2);border-radius:6px;padding:.18rem .52rem;color:var(--t55)}
-.p-lnk{display:inline-flex;align-items:center;gap:.38rem;font-size:.8rem;font-weight:600;color:var(--blue2);transition:gap .2s}
-.p-lnk:hover{gap:.65rem}
+  /* ===== Testimonials ===== */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .tm-card { background: var(--surface); padding: 36px; border-radius: var(--r-lg); border: 1px solid var(--line); backdrop-filter: blur(20px); }
+  .tm-card .quote { font-size: 16px; color: var(--ink); line-height: 1.6; margin-bottom: 24px; font-family: var(--font-display); font-weight: 500; }
+  .tm-card .quote::before { content:"\201C"; display: block; font-size: 48px; line-height: 0.4; color: var(--amber); margin-bottom: 16px; font-family: var(--font-display); }
+  .tm-card .who { display: flex; gap: 12px; align-items: center; }
+  .tm-card .av { width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; font-family: 'Poppins'; }
+  .tm-card.a1 .av { background: var(--red); }
+  .tm-card.a2 .av { background: var(--green); color: var(--bg); }
+  .tm-card.a3 .av { background: var(--amber); color: var(--bg); }
+  .tm-card .name { font-family: 'Poppins'; font-weight: 700; color: var(--ink); font-size: 15px; }
+  .tm-card .role { font-size: 13px; color: var(--ink-4); }
 
-/* ════════════════ TOOLS ════════════════ */
-#tools{padding:9rem 0}
-.t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.tc{background:var(--gl2);border:1px solid var(--brd2);border-radius:18px;padding:1.7rem;transition:all .3s;cursor:default;position:relative;overflow:hidden}
-.tc::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,130,246,.04),transparent);opacity:0;transition:opacity .3s}
-.tc:hover{border-color:rgba(59,130,246,.24);transform:translateY(-4px);box-shadow:0 16px 50px rgba(0,0,0,.3),var(--gB)}
-.tc:hover::after{opacity:1}
-.t-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.05rem}
-.t-ico{font-size:1.75rem}
-.t-badge{font-size:.59rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;border-radius:99px;padding:.18rem .6rem}
-.t-live{background:rgba(16,185,129,.1);color:var(--grn2);border:1px solid rgba(16,185,129,.22)}
-.t-beta{background:rgba(251,191,36,.08);color:#fbbf24;border:1px solid rgba(251,191,36,.2)}
-.t-soon{background:rgba(255,255,255,.05);color:var(--t30);border:1px solid var(--brd2)}
-.t-name{font-family:var(--fd);font-size:.97rem;font-weight:700;margin-bottom:.48rem}
-.t-desc{font-size:.78rem;color:var(--t55);line-height:1.72;font-weight:300}
-.t-who{font-size:.71rem;color:var(--blue2);margin-top:.6rem;font-style:italic;line-height:1.55}
+  /* ===== Newsletter ===== */
+  .newsletter {
+    background: linear-gradient(135deg, var(--amber), #d8870f);
+    color: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .newsletter::before {
+    content:""; position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+  }
+  .newsletter > * { position: relative; }
+  .newsletter-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+  }
+  .newsletter h2 { color: var(--bg); }
+  .newsletter p { color: rgba(10,9,8,0.78); font-size: 16px; }
+  .newsletter .eyebrow { color: var(--bg) !important; }
+  .newsletter .eyebrow::before { background: var(--bg) !important; }
+  .newsletter form { display: flex; gap: 10px; margin-top: 22px; }
+  .newsletter input {
+    flex: 1; padding: 14px 20px; border-radius: var(--r-pill); border: 0;
+    background: var(--bg); color: var(--ink); font-size: 15px; font-family: 'Noto Sans';
+    box-shadow: var(--shadow-sm);
+  }
+  .newsletter input::placeholder { color: var(--ink-3); }
+  .newsletter input:focus { outline: 2px solid var(--bg); }
+  .newsletter .pic {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    font-family: 'Poppins'; font-weight: 800;
+  }
+  .newsletter .pic > div {
+    background: rgba(10,9,8,0.10);
+    border-radius: 16px;
+    aspect-ratio: 1; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--bg);
+    border: 1px solid rgba(10,9,8,0.18);
+  }
+  .newsletter .pic > div.big { background: var(--bg); color: var(--amber); font-size: 42px; border: 0; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .newsletter form button.btn-primary { background: var(--bg); color: var(--amber); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+  .newsletter form button.btn-primary:hover { background: #1a1815; transform: translateY(-1px); }
 
-/* ════════════════ DEMO ════════════════ */
-#demo{padding:9rem 0;background:linear-gradient(180deg,var(--bg) 0%,rgba(59,130,246,.025) 50%,var(--bg) 100%)}
-.demo-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4.5rem;align-items:start}
-.demo-tabs{margin-top:2rem;display:flex;flex-direction:column;gap:.55rem}
-.dtab{padding:.88rem 1.05rem;border-radius:12px;border:1px solid var(--brd2);cursor:pointer;transition:all .22s;background:transparent}
-.dtab:hover,.dtab.on{background:rgba(59,130,246,.07);border-color:rgba(59,130,246,.28)}
-.dtab-nm{font-size:.8rem;font-weight:600;color:var(--t80)}
-.dtab-ds{font-size:.68rem;color:var(--t30);margin-top:.18rem}
-.dtab.on .dtab-nm{color:var(--blue2)}
-.term{background:rgba(5,8,22,.97);border:1px solid rgba(59,130,246,.22);border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5),var(--gB)}
-.term-top{background:var(--bg3);padding:.82rem 1.2rem;display:flex;align-items:center;gap:.9rem;border-bottom:1px solid var(--brd2)}
-.t-dots{display:flex;gap:.42rem}
-.tdot{width:10px;height:10px;border-radius:50%}
-.tdot:nth-child(1){background:#ff5f57}.tdot:nth-child(2){background:#ffbd2e}.tdot:nth-child(3){background:#28c840}
-.t-title{font-size:.7rem;color:var(--t30);font-weight:500}
-.t-body{padding:1.45rem;font-family:'SF Mono','Fira Code',monospace;font-size:.8rem;line-height:2;min-height:240px}
-.tl{display:block}
-.tp{color:var(--blue2)}.tc2{color:var(--t80)}.to{color:var(--grn2)}.tco{color:var(--prp2)}.ts{color:var(--blue2)}
-.tcsr{display:inline-block;width:7px;height:13px;background:var(--blue2);border-radius:1px;vertical-align:middle;animation:blink 1s infinite}
+  @media (max-width: 1000px) {
+    .hero-grid, .pillars-grid, .academy-pv .week-grid, .tools-grid, .testimonials-grid, .demo-strip, .newsletter-inner, .who-grid { grid-template-columns: 1fr 1fr; }
+    .hero-grid, .demo-strip, .newsletter-inner { grid-template-columns: 1fr; }
+    .hero-visual { max-width: 420px; margin: 30px auto 0; }
+  }
+  @media (max-width: 640px) {
+    .pillars-grid, .academy-pv .week-grid, .tools-grid, .testimonials-grid, .who-grid { grid-template-columns: 1fr; }
+  }
 
-/* ════════════════ DIASPORA ════════════════ */
-#diaspora{padding:9rem 0;background:var(--bg3);border-top:1px solid var(--brd2);border-bottom:1px solid var(--brd2);text-align:center}
-.cities{display:flex;flex-wrap:wrap;justify-content:center;gap:.9rem;margin:2.8rem 0}
-.city{display:flex;align-items:center;gap:.55rem;background:var(--glass);border:1px solid var(--brd);border-radius:99px;padding:.62rem 1.25rem;font-size:.83rem;font-weight:500;transition:all .22s}
-.city:hover{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.28);transform:translateY(-3px);box-shadow:var(--gB)}
-.diaspora-stats{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;margin-top:2.8rem;padding-top:2.8rem;border-top:1px solid var(--brd2)}
-.ds-n{font-family:var(--fd);font-size:2.1rem;font-weight:800;background:linear-gradient(135deg,var(--blue2),var(--red2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.2rem}
-.ds-l{font-size:.68rem;color:var(--t30);text-transform:uppercase;letter-spacing:.08em}
+  /* ===== Made in Haiti section ===== */
+  .haiti-section {
+    position: relative; overflow: hidden;
+    padding: clamp(70px, 9vw, 120px) 0;
+    border-top: 1px solid var(--line-2);
+    border-bottom: 1px solid var(--line-2);
+  }
+  .haiti-bg {
+    position: absolute; inset: 0;
+    background-image: url('assets/haiti-ai-hero.svg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .haiti-bg::after {
+    content:""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,9,8,0.45) 0%, rgba(10,9,8,0.85) 70%, rgba(10,9,8,1) 100%);
+  }
+  .haiti-inner { position: relative; z-index: 2; }
+  .haiti-head { max-width: 720px; margin-bottom: 56px; }
+  .haiti-head h2 .accent { color: var(--amber); font-style: italic; font-family: var(--font-display); font-weight: 800; }
+  .haiti-head p { color: var(--ink-3); font-size: 18px; margin-top: 14px; max-width: 580px; line-height: 1.6; }
 
-/* ════════════════ MOVEMENT ════════════════ */
-#movement{padding:9rem 0}
-.mov-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:5.5rem;align-items:center}
-.mov-h{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:1.15rem}
-.mov-p{font-size:.94rem;color:var(--t55);line-height:1.87;font-weight:300;margin-bottom:1.9rem}
-.mov-list{display:flex;flex-direction:column;gap:.9rem}
-.mv-item{display:flex;align-items:flex-start;gap:.95rem;background:var(--gl2);border:1px solid var(--brd2);border-radius:14px;padding:1.05rem 1.2rem;transition:all .25s}
-.mv-item:hover{border-color:rgba(59,130,246,.27);background:rgba(59,130,246,.035)}
-.mv-ico{width:31px;height:31px;border-radius:8px;flex-shrink:0;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.18);display:flex;align-items:center;justify-content:center;font-size:.88rem;margin-top:.08rem}
-.mv-txt{font-size:.83rem;color:var(--t55);line-height:1.65}
-.mv-txt strong{color:var(--t80);font-weight:500;display:block;margin-bottom:.18rem;font-size:.86rem}
-.mov-vis{background:var(--gl2);border:1px solid var(--brd2);border-radius:22px;padding:2.4rem 1.9rem}
-.mv-s-n{font-family:var(--fd);font-size:2.1rem;font-weight:800;background:linear-gradient(135deg,var(--blue2),var(--prp2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.18rem}
-.mv-s-l{font-size:.76rem;color:var(--t55);font-weight:300}
-.mv-div{border:none;border-top:1px solid var(--brd2);margin:1.4rem 0}
-.mv-quote{font-size:.75rem;color:var(--t30);line-height:1.78;font-style:italic;margin-top:1.4rem}
+  .haiti-grid {
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: 1fr 1fr;
+    gap: 18px;
+    min-height: 540px;
+  }
+  .haiti-slot {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    backdrop-filter: blur(8px);
+  }
+  .haiti-slot.big { grid-row: span 2; }
+  .haiti-slot image-slot {
+    display: block;
+    width: 100%; height: 100%;
+    border: 0;
+    background: linear-gradient(135deg, rgba(255,181,71,0.08), rgba(52,224,140,0.05));
+  }
+  .haiti-slot image-slot[filled] { background: transparent; }
+  .haiti-caption {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 3;
+    padding: 22px;
+    background: linear-gradient(180deg, transparent, rgba(10,9,8,0.92) 60%);
+    pointer-events: none;
+  }
+  .haiti-caption .num {
+    display: inline-block;
+    font-family: var(--font-head); font-weight: 700; font-size: 11px;
+    letter-spacing: 0.24em; color: var(--amber); text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .haiti-caption .h {
+    font-family: var(--font-head); font-weight: 700; font-size: 20px;
+    color: var(--ink); line-height: 1.2; letter-spacing: -0.01em;
+  }
+  .haiti-caption .s {
+    font-size: 13px; color: var(--ink-3); margin-top: 4px;
+  }
+  .haiti-slot.big .haiti-caption .h { font-size: 28px; }
+  @media (max-width: 900px) {
+    .haiti-grid { grid-template-columns: 1fr 1fr; min-height: auto; }
+    .haiti-slot.big { grid-row: auto; aspect-ratio: 4/3; }
+    .haiti-slot:not(.big) { aspect-ratio: 4/3; }
+  }
+  @media (max-width: 560px) {
+    .haiti-grid { grid-template-columns: 1fr; }
+  }
 
-/* ════════════════ COMMUNITY ════════════════ */
-#community{padding:9rem 0;background:linear-gradient(135deg,rgba(59,130,246,.03) 0%,rgba(124,58,237,.025) 100%);border-top:1px solid var(--brd2)}
-.comm-inner{text-align:center;max-width:620px;margin:0 auto}
-.comm-ctas{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center;margin-top:2.4rem}
-.comm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3.4rem}
-.cmm{background:var(--gl2);border:1px solid var(--brd2);border-radius:18px;padding:1.7rem;text-align:left;transition:all .3s}
-.cmm:hover{border-color:rgba(59,130,246,.24);transform:translateY(-4px);box-shadow:var(--gB)}
-.cm-ico{font-size:1.75rem;margin-bottom:.95rem}
-.cm-title{font-family:var(--fd);font-size:.97rem;font-weight:700;margin-bottom:.45rem}
-.cm-desc{font-size:.79rem;color:var(--t55);line-height:1.72;font-weight:300}
+  /* ============================================================
+     AISHARE THEME — electric-blue / black sci-fi (homepage only)
+     ============================================================ */
+  :root {
+    /* remap accents to electric blue + cyan */
+    --amber:#2f6bff; --amber-2:#2f6bff; --amber-3:#5b8cff; --gold:#2f6bff; --yellow:#2f6bff;
+    --green:#27e0ff; --green-2:#27e0ff;
+    --red:#3f74ff;  --red-2:#3f74ff;
+    --blue:#2f6bff; --navy:#2f6bff; --cream:#eaf2ff;
+    --bg:#04060e; --bg-2:#070c1a; --bg-3:#0c1426;
+    --line:rgba(47,107,255,0.14); --line-2:rgba(47,107,255,0.09); --hairline:rgba(47,107,255,0.30);
+    --glow-amber:0 0 60px rgba(47,107,255,0.35), 0 0 120px rgba(47,107,255,0.18);
+    --glow-blue:0 0 60px rgba(47,107,255,0.42), 0 0 120px rgba(47,107,255,0.20);
+    --glow-green:0 0 60px rgba(39,224,255,0.32), 0 0 120px rgba(39,224,255,0.16);
+  }
+  body {
+    background:#04060e;
+    background-image:
+      linear-gradient(rgba(47,107,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(47,107,255,0.022) 1px, transparent 1px),
+      radial-gradient(ellipse 1100px 620px at 14% -6%, rgba(47,107,255,0.12), transparent 62%),
+      radial-gradient(ellipse 950px 600px at 102% 2%, rgba(39,224,255,0.055), transparent 62%),
+      linear-gradient(180deg,#04060e,#04060e);
+    background-size:60px 60px,60px 60px,auto,auto,auto;
+    background-attachment:fixed;
+  }
 
-/* ════════════════ NEWSLETTER ════════════════ */
-#nl{padding:9rem 0;text-align:center}
-.nl-inner{max-width:540px;margin:0 auto}
-.nl-form{display:flex;gap:.7rem;margin:1.9rem 0 .7rem}
-.nl-in{flex:1;background:var(--glass);border:1px solid var(--brd);border-radius:12px;padding:.82rem 1.2rem;font-family:var(--fs);font-size:.88rem;color:var(--t100);outline:none;transition:border-color .2s}
-.nl-in::placeholder{color:var(--t30)}
-.nl-in:focus{border-color:rgba(59,130,246,.45)}
-.nl-note{font-size:.68rem;color:var(--t30)}
+  /* ---- Condensed uppercase display titles with metallic fill ---- */
+  .hero h1, h2 {
+    font-family:'Rajdhani','Poppins',sans-serif;
+    text-transform:uppercase; font-weight:700; letter-spacing:0.012em; line-height:1.02;
+    color:#dCE6FF;
+    background:linear-gradient(180deg,#ffffff 0%, #cfe0ff 46%, rgba(120,150,220,0.55) 100%);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .hero h1 { font-size:clamp(48px,7.4vw,104px); letter-spacing:0.005em; line-height:0.98; }
+  .hero h1 .accent, .hero h1 .accent-2, h2 .accent {
+    -webkit-text-fill-color:initial; color:#27e0ff; background:none;
+    text-shadow:0 0 28px rgba(39,224,255,0.4);
+  }
+  .who-card h3, .pillar h3, .week-card h3, .tool-card h3 {
+    font-family:'Rajdhani','Poppins',sans-serif; text-transform:uppercase;
+    letter-spacing:0.04em; font-weight:700; color:#eaf2ff;
+  }
+  .eyebrow, .tag, .hero-stats, .trust-row, .hero-media-badge, .pillar .num,
+  .week-card .w-num, .tool-card .status, .haiti-caption .num {
+    font-family:'Share Tech Mono', ui-monospace, monospace !important;
+  }
+  .eyebrow { color:#2f6bff; }
 
-/* ════════════════ FOOTER ════════════════ */
-footer{background:var(--bg2);border-top:1px solid var(--brd2);padding:5rem 0 2rem}
-.ft-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.8rem;margin-bottom:4rem}
-.ft-brand{font-family:var(--fd);font-size:1.18rem;font-weight:800;margin-bottom:.7rem;background:linear-gradient(90deg,var(--blue2),var(--prp2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.ft-desc{font-size:.78rem;color:var(--t30);line-height:1.82;margin-bottom:.65rem}
-.ft-tagline{font-size:.71rem;color:var(--t30);font-style:italic;line-height:1.65}
-.ft-col h6{font-size:.67rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t55);margin-bottom:1.2rem}
-.ft-col a{display:block;font-size:.78rem;color:var(--t30);margin-bottom:.6rem;transition:color .2s}
-.ft-col a:hover{color:var(--t80)}
-.ft-bot{padding-top:2rem;border-top:1px solid var(--brd2);display:flex;justify-content:space-between;align-items:center;font-size:.73rem;color:var(--t30);flex-wrap:wrap;gap:.9rem}
+  /* ---- Buttons: angular ---- */
+  .btn { border-radius:4px; }
+  .btn-primary { background:var(--blue); color:#fff; box-shadow:0 0 26px rgba(47,107,255,0.5); }
+  .btn-primary:hover { background:#4d83ff; }
+  .btn-ghost { border-color:rgba(47,107,255,0.5); color:#cfe0ff; }
+  .btn-ghost:hover { border-color:var(--blue); color:#fff; background:rgba(47,107,255,0.12); }
+  .btn-secondary { background:#eaf2ff; color:#06101f; border-radius:4px; }
 
-/* Sticky demo */
-#sd-toggle{position:fixed;bottom:5.5rem;left:2rem;z-index:998;background:linear-gradient(135deg,var(--blue),var(--prp));border:none;border-radius:99px;padding:.58rem 1.05rem;font-family:var(--fs);font-size:.73rem;font-weight:600;color:#fff;cursor:pointer;display:flex;align-items:center;gap:.38rem;box-shadow:0 6px 24px rgba(59,130,246,.4);transition:all .22s}
-#sd-toggle:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(59,130,246,.58)}
-#sticky-demo{position:fixed;bottom:2rem;left:2rem;z-index:997;width:300px;transform:translateX(-340px);transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
-#sticky-demo.open{transform:translateX(0)}
-.sd-card{background:rgba(8,13,30,.97);border:1px solid rgba(59,130,246,.32);border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6),var(--gB)}
-.sd-top{background:var(--bg3);padding:.68rem .95rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--brd2)}
-.sd-ttl{font-size:.7rem;font-weight:600;color:var(--blue2);display:flex;align-items:center;gap:.38rem}
-.sd-x{background:none;border:none;color:var(--t30);cursor:pointer;font-size:1.05rem;padding:0;line-height:1}
-.sd-body{padding:.95rem}
-.sd-lbl{font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t30);margin-bottom:.45rem}
-.sd-inp{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--brd);border-radius:9px;padding:.6rem .85rem;font-family:var(--fs);font-size:.8rem;color:var(--t100);outline:none;resize:none;transition:border-color .2s}
-.sd-inp:focus{border-color:rgba(59,130,246,.38)}
-.sd-res{margin-top:.7rem;background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.14);border-radius:9px;padding:.7rem .85rem;font-size:.78rem;min-height:48px;color:var(--blue2);line-height:1.6;font-family:'SF Mono','Fira Code',monospace}
-.sd-btn-row{margin-top:.7rem}
+  /* ---- Nav / flag ---- */
+  .flag-stripe { background:linear-gradient(90deg,#2f6bff 0 42%, #27e0ff 42% 72%, #1e49d6 72%); opacity:0.85; }
+  .nav-brand .mark { background:linear-gradient(135deg,#2f6bff,#16308f); box-shadow:var(--glow-blue); border-radius:5px; }
+  .nav-brand .mark::after { background:linear-gradient(to right,#2f6bff 0 50%, #27e0ff 50%); }
+  .nav { background:rgba(4,6,14,0.78); border-bottom:1px solid rgba(47,107,255,0.18); }
 
-/* WA */
-.wa{position:fixed;bottom:2rem;right:2rem;z-index:999;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);display:flex;align-items:center;justify-content:center;font-size:1.35rem;box-shadow:0 6px 22px rgba(37,211,102,.32);transition:all .22s}
-.wa:hover{transform:scale(1.12);box-shadow:0 10px 34px rgba(37,211,102,.48)}
+  /* ---- HUD feature cards ---- */
+  .who-card, .pillar, .week-card, .tool-card, .tm-card {
+    position:relative;
+    background:linear-gradient(180deg, rgba(13,21,40,0.82), rgba(7,12,26,0.85));
+    border:1px solid rgba(47,107,255,0.26);
+    border-radius:3px;
+  }
+  /* top-right corner bracket */
+  .who-card::before, .pillar::before, .week-card::before, .tool-card::before {
+    content:""; position:absolute; top:10px; right:10px; width:16px; height:16px;
+    border-top:2px solid var(--blue); border-right:2px solid var(--blue);
+    opacity:0.7; background:none; left:auto; box-shadow:none;
+  }
+  /* bottom HUD progress bar */
+  .who-card::after, .pillar::after, .week-card::after, .tool-card::after {
+    content:""; position:absolute; left:0; right:0; bottom:0; height:3px;
+    background:linear-gradient(90deg, var(--blue) 0 70%, rgba(47,107,255,0.12) 70%);
+    box-shadow:0 0 10px rgba(47,107,255,0.45);
+  }
+  /* unify icon chips to blue */
+  .who-card .icon { background:rgba(47,107,255,0.14) !important; color:#5b8cff !important; border-radius:4px; }
+  .who-card.c2 .icon { background:rgba(39,224,255,0.14) !important; color:#27e0ff !important; }
+  .tool-card .status.live { background:rgba(39,224,255,0.15); color:#27e0ff; border-color:rgba(39,224,255,0.3); }
+  .pillar, .tool-card { border-radius:3px; }
 
-/* ════════════════ RESPONSIVE ════════════════ */
-@media(max-width:960px){
-  .hero-inner{grid-template-columns:1fr;padding:4rem 0 3rem}
-  .hero-vis{display:none}
-  .fl-grid{grid-template-columns:1fr}
-  .pil-grid{grid-template-columns:1fr}
-  .t-grid{grid-template-columns:1fr 1fr}
-  .demo-grid{grid-template-columns:1fr}
-  .mov-grid{grid-template-columns:1fr}
-  .ft-grid{grid-template-columns:1fr 1fr;gap:2rem}
-  .comm-grid{grid-template-columns:1fr}
-  .who-grid{grid-template-columns:1fr 1fr}
-  #sticky-demo,#sd-toggle{display:none}
-}
-@media(max-width:640px){
-  .t-grid{grid-template-columns:1fr}
-  .n-menu{display:none}
-  .who-grid{grid-template-columns:1fr}
-  .ft-grid{grid-template-columns:1fr}
-  .hero-stats{gap:1.4rem}
-  .n-ham{display:flex}
-  .nl-form{flex-direction:column}
-}
+  /* ---- Hero media: notched + strong blue glow + HUD bits ---- */
+  .hero-media {
+    border-radius:5px;
+    clip-path:polygon(0 0, calc(100% - 26px) 0, 100% 26px, 100% 100%, 26px 100%, 0 calc(100% - 26px));
+    box-shadow:0 0 0 1px rgba(47,107,255,0.28), 0 28px 70px -30px rgba(0,0,0,0.7), 0 0 60px -32px rgba(47,107,255,0.32);
+  }
+  .hero-media::before { display:none; }
+  .hero-media-badge { border-radius:4px; border-color:rgba(47,107,255,0.4); background:rgba(4,6,14,0.78); }
+  .hero-media-badge .dot { background:#27e0ff; box-shadow:0 0 10px #27e0ff; }
+  .hud-sq {
+    position:absolute; width:12px; height:12px; background:var(--blue); z-index:4; opacity:0.85;
+    box-shadow:0 0 8px rgba(47,107,255,0.45);
+  }
+  .hud-sq.s1 { top:-6px; left:32%; }
+  .hud-sq.s2 { bottom:16%; left:-6px; background:#27e0ff; box-shadow:0 0 8px rgba(39,224,255,0.45); }
+  .hud-sq.s3 { display:none; }
+  .hud-bracket { position:absolute; width:44px; height:44px; z-index:4; pointer-events:none; }
+  .hud-bracket.tl { top:-6px; left:-6px; border-left:2px solid var(--blue); border-top:2px solid var(--blue); }
+  .hud-bracket.br { bottom:-6px; right:-6px; border-right:2px solid var(--blue); border-bottom:2px solid var(--blue); }
+
+  /* ---- Misc recolors ---- */
+  .trust-row .item::before { background:#27e0ff; }
+  .haiti-bg { filter:hue-rotate(168deg) saturate(1.15) brightness(0.9); opacity:0.42; }
+  .demo-strip { border-color:rgba(47,107,255,0.3); }
+  .demo-strip .live-card .pulse { background:#27e0ff; }
+  .newsletter { background:linear-gradient(135deg,#2f6bff,#16308f); }
+  .newsletter .pic > div.big { color:#2f6bff; }
+  .hero-bg::before { background:#2f6bff; opacity:0.16; }
+  .hero-bg::after { background:#27e0ff; opacity:0.10; }
+
+  /* ---- Proof & Impact grid ---- */
+  .impact-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:44px; }
+  .impact-card { display:flex; align-items:flex-start; gap:14px; padding:26px 28px; }
+  .impact-card .mk { width:11px; height:11px; margin-top:6px; background:var(--blue); flex-shrink:0; }
+  .impact-card .ttl { font-family:'Rajdhani','Poppins',sans-serif; font-weight:700; font-size:18px; text-transform:uppercase; letter-spacing:0.03em; color:#eaf2ff; line-height:1.15; }
+  .impact-card .dsc { font-size:13.5px; color:var(--ink-3); margin-top:4px; line-height:1.45; }
+  @media (max-width:760px){ .impact-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:480px){ .impact-grid{ grid-template-columns:1fr; } }
+
+  /* ---- Flagship course feature ---- */
+  .flagship {
+    position: relative; overflow: hidden;
+    display: grid; grid-template-columns: 1.55fr 1fr; gap: 36px; align-items: center;
+    background: linear-gradient(135deg, rgba(47,107,255,0.16), rgba(13,21,40,0.9));
+    border: 1px solid rgba(47,107,255,0.42);
+    border-radius: 6px; padding: clamp(28px,4vw,48px);
+    box-shadow: 0 0 0 1px rgba(47,107,255,0.10), 0 30px 70px -38px rgba(0,0,0,0.7);
+    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 0 100%);
+    margin-bottom: 40px;
+  }
+  .flagship-glow { position:absolute; inset:0; pointer-events:none;
+    background: radial-gradient(ellipse 460px 280px at 88% 12%, rgba(39,224,255,0.12), transparent 62%); }
+  .flagship .fmain { position: relative; z-index: 2; }
+  .f-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Share Tech Mono', monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:#27e0ff; border:1px solid rgba(39,224,255,0.4); padding:6px 14px; border-radius:999px;
+    background: rgba(39,224,255,0.06);
+  }
+  .flagship h3 {
+    font-family:'Rajdhani','Poppins',sans-serif; text-transform:uppercase; font-weight:700;
+    font-size:clamp(28px,3.6vw,44px); color:#ffffff; letter-spacing:0.01em; line-height:1.04;
+    margin:18px 0 10px;
+  }
+  .flagship h3 .ar { color:#27e0ff; }
+  .flagship p { color: var(--ink-2); font-size:16px; line-height:1.6; margin:0 0 22px; max-width:540px; }
+  .flagship ul { list-style:none; padding:0; margin:0 0 26px; display:grid; gap:9px; }
+  .flagship li { position:relative; padding-left:24px; color: var(--ink-2); font-size:14.5px; line-height:1.5; }
+  .flagship li::before { content:""; position:absolute; left:0; top:6px; width:10px; height:10px;
+    background: var(--blue); box-shadow:0 0 10px rgba(47,107,255,0.75); }
+  .flagship .fside { position:relative; z-index:2; text-align:center; }
+  .flagship .bignum {
+    font-family:'Rajdhani','Poppins',sans-serif; font-weight:700; font-size:clamp(96px,12vw,150px); line-height:0.92;
+    color:transparent; -webkit-text-fill-color:transparent;
+    background:linear-gradient(180deg,#ffffff, rgba(120,150,220,0.35)); -webkit-background-clip:text; background-clip:text;
+  }
+  .flagship .bignum small {
+    display:block; font-family:'Share Tech Mono',monospace; font-size:16px; letter-spacing:0.32em;
+    color:#27e0ff; -webkit-text-fill-color:#27e0ff; margin-top:2px;
+  }
+  .flagship .fside-tag { font-family:'Rajdhani','Poppins'; text-transform:uppercase; font-weight:700;
+    letter-spacing:0.06em; color: var(--ink-3); font-size:15px; margin-top:10px; }
+  .upcoming-head { display:flex; align-items:center; gap:18px; margin: 0 0 22px; }
+  .upcoming-head h4 { font-family:'Share Tech Mono',monospace; text-transform:uppercase; letter-spacing:0.14em;
+    font-size:13px; color: var(--ink-3); font-weight:400; white-space:nowrap; }
+  .upcoming-head .rule { flex:1; height:1px; background: var(--line); }
+  .paths-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  @media (max-width:820px){ .flagship{ grid-template-columns:1fr; } .flagship .fside{ display:none; } }
+  @media (max-width:900px){ .paths-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .paths-grid{ grid-template-columns:1fr; } }
+
+  /* ============================================================
+     CINEMATIC HERO — Haiti 2040 image as the emotional centerpiece
+     ============================================================ */
+  .hero-cine {
+    position: relative; overflow: hidden;
+    min-height: min(92vh, 880px);
+    display: flex; align-items: flex-end;
+    padding: 0 !important;
+    border-bottom: 1px solid rgba(47,107,255,0.18);
+  }
+  .hero-cine-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .hero-cine-media img {
+    width: 100%; height: 100%; object-fit: cover; object-position: 18% 36%;
+    transform-origin: 24% 40%;
+    animation: heroKen 26s ease-out forwards;
+  }
+  @keyframes heroKen { from { transform: scale(1.005); } to { transform: scale(1.075); } }
+  @media (prefers-reduced-motion: reduce) { .hero-cine-media img { animation: none; transform: scale(1.01); } }
+
+  /* Premium tech grade: cool edge tint + vignette + faint HUD grid */
+  .hero-cine-grade {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      radial-gradient(ellipse 105% 82% at 48% 34%, transparent 56%, rgba(1,4,14,0.55) 100%),
+      linear-gradient(180deg, rgba(8,20,48,0.20), transparent 24%),
+      linear-gradient(90deg, rgba(47,107,255,0.14), transparent 20%, transparent 80%, rgba(39,224,255,0.12));
+  }
+  .hero-cine-grade::after {
+    content:""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(120,180,255,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,180,255,0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask: linear-gradient(180deg, #000 0%, #000 42%, transparent 68%);
+            mask: linear-gradient(180deg, #000 0%, #000 42%, transparent 68%);
+    opacity: 0.6;
+  }
+  /* Bottom-anchored scrim: keeps the Citadelle, sunset & city clear up top,
+     darkens only the foreground where the text sits. */
+  .hero-cine-scrim {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(2,4,10,0.34) 0%, rgba(2,4,10,0.06) 16%, transparent 34%, transparent 50%, rgba(2,4,10,0.72) 84%, rgba(4,6,14,0.97) 100%);
+  }
+  .hero-cine-inner { position: relative; z-index: 3; width: 100%; padding-top: 0; padding-bottom: 76px; }
+  .hero-cine-copy { max-width: 680px; }
+  .hero-cine .eyebrow {
+    color: #aee2ff;
+    background: rgba(2,4,10,0.45); border: 1px solid rgba(174,226,255,0.30);
+    padding: 7px 14px; border-radius: 999px;
+  }
+  .hero-cine h1 {
+    margin-top: 22px;
+    font-size: clamp(42px, 6vw, 86px); line-height: 0.98;
+    text-shadow: 0 2px 34px rgba(0,0,0,0.7);
+  }
+  .hero-cine h1 .accent { -webkit-text-fill-color: initial; color: #38e2ff; }
+  .hero-cine .hero-lead {
+    color: #eef3fc; margin-top: 20px; max-width: 560px;
+    font-size: clamp(18px, 1.7vw, 22px); text-shadow: 0 1px 20px rgba(0,0,0,0.7);
+  }
+  .hero-cine .hero-eco { color: #dbe8ff; margin-top: 22px; text-shadow: 0 1px 12px rgba(0,0,0,0.6); }
+  .hero-cine .hero-eco i { color: #38e2ff; }
+  .hero-cine .hero-ctas { margin-top: 30px; }
+  .hero-cine .btn-ghost {
+    background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.45); color: #fff;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  }
+  .hero-cine .btn-ghost:hover { background: rgba(255,255,255,0.16); border-color: #fff; }
+  /* Glowing HUD corner brackets + hairline frame */
+  .hero-cine-frame { position: absolute; inset: 18px; z-index: 4; pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(120,180,255,0.12); border-radius: 2px; }
+  .hero-cine-frame .c { position: absolute; width: 26px; height: 26px;
+    border: 2px solid rgba(56,226,255,0.75); box-shadow: 0 0 14px rgba(56,226,255,0.4); }
+  .hero-cine-frame .c.tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+  .hero-cine-frame .c.tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+  .hero-cine-frame .c.bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+  .hero-cine-frame .c.br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+  /* Landmark label */
+  .hero-cine-tag { position: absolute; top: 30px; right: 30px; z-index: 5;
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 8px 14px; border-radius: 999px;
+    background: rgba(2,6,18,0.5); border: 1px solid rgba(120,180,255,0.28);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    font-family: 'Share Tech Mono', ui-monospace, monospace; font-size: 11.5px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: #dbe8ff; }
+  .hero-cine-tag .d { width: 7px; height: 7px; border-radius: 50%; background: #38e2ff;
+    box-shadow: 0 0 10px #38e2ff; }
+  .hero-cine-flag {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 4px; z-index: 6;
+    background: linear-gradient(90deg, #002D62 0 33%, #CE1126 33% 66%, #00A651 66%);
+    opacity: 0.9;
+  }
+  @media (max-width: 700px) {
+    .hero-cine { min-height: 88vh; }
+    .hero-cine-media img { object-position: 16% 34%; }
+    .hero-cine-tag { top: auto; bottom: 64px; right: auto; left: var(--pad-x); }
+    .hero-cine-frame { inset: 12px; }
+    .hero-cine-scrim { background:
+      linear-gradient(180deg, rgba(2,4,10,0.40) 0%, transparent 30%, transparent 46%, rgba(2,4,10,0.80) 82%, rgba(4,6,14,0.98) 100%); }
+  }
+
+  /* ============================================================
+     REFINEMENT — calmer, more premium, more whitespace
+     ============================================================ */
+  section { padding: clamp(90px, 11vw, 152px) 0; }
+  .trust { padding: 30px 0; }
+  /* Hero ecosystem descriptor */
+  .hero-eco { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:22px;
+    font-family:'Share Tech Mono', ui-monospace, monospace; text-transform:uppercase;
+    letter-spacing:0.14em; font-size:12.5px; color:var(--ink-2); }
+  .hero-eco i { color:var(--blue); font-style:normal; }
+  .hero-lead { font-size:clamp(17px,1.5vw,20px); color:var(--ink-2); max-width:520px; }
+  /* Typography hierarchy */
+  h2 { font-size:clamp(30px,4.2vw,52px); }
+  .who-head .lead, .academy-pv p, .impact + * p { line-height:1.65; }
+  /* Calmer card hover — drop the heavy blue halo */
+  .who-card:hover, .pillar:hover, .week-card:hover, .tool-card:hover, .tm-card:hover, .stat-card:hover {
+    box-shadow: 0 18px 50px -26px rgba(0,0,0,0.72), 0 0 0 1px rgba(47,107,255,0.20) !important;
+  }
+  /* Restraint: keep blue primary, drop loud accent glows */
+  h1 .accent, h2 .accent { text-shadow:none; }
+  .who-card::after, .pillar::after, .week-card::after, .tool-card::after,
+  .svc::after, .step::after, .stat-card::after, .team-card::after, .soon-card::after { box-shadow:none; }
+  /* ---- Brief sections: hero mission, pillars 2x2, tools subhead, demo, mission band ---- */
+  .hero-mission { margin-top: 22px; font-family:'Share Tech Mono', ui-monospace, monospace;
+    text-transform:uppercase; letter-spacing:0.14em; font-size:12.5px; color:#9fd2ff;
+    text-shadow:0 1px 10px rgba(0,0,0,0.6); }
+  .pillars-grid.g4 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 820px){ .pillars-grid.g4 { grid-template-columns: 1fr; } }
+  .pillar ul { margin: 18px 0 22px; }
+  .tools-subhead { display:flex; align-items:center; gap:12px; margin: 6px 0 18px; }
+  .tools-subhead > span:first-child { font-family:'Share Tech Mono', monospace; text-transform:uppercase;
+    letter-spacing:0.14em; font-size:13px; color: var(--ink-2); white-space:nowrap; }
+  .tools-subhead .dot-live { width:8px; height:8px; border-radius:50%; background:#27e0ff;
+    box-shadow:0 0 10px #27e0ff; flex-shrink:0; }
+  .tools-subhead .rule { flex:1; height:1px; background: var(--line); }
+  /* Demo sample prompt card */
+  .prompt-card { background: linear-gradient(180deg, rgba(13,21,40,0.9), rgba(7,12,26,0.92));
+    border: 1px solid rgba(47,107,255,0.28); border-radius: 14px; padding: 22px; width:100%;
+    font-family: var(--font-mono); box-shadow: var(--shadow-md); }
+  .prompt-card .pc-head { display:flex; align-items:center; gap:9px; font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; color: var(--ink-3); margin-bottom:16px; }
+  .prompt-card .pc-dot { width:8px; height:8px; border-radius:50%; background:#27e0ff; box-shadow:0 0 10px #27e0ff; }
+  .prompt-card .pc-row { display:grid; grid-template-columns: 54px 1fr; gap:12px; align-items:start;
+    font-size:14px; line-height:1.5; padding:12px 0; }
+  .prompt-card .pc-label { font-size:10px; letter-spacing:0.12em; text-transform:uppercase;
+    padding:3px 8px; border-radius:6px; text-align:center; }
+  .prompt-card .pc-you .pc-label { background: rgba(47,107,255,0.18); color:#9fc2ff; }
+  .prompt-card .pc-you span:last-child { color: var(--ink); }
+  .prompt-card .pc-ai .pc-label { background: rgba(39,224,255,0.16); color:#7fe9ff; }
+  .prompt-card .pc-ai span:last-child { color: var(--ink-2); }
+  .prompt-card .pc-arrow { text-align:center; color: var(--blue); font-size:18px; opacity:0.8; }
+  /* Haiti mission band */
+  .mission-band { background:
+      radial-gradient(ellipse 700px 360px at 50% 0%, rgba(47,107,255,0.12), transparent 62%),
+      var(--bg-2);
+    border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+  .mission-band h2 .accent { color:#38e2ff; }
+
+  /* ---- AI Playground ---- */
+  .playground-section { background: var(--bg-2); border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+  .playground-card { max-width: 840px; margin: 0 auto; padding: clamp(20px, 3vw, 34px); }
+  .pg-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .pg-title { font-family: 'Share Tech Mono', ui-monospace, monospace; text-transform: uppercase; letter-spacing: 0.14em; font-size: 12px; color: var(--ink-2); }
+  .pg-status { display: inline-flex; align-items: center; gap: 7px; font-family: 'Share Tech Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3); }
+  .pg-dot { width: 8px; height: 8px; border-radius: 50%; background: #27e0ff; box-shadow: 0 0 10px #27e0ff; }
+  .pg-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .pg-chip { background: var(--surface); border: 1px solid var(--line); color: var(--ink-2);
+    border-radius: 999px; padding: 8px 15px; font-family: var(--font-head); font-weight: 600; font-size: 13px;
+    cursor: pointer; transition: background .15s, border-color .15s, color .15s, box-shadow .15s; }
+  .pg-chip:hover { border-color: var(--blue); color: var(--ink); }
+  .pg-chip.active { background: var(--blue); border-color: var(--blue); color: #fff; box-shadow: 0 0 20px rgba(47,107,255,0.32); }
+  .pg-input { width: 100%; box-sizing: border-box; background: rgba(0,0,0,0.28); border: 1px solid var(--line);
+    border-radius: 14px; color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.6;
+    padding: 16px 18px; resize: vertical; min-height: 112px; }
+  .pg-input::placeholder { color: var(--ink-4); }
+  .pg-input:focus { outline: none; border-color: rgba(47,107,255,0.5); box-shadow: 0 0 0 3px rgba(47,107,255,0.12); }
+  .pg-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
+  .pg-hint { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--ink-4); letter-spacing: 0.04em; }
+  .pg-out-label { font-family: 'Share Tech Mono', monospace; text-transform: uppercase; letter-spacing: 0.14em;
+    font-size: 11px; color: var(--ink-3); margin: 24px 0 10px; }
+  .pg-output { min-height: 124px; background: linear-gradient(180deg, rgba(208,224,255,0.025), rgba(208,224,255,0.012));
+    border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; color: var(--ink);
+    font-size: 15px; line-height: 1.66; white-space: pre-wrap; word-break: break-word; }
+  .pg-output .pg-ph { color: var(--ink-4); }
+  .pg-output.is-streaming { border-color: rgba(47,107,255,0.4); box-shadow: 0 0 0 3px rgba(47,107,255,0.08); }
+  .pg-typing { display: inline-flex; gap: 6px; padding: 4px 0; }
+  .pg-typing i { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); animation: pgTyping 1.2s infinite; }
+  .pg-typing i:nth-child(2) { animation-delay: .15s; }
+  .pg-typing i:nth-child(3) { animation-delay: .3s; }
+  @keyframes pgTyping { 0%,60%,100% { opacity: .35; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-4px); } }
+  @media (max-width: 560px) { .pg-actions { flex-direction: column-reverse; align-items: stretch; } .pg-actions .btn { width: 100%; justify-content: center; } .pg-hint { text-align: center; } }
+
+  /* ---- Playground dashboard panel (SVG framework + glow border) ---- */
+  .pg-panel { position: relative; border-radius: 14px; overflow: hidden;
+    background: linear-gradient(180deg, rgba(13,21,40,0.62), rgba(7,12,26,0.72));
+    border: 1px solid rgba(47,107,255,0.38);
+    box-shadow: var(--glow-blue);
+    transition: box-shadow .25s; }
+  .pg-frame { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .pg-corner { position: absolute; width: 16px; height: 16px; z-index: 2; pointer-events: none;
+    border: 2px solid #38e2ff; box-shadow: 0 0 10px rgba(56,226,255,0.45); }
+  .pg-corner.tl { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+  .pg-corner.tr { top: 8px; right: 8px; border-left: 0; border-bottom: 0; }
+  .pg-corner.bl { bottom: 8px; left: 8px; border-right: 0; border-top: 0; }
+  .pg-corner.br { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
+  .pg-panel-head { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between;
+    padding: 11px 18px; border-bottom: 1px solid rgba(47,107,255,0.22); background: rgba(47,107,255,0.05); }
+  .pg-panel-title { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #9fd2ff; }
+  .pg-leds { display: inline-flex; gap: 6px; }
+  .pg-leds i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+  .pg-leds i:nth-child(1) { background: #ff5f6d; box-shadow: 0 0 8px rgba(255,95,109,0.6); }
+  .pg-leds i:nth-child(2) { background: #ffc62e; box-shadow: 0 0 8px rgba(255,198,46,0.45); }
+  .pg-leds i:nth-child(3) { background: #27e0ff; box-shadow: 0 0 8px rgba(39,224,255,0.6); }
+  .pg-panel .pg-output { position: relative; z-index: 1; border: 0; border-radius: 0; background: transparent; min-height: 132px; }
+  .pg-panel-foot { position: relative; z-index: 1; display: flex; align-items: center; gap: 14px;
+    padding: 9px 18px; border-top: 1px solid rgba(47,107,255,0.18); background: rgba(2,6,18,0.4);
+    font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); }
+  .pg-state { color: #7fe9ff; }
+  .pg-wave { margin-left: auto; display: inline-flex; align-items: flex-end; gap: 3px; height: 16px; }
+  .pg-wave i { width: 3px; height: 5px; background: var(--blue); border-radius: 2px; opacity: 0.5; }
+  .pg-panel.is-streaming { box-shadow: var(--glow-blue), inset 0 0 0 1px rgba(56,226,255,0.5); }
+  .pg-panel.is-streaming .pg-wave i { animation: pgWave 0.9s ease-in-out infinite; }
+  .pg-wave i:nth-child(2){animation-delay:.1s;} .pg-wave i:nth-child(3){animation-delay:.2s;}
+  .pg-wave i:nth-child(4){animation-delay:.3s;} .pg-wave i:nth-child(5){animation-delay:.4s;}
+  @keyframes pgWave { 0%,100% { height:5px; opacity:.5; } 50% { height:16px; opacity:1; } }
+  .pg-panel.is-streaming::after { content:""; position:absolute; left:0; right:0; top:0; height:46px; z-index:2; pointer-events:none;
+    background: linear-gradient(180deg, rgba(56,226,255,0.12), transparent); animation: pgScan 2.2s linear infinite; }
+  @keyframes pgScan { 0% { transform: translateY(38px); } 100% { transform: translateY(360px); } }
+  .pg-skel { display:block; }
+  .pg-skel b { display:block; height:12px; border-radius:6px; margin:0 0 13px;
+    background: linear-gradient(90deg, rgba(120,180,255,0.08) 25%, rgba(120,180,255,0.24) 37%, rgba(120,180,255,0.08) 63%);
+    background-size: 400% 100%; animation: pgShimmer 1.3s ease infinite; }
+  .pg-skel b:nth-child(1){ width:92%; } .pg-skel b:nth-child(2){ width:80%; }
+  .pg-skel b:nth-child(3){ width:86%; } .pg-skel b:nth-child(4){ width:64%; }
+  @keyframes pgShimmer { 0% { background-position:100% 0; } 100% { background-position:0 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .pg-panel.is-streaming::after, .pg-wave i, .pg-skel b { animation: none !important; }
+  }
+
+  /* ---- Voice input: amber-aura mic + pulsing soundwave ---- */
+  .pg-input-wrap { position: relative; }
+  .pg-input-wrap .pg-input { padding-right: 64px; }
+  .pg-mic-zone { position: absolute; right: 12px; bottom: 12px; z-index: 2;
+    display: flex; flex-direction: row-reverse; align-items: center; gap: 10px; }
+  .pg-mic {
+    /* scoped amber glow so var(--glow-amber) reads warm even on the blue page */
+    --glow-amber: 0 0 18px rgba(244,195,0,0.5), 0 0 44px rgba(244,195,0,0.22);
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 1px solid rgba(244,195,0,0.55);
+    background: radial-gradient(circle at 50% 38%, rgba(244,195,0,0.22), rgba(244,195,0,0.05));
+    color: #ffd766; font-size: 18px; line-height: 1; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: var(--glow-amber);
+    transition: transform .15s, background .2s;
+  }
+  .pg-mic { position: relative; }
+  .pg-mic:hover { transform: scale(1.06); }
+  .pg-mic.busy { pointer-events: none; }
+  .pg-mic.busy::after { content: ""; position: absolute; inset: -3px; border-radius: 50%;
+    border: 2px solid transparent; border-top-color: #ffd766; animation: micSpin .8s linear infinite; }
+  @keyframes micSpin { to { transform: rotate(360deg); } }
+  .pg-mic.recording {
+    background: radial-gradient(circle at 50% 38%, rgba(255,90,90,0.32), rgba(244,195,0,0.10));
+    border-color: rgba(255,140,90,0.7);
+    animation: micPulse 1.1s ease-in-out infinite;
+  }
+  @keyframes micPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(244,195,0,0.55), 0 0 18px rgba(244,195,0,0.5); }
+    50%      { box-shadow: 0 0 0 10px rgba(244,195,0,0), 0 0 30px rgba(255,170,60,0.75); }
+  }
+  /* soundwave appears only while recording (button = sibling before wave) */
+  .pg-wave-rec { display: none; align-items: center; gap: 3px; height: 26px;
+    padding: 0 4px; border-radius: 8px; background: rgba(2,6,18,0.45); }
+  .pg-mic.recording ~ .pg-wave-rec { display: inline-flex; }
+  .pg-wave-rec i { width: 3px; height: 6px; border-radius: 2px;
+    background: linear-gradient(180deg, #ffd766, #F4C300);
+    box-shadow: 0 0 6px rgba(244,195,0,0.6);
+    animation: micWave 0.7s ease-in-out infinite; }
+  .pg-wave-rec i:nth-child(1){ animation-delay: 0s;    }
+  .pg-wave-rec i:nth-child(2){ animation-delay: .09s;  }
+  .pg-wave-rec i:nth-child(3){ animation-delay: .18s;  }
+  .pg-wave-rec i:nth-child(4){ animation-delay: .27s;  }
+  .pg-wave-rec i:nth-child(5){ animation-delay: .20s;  }
+  .pg-wave-rec i:nth-child(6){ animation-delay: .12s;  }
+  .pg-wave-rec i:nth-child(7){ animation-delay: .05s;  }
+  .pg-wave-rec i:nth-child(8){ animation-delay: .15s;  }
+  @keyframes micWave { 0%, 100% { height: 5px; } 50% { height: 22px; } }
+  @media (prefers-reduced-motion: reduce) {
+    .pg-mic.recording { animation: none; }
+    .pg-wave-rec i { animation: none; height: 14px; }
+  }
+
+  /* ============================================================
+     STANDARD HERO + 3D Citadelle card (same dark bg as the page)
+     ============================================================ */
+  .hero-std { background: transparent; border-bottom: 1px solid var(--line-2); }
+  .hero-std .hero-grid { align-items: center; }
+  .hero-std .hero-copy { max-width: 600px; }
+  .hero-std .hero-lead { margin-top: 20px; color: var(--ink-2); max-width: 520px; }
+  .hero-std .hero-ctas { margin-top: 30px; }
+  .hero-std .hero-mission { margin-top: 22px; font-family: 'Share Tech Mono', ui-monospace, monospace;
+    text-transform: uppercase; letter-spacing: 0.14em; font-size: 12.5px; color: #9fd2ff; }
+
+  /* Stage holds the flip card + the Nèg Mawon emblem */
+  .hero-stage { position: relative; }
+  .neg-mawon { position: absolute; left: -34px; bottom: -30px; width: 200px; height: auto; z-index: 0;
+    color: #2f6bff; opacity: 0.20; pointer-events: none;
+    filter: drop-shadow(0 0 26px rgba(56,226,255,0.45));
+    transition: opacity .4s, transform .3s ease-out; will-change: transform; }
+  .hero-stage:hover .neg-mawon { opacity: 0.42; }
+
+  .hero-3d-wrap { perspective: 1500px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+  /* The card tilts (JS sets --rx/--ry from the cursor); the inner face flips on hover. */
+  .hero-3d { position: relative; width: 100%; max-width: 480px; transform-style: preserve-3d;
+    transform: rotateX(var(--rx, 4deg)) rotateY(var(--ry, -9deg));
+    transition: transform .25s ease-out; will-change: transform; outline: none; }
+  .flip3d-inner { position: relative; width: 100%; transform-style: preserve-3d;
+    transition: transform .9s cubic-bezier(.2,.8,.2,1); }
+  .hero-3d:hover .flip3d-inner, .hero-3d:focus-visible .flip3d-inner { transform: rotateY(180deg); }
+  .flip3d-face { border-radius: 16px; overflow: hidden;
+    border: 1px solid rgba(47,107,255,0.42);
+    box-shadow: -28px 38px 80px -28px rgba(0,0,0,0.85), 0 0 0 1px rgba(47,107,255,0.22), var(--glow-blue);
+    -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+  .flip3d-front { position: relative; }
+  .flip3d-back { position: absolute; inset: 0; transform: rotateY(180deg);
+    background: radial-gradient(ellipse 90% 70% at 50% 40%, rgba(47,107,255,0.16), transparent 65%), #05080f;
+    display: flex; align-items: center; justify-content: center; }
+  .hero-3d img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3;
+    object-fit: cover; object-position: 22% 42%; }
+  .hero-3d-sheen { position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background:
+      linear-gradient(125deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 36%),
+      linear-gradient(180deg, transparent 56%, rgba(2,6,18,0.5)); }
+  .flip3d-hint { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 3;
+    font-family: 'Share Tech Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #cde8ff; background: rgba(2,6,18,0.5); border: 1px solid rgba(120,180,255,0.3);
+    padding: 5px 9px; border-radius: 999px; }
+  .hero-3d .c { position: absolute; width: 18px; height: 18px; z-index: 2;
+    border: 2px solid #38e2ff; box-shadow: 0 0 10px rgba(56,226,255,0.5); }
+  .hero-3d .c.tl { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+  .hero-3d .c.tr { top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
+  .hero-3d .c.bl { bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
+  .hero-3d .c.br { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+  .hero-3d-flag { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; z-index: 2;
+    background: linear-gradient(90deg, #002D62 0 33%, #CE1126 33% 66%, #00A651 66%); opacity: 0.92; }
+  /* AI hub (back face) */
+  .ai-hub { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hub-rings { transform-box: fill-box; transform-origin: center; animation: hubSpin 26s linear infinite; }
+  .hub-core { animation: hubPulse 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes hubSpin { to { transform: rotate(360deg); } }
+  @keyframes hubPulse { 0%,100% { opacity: .65; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.08); } }
+  .hub-label { position: relative; z-index: 2; text-align: center; padding: 16px; }
+  .hub-label .hub-kicker { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #7fe9ff; display: block; }
+  .hub-label strong { display: block; font-family: 'Poppins', sans-serif; font-weight: 800; text-transform: uppercase;
+    font-size: clamp(22px, 3vw, 30px); color: #fff; letter-spacing: 0.02em; margin: 6px 0 4px; text-shadow: 0 0 24px rgba(56,226,255,0.55); }
+  .hub-label .hub-sub { font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #cfe0ff; }
+
+  @media (max-width: 1000px) {
+    .hero-3d-wrap { perspective: none; margin-top: 8px; }
+    .hero-3d { transform: none; max-width: 540px; margin: 0 auto; }
+    .neg-mawon { left: 50%; transform: translateX(-50%); bottom: -18px; opacity: 0.14; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-3d, .flip3d-inner { transition: none; }
+    .hub-rings, .hub-core { animation: none; }
+  }
+
+  /* ---- Academy journey: progress meter + checklists + milestone badges ---- */
+  .academy-progress-wrapper { margin: 0 0 24px; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 16px 18px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  .apw-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .apw-label { font-family: 'Share Tech Mono', ui-monospace, monospace; text-transform: uppercase;
+    letter-spacing: 0.12em; font-size: 12px; color: var(--ink-2); }
+  .apw-pct { font-family: 'Rajdhani', 'Poppins', sans-serif; font-weight: 700; font-size: 19px; color: #38e2ff; }
+  progress#academy-bar { -webkit-appearance: none; appearance: none; width: 100%; height: 12px; border: 0;
+    border-radius: 999px; background: transparent; display: block; }
+  progress#academy-bar::-webkit-progress-bar { background: rgba(47,107,255,0.12); border-radius: 999px;
+    box-shadow: inset 0 0 0 1px rgba(47,107,255,0.18); }
+  progress#academy-bar::-webkit-progress-value { background: linear-gradient(90deg, #2f6bff, #38e2ff);
+    border-radius: 999px; box-shadow: 0 0 14px rgba(56,226,255,0.6); transition: width .45s cubic-bezier(.2,.8,.2,1); }
+  progress#academy-bar::-moz-progress-bar { background: linear-gradient(90deg, #2f6bff, #38e2ff); border-radius: 999px; }
+
+  .wk-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .wk-badge svg { width: 38px; height: 38px; display: block; opacity: 0.5; filter: grayscale(0.4);
+    transition: opacity .3s, filter .3s; }
+  .wk-badge .bdg-check { stroke-dasharray: 22; stroke-dashoffset: 22; transition: stroke-dashoffset .5s ease; }
+  .week-card.complete .wk-badge svg { opacity: 1; filter: drop-shadow(0 0 10px rgba(244,195,0,0.7)); }
+  .week-card.complete .wk-badge .bdg-check { stroke-dashoffset: 0; }
+  .wk-checklist { display: grid; gap: 9px; margin-top: 14px; }
+  .wk-item { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 14px;
+    line-height: 1.4; color: var(--ink-2); user-select: none; }
+  .wk-item input { appearance: none; -webkit-appearance: none; flex-shrink: 0; width: 18px; height: 18px;
+    margin: 1px 0 0; border-radius: 5px; border: 1.5px solid rgba(47,107,255,0.5); background: rgba(0,0,0,0.25);
+    cursor: pointer; position: relative; transition: background .15s, border-color .15s, box-shadow .15s; }
+  .wk-item input:hover { border-color: #38e2ff; }
+  .wk-item input:checked { background: linear-gradient(135deg, #2f6bff, #38e2ff); border-color: #38e2ff;
+    box-shadow: 0 0 10px rgba(56,226,255,0.5); }
+  .wk-item input:checked::after { content: ""; position: absolute; left: 5px; top: 1.5px; width: 4px; height: 9px;
+    border: 2px solid #04060e; border-top: 0; border-left: 0; transform: rotate(45deg); }
+  .wk-item input:focus-visible { outline: 2px solid #38e2ff; outline-offset: 2px; }
+  .wk-item input:checked + span { color: var(--ink-4); text-decoration: line-through; }
 </style>
 </head>
-<body>
+<body data-page="home">
 
-<!-- ══════════════ NAVBAR ══════════════ -->
-<nav id="nav">
-  <a class="n-logo" href="#">KreyòlAI<span style="color:rgba(255,255,255,.25)">·</span>Hub</a>
+<div id="nav-mount"></div>
 
-  <ul class="n-menu">
-    <li><a href="#pillars">Platform</a></li>
-    <li><a href="#flagship">AI Academy</a></li>
-    <li><a href="#tools">AI Tools</a></li>
-    <li><a href="consulting.html">Consulting</a></li>
-    <li><a href="#community">Community</a></li>
-    <li><a href="#demo">Demo</a></li>
-  </ul>
-
-  <div class="n-actions">
-    <span class="n-sign">Sign In</span>
-    <a href="#flagship" class="btn btn-p btn-sm">Get Started</a>
-  </div>
-  <div class="n-ham" id="ham"><span></span><span></span><span></span></div>
-</nav>
-
-<!-- ══════════════ HERO ══════════════ -->
-<section id="hero">
-  <canvas id="cv"></canvas>
-  <div class="orb orb-a"></div>
-  <div class="orb orb-b"></div>
-  <div class="orb orb-c"></div>
-
-  <div class="c">
-    <div class="hero-inner">
-      <!-- TEXT -->
-      <div>
-        <div class="hero-tag" data-r>
-          <div class="tag-dot"></div>
-          The first AI ecosystem built for Haitian Creole
-        </div>
-
-        <h1 class="hero-h1" data-r data-d="1">
-          The AI Academy<br/>
-          <span class="grad">&amp; Platform</span><br/>
-          in Haitian Creole.
-        </h1>
-
-        <p class="hero-sub" data-r data-d="2">
-          Learn AI step-by-step in <strong>Kreyòl</strong>, use tools built for Haitian life, and join a global movement putting <strong>our language at the center of technology.</strong>
-        </p>
-
-        <div class="hero-ctas" data-r data-d="3">
-          <a href="academy.html" class="btn btn-p">🎓 Start 30-Day AI Course</a>
-          <a href="#demo" class="btn btn-g">⚡ Try Live Demo</a>
-        </div>
-
-        <div class="hero-stats" data-r data-d="4">
-          <div><div class="st-n">12M+</div><div class="st-l">Creole speakers</div></div>
-          <div><div class="st-n">30</div><div class="st-l">Free lessons</div></div>
-          <div><div class="st-n">6</div><div class="st-l">AI tools</div></div>
-          <div><div class="st-n">3</div><div class="st-l">Languages</div></div>
-        </div>
+<!-- ===================== HERO ===================== -->
+<header class="hero hero-std">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow" data-kw="🇭🇹 Platfòm AI Ayiti a" data-fr="🇭🇹 La plateforme IA d'Haïti" data-en="🇭🇹 Haiti's AI Platform">🇭🇹 Platfòm AI Ayiti a</div>
+      <h1 data-kw="Aprann AI an <span class='accent'>Kreyòl Ayisyen.</span>" data-fr="Apprenez l'IA en <span class='accent'>créole haïtien.</span>" data-en="Learn AI in <span class='accent'>Haitian Creole.</span>">Aprann AI an <span class="accent">Kreyòl Ayisyen.</span></h1>
+      <p class="hero-lead" data-kw="Kou, zouti, workflow, ak yon kominote pou Ayisyen ki vle bati ak AI." data-fr="Des cours, des outils, des workflows et une communauté pour les Haïtiens qui veulent créer avec l'IA." data-en="Courses, tools, workflows, and community for Haitians who want to build with AI.">Kou, zouti, workflow, ak yon kominote pou Ayisyen ki vle bati ak AI.</p>
+      <div class="hero-ctas">
+        <a href="academy.html" class="btn btn-primary btn-lg" data-kw="Kòmanse Akademi an" data-fr="Commencer l'Académie" data-en="Start the Academy">Kòmanse Akademi an</a>
+        <a href="tools.html" class="btn btn-ghost btn-lg" data-kw="Eksplore Zouti yo" data-fr="Explorer les outils" data-en="Explore Tools">Eksplore Zouti yo</a>
       </div>
-
-      <!-- VISUAL -->
-      <div class="hero-vis">
-        <div class="r-glow"></div>
-
-        <!-- Robot SVG -->
-        <div class="robot">
-          <svg width="190" height="235" viewBox="0 0 190 235" fill="none">
-            <!-- Antenna -->
-            <line x1="95" y1="16" x2="95" y2="36" stroke="#3B82F6" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="95" cy="10" r="7" fill="#3B82F6">
-              <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="95" cy="10" r="12" fill="none" stroke="rgba(59,130,246,0.3)" stroke-width="1">
-              <animate attributeName="r" values="8;14;8" dur="2s" repeatCount="indefinite"/>
-              <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite"/>
-            </circle>
-            <!-- Head -->
-            <rect x="45" y="36" width="100" height="80" rx="22" fill="url(#hg)" stroke="rgba(59,130,246,0.45)" stroke-width="1.5"/>
-            <!-- Eyes -->
-            <rect x="60" y="58" width="26" height="20" rx="10" fill="#050816"/>
-            <circle cx="73" cy="68" r="7" fill="#3B82F6">
-              <animate attributeName="opacity" values="1;0.35;1" dur="3.2s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="73" cy="68" r="3" fill="white" opacity=".6"/>
-            <rect x="104" y="58" width="26" height="20" rx="10" fill="#050816"/>
-            <circle cx="117" cy="68" r="7" fill="#3B82F6">
-              <animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0.5s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="117" cy="68" r="3" fill="white" opacity=".6"/>
-            <!-- Mouth / display panel -->
-            <rect x="66" y="88" width="58" height="16" rx="8" fill="rgba(59,130,246,0.12)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
-            <text x="95" y="100" text-anchor="middle" fill="#60a5fa" font-size="7.5" font-family="monospace" font-weight="700">KW · EN · FR · 🇭🇹</text>
-            <!-- Neck -->
-            <rect x="82" y="116" width="26" height="13" rx="6" fill="url(#bg2)"/>
-            <!-- Body -->
-            <rect x="25" y="129" width="140" height="88" rx="24" fill="url(#bg2)" stroke="rgba(124,58,237,0.28)" stroke-width="1.5"/>
-            <!-- Chest panel -->
-            <rect x="48" y="144" width="94" height="52" rx="12" fill="rgba(0,0,0,0.3)"/>
-            <!-- Power core -->
-            <circle cx="95" cy="170" r="20" stroke="#7C3AED" stroke-width="1.8" fill="none">
-              <animate attributeName="stroke-opacity" values="0.5;0.9;0.5" dur="2s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="95" cy="170" r="12" fill="rgba(124,58,237,0.2)"/>
-            <circle cx="95" cy="170" r="6" fill="#7C3AED">
-              <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
-            </circle>
-            <!-- Dots around power core -->
-            <circle cx="95" cy="150" r="2" fill="#7C3AED" opacity=".5"/>
-            <circle cx="113" cy="160" r="2" fill="#3B82F6" opacity=".5"/>
-            <circle cx="113" cy="180" r="2" fill="#3B82F6" opacity=".5"/>
-            <circle cx="95" cy="190" r="2" fill="#7C3AED" opacity=".5"/>
-            <circle cx="77" cy="180" r="2" fill="#3B82F6" opacity=".5"/>
-            <circle cx="77" cy="160" r="2" fill="#3B82F6" opacity=".5"/>
-            <!-- Arms -->
-            <rect x="0" y="136" width="23" height="60" rx="11.5" fill="url(#bg2)" stroke="rgba(59,130,246,0.18)" stroke-width="1"/>
-            <circle cx="11.5" cy="202" r="10" fill="url(#bg2)" stroke="rgba(59,130,246,0.25)" stroke-width="1"/>
-            <rect x="167" y="136" width="23" height="60" rx="11.5" fill="url(#bg2)" stroke="rgba(59,130,246,0.18)" stroke-width="1"/>
-            <circle cx="178.5" cy="202" r="10" fill="url(#bg2)" stroke="rgba(59,130,246,0.25)" stroke-width="1"/>
-            <!-- Legs -->
-            <rect x="58" y="217" width="26" height="18" rx="9" fill="url(#bg2)"/>
-            <rect x="106" y="217" width="26" height="18" rx="9" fill="url(#bg2)"/>
-            <defs>
-              <linearGradient id="hg" x1="45" y1="36" x2="145" y2="116" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#0e1d48"/>
-                <stop offset="100%" stop-color="#080d1e"/>
-              </linearGradient>
-              <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#182060"/>
-                <stop offset="100%" stop-color="#0c1132"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-
-        <!-- Floating cards -->
-        <div class="fc fc1">
-          <div class="fc-ico">🌐</div>
-          <div><div class="fc-nm">Kreyòl Translate</div><div class="fc-tg">Creole ↔ English ↔ French</div></div>
-          <div class="fc-bge">Live</div>
-        </div>
-        <div class="fc fc2">
-          <div class="fc-ico">🤖</div>
-          <div><div class="fc-nm">Grann AI</div><div class="fc-tg">Cultural AI elder</div></div>
-          <div class="fc-bge">Live</div>
-        </div>
-        <div class="fc fc3">
-          <div class="fc-ico">📚</div>
-          <div><div class="fc-nm">Lekòl AI</div><div class="fc-tg">AI tutor in Kreyòl</div></div>
-          <div class="fc-bge fc-bge-y">Beta</div>
-        </div>
-        <div class="fc fc4">
-          <div class="fc-ico">💼</div>
-          <div><div class="fc-nm">Biznis AI</div><div class="fc-tg">For entrepreneurs</div></div>
-          <div class="fc-bge fc-bge-y">Beta</div>
-        </div>
-      </div>
+      <div class="hero-mission" data-kw="Demokratize AI pou chak Ayisyen." data-fr="Démocratiser l'IA pour chaque Haïtien." data-en="Democratizing AI for every Haitian.">Demokratize AI pou chak Ayisyen.</div>
     </div>
-  </div>
-</section>
 
-<!-- ══════════════ TRUST ══════════════ -->
-<section id="trust">
-  <div class="c">
-    <div class="trust-inner">
-      <p class="trust-lbl">Who this platform is built for</p>
-      <div class="who-grid">
-        <div class="wc" data-r data-d="1"><div class="wc-ico">🎒</div><div class="wc-title">Students</div><div class="wc-desc">High-school and university students learning AI for the very first time — in their language.</div></div>
-        <div class="wc" data-r data-d="2"><div class="wc-ico">💡</div><div class="wc-title">Entrepreneurs</div><div class="wc-desc">Side-hustlers and business owners who want AI working for their business, not against them.</div></div>
-        <div class="wc" data-r data-d="3"><div class="wc-ico">🏛️</div><div class="wc-title">NGOs & Professionals</div><div class="wc-desc">Professionals in NGOs, government, and public sector ready to adopt AI in their workflows.</div></div>
-        <div class="wc" data-r data-d="4"><div class="wc-ico">🌍</div><div class="wc-title">Diaspora & Migrants</div><div class="wc-desc">Haitians abroad navigating education, immigration, and careers with AI tools built for their life.</div></div>
-      </div>
-      <p class="trust-lbl">Trusted by & working with</p>
-      <div class="trusted-row">
-        <div class="tbadge">🎓 Universities</div>
-        <div class="tbadge">🤝 NGOs & Nonprofits</div>
-        <div class="tbadge">🌍 Diaspora Communities</div>
-        <div class="tbadge">💻 Tech Meetups</div>
-        <div class="tbadge cta">Your organization →</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ FLAGSHIP ══════════════ -->
-<section id="flagship">
-  <div class="c">
-    <div class="fl-grid">
-      <div data-r>
-        <div class="eyebrow">🎓 AI Academy · Flagship Program</div>
-        <h2 class="fl-h">30 Days to <span class="grad">Master AI.</span></h2>
-        <p class="fl-pos">A free, beginner-friendly AI bootcamp in Haitian Creole.<br/>30 micro-lessons, daily practice, and a certificate you can show to employers or schools.</p>
-        <div class="badges">
-          <span class="fbg fbg-b">✓ No tech experience needed</span>
-          <span class="fbg fbg-r">⏱ 15–25 minutes per day</span>
-          <span class="fbg fbg-g">🎓 Certificate on completion</span>
-        </div>
-        <div style="display:flex;gap:.9rem;flex-wrap:wrap">
-          <a href="academy.html" class="btn btn-p">Start Free Course →</a>
-          <a href="academy.html" class="btn btn-g">View Curriculum</a>
-        </div>
-      </div>
-      <div data-r data-d="2">
-        <div class="dash">
-          <div class="dash-top">
-            <div class="dash-dots"><div class="dd dd1"></div><div class="dd dd2"></div><div class="dd dd3"></div></div>
-            <div class="dash-lbl">KreyòlAI Academy · Dashboard</div>
-            <div class="dash-live"><div class="ld"></div>Live</div>
-          </div>
-          <div class="dash-body">
-            <div class="d-course-title">30 Days to Master AI</div>
-            <div class="d-course-sub">Your personal AI learning journey</div>
-            <div class="d-prog-row"><span>Progress</span><span style="color:var(--blue2)">68%</span></div>
-            <div class="d-prog-bar"><div class="d-prog-fill"></div></div>
-            <div class="l-item dn"><div class="l-ic dn">✓</div><span>Day 1 — What is Artificial Intelligence?</span></div>
-            <div class="l-item dn"><div class="l-ic dn">✓</div><span>Day 2 — How AI Learns from Data</span></div>
-            <div class="l-item ac"><div class="l-ic ac">▶</div><span style="color:var(--blue2);font-weight:500">Day 3 — Understanding AI Prompts</span></div>
-            <div class="l-item nx"><div class="l-ic nx">○</div><span>Day 4 — Using AI Tools in Daily Life</span></div>
-            <div class="d-metrics">
-              <div class="dm-item"><div class="dm-n" style="color:var(--blue2)">20</div><div class="dm-l">Days left</div></div>
-              <div class="dm-item"><div class="dm-n" style="color:var(--grn2)">Free</div><div class="dm-l">Forever</div></div>
-              <div class="dm-item"><div class="dm-n" style="color:var(--prp2)">Cert.</div><div class="dm-l">On completion</div></div>
+    <div class="hero-stage">
+      <img class="neg-mawon" src="assets/ph/neg-mawon.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+      <div class="hero-3d-wrap" id="hero3dWrap">
+        <div class="hero-3d flip3d" id="hero3d" tabindex="0" aria-label="Sitadèl Laferyè → Hub IA">
+          <div class="flip3d-inner">
+            <!-- FRONT: the Citadelle -->
+            <div class="flip3d-face flip3d-front">
+              <picture class="hero-3d-media">
+                <source type="image/webp" srcset="assets/haiti-2040-640.webp 640w, assets/haiti-2040-1280.webp 1280w" sizes="(max-width: 1000px) 80vw, 480px">
+                <img src="assets/haiti-2040.jpg" width="1500" height="1000"
+                     alt="Sitadèl Laferyè an Ayiti ak yon vil fiti ki klere ak teknoloji"
+                     loading="eager" fetchpriority="high" decoding="async">
+              </picture>
+              <span class="hero-3d-sheen" aria-hidden="true"></span>
+              <span class="c tl" aria-hidden="true"></span><span class="c tr" aria-hidden="true"></span>
+              <span class="c bl" aria-hidden="true"></span><span class="c br" aria-hidden="true"></span>
+              <span class="flip3d-hint" aria-hidden="true" data-kw="Pase sou li ↻" data-fr="Survolez ↻" data-en="Hover ↻">Pase sou li ↻</span>
+              <span class="hero-3d-flag" aria-hidden="true"></span>
+            </div>
+            <!-- BACK: futuristic AI hub -->
+            <div class="flip3d-face flip3d-back">
+              <svg class="ai-hub" viewBox="0 0 480 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <defs>
+                  <radialGradient id="hubCore" cx="50%" cy="50%" r="50%">
+                    <stop offset="0" stop-color="#eaffff"/><stop offset="35%" stop-color="#38e2ff"/><stop offset="100%" stop-color="#2f6bff" stop-opacity="0"/>
+                  </radialGradient>
+                  <linearGradient id="hubLine" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#38e2ff"/><stop offset="1" stop-color="#2f6bff"/>
+                  </linearGradient>
+                </defs>
+                <rect width="480" height="360" fill="#05080f"/>
+                <g stroke="#2f6bff" stroke-opacity="0.10" stroke-width="1">
+                  <line x1="96" y1="0" x2="96" y2="360"/><line x1="192" y1="0" x2="192" y2="360"/>
+                  <line x1="288" y1="0" x2="288" y2="360"/><line x1="384" y1="0" x2="384" y2="360"/>
+                  <line x1="0" y1="90" x2="480" y2="90"/><line x1="0" y1="180" x2="480" y2="180"/><line x1="0" y1="270" x2="480" y2="270"/>
+                </g>
+                <g class="hub-rings" fill="none" stroke="url(#hubLine)" stroke-width="1.4">
+                  <circle cx="240" cy="180" r="62" stroke-opacity="0.7"/>
+                  <circle cx="240" cy="180" r="96" stroke-opacity="0.45" stroke-dasharray="5 9"/>
+                  <circle cx="240" cy="180" r="132" stroke-opacity="0.28" stroke-dasharray="2 10"/>
+                </g>
+                <g class="hub-nodes" fill="#38e2ff">
+                  <circle cx="240" cy="48" r="5"/><circle cx="372" cy="180" r="5"/><circle cx="240" cy="312" r="5"/>
+                  <circle cx="108" cy="180" r="5"/><circle cx="334" cy="86" r="4"/><circle cx="146" cy="274" r="4"/>
+                  <circle cx="334" cy="274" r="4"/><circle cx="146" cy="86" r="4"/>
+                </g>
+                <g stroke="#38e2ff" stroke-opacity="0.4" stroke-width="1">
+                  <line x1="240" y1="180" x2="240" y2="48"/><line x1="240" y1="180" x2="372" y2="180"/>
+                  <line x1="240" y1="180" x2="240" y2="312"/><line x1="240" y1="180" x2="108" y2="180"/>
+                  <line x1="240" y1="180" x2="334" y2="86"/><line x1="240" y1="180" x2="146" y2="274"/>
+                </g>
+                <circle class="hub-core" cx="240" cy="180" r="40" fill="url(#hubCore)"/>
+                <circle cx="240" cy="180" r="9" fill="#eaffff"/>
+              </svg>
+              <div class="hub-label">
+                <span class="hub-kicker">// KreyòlAIHub</span>
+                <strong data-kw="Hub IA Ayiti" data-fr="Hub IA d'Haïti" data-en="Haiti's AI Hub">Hub IA Ayiti</strong>
+                <span class="hub-sub" data-kw="Aprann · Bati · Konekte" data-fr="Apprendre · Construire · Connecter" data-en="Learn · Build · Connect">Aprann · Bati · Konekte</span>
+              </div>
+              <span class="c tl" aria-hidden="true"></span><span class="c tr" aria-hidden="true"></span>
+              <span class="c bl" aria-hidden="true"></span><span class="c br" aria-hidden="true"></span>
+              <span class="hero-3d-flag" aria-hidden="true"></span>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+</header>
+<!-- ===================== AI PLAYGROUND ===================== -->
+<section class="playground-section" id="playground">
+  <div class="container">
+    <div style="text-align:center; max-width: 680px; margin: 0 auto 36px;">
+      <div class="eyebrow" style="justify-content:center;" data-kw="Demo entèaktif" data-fr="Démo interactive" data-en="Interactive demo">Demo entèaktif</div>
+      <h2 style="margin-top: 14px;" data-kw="Eseye AI an Kreyòl — kounye a." data-fr="Essayez l'IA en créole — maintenant." data-en="Try AI in Kreyòl — right now.">Eseye AI an Kreyòl — kounye a.</h2>
+      <p style="margin-top: 12px; color: var(--ink-3); font-size: 16px; line-height: 1.6;" data-kw="Ekri yon bagay, chwazi yon aksyon, epi gade AI a travay — an Kreyòl. San enskripsyon." data-fr="Écrivez quelque chose, choisissez une action et regardez l'IA travailler — en créole. Sans inscription." data-en="Type something, pick an action, and watch AI work — in Kreyòl. No signup.">Ekri yon bagay, chwazi yon aksyon, epi gade AI a travay — an Kreyòl. San enskripsyon.</p>
+    </div>
 
-<!-- ══════════════ THREE PILLARS ══════════════ -->
-<section id="pillars">
-  <div class="c">
-    <div class="pil-head" data-r>
-      <div class="eyebrow" style="margin:0 auto 1.35rem">The Platform</div>
-      <h2 class="sec-title">Three pillars. <span class="grad">One ecosystem.</span></h2>
-      <p class="sec-sub">Start learning, use ready-made tools, then scale with expert consulting — all in Haitian Creole.</p>
-    </div>
-    <div class="pil-grid">
-      <div class="pil-card" style="--pc-glow:linear-gradient(135deg,rgba(59,130,246,.08),transparent)" data-r data-d="1">
-        <div class="p-num">01 / Start Here</div>
-        <div class="p-ico">🎓</div>
-        <div class="p-step">→ Learn</div>
-        <h3 class="p-title">AI Academy</h3>
-        <p class="p-desc">Start here: free structured AI courses in Kreyòl for complete beginners and working professionals.</p>
-        <div class="p-tags"><span class="p-tag">Haitian Creole</span><span class="p-tag">Free</span><span class="p-tag">Certificate</span></div>
-        <a href="academy.html" class="p-lnk">Start learning →</a>
-      </div>
-      <div class="pil-card" style="--pc-glow:linear-gradient(135deg,rgba(124,58,237,.08),transparent)" data-r data-d="2">
-        <div class="p-num">02 / Apply AI</div>
-        <div class="p-ico">⚡</div>
-        <div class="p-step">→ Use Tools</div>
-        <h3 class="p-title">AI Tools Platform</h3>
-        <p class="p-desc">Next: apply AI immediately with tools designed for Haitian life — translation, education, business, immigration.</p>
-        <div class="p-tags"><span class="p-tag">Translation</span><span class="p-tag">Education</span><span class="p-tag">Business</span><span class="p-tag">Immigration</span></div>
-        <a href="tools.html" class="p-lnk">Explore tools →</a>
-      </div>
-      <div class="pil-card" style="--pc-glow:linear-gradient(135deg,rgba(239,68,68,.06),transparent)" data-r data-d="3">
-        <div class="p-num">03 / Scale Up</div>
-        <div class="p-ico">💼</div>
-        <div class="p-step">→ Consult</div>
-        <h3 class="p-title">AI Consulting</h3>
-        <p class="p-desc">For organizations ready to lead: custom AI strategy, automation, and multilingual team training.</p>
-        <div class="p-tags"><span class="p-tag">Strategy</span><span class="p-tag">Automation</span><span class="p-tag">Training</span></div>
-        <a href="consulting.html" class="p-lnk">Book consultation →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ AI TOOLS ══════════════ -->
-<section id="tools">
-  <div class="c">
-    <div style="text-align:center;margin-bottom:4rem" data-r>
-      <div class="eyebrow" style="margin:0 auto 1.35rem">AI Tools</div>
-      <h2 class="sec-title">AI built <span class="grad">for Haitians.</span></h2>
-      <p class="sec-sub">Purpose-built tools addressing real needs of Haitians and the diaspora worldwide.</p>
-    </div>
-    <div class="t-grid">
-      <!-- Lakay Pale FEATURED -->
-      <div class="tc" data-r data-d="1" style="grid-column:1/-1;background:linear-gradient(135deg,rgba(99,102,241,.13),rgba(168,85,247,.08));border:1px solid rgba(129,140,248,.35);display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center">
-        <div>
-          <div class="t-head" style="margin-bottom:.6rem"><div class="t-ico" style="font-size:1.6rem">🗣️</div><span class="t-badge t-live" style="background:rgba(99,102,241,.25);border-color:rgba(129,140,248,.5);color:#a5b4fc">Live</span><span style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#c084fc;background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.3);border-radius:99px;padding:.18rem .55rem">⭐ Flagship</span></div>
-          <div class="t-name" style="font-size:1.45rem;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Lakay Pale</div>
-          <div class="t-desc" style="color:#94a3b8;margin:.35rem 0 .5rem">The first Haitian Creole AI voice assistant. Type or speak in Kreyòl, French, or English — scan documents, generate images, and more.</div>
-          <div class="t-who" style="color:#64748b">For every Haitian at home and in the diaspora who wants AI in their language.</div>
-        </div>
-        <a href="https://michelsassia-netizen.github.io/Kreyolaibot/" target="_blank" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);box-shadow:0 6px 25px rgba(99,102,241,.4);border-radius:10px;padding:.7rem 1.4rem;font-size:.82rem;font-weight:600;color:#fff;white-space:nowrap;text-decoration:none;font-family:inherit;flex-shrink:0">🚀 Lanse App →</a>
+    <div class="playground-card glass">
+      <div class="pg-bar">
+        <span class="pg-title" data-kw="Espas Eseyaj AI" data-fr="Espace d'essai IA" data-en="AI Playground">Espas Eseyaj AI</span>
+        <span class="pg-status"><span class="pg-dot"></span><span data-kw="An dirèk" data-fr="En direct" data-en="Live">An dirèk</span></span>
       </div>
 
-      <div class="tc" data-r data-d="1">
-        <div class="t-head"><div class="t-ico">🌐</div><span class="t-badge t-live">Live</span></div>
-        <div class="t-name">Kreyòl Translate</div>
-        <div class="t-desc">Accurate Haitian Creole ↔ English ↔ French AI translation. Preserves idioms and cultural context others miss.</div>
-        <div class="t-who">For students, migrants, and professionals who need trustworthy translation with real cultural nuance.</div>
+      <div class="pg-chips" role="group" aria-label="Quick actions">
+        <button type="button" class="pg-chip active" data-task="translate" data-kw="Tradui an Kreyòl" data-fr="Traduire en créole" data-en="Translate to Kreyòl">Tradui an Kreyòl</button>
+        <button type="button" class="pg-chip" data-task="email" data-kw="Ekri yon Email" data-fr="Rédiger un email" data-en="Write an Email">Ekri yon Email</button>
+        <button type="button" class="pg-chip" data-task="summarize" data-kw="Rezime an Kreyòl" data-fr="Résumer en créole" data-en="Summarize in Kreyòl">Rezime an Kreyòl</button>
+        <button type="button" class="pg-chip" data-task="explain" data-kw="Eksplike senp" data-fr="Expliquer simplement" data-en="Explain simply">Eksplike senp</button>
       </div>
-      <div class="tc" data-r data-d="2">
-        <div class="t-head"><div class="t-ico">🤖</div><span class="t-badge t-live">Live</span></div>
-        <div class="t-name" style="background:linear-gradient(135deg,#d4a017,#f0c040);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Grann AI ✨</div>
-        <div class="t-desc">Cultural AI assistant trained on Haitian history, proverbs, folklore, and traditions.</div>
-        <div class="t-who">For anyone who wants to learn, preserve, and explore Haitian culture with an AI elder who speaks Kreyòl.</div>
-        <a href="grann.html" style="display:inline-flex;align-items:center;gap:.3rem;margin-top:.65rem;font-size:.72rem;color:#d4a017;text-decoration:none;font-weight:600;font-family:inherit">👵🏾 Pale ak Grann →</a>
-      </div>
-      <div class="tc" data-r data-d="3">
-        <div class="t-head"><div class="t-ico">📚</div><span class="t-badge t-beta">Beta</span></div>
-        <div class="t-name">Lekòl AI</div>
-        <div class="t-desc">AI tutoring for Haitian students. Explains concepts in Creole, French, and English — no jargon.</div>
-        <div class="t-who">For Haitian students and teachers who need clear explanations in their language.</div>
-      </div>
-      <div class="tc" data-r data-d="1">
-        <div class="t-head"><div class="t-ico">💼</div><span class="t-badge t-beta">Beta</span></div>
-        <div class="t-name">Biznis AI</div>
-        <div class="t-desc">Business intelligence assistant for Haitian entrepreneurs — proposals, research, strategy.</div>
-        <div class="t-who">For entrepreneurs who need AI-powered business tools built in their language.</div>
-      </div>
-      <div class="tc" data-r data-d="2">
-        <div class="t-head"><div class="t-ico">📄</div><span class="t-badge t-live">Live</span></div>
-        <div class="t-name">Document AI</div>
-        <div class="t-desc">Upload medical, legal, or immigration documents and receive clear summaries in your language.</div>
-        <div class="t-who">For anyone who needs instant summaries of complex documents in Creole or French.</div>
-      </div>
-      <div class="tc" data-r data-d="3">
-        <div class="t-head"><div class="t-ico">✈️</div><span class="t-badge t-soon">Soon</span></div>
-        <div class="t-name">Immigration AI</div>
-        <div class="t-desc">Navigate US, Canada, and UK immigration — forms, deadlines, and requirements simplified step by step.</div>
-        <div class="t-who">For Haitians navigating immigration processes across three countries.</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:3rem" data-r>
-      <a href="tools.html" class="btn btn-g">Explore All Tools →</a>
-    </div>
-  </div>
-</section>
 
-<!-- ══════════════ LIVE DEMO ══════════════ -->
-<section id="demo">
-  <div class="c">
-    <div class="demo-grid">
-      <div data-r>
-        <div class="eyebrow">Live Demo</div>
-        <h2 class="sec-title" style="font-size:clamp(1.8rem,3.5vw,2.5rem)">Try KreyòlAI <span class="grad">instantly.</span></h2>
-        <p style="font-size:.9rem;color:var(--t55);line-height:1.82;max-width:330px;font-weight:300;margin:.5rem 0 0">No account required. Experience AI in Haitian Creole right now.</p>
-        <div class="demo-tabs">
-          <div class="dtab on" onclick="setDemo(this,'tr')"><div class="dtab-nm">🌐 Translate Creole ↔ English</div><div class="dtab-ds">Context-aware cultural translation</div></div>
-          <div class="dtab" onclick="setDemo(this,'pv')"><div class="dtab-nm">📖 Explain Haitian Proverbs</div><div class="dtab-ds">Decode cultural wisdom with AI</div></div>
-          <div class="dtab" onclick="setDemo(this,'bi')"><div class="dtab-nm">💡 Generate Business Ideas</div><div class="dtab-ds">AI-powered ideas for the diaspora</div></div>
-          <div class="dtab" onclick="setDemo(this,'nx')"><div class="dtab-nm">📰 Summarize Haitian News</div><div class="dtab-ds">Stay informed in any language</div></div>
-        </div>
-      </div>
-      <div data-r data-d="2">
-        <div class="term">
-          <div class="term-top">
-            <div class="t-dots"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>
-            <div class="t-title">KreyòlAI·Hub · Live Terminal</div>
-          </div>
-          <div class="t-body" id="tb">
-            <span class="tl"><span class="tp">$ </span><span class="tc2">translate "Bonjou, kijan ou rele?"</span></span>
-            <span class="tl"><span class="to">→ "Hello, what is your name?"</span></span>
-            <span class="tl"> </span>
-            <span class="tl"><span class="tp">$ </span><span class="tc2">translate "The future belongs to those who learn"</span></span>
-            <span class="tl"><span class="to">→ KW: "Lavni se pou moun ki aprann"</span></span>
-            <span class="tl"><span class="to">→ FR: "L'avenir appartient à ceux qui apprennent"</span></span>
-            <span class="tl"> </span>
-            <span class="tl"><span class="tp">$ </span><span class="tcsr"></span></span>
+      <div class="pg-input-wrap">
+        <textarea id="playground-input" class="pg-input" rows="4" placeholder="Ekri oswa kole tèks ou la…" data-kw-placeholder="Ekri oswa kole tèks ou la…" data-fr-placeholder="Écrivez ou collez votre texte ici…" data-en-placeholder="Type or paste your text here…"></textarea>
+        <div class="pg-mic-zone">
+          <button id="mic-btn" type="button" class="pg-mic" aria-label="Pale an Kreyòl / Record Creole" title="🎙️">🎙️</button>
+          <div class="pg-wave-rec" id="mic-wave" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
           </div>
         </div>
-        <div style="display:flex;gap:.5rem;margin-top:.7rem;flex-wrap:wrap">
-          <a href="tools.html" class="btn btn-p btn-sm">Try Live AI →</a>
-          <a href="tools.html" class="btn btn-g btn-sm">All Tools</a>
+      </div>
+
+      <div class="pg-actions">
+        <span class="pg-hint" aria-hidden="true">⌘ / Ctrl + Enter</span>
+        <button type="button" id="playground-run" class="btn btn-primary btn-lg" data-kw="Jenere →" data-fr="Générer →" data-en="Generate →">Jenere →</button>
+      </div>
+
+      <div class="pg-out-label" data-kw="Rezilta" data-fr="Résultat" data-en="Result">Rezilta</div>
+      <div class="pg-panel" id="playground-panel">
+        <svg class="pg-frame" preserveAspectRatio="none" viewBox="0 0 100 100" aria-hidden="true">
+          <defs>
+            <linearGradient id="pgEdge" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#38e2ff"></stop><stop offset="0.5" stop-color="#2f6bff"></stop><stop offset="1" stop-color="#1e49d6"></stop>
+            </linearGradient>
+            <filter id="pgGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.4"></feGaussianBlur></filter>
+          </defs>
+          <rect x="1" y="1" width="98" height="98" fill="none" stroke="#2f6bff" stroke-opacity="0.6" stroke-width="2.2" vector-effect="non-scaling-stroke" filter="url(#pgGlow)"></rect>
+          <rect x="1" y="1" width="98" height="98" fill="none" stroke="url(#pgEdge)" stroke-width="1.3" vector-effect="non-scaling-stroke"></rect>
+          <g stroke="#2f6bff" stroke-opacity="0.10" stroke-width="1" vector-effect="non-scaling-stroke">
+            <line x1="20" y1="1" x2="20" y2="99"></line><line x1="40" y1="1" x2="40" y2="99"></line>
+            <line x1="60" y1="1" x2="60" y2="99"></line><line x1="80" y1="1" x2="80" y2="99"></line>
+          </g>
+        </svg>
+        <span class="pg-corner tl" aria-hidden="true"></span><span class="pg-corner tr" aria-hidden="true"></span>
+        <span class="pg-corner bl" aria-hidden="true"></span><span class="pg-corner br" aria-hidden="true"></span>
+
+        <div class="pg-panel-head">
+          <span class="pg-panel-title" data-kw="SÒTI // FLOW" data-fr="SORTIE // FLUX" data-en="OUTPUT // STREAM">SÒTI // FLOW</span>
+          <span class="pg-leds" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+
+        <div id="playground-output" class="pg-output" aria-live="polite">
+          <span class="pg-ph" data-kw="Repons AI a ap parèt isit la…" data-fr="La réponse de l'IA s'affichera ici…" data-en="The AI's answer will stream here…">Repons AI a ap parèt isit la…</span>
+        </div>
+
+        <div class="pg-panel-foot" aria-hidden="true">
+          <span class="pg-meta">MODEL · CLAUDE HAIKU</span>
+          <span class="pg-meta pg-state" id="pg-state" data-kw="ESTATI · PARE" data-fr="STATUT · PRÊT" data-en="STATUS · READY">ESTATI · PARE</span>
+          <span class="pg-wave"><i></i><i></i><i></i><i></i><i></i></span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ DIASPORA ══════════════ -->
-<section id="diaspora">
-  <div class="c">
-    <div class="eyebrow" style="margin:0 auto 1.35rem" data-r>One Language · A Global Network</div>
-    <h2 class="sec-title" data-r data-d="1">From <span class="haiti-grad">Port-au-Prince</span> to the world.</h2>
-    <p class="sec-sub" style="margin:1rem auto 0" data-r data-d="2">12 million Creole speakers across five continents — one platform to connect, learn, and build together.</p>
-    <div class="cities" data-r data-d="2">
-      <div class="city">🇭🇹 Port-au-Prince</div>
-      <div class="city">🇺🇸 Miami</div>
-      <div class="city">🇺🇸 New York</div>
-      <div class="city">🇨🇦 Montréal</div>
-      <div class="city">🇫🇷 Paris</div>
-      <div class="city">🇬🇧 London</div>
-      <div class="city">🇧🇪 Brussels</div>
-      <div class="city">🌍 Worldwide</div>
-    </div>
-    <div class="diaspora-stats" data-r data-d="3">
-      <div><div class="ds-n">12M+</div><div class="ds-l">Global speakers</div></div>
-      <div><div class="ds-n" style="color:var(--prp2)">8</div><div class="ds-l">Countries served</div></div>
-      <div><div class="ds-n" style="color:var(--red2)">1st</div><div class="ds-l">AI ecosystem in Kreyòl</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ MOVEMENT ══════════════ -->
-<section id="movement">
-  <div class="c">
-    <div class="mov-grid">
-      <div data-r>
-        <div class="eyebrow">The Movement</div>
-        <h2 class="mov-h">Haitians building the future of AI <span class="grad">in our language.</span></h2>
-        <p class="mov-p">From Port-au-Prince to Paris and Montréal, we're proving that world-class AI can start in Kreyòl, not just English.</p>
-        <div class="mov-list">
-          <div class="mv-item" data-r data-d="1">
-            <div class="mv-ico">📊</div>
-            <div class="mv-txt"><strong>Open Haitian language datasets</strong>Create and share open datasets to train AI models that truly understand Haitian Creole.</div>
-          </div>
-          <div class="mv-item" data-r data-d="2">
-            <div class="mv-ico">🤝</div>
-            <div class="mv-txt"><strong>Co-design with communities</strong>Tools built with students, entrepreneurs, and migrants — not just for them.</div>
-          </div>
-          <div class="mv-item" data-r data-d="3">
-            <div class="mv-ico">🚀</div>
-            <div class="mv-txt"><strong>The next generation of builders</strong>Train Kreyòl-first AI developers who will shape the next decade of Haitian tech.</div>
-          </div>
-        </div>
-      </div>
-      <div class="mov-vis glass" data-r data-d="2">
-        <div class="eyebrow" style="margin-bottom:2rem">Platform Vision</div>
-        <div class="mv-stat"><div class="mv-s-n">First</div><div class="mv-s-l">AI ecosystem built natively in Haitian Creole</div></div>
-        <hr class="mv-div"/>
-        <div class="mv-stat"><div class="mv-s-n">12M+</div><div class="mv-s-l">Creole speakers globally ready for the AI era</div></div>
-        <hr class="mv-div"/>
-        <div class="mv-stat"><div class="mv-s-n">2026</div><div class="mv-s-l">Goal: 10,000 Kreyòl-certified AI practitioners</div></div>
-        <p class="mv-quote">"We are not translating technology into Creole.<br/>We are building it in Creole from the ground up."</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ COMMUNITY ══════════════ -->
-<section id="community">
-  <div class="c">
-    <div class="comm-inner" data-r>
-      <div class="eyebrow" style="margin:0 auto 1.35rem">Community</div>
-      <h2 class="sec-title">Join <span class="grad">the builders.</span></h2>
-      <p class="sec-sub" style="max-width:500px;margin:0 auto">Connect with developers, students, and entrepreneurs building the future of Haitian AI — in Kreyòl.</p>
-      <div class="comm-ctas">
-        <a href="#" class="btn btn-p">💬 Join Discord</a>
-        <a href="#" class="btn btn-g">📅 See Events</a>
-        <a href="#" class="btn btn-g">🚀 Open Projects</a>
-      </div>
-    </div>
-    <div class="comm-grid">
-      <div class="cmm" data-r data-d="1"><div class="cm-ico">💬</div><div class="cm-title">Discord Community</div><div class="cm-desc">Connect with Haitian AI enthusiasts worldwide. Share projects, ask questions, collaborate in Kreyòl, FR, or EN.</div></div>
-      <div class="cmm" data-r data-d="2"><div class="cm-ico">📅</div><div class="cm-title">Events & Workshops</div><div class="cm-desc">Live workshops, webinars, and AI hackathons — online and in diaspora cities including London, Miami, and Montréal.</div></div>
-      <div class="cmm" data-r data-d="3"><div class="cm-ico">🚀</div><div class="cm-title">Open Projects</div><div class="cm-desc">Contribute to open-source Haitian AI projects. Build your portfolio while building Haiti's digital future.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ NEWSLETTER ══════════════ -->
-<section id="nl">
-  <div class="c">
-    <div class="nl-inner" data-r>
-      <div class="eyebrow" style="margin:0 auto 1.35rem">Newsletter</div>
-      <h2 class="sec-title">Stay at <span class="grad">the frontier.</span></h2>
-      <p style="font-size:.94rem;color:var(--t55);font-weight:300;line-height:1.82;margin:.75rem 0 0">Weekly AI insights, new tools, and community highlights — in Creole, French, and English.</p>
-      <div class="nl-form">
-        <input class="nl-in" type="email" id="nle" placeholder="Enter your email address"/>
-        <button class="btn btn-p" onclick="subNL()">Subscribe →</button>
-      </div>
-      <div class="nl-note">Free. No spam. Unsubscribe anytime.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ FOOTER ══════════════ -->
-<footer>
-  <div class="c">
-    <div class="ft-grid">
-      <div>
-        <div class="ft-brand">KreyòlAI<span style="color:rgba(255,255,255,.2)">·</span>Hub</div>
-        <div class="ft-desc">The AI Academy & Platform for Haitians — teaching AI in Haitian Creole and building tools for the global diaspora.</div>
-        <div class="ft-tagline">Built in London 🇬🇧 · Heart in Haiti 🇭🇹<br/>Kreyòl first. Always.</div>
-      </div>
-      <div class="ft-col">
-        <h6>Platform</h6>
-        <a href="academy.html">AI Academy</a>
-        <a href="tools.html">AI Tools</a>
-        <a href="consulting.html">Consulting</a>
-        <a href="#demo">Live Demo</a>
-      </div>
-      <div class="ft-col">
-        <h6>Community</h6>
-        <a href="#">Discord</a>
-        <a href="#">Events</a>
-        <a href="#">Open Projects</a>
-        <a href="#">Blog</a>
-      </div>
-      <div class="ft-col">
-        <h6>Company</h6>
-        <a href="#">About</a>
-        <a href="https://kreyolaihub.gumroad.com" target="_blank">Shop</a>
-        <a href="/cdn-cgi/l/email-protection#93f2fff2e0fcf7faf4fae7f2ffd3fbfce7fef2faffbdf0fcfe">Contact</a>
-        <a href="#">Privacy</a>
-      </div>
-    </div>
-    <div class="ft-bot">
-      <span>© 2025–2026 KreyòlAIHub. All rights reserved.</span>
-      <span>The first AI ecosystem in Haitian Creole.</span>
-    </div>
-  </div>
-</footer>
-
-<!-- WA -->
-<a href="https://wa.me/447906520032" target="_blank" class="wa">💬</a>
-
-<!-- Sticky demo toggle -->
-<button id="sd-toggle" onclick="toggleSD()">⚡ Try AI Now</button>
-<div id="sticky-demo">
-  <div class="sd-card">
-    <div class="sd-top">
-      <div class="sd-ttl">⚡ Try KreyòlAI Instantly</div>
-      <button class="sd-x" onclick="toggleSD()">✕</button>
-    </div>
-    <div class="sd-body">
-      <div class="sd-lbl">Type in Haitian Creole</div>
-      <textarea class="sd-inp" id="sdi" rows="2" placeholder="Bonjou, kijan ou rele?"></textarea>
-      <div class="sd-res" id="sdr">Translation will appear here...</div>
-      <div class="sd-btn-row">
-        <button class="btn btn-p btn-sm" style="width:100%" onclick="qTr()">Translate →</button>
-      </div>
-    </div>
+<!-- ===================== TRUST STRIP ===================== -->
+<div class="trust">
+  <div class="container trust-row">
+    <div class="item" data-kw="Aprantisaj Kreyòl-an-premye" data-fr="Apprentissage créole d'abord" data-en="Haitian Creole-first learning">Aprantisaj Kreyòl-an-premye</div>
+    <div class="item" data-kw="Zouti AI pratik" data-fr="Outils IA pratiques" data-en="Practical AI tools">Zouti AI pratik</div>
+    <div class="item" data-kw="Kominote Ayisyen mondyal" data-fr="Communauté haïtienne mondiale" data-en="Global Haitian community">Kominote Ayisyen mondyal</div>
+    <div class="item" data-kw="Kou, prompt, ak workflow" data-fr="Cours, prompts et workflows" data-en="Courses, prompts &amp; workflows">Kou, prompt, ak workflow</div>
   </div>
 </div>
 
-<!-- ══════════════ SCRIPTS ══════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* NAV */
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
-document.getElementById('ham').addEventListener('click',()=>{
-  const m=document.querySelector('.n-menu');
-  m.style.display=m.style.display==='flex'?'none':'flex';
-  if(m.style.display==='flex'){Object.assign(m.style,{flexDirection:'column',position:'absolute',top:'70px',left:0,right:0,background:'rgba(5,8,22,.97)',padding:'1.5rem',borderBottom:'1px solid rgba(255,255,255,.06)'});}
-});
+<!-- ===================== WHO IT'S FOR ===================== -->
+<section class="who">
+  <div class="container">
+    <div class="who-head">
+      <div class="eyebrow" style="justify-content:center;" data-kw="Pou ki moun" data-fr="Pour qui" data-en="Who it's for">Pou ki moun</div>
+      <h2 style="margin-top: 16px;" data-kw="Fèt pou chak Ayisyen ki vle sèvi ak AI." data-fr="Conçu pour chaque Haïtien qui veut utiliser l'IA." data-en="Built for every Haitian who wants to use AI.">Fèt pou chak Ayisyen ki vle sèvi ak AI.</h2>
+    </div>
+    <div class="who-grid">
+      <div class="who-card c1">
+        <div class="icon">🎓</div>
+        <h3 data-kw="Elèv &amp; Debitan" data-fr="Étudiants &amp; débutants" data-en="Students &amp; beginners">Elèv &amp; Debitan</h3>
+        <p data-kw="Aprann AI depi nan baz, eksplike klè an Kreyòl." data-fr="Apprenez l'IA de zéro, expliquée clairement en créole." data-en="Learn AI from scratch, explained in Creole.">Aprann AI depi nan baz, eksplike klè an Kreyòl.</p>
+      </div>
+      <div class="who-card c2">
+        <div class="icon">💼</div>
+        <h3 data-kw="Antreprenè Ayisyen" data-fr="Entrepreneurs haïtiens" data-en="Haitian entrepreneurs">Antreprenè Ayisyen</h3>
+        <p data-kw="Sèvi ak AI pou ekonomize tan epi fè biznis ou grandi." data-fr="Utilisez l'IA pour gagner du temps et développer votre activité." data-en="Use AI to save time and grow your business.">Sèvi ak AI pou ekonomize tan epi fè biznis ou grandi.</p>
+      </div>
+      <div class="who-card c3">
+        <div class="icon">🎨</div>
+        <h3 data-kw="Kreyatè &amp; Frilanser" data-fr="Créateurs &amp; freelances" data-en="Creators &amp; freelancers">Kreyatè &amp; Frilanser</h3>
+        <p data-kw="Pwodui kontni pi vit ak prompt ak workflow." data-fr="Produisez du contenu plus vite avec des prompts et des workflows." data-en="Build content faster with prompts and workflows.">Pwodui kontni pi vit ak prompt ak workflow.</p>
+      </div>
+      <div class="who-card c4">
+        <div class="icon">🚀</div>
+        <h3 data-kw="Pwofesyonèl &amp; Moun k ap Bati" data-fr="Professionnels &amp; bâtisseurs" data-en="Professionals &amp; builders">Pwofesyonèl &amp; Moun k ap Bati</h3>
+        <p data-kw="Aplike AI nan travay, konsiltasyon, ak devlopman pwodwi." data-fr="Appliquez l'IA au travail, au conseil et au développement de produits." data-en="Apply AI in work, consulting, and product development.">Aplike AI nan travay, konsiltasyon, ak devlopman pwodwi.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-/* REVEAL */
-const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')}),{threshold:.1});
-document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
+<!-- ===================== CORE PILLARS ===================== -->
+<section class="pillars">
+  <div class="container pillars-inner">
+    <div class="pillars-head">
+      <div class="eyebrow" style="justify-content:center; color: var(--blue);" data-kw="Platfòm la" data-fr="La plateforme" data-en="The Platform">Platfòm la</div>
+      <h2 style="margin-top: 16px;" data-kw="Yon ekosistèm. Kat fason pou grandi." data-fr="Un écosystème. Quatre façons de grandir." data-en="One ecosystem. Four ways to grow.">Yon ekosistèm. Kat fason pou grandi.</h2>
+    </div>
+    <div class="pillars-grid g4">
+      <div class="pillar">
+        <div class="num" data-kw="01 / Akademi" data-fr="01 / Académie" data-en="01 / Academy">01 / Akademi</div>
+        <h3 data-kw="Aprann AI an Kreyòl" data-fr="Apprendre l'IA en créole" data-en="Learn AI in Haitian Creole">Aprann AI an Kreyòl</h3>
+        <p data-kw="Kou etap-pa-etap an Kreyòl, ak egzanp Ayisyen reyèl." data-fr="Des cours pas à pas en créole, avec de vrais exemples haïtiens." data-en="Step-by-step courses in Kreyòl, with real Haitian examples.">Kou etap-pa-etap an Kreyòl, ak egzanp Ayisyen reyèl.</p>
+        <ul>
+          <li data-kw="Kou etap-pa-etap an Kreyòl" data-fr="Cours pas à pas en créole" data-en="Step-by-step courses in Kreyòl">Kou etap-pa-etap an Kreyòl</li>
+          <li data-kw="Egzanp Ayisyen reyèl" data-fr="Exemples haïtiens réels" data-en="Real Haitian examples">Egzanp Ayisyen reyèl</li>
+          <li data-kw="Sètifika lè ou fini" data-fr="Certificat à la fin" data-en="Certificate on completion">Sètifika lè ou fini</li>
+        </ul>
+        <a href="academy.html" class="link" data-kw="Eksplore Akademi an →" data-fr="Explorer l'Académie →" data-en="Explore the Academy →">Eksplore Akademi an →</a>
+      </div>
+      <div class="pillar">
+        <div class="num" data-kw="02 / Zouti" data-fr="02 / Outils" data-en="02 / Tools">02 / Zouti</div>
+        <h3 data-kw="Sèvi ak zouti AI chwazi" data-fr="Utiliser des outils IA sélectionnés" data-en="Use curated AI tools">Sèvi ak zouti AI chwazi</h3>
+        <p data-kw="Zouti AI pou pwodiktivite ak biznis — chwazi ak swen." data-fr="Des outils IA pour la productivité et le business — choisis avec soin." data-en="Curated AI tools for productivity and business.">Zouti AI pou pwodiktivite ak biznis — chwazi ak swen.</p>
+        <ul>
+          <li data-kw="Zouti AI nou chwazi" data-fr="Outils IA sélectionnés" data-en="Hand-picked AI tools">Zouti AI nou chwazi</li>
+          <li data-kw="Bibliyotèk prompt &amp; workflow" data-fr="Bibliothèque de prompts &amp; workflows" data-en="Prompt library &amp; workflows">Bibliyotèk prompt &amp; workflow</li>
+          <li data-kw="Fèt pou vrè travay" data-fr="Pensés pour de vraies tâches" data-en="Built for real tasks">Fèt pou vrè travay</li>
+        </ul>
+        <a href="tools.html" class="link" data-kw="Gade Zouti yo →" data-fr="Voir les outils →" data-en="Browse Tools →">Gade Zouti yo →</a>
+      </div>
+      <div class="pillar">
+        <div class="num" data-kw="03 / Kominote" data-fr="03 / Communauté" data-en="03 / Community">03 / Kominote</div>
+        <h3 data-kw="Konekte ak moun k ap bati" data-fr="Se connecter aux bâtisseurs" data-en="Connect with builders">Konekte ak moun k ap bati</h3>
+        <p data-kw="Rejwenn Ayisyen k ap bati ak AI toupatou nan mond lan." data-fr="Rejoignez des Haïtiens qui construisent avec l'IA partout dans le monde." data-en="Connect with Haitians building with AI worldwide.">Rejwenn Ayisyen k ap bati ak AI toupatou nan mond lan.</p>
+        <ul>
+          <li data-kw="Diskisyon &amp; atelye" data-fr="Discussions &amp; ateliers" data-en="Discussions &amp; workshops">Diskisyon &amp; atelye</li>
+          <li data-kw="Ayiti + dyaspora" data-fr="Haïti + diaspora" data-en="Haiti + diaspora">Ayiti + dyaspora</li>
+          <li data-kw="Kolabore &amp; rezo" data-fr="Collaborer &amp; réseauter" data-en="Collaborate &amp; network">Kolabore &amp; rezo</li>
+        </ul>
+        <a href="https://wa.me/447906520032" target="_blank" rel="noopener" class="link" data-kw="Antre nan Kominote a →" data-fr="Rejoindre la communauté →" data-en="Join the Community →">Antre nan Kominote a →</a>
+      </div>
+      <div class="pillar">
+        <div class="num" data-kw="04 / Konsiltasyon" data-fr="04 / Conseil" data-en="04 / Consulting">04 / Konsiltasyon</div>
+        <h3 data-kw="Konsèy pou adopte AI" data-fr="Accompagnement pour adopter l'IA" data-en="Guidance for AI adoption">Konsèy pou adopte AI</h3>
+        <p data-kw="Jwenn konsèy pou adopsyon AI ak pwodwi dijital." data-fr="Recevez un accompagnement pour l'adoption de l'IA et les produits numériques." data-en="Get guidance for AI adoption and digital products.">Jwenn konsèy pou adopsyon AI ak pwodwi dijital.</p>
+        <ul>
+          <li data-kw="Estrateji &amp; fòmasyon AI" data-fr="Stratégie &amp; formation IA" data-en="AI strategy &amp; training">Estrateji &amp; fòmasyon AI</li>
+          <li data-kw="Chatbot &amp; otomatizasyon" data-fr="Chatbots &amp; automatisation" data-en="Chatbots &amp; automation">Chatbot &amp; otomatizasyon</li>
+          <li data-kw="Devlopman pwodwi" data-fr="Développement de produits" data-en="Product development">Devlopman pwodwi</li>
+        </ul>
+        <a href="consulting.html" class="link" data-kw="Travay ak nou →" data-fr="Travailler avec nous →" data-en="Work with us →">Travay ak nou →</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-/* NEURAL CANVAS */
-(()=>{
-  const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
-  let W,H,pts=[],raf;
-  const COLS=['59,130,246','124,58,237','239,68,68'];
-  function resize(){
-    W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;
-    const n=Math.floor(W*H/12000);pts=[];
-    for(let i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,r:Math.random()*1.7+.35,o:Math.random()*.45+.08,c:COLS[Math.floor(Math.random()*3)]});
-  }
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    for(let i=0;i<pts.length;i++){
-      for(let j=i+1;j<pts.length;j++){
-        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
-        if(d<145){ctx.beginPath();ctx.strokeStyle=`rgba(59,130,246,${.11*(1-d/145)})`;ctx.lineWidth=.55;ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke();}
-      }
-      const p=pts[i];
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(${p.c},${p.o})`;ctx.fill();
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+<!-- ===================== ACADEMY PREVIEW ===================== -->
+<section class="academy-pv">
+  <div class="container">
+    <div style="text-align:center; max-width: 720px; margin: 0 auto 44px;">
+      <div class="eyebrow" style="justify-content:center;" data-kw="Akademi an" data-fr="L'Académie" data-en="The Academy">Akademi an</div>
+      <h2 style="margin-top: 14px;" data-kw="Kòmanse ak kou ki chanje tout bagay la." data-fr="Commencez par le cours qui change tout." data-en="Start with the course that changes everything.">Kòmanse ak kou ki chanje tout bagay la.</h2>
+      <p style="margin-top: 14px; color: var(--ink-3); font-size: 17px; line-height: 1.6;" data-kw="Soti debitan rive itilizatè AI ki gen konfyans an 30 jou, ansenye nèt an Kreyòl Ayisyen." data-fr="Passez de débutant à utilisateur d'IA confiant en 30 jours, entièrement enseigné en créole haïtien." data-en="Go from beginner to confident AI user in 30 days, taught entirely in Haitian Creole.">Soti debitan rive itilizatè AI ki gen konfyans an 30 jou, ansenye nèt an Kreyòl Ayisyen.</p>
+    </div>
+
+    <div class="flagship">
+      <div class="flagship-glow" aria-hidden="true"></div>
+      <div class="fmain">
+        <span class="f-badge" data-kw="● Kou 01 · Disponib kounye a" data-fr="● Cours 01 · Disponible" data-en="● Course 01 · Available now">● Kou 01 · Disponib kounye a</span>
+        <h3 data-kw="30 Jou pou Metrize AI <span class='ar'>— an Kreyòl</span>" data-fr="30 jours pour maîtriser l'IA <span class='ar'>— en créole</span>" data-en="30 Days to Master AI <span class='ar'>— in Kreyòl</span>">30 Jou pou Metrize AI <span class="ar">— an Kreyòl</span></h3>
+        <p data-kw="Yon vwayaj transfòmasyon: chak semèn pote w pi devan, soti nan baz rive nan pwòp pwojè pa w." data-fr="Un parcours de transformation : chaque semaine vous fait progresser, des bases à vos propres projets." data-en="A transformation journey: each week moves you forward, from the basics to your own projects.">Yon vwayaj transfòmasyon: chak semèn pote w pi devan, soti nan baz rive nan pwòp pwojè pa w.</p>
+        <ul>
+          <li data-kw="Semèn 1 · Baz AI yo" data-fr="Semaine 1 · Les bases de l'IA" data-en="Week 1 · AI basics">Semèn 1 · Baz AI yo</li>
+          <li data-kw="Semèn 2 · Prompt" data-fr="Semaine 2 · Les prompts" data-en="Week 2 · Prompts">Semèn 2 · Prompt</li>
+          <li data-kw="Semèn 3 · Zouti &amp; otomatizasyon" data-fr="Semaine 3 · Outils &amp; automatisation" data-en="Week 3 · Tools &amp; automation">Semèn 3 · Zouti &amp; otomatizasyon</li>
+          <li data-kw="Semèn 4 · Pwojè &amp; pwochen etap" data-fr="Semaine 4 · Projets &amp; prochaines étapes" data-en="Week 4 · Projects &amp; next steps">Semèn 4 · Pwojè &amp; pwochen etap</li>
+        </ul>
+        <a href="academy.html" class="btn btn-primary btn-lg" data-kw="Gade Kou yo" data-fr="Voir les cours" data-en="View Courses">Gade Kou yo</a>
+      </div>
+      <div class="fside" aria-hidden="true">
+        <div class="bignum">30<small data-kw="JOU" data-fr="JOURS" data-en="DAYS">JOU</small></div>
+        <div class="fside-tag" data-kw="pou metrize AI" data-fr="pour maîtriser l'IA" data-en="to master AI">pou metrize AI</div>
+      </div>
+    </div>
+
+    <div class="upcoming-head">
+      <h4 data-kw="Vwayaj 4 semèn nan" data-fr="Le parcours de 4 semaines" data-en="The 4-week journey">Vwayaj 4 semèn nan</h4>
+      <div class="rule"></div>
+    </div>
+
+    <!-- Progress meter (saves to localStorage) -->
+    <div class="academy-progress-wrapper">
+      <div class="apw-top">
+        <span class="apw-label" data-kw="Pwogrè vwayaj ou" data-fr="Progression de votre parcours" data-en="Your journey progress">Pwogrè vwayaj ou</span>
+        <span class="apw-pct" id="academy-pct">0%</span>
+      </div>
+      <progress value="0" max="100" id="academy-bar"></progress>
+    </div>
+
+    <div class="paths-grid week-grid">
+      <div class="week-card w1" data-week="1">
+        <div class="wk-head">
+          <div>
+            <div class="w-num" data-kw="Semèn 01" data-fr="Semaine 01" data-en="Week 01">Semèn 01</div>
+            <h3 data-kw="Baz AI yo" data-fr="Les bases de l'IA" data-en="AI Basics">Baz AI yo</h3>
+          </div>
+          <span class="wk-badge" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><defs><linearGradient id="bdg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a3"/><stop offset="55%" stop-color="#F4C300"/><stop offset="100%" stop-color="#b8860b"/></linearGradient></defs><path d="M20 3 33 10.5v15L20 33 7 25.5v-15z" fill="none" stroke="url(#bdg1)" stroke-width="2"/><path d="M20 8 28 12.5v9L20 26 12 21.5v-9z" fill="url(#bdg1)" opacity="0.18"/><path class="bdg-check" d="M15 20.5l3.4 3.4L26 16.5" fill="none" stroke="url(#bdg1)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <div class="wk-checklist">
+          <label class="wk-item"><input type="checkbox" id="wk1-1"><span data-kw="Ki sa AI ye" data-fr="Ce qu'est l'IA" data-en="What AI is">Ki sa AI ye</span></label>
+          <label class="wk-item"><input type="checkbox" id="wk1-2"><span data-kw="Kijan AI aprann" data-fr="Comment l'IA apprend" data-en="How AI learns">Kijan AI aprann</span></label>
+          <label class="wk-item"><input type="checkbox" id="wk1-3"><span data-kw="Premye prompt ou" data-fr="Votre premier prompt" data-en="Your first prompt">Premye prompt ou</span></label>
+        </div>
+      </div>
+      <div class="week-card w2" data-week="2">
+        <div class="wk-head">
+          <div>
+            <div class="w-num" data-kw="Semèn 02" data-fr="Semaine 02" data-en="Week 02">Semèn 02</div>
+            <h3 data-kw="Prompt" data-fr="Les prompts" data-en="Prompts">Prompt</h3>
+          </div>
+          <span class="wk-badge" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><path d="M20 3 33 10.5v15L20 33 7 25.5v-15z" fill="none" stroke="url(#bdg1)" stroke-width="2"/><path d="M20 8 28 12.5v9L20 26 12 21.5v-9z" fill="url(#bdg1)" opacity="0.18"/><path class="bdg-check" d="M15 20.5l3.4 3.4L26 16.5" fill="none" stroke="url(#bdg1)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <div class="wk-checklist">
+          <label class="wk-item"><input type="checkbox" id="wk2-1"><span data-kw="Estrikti yon prompt" data-fr="Structurer un prompt" data-en="Structure a prompt">Estrikti yon prompt</span></label>
+          <label class="wk-item"><input type="checkbox" id="wk2-2"><span data-kw="Bay bon kontèks" data-fr="Donner du contexte" data-en="Give good context">Bay bon kontèks</span></label>
+          <label class="wk-item"><input type="checkbox" id="wk2-3"><span data-kw="Amelyore rezilta yo" data-fr="Améliorer les résultats" data-en="Improve the results">Amelyore rezilta yo</span></label>
+        </div>
+      </div>
+      <div class="week-card w3" data-week="3">
+        <div class="wk-head">
+          <div>
+            <div class="w-num" data-kw="Semèn 03" data-fr="Semaine 03" data-en="Week 03">Semèn 03</div>
+            <h3 data-kw="Zouti &amp; Otomatizasyon" data-fr="Outils &amp; automatisation" data-en="Tools &amp; Automation">Zouti &amp; Otomatizasyon</h3>
+          </div>
+          <span class="wk-badge" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><path d="M20 3 33 10.5v15L20 33 7 25.5v-15z" fill="none" stroke="url(#bdg1)" stroke-width="2"/><path d="M20 8 28 12.5v9L20 26 12 21.5v-9z" fill="url(#bdg1)" opacity="0.18"/><path class="bdg-check" d="M15 20.5l3.4 3.4L26 16.5" fill="none" stroke="url(#bdg1)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <div class="wk-checklist">
+          <label class="wk-item"><input type="checkbox" id="wk3-1"><span data-kw="Chwazi yon zouti" data-fr="Choisir un outil" data-en="Pick a tool">Chwazi yon zouti</span></label>
+          <label class="wk-item"><input type="checkbox" id="wk3-2"><span data-kw="Otomatize yon tach" data-fr="Automatiser une tâche" data-en="Automate a task">Otomatize yon tach</span></label>
+          <label class="wk-item"><input type="checkbox" id="wk3-3"><span data-kw="Konekte zouti yo" data-fr="Connecter les outils" data-en="Connect your tools">Konekte zouti yo</span></label>
+        </div>
+      </div>
+      <div class="week-card w4" data-week="4">
+        <div class="wk-head">
+          <div>
+            <div class="w-num" data-kw="Semèn 04" data-fr="Semaine 04" data-en="Week 04">Semèn 04</div>
+            <h3 data-kw="Pwojè &amp; Pwochen Etap" data-fr="Projets &amp; prochaines étapes" data-en="Projects &amp; Next Steps">Pwojè &amp; Pwochen Etap</h3>
+          </div>
+          <span class="wk-badge" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><path d="M20 3 33 10.5v15L20 33 7 25.5v-15z" fill="none" stroke="url(#bdg1)" stroke-width="2"/><path d="M20 8 28 12.5v9L20 26 12 21.5v-9z" fill="url(#bdg1)" opacity="0.18"/><path class="bdg-check" d="M15 20.5l3.4 3.4L26 16.5" fill="none" stroke="url(#bdg1)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <div class="wk-checklist">
+          <label class="wk-item"><input type="checkbox" id="wk4-1"><span data-kw="Planifye pwojè a" data-fr="Planifier le projet" data-en="Plan the project">Planifye pwojè a</span></label>
+          <label class="wk-item"><input type="checkbox" id="wk4-2"><span data-kw="Bati l vre" data-fr="Le construire" data-en="Build it for real">Bati l vre</span></label>
+          <label class="wk-item"><input type="checkbox" id="wk4-3"><span data-kw="Planifye pwochen etap yo" data-fr="Planifier la suite" data-en="Plan your next steps">Planifye pwochen etap yo</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TOOLS (2 PARTS) ===================== -->
+<section class="tools-pv">
+  <div class="container">
+    <div class="head-row" style="display:flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 14px;">
+      <div>
+        <div class="eyebrow" data-kw="Zouti AI" data-fr="Outils IA" data-en="AI Tools">Zouti AI</div>
+        <h2 style="margin-top: 14px;" data-kw="Yon sant pwodwi AI ki pale Kreyòl." data-fr="Un hub de produits IA qui parlent créole." data-en="A product hub of AI that speaks Kreyòl.">Yon sant pwodwi AI ki pale Kreyòl.</h2>
+      </div>
+      <a href="tools.html" class="btn btn-ghost" data-kw="Wè tout zouti →" data-fr="Voir tous les outils →" data-en="See all tools →">Wè tout zouti →</a>
+    </div>
+
+    <!-- Part 1: Live tools -->
+    <div class="tools-subhead">
+      <span data-kw="Zouti ki an dirèk" data-fr="Outils en ligne" data-en="Live tools">Zouti ki an dirèk</span>
+      <span class="dot-live"></span>
+      <div class="rule"></div>
+    </div>
+    <div class="tools-grid">
+      <a href="https://michelsassia-netizen.github.io/Kreyolaibot/" target="_blank" rel="noopener" class="tool-card card-hover" style="text-decoration:none;">
+        <div class="row1"><span class="emoji">🗣️</span><span class="status live" data-kw="An dirèk" data-fr="En ligne" data-en="Live">An dirèk</span></div>
+        <h3>Lakay Pale</h3>
+        <p data-kw="Pratike konvèsasyon ak yon AI ki reponn an Kreyòl Ayisyen." data-fr="Pratiquez la conversation avec une IA qui répond en créole haïtien." data-en="Practice conversation with an AI that speaks Haitian Creole.">Pratike konvèsasyon ak yon AI ki reponn an Kreyòl Ayisyen.</p>
+        <span class="cta" data-kw="Ouvri Lakay Pale ↗" data-fr="Ouvrir Lakay Pale ↗" data-en="Open Lakay Pale ↗">Ouvri Lakay Pale ↗</span>
+      </a>
+      <a href="grann.html" class="tool-card card-hover" style="text-decoration:none;">
+        <div class="row1"><span class="emoji">👵🏾</span><span class="status live" data-kw="An dirèk" data-fr="En ligne" data-en="Live">An dirèk</span></div>
+        <h3>Grann AI</h3>
+        <p data-kw="Yon granmè Ayisyen dijital — pwovèb, istwa, ak Kreyòl pou timoun." data-fr="Une grand-mère haïtienne numérique — proverbes, histoires et créole pour les enfants." data-en="A digital Haitian grandmother — proverbs, stories, and Kreyòl for kids.">Yon granmè Ayisyen dijital — pwovèb, istwa, ak Kreyòl pou timoun.</p>
+        <span class="cta" data-kw="Pale ak Grann →" data-fr="Parler à Grann →" data-en="Talk to Grann →">Pale ak Grann →</span>
+      </a>
+      <a href="tools.html#lekol" class="tool-card card-hover" style="text-decoration:none;">
+        <div class="row1"><span class="emoji">📚</span><span class="status live" data-kw="An dirèk" data-fr="En ligne" data-en="Live">An dirèk</span></div>
+        <h3>Lekòl AI</h3>
+        <p data-kw="Yon pwofesè pasyan ki eksplike devwa etap pa etap an Kreyòl." data-fr="Un tuteur patient qui explique les devoirs étape par étape en créole." data-en="A patient tutor that explains schoolwork step by step in Kreyòl.">Yon pwofesè pasyan ki eksplike devwa etap pa etap an Kreyòl.</p>
+        <span class="cta" data-kw="Ouvri Lekòl AI →" data-fr="Ouvrir Lekòl AI →" data-en="Open Lekòl AI →">Ouvri Lekòl AI →</span>
+      </a>
+    </div>
+
+    <!-- Part 2: Resources -->
+    <div class="tools-subhead" style="margin-top:40px;">
+      <span data-kw="Resous" data-fr="Ressources" data-en="Resources">Resous</span>
+      <div class="rule"></div>
+    </div>
+    <div class="tools-grid">
+      <a href="tools.html" class="tool-card card-hover" style="text-decoration:none;">
+        <div class="row1"><span class="emoji">💬</span><span class="status soon" data-kw="Byento" data-fr="Bientôt" data-en="Soon">Byento</span></div>
+        <h3 data-kw="Bibliyotèk Prompt AI" data-fr="Bibliothèque de prompts IA" data-en="AI Prompt Library">Bibliyotèk Prompt AI</h3>
+        <p data-kw="Prompt ki pare pou itilize pou travay, etid, ak biznis." data-fr="Des prompts prêts à l'emploi pour le travail, les études et les affaires." data-en="Ready-to-use prompts for work, study, and business.">Prompt ki pare pou itilize pou travay, etid, ak biznis.</p>
+        <span class="cta" data-kw="Eksplore →" data-fr="Explorer →" data-en="Explore →">Eksplore →</span>
+      </a>
+      <a href="tools.html" class="tool-card card-hover" style="text-decoration:none;">
+        <div class="row1"><span class="emoji">🧭</span><span class="status soon" data-kw="Byento" data-fr="Bientôt" data-en="Soon">Byento</span></div>
+        <h3 data-kw="Anyè Zouti" data-fr="Annuaire d'outils" data-en="Tool Directory">Anyè Zouti</h3>
+        <p data-kw="Yon seleksyon pi bon zouti AI yo." data-fr="Une sélection des meilleurs outils IA." data-en="A curated map of the best AI tools.">Yon seleksyon pi bon zouti AI yo.</p>
+        <span class="cta" data-kw="Eksplore →" data-fr="Explorer →" data-en="Explore →">Eksplore →</span>
+      </a>
+      <a href="tools.html" class="tool-card card-hover" style="text-decoration:none;">
+        <div class="row1"><span class="emoji">📰</span><span class="status soon" data-kw="Byento" data-fr="Bientôt" data-en="Soon">Byento</span></div>
+        <h3 data-kw="Nouvèl AI" data-fr="Actu IA" data-en="AI News">Nouvèl AI</h3>
+        <p data-kw="Mizajou chak semèn sou sa ki enpòtan nan AI." data-fr="Des mises à jour hebdomadaires sur l'essentiel de l'IA." data-en="Weekly updates on what matters in AI.">Mizajou chak semèn sou sa ki enpòtan nan AI.</p>
+        <span class="cta" data-kw="Eksplore →" data-fr="Explorer →" data-en="Explore →">Eksplore →</span>
+      </a>
+      <a href="tools.html" class="tool-card card-hover" style="text-decoration:none;">
+        <div class="row1"><span class="emoji">⚙️</span><span class="status soon" data-kw="Byento" data-fr="Bientôt" data-en="Soon">Byento</span></div>
+        <h3 data-kw="Pakè Workflow" data-fr="Packs de workflows" data-en="Workflow Packs">Pakè Workflow</h3>
+        <p data-kw="Sistèm plug-and-play ki ekonomize tan." data-fr="Des systèmes prêts à l'emploi qui font gagner du temps." data-en="Plug-and-play systems that save time.">Sistèm plug-and-play ki ekonomize tan.</p>
+        <span class="cta" data-kw="Eksplore →" data-fr="Explorer →" data-en="Explore →">Eksplore →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DEMO STRIP ===================== -->
+<section>
+  <div class="container">
+    <div class="demo-strip">
+      <div class="demo-text">
+        <div class="eyebrow" style="color: var(--blue);" data-kw="Wè l an aksyon" data-fr="Voyez-le en action" data-en="See it in action">Wè l an aksyon</div>
+        <h2 style="margin-top: 14px;" data-kw="Soti nan prompt rive nan rezilta — an Kreyòl." data-fr="Du prompt au résultat — en créole." data-en="From prompt to result — in Kreyòl.">Soti nan prompt rive nan rezilta — an Kreyòl.</h2>
+        <p data-kw="Mande an Kreyòl, jwenn yon bagay ou ka itilize touswit. Men yon egzanp soti nan pakè prompt nou yo." data-fr="Demandez en créole, obtenez quelque chose d'utilisable tout de suite. Voici un exemple de nos packs de prompts." data-en="Ask in Creole, get something you can use right away. Here's a sample from our prompt packs.">Mande an Kreyòl, jwenn yon bagay ou ka itilize touswit. Men yon egzanp soti nan pakè prompt nou yo.</p>
+        <div class="actions">
+          <a href="grann.html" class="btn btn-secondary btn-lg" data-kw="Eseye yon Egzanp" data-fr="Essayer un exemple" data-en="Try a Sample">Eseye yon Egzanp</a>
+          <a href="academy.html" class="btn btn-ghost btn-lg" style="border-color: var(--cream); color: var(--cream);" data-kw="Kòmanse Gratis" data-fr="Commencer gratuitement" data-en="Start Free">Kòmanse Gratis</a>
+        </div>
+      </div>
+      <div class="demo-media">
+        <div class="prompt-card">
+          <div class="pc-head"><span class="pc-dot"></span><span data-kw="Egzanp · Pakè Prompt" data-fr="Exemple · Pack de prompts" data-en="Sample · Prompt Pack">Egzanp · Pakè Prompt</span></div>
+          <div class="pc-row pc-you"><span class="pc-label">Prompt</span><span data-kw="“Ekri yon deskripsyon pwodwi pou yon savon natirèl ki fèt an Ayiti.”" data-fr="« Rédige une description de produit pour un savon naturel fabriqué en Haïti. »" data-en="“Write a product description for a natural soap made in Haiti.”">“Ekri yon deskripsyon pwodwi pou yon savon natirèl ki fèt an Ayiti.”</span></div>
+          <div class="pc-arrow">↓</div>
+          <div class="pc-row pc-ai"><span class="pc-label">AI</span><span data-kw="“Savon natirèl, fèt ak men an Ayiti ak engredyan lokal — dous pou po w, bon pou kilti nou…”" data-fr="« Savon naturel, fait main en Haïti avec des ingrédients locaux — doux pour votre peau, bon pour notre culture… »" data-en="“Natural soap, handmade in Haiti with local ingredients — gentle on your skin, rooted in our culture…”">“Savon natirèl, fèt ak men an Ayiti ak engredyan lokal — dous pou po w, bon pou kilti nou…”</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TESTIMONIALS ===================== -->
+<section>
+  <div class="container">
+    <div class="head-row" style="text-align:center; justify-content:center; flex-direction: column; align-items: center; margin-bottom: 48px;">
+      <div class="eyebrow" data-kw="Premye reyaksyon" data-fr="Premiers retours" data-en="Early feedback">Premye reyaksyon</div>
+      <h2 style="margin-top: 14px; text-align:center;" data-kw="Sa premye aprenan yo ap di." data-fr="Ce que disent les premiers apprenants." data-en="What early learners are saying.">Sa premye aprenan yo ap di.</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="tm-card a1">
+        <div class="quote" data-kw="“Mwen finalman konprann AI an Kreyòl epi mwen kòmanse itilize l pou biznis mwen.”" data-fr="« J'ai enfin compris l'IA en créole et j'ai commencé à l'utiliser pour mon entreprise. »" data-en="“I finally understood AI in Creole and started using it for my business.”">“Mwen finalman konprann AI an Kreyòl epi mwen kòmanse itilize l pou biznis mwen.”</div>
+        <div class="who"><span class="av">RJ</span><div><div class="name">Rose-Mica J.</div><div class="role" data-kw="Antreprenè · Pòtoprens" data-fr="Entrepreneure · Port-au-Prince" data-en="Entrepreneur · Pòtoprens">Antreprenè · Pòtoprens</div></div></div>
+      </div>
+      <div class="tm-card a2">
+        <div class="quote" data-kw="“Modèl prompt yo ekonomize plizyè èdtan pou mwen chak semèn.”" data-fr="« Les modèles de prompts me font gagner des heures chaque semaine. »" data-en="“The prompt templates saved me hours every week.”">“Modèl prompt yo ekonomize plizyè èdtan pou mwen chak semèn.”</div>
+        <div class="who"><span class="av">FD</span><div><div class="name">Frantz D.</div><div class="role" data-kw="Frilanser · Miami" data-fr="Freelance · Miami" data-en="Freelancer · Miami">Frilanser · Miami</div></div></div>
+      </div>
+      <div class="tm-card a3">
+        <div class="quote" data-kw="“Kominote a ede m kòmanse bati ak konfyans.”" data-fr="« La communauté m'a aidé à commencer à créer avec confiance. »" data-en="“The community helped me start building with confidence.”">“Kominote a ede m kòmanse bati ak konfyans.”</div>
+        <div class="who"><span class="av">ML</span><div><div class="name">Marc-Ley L.</div><div class="role" data-kw="Elèv · Monreyal" data-fr="Étudiant · Montréal" data-en="Student · Montréal">Elèv · Monreyal</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NEWSLETTER (LEAD MAGNET) ===================== -->
+<section class="newsletter">
+  <div class="container newsletter-inner">
+    <div>
+      <div class="eyebrow" style="color: var(--navy-deep);" data-kw="Resous gratis" data-fr="Ressource gratuite" data-en="Free resource">Resous gratis</div>
+      <h2 style="margin-top: 14px;" data-kw="Jwenn Pakè Prompt AI an Kreyòl la — gratis." data-fr="Recevez le pack de prompts IA en créole — gratuit." data-en="Get the free Kreyòl AI Prompt Pack.">Jwenn Pakè Prompt AI an Kreyòl la — gratis.</h2>
+      <p data-kw="Antre nan lis Kreyòl AI a pou mizajou chak semèn ak yon pakè prompt ki pare pou itilize an Kreyòl Ayisyen." data-fr="Rejoignez la liste Kreyòl AI pour des mises à jour hebdomadaires et un pack de prompts prêts à l'emploi en créole haïtien." data-en="Join the Kreyòl AI list for weekly updates and a free pack of ready-to-use prompts in Haitian Creole.">Antre nan lis Kreyòl AI a pou mizajou chak semèn ak yon pakè prompt ki pare pou itilize an Kreyòl Ayisyen.</p>
+      <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='✓ Mèsi! / Thanks!'; this.querySelector('input').value='';">
+        <input type="email" placeholder="ou@email.com" required="">
+        <button class="btn btn-primary" type="submit" data-kw="Jwenn Pakè AI Gratis la" data-fr="Obtenir le pack IA gratuit" data-en="Get the Free AI Pack">Jwenn Pakè AI Gratis la</button>
+      </form>
+    </div>
+    <div class="pic" aria-hidden="true">
+      <div>🇭🇹</div><div class="big">AI</div><div>🚀</div>
+      <div>📚</div><div>💼</div><div>🤖</div>
+      <div>🎨</div><div>🎙️</div><div>$</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HAITI MISSION ===================== -->
+<section class="mission-band" id="about">
+  <div class="narrow" style="text-align:center;">
+    <div class="eyebrow" style="justify-content:center;" data-kw="Misyon nou" data-fr="Notre mission" data-en="Our mission">Misyon nou</div>
+    <h2 style="margin-top: 16px;" data-kw="Fèt pou Ayiti. <span class='accent'>Pare pou mond lan.</span>" data-fr="Conçu pour Haïti. <span class='accent'>Prêt pour le monde.</span>" data-en="Built for Haiti. <span class='accent'>Ready for the world.</span>">Fèt pou Ayiti. <span class="accent">Pare pou mond lan.</span></h2>
+    <p style="margin-top: 16px; font-size: 18px; color: var(--ink-2); max-width: 640px; margin-left:auto; margin-right:auto; line-height:1.65;" data-kw="N ap kreye aksè AI, edikasyon, ak zouti ki ede Ayisyen aprann pi vit, bati pi entelijan, epi konpetisyone sou nivo mondyal." data-fr="Nous créons un accès à l'IA, une éducation et des outils qui aident les Haïtiens à apprendre plus vite, à construire plus intelligemment et à rivaliser à l'échelle mondiale." data-en="We're creating AI access, education, and tools that help Haitians learn faster, build smarter, and compete globally.">N ap kreye aksè AI, edikasyon, ak zouti ki ede Ayisyen aprann pi vit, bati pi entelijan, epi konpetisyone sou nivo mondyal.</p>
+    <div style="margin-top: 28px;">
+      <a href="academy.html" class="btn btn-primary btn-lg" data-kw="Kòmanse Akademi an" data-fr="Commencer l'Académie" data-en="Start the Academy">Kòmanse Akademi an</a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="config.js"></script>
+<script src="partials.js"></script>
+<script src="image-slot.js"></script>
+<script>
+/* ── Academy journey: checkbox progress meter persisted to localStorage ── */
+(function(){
+  var KEY = 'kah_journey_v1';
+  var bar = document.getElementById('academy-bar');
+  var pctEl = document.getElementById('academy-pct');
+  if (!bar) return;
+  var boxes = [].slice.call(document.querySelectorAll('.wk-checklist input[type="checkbox"]'));
+  if (!boxes.length) return;
+
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+  boxes.forEach(function(b){ if (saved[b.id]) b.checked = true; });
+
+  function recalc(save){
+    var done = boxes.filter(function(b){ return b.checked; }).length;
+    var pct = Math.round(done / boxes.length * 100);
+    bar.value = pct;
+    if (pctEl) pctEl.textContent = pct + '%';
+    // light up each week's milestone badge once all its items are checked
+    document.querySelectorAll('.week-card[data-week]').forEach(function(card){
+      var ins = card.querySelectorAll('input[type="checkbox"]');
+      var all = ins.length > 0 && [].every.call(ins, function(i){ return i.checked; });
+      card.classList.toggle('complete', all);
+    });
+    if (save){
+      var st = {};
+      boxes.forEach(function(b){ if (b.checked) st[b.id] = 1; });
+      try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {}
     }
-    raf=requestAnimationFrame(draw);
   }
-  resize();draw();
-  window.addEventListener('resize',()=>{cancelAnimationFrame(raf);resize();draw();});
+  boxes.forEach(function(b){ b.addEventListener('change', function(){ recalc(true); }); });
+  recalc(false);
 })();
+</script>
+<script>
+/* ── Hero 3D: cursor-driven tilt on the Citadelle⇆AI-hub card + Nèg Mawon parallax ── */
+(function(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return; // skip on touch
+  var wrap = document.getElementById('hero3dWrap');
+  var card = document.getElementById('hero3d');
+  var neg  = document.querySelector('.neg-mawon');
+  if (!wrap || !card) return;
+  var raf = null, rx = 4, ry = -9;
+  function onMove(e){
+    var r = wrap.getBoundingClientRect();
+    var px = (e.clientX - r.left) / r.width  - 0.5;   // -0.5 … 0.5
+    var py = (e.clientY - r.top)  / r.height - 0.5;
+    ry = -9 + px * 18;       // sweep left/right
+    rx = 4  - py * 12;       // tip up/down
+    if (neg) neg.style.transform = 'translate(' + (px * -20).toFixed(1) + 'px,' + (py * -14).toFixed(1) + 'px)';
+    if (!raf) raf = requestAnimationFrame(apply);
+  }
+  function apply(){ raf = null; card.style.setProperty('--ry', ry.toFixed(2) + 'deg'); card.style.setProperty('--rx', rx.toFixed(2) + 'deg'); }
+  function reset(){ card.style.setProperty('--ry', '-9deg'); card.style.setProperty('--rx', '4deg'); if (neg) neg.style.transform = ''; }
+  wrap.addEventListener('mousemove', onMove);
+  wrap.addEventListener('mouseleave', reset);
+})();
+</script>
+<script>
+/* ── AI Playground ── streams a result from the Kreyòl worker ── */
+(function(){
+  function cfg(k,d){ return (window.KAH_CONFIG && window.KAH_CONFIG[k]) || d; }
+  var WORKER = cfg('WORKER_URL', 'https://kreyolaihubproxy.kreyolaihub.workers.dev');
+  var MODEL  = cfg('MODEL', 'claude-haiku-4-5-20251001');
+  var TASKS = {
+    translate: "You are a precise translator. Translate the user's text into natural, fluent Haitian Creole (Kreyòl Ayisyen). Output only the translation, nothing else.",
+    email:     "You are a writing assistant. From the user's notes, write one clear, professional email in the same language as the notes (default Haitian Creole). Include a subject line. Keep it concise.",
+    summarize: "Summarize the user's text into 3–5 short, clear bullet points in Haitian Creole (Kreyòl Ayisyen).",
+    explain:   "Explain the user's topic simply and warmly in Haitian Creole (Kreyòl Ayisyen), as if to a curious beginner. Use short sentences."
+  };
+  // Offline / fallback mock generations so the dashboard always shows output.
+  var MOCK = {
+    translate: "« Bonjou! Mwen swete ou yon bèl jounen. Mèsi anpil pou tan ou — nou la pou ede ou aprann epi bati ak AI. »",
+    email:     "Sijè: Demann Enfòmasyon\n\nBonjou,\n\nMwen ap ekri ou pou mande plis detay sou sèvis ou yo. Èske nou ka pwograme yon ti apèl rapid semèn sa a?\n\nMèsi davans,\n[Non ou]",
+    summarize: "• Pwen prensipal la klè e dirèk\n• De a twa lide kle ki sipòte mesaj la\n• Yon konklizyon kout ak yon pwochen etap",
+    explain:   "AI se yon zouti ki ka konprann epi kreye tèks. Panse ak li tankou yon asistan ki pa janm fatige: ou poze yon kesyon, li ba ou yon repons klè — an Kreyòl."
+  };
+  var STATE = {
+    ready:     { kw:'ESTATI · PARE', fr:'STATUT · PRÊT', en:'STATUS · READY' },
+    streaming: { kw:'ESTATI · AP JENERE', fr:'STATUT · GÉNÉRATION', en:'STATUS · STREAMING' }
+  };
+  function lang(){ return (window.kahLang && window.kahLang()) || 'kw'; }
 
-/* DEMO TERMINAL */
-const demos={
-  tr:`<span class="tl"><span class="tp">$ </span><span class="tc2">translate "Bonjou, kijan ou rele?"</span></span>
-<span class="tl"><span class="to">→ "Hello, what is your name?"</span></span>
-<span class="tl"> </span>
-<span class="tl"><span class="tp">$ </span><span class="tc2">translate "The future belongs to those who learn"</span></span>
-<span class="tl"><span class="to">→ KW: "Lavni se pou moun ki aprann"</span></span>
-<span class="tl"><span class="to">→ FR: "L'avenir appartient à ceux qui apprennent"</span></span>
-<span class="tl"> </span>
-<span class="tl"><span class="tp">$ </span><span class="tcsr"></span></span>`,
-  pv:`<span class="tl"><span class="tp">$ </span><span class="tc2">explain "Dèyè mòn gen mòn"</span></span>
-<span class="tl"><span class="to">→ "Behind mountains, more mountains."</span></span>
-<span class="tl"><span class="tco">  Meaning: Life's challenges never end, but Haitians</span></span>
-<span class="tl"><span class="tco">  face them with resilience and collective strength.</span></span>
-<span class="tl"> </span>
-<span class="tl"><span class="tp">$ </span><span class="tc2">explain "Men anpil, chay pa lou"</span></span>
-<span class="tl"><span class="to">→ "Many hands make the load light."</span></span>
-<span class="tl"><span class="tco">  A call to collective action and community care.</span></span>
-<span class="tl"><span class="tp">$ </span><span class="tcsr"></span></span>`,
-  bi:`<span class="tl"><span class="tp">$ </span><span class="tc2">generate ideas --audience haitian-diaspora</span></span>
-<span class="tl"><span class="to">→ 1. Kreyòl AI tutoring platform ← you built this ✓</span></span>
-<span class="tl"><span class="to">→ 2. Haitian food subscription box</span></span>
-<span class="tl"><span class="to">→ 3. AI remittance optimization service</span></span>
-<span class="tl"><span class="to">→ 4. Cultural event production agency</span></span>
-<span class="tl"><span class="to">→ 5. Haitian professional network app</span></span>
-<span class="tl"> </span>
-<span class="tl"><span class="ts">✓ 5 ideas generated for Haitian diaspora context</span></span>
-<span class="tl"><span class="tp">$ </span><span class="tcsr"></span></span>`,
-  nx:`<span class="tl"><span class="tp">$ </span><span class="tc2">summarize news --lang en --source haiti</span></span>
-<span class="tl"><span class="to">→ Fetching latest Haitian news...</span></span>
-<span class="tl"><span class="tco">  1. Economic recovery efforts continue in Port-au-Prince</span></span>
-<span class="tl"><span class="tco">  2. Haitian diaspora raises $2M for education fund</span></span>
-<span class="tl"><span class="tco">  3. New tech hub opens in Pétionville</span></span>
-<span class="tl"><span class="tco">  4. Haiti AI initiative gains international attention</span></span>
-<span class="tl"> </span>
-<span class="tl"><span class="ts">✓ Summary complete · 4 stories</span></span>
-<span class="tl"><span class="tp">$ </span><span class="tcsr"></span></span>`
-};
-function setDemo(tab,k){document.querySelectorAll('.dtab').forEach(t=>t.classList.remove('on'));tab.classList.add('on');document.getElementById('tb').innerHTML=demos[k];}
+  var task  = 'translate';
+  var out   = document.getElementById('playground-output');
+  var ta    = document.getElementById('playground-input');
+  var run   = document.getElementById('playground-run');
+  var panel = document.getElementById('playground-panel');
+  var state = document.getElementById('pg-state');
+  if (!out || !ta || !run) return;
+  var chips = document.querySelectorAll('.pg-chip');
+  function setState(k){ if (state) state.textContent = STATE[k][lang()] || STATE[k].en; }
 
-/* STICKY DEMO */
-let sdOpen=false;
-function toggleSD(){sdOpen=!sdOpen;document.getElementById('sticky-demo').classList.toggle('open',sdOpen);}
-function qTr(){
-  const v=document.getElementById('sdi').value.trim(),r=document.getElementById('sdr');
-  if(!v)return;
-  r.innerHTML='<span style="color:var(--t30)">Translating...</span>';
-  const map={'bonjou':'→ Hello','mèsi':'→ Thank you','kijan ou rele':'→ What is your name?','kijan ou ye':'→ How are you?','ayiti':'→ Haiti','wi':'→ Yes','non':'→ No','mwen rele':'→ My name is'};
-  const lo=v.toLowerCase();let found=null;
-  for(const k in map){if(lo.includes(k)){found=map[k];break;}}
-  setTimeout(()=>{r.innerHTML=found||`→ "${v}" translated into English`;r.style.color='#34d399';},650);
-}
+  chips.forEach(function(c){
+    c.addEventListener('click', function(){
+      chips.forEach(function(x){ x.classList.remove('active'); });
+      c.classList.add('active');
+      task = c.getAttribute('data-task');
+      ta.focus();
+    });
+  });
 
-/* NL */
-function subNL(){const e=document.getElementById('nle');if(!e
+  function typewriter(text, done){
+    out.textContent = '';
+    var i = 0, step = Math.max(1, Math.round(text.length / 140));
+    (function tick(){
+      if (i <= text.length){
+        out.textContent = text.slice(0, i);
+        i += step;
+        out.scrollTop = out.scrollHeight;
+        requestAnimationFrame(tick);
+      } else {
+        out.textContent = text;
+        if (done) done();
+      }
+    })();
+  }
+
+  async function go(){
+    var input = ta.value.trim();
+    if (!input){ ta.focus(); return; }
+    run.disabled = true; var label = run.textContent; run.textContent = '…';
+    if (panel) panel.classList.add('is-streaming');
+    setState('streaming');
+    // mock "generating" visual — skeleton shimmer in the dashboard panel
+    out.innerHTML = '<span class="pg-skel"><b></b><b></b><b></b><b></b></span>';
+    var finish = function(){ if (panel) panel.classList.remove('is-streaming'); setState('ready'); run.disabled = false; run.textContent = label; };
+    try {
+      var res = await fetch(WORKER, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: MODEL, max_tokens: 600, system: TASKS[task], messages: [{ role:'user', content: input }] })
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var data = await res.json();
+      var reply = Array.isArray(data.content) ? data.content.map(function(c){ return c.text || ''; }).join('').trim()
+                : (data.text || data.completion || '');
+      if (!reply) reply = MOCK[task];
+      // small beat so the skeleton reads as "generating", then stream in
+      setTimeout(function(){ typewriter(reply, finish); }, 280);
+    } catch (e){
+      // offline / blocked — fall back to a mock generation so the panel still demos
+      setTimeout(function(){ typewriter(MOCK[task], finish); }, 420);
+    }
+  }
+
+  run.addEventListener('click', go);
+  ta.addEventListener('keydown', function(e){
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter'){ e.preventDefault(); go(); }
+  });
+
+  /* ── Voice input: capture mic permission, show live soundwave ── */
+  (function(){
+    var micBtn = document.getElementById('mic-btn');
+    if (!micBtn) return;
+    var stream = null, recorder = null;
+    var supported = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+    if (!supported) { micBtn.disabled = true; micBtn.title = 'Mic not supported'; return; }
+
+    function stop(){
+      micBtn.classList.remove('recording');   // hides the soundwave + stops the amber pulse
+      micBtn.setAttribute('aria-pressed', 'false');
+      try { if (recorder && recorder.state !== 'inactive') recorder.stop(); } catch(e){}
+      if (stream){ stream.getTracks().forEach(function(t){ t.stop(); }); stream = null; }
+      recorder = null;
+    }
+
+    async function start(){
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        micBtn.classList.add('recording');     // CSS keyframes drive the pulsing soundwave
+        micBtn.setAttribute('aria-pressed', 'true');
+        if (window.MediaRecorder){
+          var chunks = [];
+          recorder = new MediaRecorder(stream);
+          recorder.ondataavailable = function(e){ if (e.data && e.data.size) chunks.push(e.data); };
+          recorder.onstop = function(){
+            var blob;
+            try { blob = new Blob(chunks, { type: 'audio/webm' }); } catch(e){ return; }
+            window._kahLastRecording = blob;
+            if (blob && blob.size) transcribe(blob);   // → speech-to-text → textarea
+          };
+          recorder.start();
+        }
+        micBtn._timer = setTimeout(stop, 30000); // never leave the mic open silently
+      } catch (err){
+        micBtn.classList.remove('recording');
+        out.textContent = (lang() === 'en'
+          ? '🎙️ Microphone unavailable or permission denied (' + err.name + ').'
+          : lang() === 'fr'
+          ? '🎙️ Micro indisponible ou permission refusée (' + err.name + ').'
+          : '🎙️ Mikwofòn pa disponib oswa pèmisyon refize (' + err.name + ').');
+      }
+    }
+
+    // Send the recorded audio to the worker's /transcribe route, drop text in the box.
+    async function transcribe(blob){
+      var langMap = { kw:'ht', fr:'fr', en:'en' };
+      var busyMsg = { kw:'⌛ Ap transkri Kreyòl ou…', fr:'⌛ Transcription en cours…', en:'⌛ Transcribing…' };
+      micBtn.classList.add('busy');
+      var phPrev = ta.getAttribute('placeholder');
+      ta.setAttribute('placeholder', busyMsg[lang()] || busyMsg.kw);
+      try {
+        var fd = new FormData();
+        fd.append('file', blob, 'audio.webm');
+        fd.append('language', langMap[lang()] || 'ht');
+        var res = await fetch(WORKER.replace(/\/$/, '') + '/transcribe', { method:'POST', body: fd });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        var data = await res.json();
+        var text = (data && (data.text || '')).trim();
+        if (text){
+          ta.value = ta.value ? (ta.value.replace(/\s*$/,'') + ' ' + text) : text;
+          ta.focus();
+        } else {
+          out.textContent = (lang()==='en' ? '🎙️ Didn’t catch that — try again.'
+                           : lang()==='fr' ? '🎙️ Je n’ai rien capté — réessayez.'
+                           : '🎙️ Mwen pa tande anyen — eseye ankò.');
+        }
+      } catch (e){
+        out.textContent = (lang()==='en' ? '🎙️ Transcription unavailable right now (' + e.message + ').'
+                         : lang()==='fr' ? '🎙️ Transcription indisponible pour le moment (' + e.message + ').'
+                         : '🎙️ Transkripsyon pa disponib kounye a (' + e.message + ').');
+      } finally {
+        micBtn.classList.remove('busy');
+        if (phPrev != null) ta.setAttribute('placeholder', phPrev);
+      }
+    }
+
+    micBtn.addEventListener('click', function(){
+      clearTimeout(micBtn._timer);
+      if (micBtn.classList.contains('recording')) stop(); else start();
+    });
+    window.addEventListener('beforeunload', stop);
+  })();
+})();
+</script>
+
+
+</body></html>

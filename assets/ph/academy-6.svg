@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="600" viewBox="0 0 1400 600">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#070b15"/><stop offset="1" stop-color="#0b1322"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="30%" cy="35%" r="75%">
+    <stop offset="0" stop-color="#3f74ff" stop-opacity="0.30"/>
+    <stop offset="55%" stop-color="#3f74ff" stop-opacity="0.06"/>
+    <stop offset="100%" stop-color="#3f74ff" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="vig" cx="50%" cy="42%" r="75%">
+    <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+  </radialGradient>
+  <pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse">
+    <path d="M46 0H0V46" fill="none" stroke="rgba(208,224,255,0.05)" stroke-width="1"/>
+  </pattern>
+</defs>
+<rect width="1400" height="600" fill="url(#bg)"/>
+<rect width="1400" height="600" fill="url(#grid)"/>
+<rect width="1400" height="600" fill="url(#glow)"/>
+
+  <line x1="528" y1="240" x2="366" y2="333.5307436087194" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="528" y1="240" x2="312" y2="240" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="528" y1="240" x2="474" y2="146.46925639128062" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="474" y1="333.5307436087194" x2="366" y2="333.5307436087194" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="366" y1="333.5307436087194" x2="312" y2="240" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="366" y1="333.5307436087194" x2="365.99999999999994" y2="146.46925639128062" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="366" y1="333.5307436087194" x2="420" y2="240" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="312" y1="240" x2="474" y2="146.46925639128062" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="312" y1="240" x2="420" y2="240" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="365.99999999999994" y1="146.46925639128062" x2="474" y2="146.46925639128062" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="365.99999999999994" y1="146.46925639128062" x2="420" y2="240" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><circle cx="528" cy="240" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="474" cy="333.5307436087194" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="366" cy="333.5307436087194" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="312" cy="240" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="365.99999999999994" cy="146.46925639128062" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="474" cy="146.46925639128062" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="420" cy="240" r="9" fill="#3f74ff" opacity="1"/>
+  <g transform="translate(868,204.00000000000003)">
+    <path d="M0 0 C-60 0 -90 50 -60 95 C-44 120 0 110 6 80 C9 64 30 70 40 56 C70 18 40 0 0 0 Z" fill="#131d31" stroke="#3f74ff" stroke-width="2" stroke-opacity="0.6"/>
+    <circle cx="-30" cy="40" r="10" fill="#3f74ff"/><circle cx="0" cy="30" r="10" fill="#2f6bff"/><circle cx="28" cy="46" r="10" fill="#27e0ff"/><circle cx="8" cy="70" r="10" fill="#4d8bff"/>
+  </g>
+
+<rect width="1400" height="600" fill="url(#vig)"/>
+<g opacity="0.85"><rect x="0" y="594" width="140" height="6" fill="#002D62"/>
+<rect x="140" y="594" width="140" height="6" fill="#CE1126"/>
+<rect x="280" y="594" width="140" height="6" fill="#00A651"/></g>
+</svg>

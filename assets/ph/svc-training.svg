@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#070b15"/><stop offset="1" stop-color="#0b1322"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="55%" cy="25%" r="75%">
+    <stop offset="0" stop-color="#3f74ff" stop-opacity="0.30"/>
+    <stop offset="55%" stop-color="#3f74ff" stop-opacity="0.06"/>
+    <stop offset="100%" stop-color="#3f74ff" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="vig" cx="50%" cy="42%" r="75%">
+    <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+  </radialGradient>
+  <pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse">
+    <path d="M46 0H0V46" fill="none" stroke="rgba(208,224,255,0.05)" stroke-width="1"/>
+  </pattern>
+</defs>
+<rect width="1200" height="700" fill="url(#bg)"/>
+<rect width="1200" height="700" fill="url(#grid)"/>
+<rect width="1200" height="700" fill="url(#glow)"/>
+
+  <rect x="408.00000000000006" y="98.00000000000001" width="600" height="294" rx="8" fill="#131d31" stroke="#3f74ff" stroke-width="2" stroke-opacity="0.5"/>
+  <line x1="799" y1="238.00000000000003" x2="753.5" y2="316.80831174438396" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="753.5" y1="316.80831174438396" x2="753.5" y2="159.1916882556161" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="753.5" y1="316.80831174438396" x2="708" y2="238.00000000000003" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="662.5" y1="316.80831174438396" x2="617" y2="238.00000000000003" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="662.5" y1="316.80831174438396" x2="753.5" y2="159.1916882556161" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="662.5" y1="316.80831174438396" x2="708" y2="238.00000000000003" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="662.5" y1="159.19168825561613" x2="753.5" y2="159.1916882556161" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="662.5" y1="159.19168825561613" x2="708" y2="238.00000000000003" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><line x1="753.5" y1="159.1916882556161" x2="708" y2="238.00000000000003" stroke="#3f74ff" stroke-width="1.4" opacity="0.35"/><circle cx="799" cy="238.00000000000003" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="753.5" cy="316.80831174438396" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="662.5" cy="316.80831174438396" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="617" cy="238.00000000000003" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="662.5" cy="159.19168825561613" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="753.5" cy="159.1916882556161" r="5.5" fill="#3f74ff" opacity="0.85"/><circle cx="708" cy="238.00000000000003" r="9" fill="#3f74ff" opacity="1"/>
+  <g transform="translate(240,644) scale(0.8)">
+    <circle cx="0" cy="-150" r="46" fill="#eaf1fd" opacity="0.92"/>
+    <path d="M-70 0 Q-70 -110 0 -110 Q70 -110 70 0 Z" fill="#eaf1fd" opacity="0.9"/>
+    <path d="M-70 0 Q-70 -110 0 -110 Q70 -110 70 0 Z" fill="#3f74ff" opacity="0.18"/>
+  </g>
+  <line x1="324" y1="350" x2="408.00000000000006" y2="280" stroke="#3f74ff" stroke-width="3" opacity="0.6"/>
+
+<rect width="1200" height="700" fill="url(#vig)"/>
+<g opacity="0.85"><rect x="0" y="694" width="120" height="6" fill="#002D62"/>
+<rect x="120" y="694" width="120" height="6" fill="#CE1126"/>
+<rect x="240" y="694" width="120" height="6" fill="#00A651"/></g>
+</svg>

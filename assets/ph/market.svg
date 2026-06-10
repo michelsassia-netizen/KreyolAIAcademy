@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#070b15"/><stop offset="1" stop-color="#0b1322"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="75%" cy="25%" r="75%">
+    <stop offset="0" stop-color="#27e0ff" stop-opacity="0.30"/>
+    <stop offset="55%" stop-color="#27e0ff" stop-opacity="0.06"/>
+    <stop offset="100%" stop-color="#27e0ff" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="vig" cx="50%" cy="42%" r="75%">
+    <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+  </radialGradient>
+  <pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse">
+    <path d="M46 0H0V46" fill="none" stroke="rgba(208,224,255,0.05)" stroke-width="1"/>
+  </pattern>
+</defs>
+<rect width="1200" height="1200" fill="url(#bg)"/>
+<rect width="1200" height="1200" fill="url(#grid)"/>
+<rect width="1200" height="1200" fill="url(#glow)"/>
+
+  <circle cx="960" cy="264" r="144" fill="#2f6bff" opacity="0.85"/>
+  <circle cx="960" cy="264" r="216" fill="#2f6bff" opacity="0.15"/>
+  <g transform="translate(144,600)">
+      <path d="M-84.00000000000001 0 L84.00000000000001 0 L60 -40 L-60 -40 Z" fill="#3f74ff" opacity="0.6"/>
+      <rect x="-72" y="0" width="144" height="408.00000000000006" rx="6" fill="#131d31" stroke="#3f74ff" stroke-opacity="0.4"/>
+      <circle cx="-36" cy="40" r="13" fill="#3f74ff" opacity="0.7"/><circle cx="0" cy="40" r="13" fill="#3f74ff" opacity="0.7"/><circle cx="36" cy="40" r="13" fill="#3f74ff" opacity="0.7"/>
+    </g><g transform="translate(408.00000000000006,600)">
+      <path d="M-84.00000000000001 0 L84.00000000000001 0 L60 -40 L-60 -40 Z" fill="#2f6bff" opacity="0.6"/>
+      <rect x="-72" y="0" width="144" height="408.00000000000006" rx="6" fill="#131d31" stroke="#2f6bff" stroke-opacity="0.4"/>
+      <circle cx="-36" cy="40" r="13" fill="#2f6bff" opacity="0.7"/><circle cx="0" cy="40" r="13" fill="#2f6bff" opacity="0.7"/><circle cx="36" cy="40" r="13" fill="#2f6bff" opacity="0.7"/>
+    </g><g transform="translate(672.0000000000001,600)">
+      <path d="M-84.00000000000001 0 L84.00000000000001 0 L60 -40 L-60 -40 Z" fill="#27e0ff" opacity="0.6"/>
+      <rect x="-72" y="0" width="144" height="408.00000000000006" rx="6" fill="#131d31" stroke="#27e0ff" stroke-opacity="0.4"/>
+      <circle cx="-36" cy="40" r="13" fill="#27e0ff" opacity="0.7"/><circle cx="0" cy="40" r="13" fill="#27e0ff" opacity="0.7"/><circle cx="36" cy="40" r="13" fill="#27e0ff" opacity="0.7"/>
+    </g><g transform="translate(936,600)">
+      <path d="M-84.00000000000001 0 L84.00000000000001 0 L60 -40 L-60 -40 Z" fill="#4d8bff" opacity="0.6"/>
+      <rect x="-72" y="0" width="144" height="408.00000000000006" rx="6" fill="#131d31" stroke="#4d8bff" stroke-opacity="0.4"/>
+      <circle cx="-36" cy="40" r="13" fill="#4d8bff" opacity="0.7"/><circle cx="0" cy="40" r="13" fill="#4d8bff" opacity="0.7"/><circle cx="36" cy="40" r="13" fill="#4d8bff" opacity="0.7"/>
+    </g>
+
+<rect width="1200" height="1200" fill="url(#vig)"/>
+<g opacity="0.85"><rect x="0" y="1194" width="120" height="6" fill="#002D62"/>
+<rect x="120" y="1194" width="120" height="6" fill="#CE1126"/>
+<rect x="240" y="1194" width="120" height="6" fill="#00A651"/></g>
+</svg>
