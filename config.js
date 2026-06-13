@@ -6,7 +6,7 @@
 // The Worker holds your ANTHROPIC_API_KEY server-side; the website never sees it.
 window.KAH_CONFIG = {
   // Your deployed Cloudflare Worker (e.g. https://kreyolaihubproxy.YOURNAME.workers.dev)
-  WORKER_URL: 'https://kreyolaihubproxy.kreyolaihub.workers.dev',
+  WORKER_URL: 'https://kreyolaihub2.kreyolaihub.workers.dev',
   // Claude model the demos use (fast + cheap for live demos)
   MODEL: 'claude-haiku-4-5-20251001'
 };

@@ -8,6 +8,6 @@
 #   wrangler secret put OPENAI_API_KEY         # optional: voice transcription
 #
 # Then copy the printed *.workers.dev URL into site/config.js → WORKER_URL.
-name = "kreyolaihubproxy"
+name = "kreyolaihub2"
 main = "worker.js"
 compatibility_date = "2024-11-01"
