@@ -4,7 +4,7 @@
   const PAGES = [
     { id: 'academy',    href: 'academy.html',    kw: 'Akademi',      fr: 'Académie',   en: 'Academy' },
     { id: 'tools',      href: 'tools.html',      kw: 'Zouti',        fr: 'Outils',     en: 'Tools' },
-    { id: 'community',  href: '#community',      kw: 'Kominote',     fr: 'Communauté', en: 'Community' },
+    { id: 'community',  href: 'community.html',  kw: 'Kominote',     fr: 'Communauté', en: 'Community' },
     { id: 'consulting', href: 'consulting.html', kw: 'Konsiltasyon', fr: 'Conseil',    en: 'Consulting' },
     { id: 'about',      href: 'index.html#about',kw: 'Konsènan',     fr: 'À propos',   en: 'About' },
   ];
@@ -133,7 +133,7 @@
             </div>
             <div>
               <h4 data-kw="${cols.community.kw}" data-fr="${cols.community.fr}" data-en="${cols.community.en}">${cols.community[l]}</h4>
-              <a href="index.html#community" data-kw="Antre" data-fr="Rejoindre" data-en="Join">Join</a>
+              <a href="community.html" data-kw="Antre" data-fr="Rejoindre" data-en="Join">Join</a>
               <a href="${WA}">WhatsApp</a>
               <a href="consulting.html" data-kw="Konsiltasyon" data-fr="Conseil" data-en="Consulting">Consulting</a>
             </div>
