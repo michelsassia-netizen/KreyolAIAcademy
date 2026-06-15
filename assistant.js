@@ -129,15 +129,20 @@
     }
     function close(){ panel.classList.remove('open'); launch.style.display=''; }
 
+    function langName(){ var l=lang(); return l==='fr' ? 'French (français)' : (l==='en' ? 'English' : 'Haitian Creole (Kreyòl Ayisyen)'); }
+
     async function sendMsg(text){
       if(!text || !text.trim()) return;
       add('u',text); history.push({role:'user',content:text});
       input.value=''; chipsWrap.innerHTML='';
       var typing=add('a','',{typing:true});
       var reply='';
+      // Match the page language: the site is showing KW / FR / EN — reply in that language.
+      var sys = "IMPORTANT: The website is currently displayed in " + langName() +
+        ". Greet and reply in " + langName() + " unless the visitor clearly writes in another language.\n\n" + SYSTEM;
       try{
         var res=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({model:MODEL,max_tokens:500,system:SYSTEM,messages:history})});
+          body:JSON.stringify({model:MODEL,max_tokens:500,system:sys,messages:history})});
         if(!res.ok) throw new Error('w'+res.status);
         var data=await res.json();
         if(Array.isArray(data.content)) reply=data.content.map(function(c){return c.text||'';}).join('').trim();
