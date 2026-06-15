@@ -140,8 +140,8 @@
             <div>
               <h4 data-kw="${cols.company.kw}" data-fr="${cols.company.fr}" data-en="${cols.company.en}">${cols.company[l]}</h4>
               <a href="index.html#about" data-kw="Konsènan" data-fr="À propos" data-en="About">About</a>
-              <a href="mailto:hello@kreyolaihub.com" data-kw="Sipò" data-fr="Support" data-en="Support">Support</a>
-              <a href="mailto:hello@kreyolaihub.com" data-kw="Imèl" data-fr="E-mail" data-en="Email">Imèl</a>
+              <a href="mailto:kreyolaihub@gmail.com" data-kw="Sipò" data-fr="Support" data-en="Support">Support</a>
+              <a href="mailto:kreyolaihub@gmail.com" data-kw="Imèl" data-fr="E-mail" data-en="Email">Imèl</a>
             </div>
           </div>
           <div class="footer-bottom">

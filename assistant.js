@@ -27,7 +27,7 @@
     "KOMINOTE (paj 'Kominote' / community.html): rantre nan Discord oswa gwoup WhatsApp pou aprann ak lòt Ayisyen.\n" +
     "KONSILTASYON (paj 'Konsiltasyon' / consulting.html): fòmasyon ak sèvis AI pou biznis ak òganizasyon.\n\n" +
     "KIJAN POU KÒMANSE: di yo klike sou 'Akademi' anwo a (oswa bouton 'Kòmanse Gratis'), kreye yon kont gratis, epi chwazi yon kou. " +
-    "Toujou dirije moun nan bay bon paj la. Pa envante bagay ki pa la; si ou pa konnen, di yo kontakte hello@kreyolaihub.com. " +
+    "Toujou dirije moun nan bay bon paj la. Pa envante bagay ki pa la; si ou pa konnen, di yo kontakte kreyolaihub@gmail.com. " +
     "Rete pozitif, ankourajan, e fyè pou Ayiti.";
 
   var T = {
