@@ -188,5 +188,11 @@
     buildFooter();
     applyLang();
     initReveal();
+    // Site-wide welcome assistant (loads once on every page)
+    if (!document.getElementById('kah-assistant-js')) {
+      var s = document.createElement('script');
+      s.id = 'kah-assistant-js'; s.src = 'assistant.js'; s.defer = true;
+      document.body.appendChild(s);
+    }
   });
 })();

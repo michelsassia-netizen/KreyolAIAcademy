@@ -518,6 +518,13 @@
       err.textContent = '';
       saveUser({ name, email, ts: Date.now() });
       localStorage.setItem(NAME_KEY, name);
+      // Count this learner once per device (feeds the live community counter)
+      try {
+        if (!localStorage.getItem('kah_enrolled_v1')) {
+          fetch('https://abacus.jasoncameron.dev/hit/kreyolaihub/learners', { cache:'no-store' }).catch(function(){});
+          localStorage.setItem('kah_enrolled_v1', '1');
+        }
+      } catch(e){}
       gate.classList.remove('show');
       document.body.classList.remove('gated');
       view = 'catalog';

@@ -127,11 +127,12 @@
 <section class="comm-section">
   <div class="comm-wrap">
     <div class="stat-grid">
-      <div class="stat-card"><div class="stat-num">+650</div><div class="stat-label" data-kw="manm aktif — Ayiti & Dyaspora" data-fr="membres actifs — Haïti & Diaspora" data-en="active members — Haiti & Diaspora">manm aktif — Ayiti & Dyaspora</div></div>
-      <div class="stat-card"><div class="stat-num">15</div><div class="stat-label" data-kw="peyi reprezante" data-fr="pays représentés" data-en="countries represented">peyi reprezante</div></div>
-      <div class="stat-card"><div class="stat-num">30+</div><div class="stat-label" data-kw="atelye & sesyon live deja fèt" data-fr="ateliers & sessions live déjà tenus" data-en="workshops & live sessions held">atelye & sesyon live deja fèt</div></div>
-      <div class="stat-card"><div class="stat-num">∞</div><div class="stat-label" data-kw="nouvo manm ap rantre chak jou" data-fr="nouveaux membres chaque jour" data-en="new members joining every day">nouvo manm ap rantre chak jou</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-learners">…</div><div class="stat-label" data-kw="moun k ap aprann sou platfòm nan" data-fr="apprenants sur la plateforme" data-en="learners on the platform">moun k ap aprann sou platfòm nan</div></div>
+      <div class="stat-card"><div class="stat-num">4</div><div class="stat-label" data-kw="kou disponib" data-fr="cours disponibles" data-en="courses available">kou disponib</div></div>
+      <div class="stat-card"><div class="stat-num">48</div><div class="stat-label" data-kw="leson nan total" data-fr="leçons au total" data-en="lessons in total">leson nan total</div></div>
+      <div class="stat-card"><div class="stat-num">3</div><div class="stat-label" data-kw="lang: Kreyòl · Français · English" data-fr="langues : Kreyòl · Français · English" data-en="languages: Kreyòl · Français · English">lang: Kreyòl · Français · English</div></div>
     </div>
+    <p style="text-align:center; color:var(--ink-4); font-size:12.5px; margin-top:16px;" data-kw="Konte an dirèk · li grandi pandan moun ap rantre" data-fr="Compteur en direct · il grandit à mesure que les gens rejoignent" data-en="Live counter · it grows as people join">Konte an dirèk · li grandi pandan moun ap rantre</p>
   </div>
 </section>
 
@@ -299,6 +300,19 @@
 </script>
 <script src="config.js"></script>
 <script src="partials.js"></script>
+<script>
+  /* Live learner count — real, grows as people start the courses (no fake numbers). */
+  (function(){
+    var el = document.getElementById('stat-learners');
+    fetch('https://abacus.jasoncameron.dev/get/kreyolaihub/learners', { cache:'no-store' })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){
+        var n = d && (typeof d.value==='number' ? d.value : (typeof d.count==='number' ? d.count : null));
+        if (el) el.textContent = (typeof n==='number') ? n.toLocaleString() : '0';
+      })
+      .catch(function(){ if (el) el.textContent = '—'; });
+  })();
+</script>
 
 
 </body></html>
