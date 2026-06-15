@@ -7,6 +7,7 @@
   function cfg(k,d){ return (window.KAH_CONFIG && window.KAH_CONFIG[k]) || d; }
   var WORKER = cfg('WORKER_URL', 'https://kreyolaihub2.kreyolaihub.workers.dev');
   var MODEL  = cfg('MODEL', 'claude-haiku-4-5-20251001');
+  var LOGO   = 'assets/logo-mark.webp';   // brand logo shown in the chatbot
 
   var SYSTEM =
     "Ou se Asistan KreyòlAIHub — yon gid cho, zanmitay e itil ki akeyi vizitè sou sitwèb KreyòlAIHub. " +
@@ -82,6 +83,8 @@
     '.kah-as-typing .b{display:inline-flex;gap:4px;}.kah-as-typing .d{width:6px;height:6px;border-radius:50%;background:#ffc62e;animation:kahdot 1.2s infinite;}' +
     '.kah-as-typing .d:nth-child(2){animation-delay:.15s;}.kah-as-typing .d:nth-child(3){animation-delay:.3s;}' +
     '@keyframes kahdot{0%,60%,100%{opacity:.4;transform:translateY(0);}30%{opacity:1;transform:translateY(-4px);}}' +
+    '.kah-as-launch .ic img,.kah-as-head .av img,.kah-as-av img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;}' +
+    '.kah-as-launch .ic,.kah-as-head .av,.kah-as-av{overflow:hidden;padding:0;}' +
     '/* keep WhatsApp float clear of the assistant */ .wa-float{left:22px;right:auto !important;}' +
     '@media(max-width:520px){.kah-as-launch span{display:none;}.kah-as-launch{padding:14px;}}';
 
@@ -90,11 +93,11 @@
   function init(){
     var style=document.createElement('style'); style.textContent=css; document.head.appendChild(style);
 
-    var launch=el('<button class="kah-as-launch" aria-label="'+t(T.title)+'"><span class="ic">💬</span><span>'+t(T.title).split(' ')[0]+'</span></button>');
+    var launch=el('<button class="kah-as-launch" aria-label="'+t(T.title)+'"><span class="ic"><img src="'+LOGO+'" alt=""></span><span>'+t(T.title).split(' ')[0]+'</span></button>');
     var teaser=el('<div class="kah-as-teaser">'+t(T.teaser)+'</div>');
     var panel=el(
       '<div class="kah-as-panel" role="dialog" aria-label="'+t(T.title)+'">'+
-        '<div class="kah-as-head"><span class="av">🤖</span><div><div class="nm">'+t(T.title)+'</div>'+
+        '<div class="kah-as-head"><span class="av"><img src="'+LOGO+'" alt=""></span><div><div class="nm">'+t(T.title)+'</div>'+
           '<div class="st"><span class="dot"></span>'+t(T.sub)+'</div></div><button class="x" aria-label="Close">✕</button></div>'+
         '<div class="kah-as-body"></div>'+
         '<div class="kah-as-chips"></div>'+
@@ -112,7 +115,7 @@
     function add(role,text,opts){
       opts=opts||{};
       var m=el('<div class="kah-as-msg '+(role==='u'?'u':'a')+(opts.typing?' kah-as-typing':'')+'"></div>');
-      var av=el('<span class="kah-as-av">'+(role==='u'?'🧑🏾':'🤖')+'</span>');
+      var av=el('<span class="kah-as-av">'+(role==='u'?'🧑🏾':'<img src="'+LOGO+'" alt="">')+'</span>');
       var b=document.createElement('div'); b.className='b';
       if(opts.typing){ b.innerHTML='<span class="d"></span><span class="d"></span><span class="d"></span>'; }
       else { b.textContent=text; }
