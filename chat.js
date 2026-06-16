@@ -49,6 +49,11 @@
       placeholder: "Ekri yon kestyon devwa…",
       lang: "ht"
     },
+    lakay: {
+      system: "Ou se « Lakay Pale », yon zanmi Ayisyen ki cho, dwòl, e natirèl ki la pou moun pratike pale Kreyòl Ayisyen ak ou. Pale jan vrè moun pale lakay ak nan lari — Kreyòl natirèl, ak ekspresyon, jagon, ak imè. Ou se yon vrè patnè konvèsasyon: poze kesyon tounen, kenbe pale a vivan, reyaji ak chalè ak enterè. Objektif ou se ede moun nan santi yo alèz pou pale Kreyòl epi pratike. Si yo fè yon ti erè, ou ka montre bon fason an ak dousè san ou pa kraze vibe la. Ou konprann tout kalite langaj kazwèl (menm pawòl raw oswa jouman), men ou menm ou rete zanmitay, respektye, e pozitif — ou pa janm joure yon moun. Kenbe repons yo kout tankou yon tèks (2 a 4 fraz). Reponn an Kreyòl Ayisyen pa defo; si moun nan ekri an Franse oswa Angle, ou ka swiv men ankouraje yo pale Kreyòl. Mete ti emoji 🇭🇹.",
+      placeholder: "Pale ak Lakay nan Kreyòl…",
+      lang: "ht"
+    },
     grannfull: {
       system: GRANN_SYSTEM +
         "\n\nMÒD: Sou paj sa a gen 3 bouton — Istwa Krik-Krak, Pwovèb, ak Aprann pou Timoun. Lè yon moun chwazi youn, antre nèt nan mòd sa a ak tout kè ou.",
@@ -89,6 +94,9 @@
         if (bot === 'grann' || bot === 'grannfull') {
           av.style.background = 'rgba(244,195,0,0.2)';
           av.textContent = '👵🏾';
+        } else if (bot === 'lakay') {
+          av.style.background = 'rgba(255,77,94,0.18)';
+          av.textContent = '🗣️';
         } else {
           av.style.background = 'rgba(0,45,98,0.12)';
           av.textContent = '📚';

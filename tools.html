@@ -228,17 +228,32 @@
       <p data-kw="Pratike konvèsasyon ak yon AI ki reponn an Kreyòl Ayisyen. Eseye ekspresyon, jagon, menm jouman — Lakay Pale swiv." data-fr="Pratiquez la conversation avec une IA qui répond en créole haïtien. Essayez expressions, argot, même insultes — Lakay Pale suit." data-en="Conversation practice with an AI that speaks Haitian Creole back. Try idioms, slang, even insults — Lakay Pale keeps up.">Pratike konvèsasyon ak yon AI ki reponn an Kreyòl Ayisyen. Eseye ekspresyon, jagon, menm jouman — Lakay Pale swiv.</p>
       <div class="tag-row">
         <span class="badge-live" data-kw="● Disponib" data-fr="● En ligne" data-en="● Live">● Disponib</span>
-        <span class="tag" style="background: rgba(0,45,98,0.10); color: var(--navy);" data-kw="Ekstèn" data-fr="Externe" data-en="External">Ekstèn</span>
+        <span class="tag" style="background: rgba(255,77,94,0.12); color: var(--red);" data-kw="Pratik Kreyòl" data-fr="Pratique du créole" data-en="Kreyòl practice">Pratik Kreyòl</span>
       </div>
-      <a class="ext-link" href="https://michelsassia-netizen.github.io/Kreyolaibot/" target="_blank" rel="noopener" data-kw="Ouvri Lakay Pale" data-fr="Ouvrir Lakay Pale" data-en="Open Lakay Pale">Ouvri Lakay Pale</a>
       <div class="photo">
         <image-slot id="tool-lakay" shape="rect" src="assets/ph/lakay.svg" placeholder="Two friends practicing Kreyòl over phones"></image-slot>
       </div>
     </div>
-    <div class="disabled-chat">
-      <div class="big" data-kw="Lakay Pale ouvri nan yon nouvo tab." data-fr="Lakay Pale s'ouvre dans un nouvel onglet." data-en="Lakay Pale opens in a new tab.">Lakay Pale ouvri nan yon nouvo tab.</div>
-      <div style="margin-top: 4px; font-size: 14px; color: var(--ink-3); font-weight: 500;" data-kw="Se yon konstriksyon endepandan pa kominote nou an —<br/>klike sou lyen an pou kòmanse pale." data-fr="Construction indépendante de notre communauté —<br/>cliquez sur le lien pour commencer." data-en="It's an independent build by our community —<br/>click the link to start chatting.">Se yon konstriksyon endepandan pa kominote nou an —<br>klike sou lyen an pou kòmanse pale.</div>
-      <a href="https://michelsassia-netizen.github.io/Kreyolaibot/" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 20px;" data-kw="Lanse Lakay Pale ↗" data-fr="Lancer Lakay Pale ↗" data-en="Launch Lakay Pale ↗">Lanse Lakay Pale ↗</a>
+    <div class="chat-panel" id="lakay-chat">
+      <div class="chat-header">
+        <div class="av" style="background: rgba(255,77,94,0.18); border-radius: 50%; width: 40px; height: 40px;">🗣️</div>
+        <div class="meta">
+          <div class="name">Lakay Pale</div>
+          <div class="sub"><span class="dot"></span><span data-kw="Anliy · pale Kreyòl natirèl" data-fr="En ligne · créole naturel" data-en="Online · natural Kreyòl">Anliy · pale Kreyòl natirèl</span></div>
+        </div>
+      </div>
+      <div class="chat-body" data-empty="true">
+        <div class="msg ai"><span class="av" style="background: rgba(255,77,94,0.18);">🗣️</span><div class="bubble">Sak pase! 🇭🇹 Mwen se Lakay Pale. Pale avè m an Kreyòl sou nenpòt bagay — n ap pratike ansanm. Sa k ap pase jodi a?</div></div>
+      </div>
+      <div class="chat-quick">
+        <button data-q="Sak pase? Kijan jounen w ye?">Salye m</button>
+        <button data-q="Aprann mwen kèk ekspresyon Kreyòl chak jou.">Ekspresyon</button>
+        <button data-q="Ann pale sou manje Ayisyen.">Pale sou manje</button>
+      </div>
+      <form class="chat-input" data-bot="lakay">
+        <input type="text" placeholder="Pale ak Lakay nan Kreyòl…" data-kw-placeholder="Pale ak Lakay nan Kreyòl…" data-fr-placeholder="Parlez à Lakay en créole…" data-en-placeholder="Chat with Lakay in Kreyòl…" required="">
+        <button type="submit" data-kw="Voye" data-fr="Envoyer" data-en="Send">Voye</button>
+      </form>
     </div>
   </div>
 </section>
