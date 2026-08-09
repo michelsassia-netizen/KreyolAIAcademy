@@ -525,6 +525,18 @@
           localStorage.setItem('kah_enrolled_v1', '1');
         }
       } catch(e){}
+      // Save the signup (name + email) to Formspree for the newsletter list.
+      try {
+        var FS = (window.KAH_CONFIG && window.KAH_CONFIG.FORMSPREE_URL) || '';
+        var sentKey = 'kah_signup_sent_' + email;
+        if (FS && !localStorage.getItem(sentKey)) {
+          fetch(FS, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ name: name, email: email, source: 'KreyòlAIHub Academy', _subject: 'Nouvo enskripsyon Akademi' })
+          }).then(function(){ localStorage.setItem(sentKey, '1'); }).catch(function(){});
+        }
+      } catch(e){}
       gate.classList.remove('show');
       document.body.classList.remove('gated');
       view = 'catalog';
