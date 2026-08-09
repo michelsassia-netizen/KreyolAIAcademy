@@ -11,5 +11,5 @@ window.KAH_CONFIG = {
   MODEL: 'claude-haiku-4-5-20251001',
   // Formspree endpoint that collects academy signups (name + email) for your newsletter.
   // Create a free form at formspree.io, then paste its URL here (e.g. https://formspree.io/f/xxxxxx).
-  FORMSPREE_URL: ''
+  FORMSPREE_URL: 'https://formspree.io/f/xojnlklz'
 };
