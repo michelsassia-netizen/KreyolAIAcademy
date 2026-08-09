@@ -14,5 +14,5 @@ window.KAH_CONFIG = {
   FORMSPREE_URL: 'https://formspree.io/f/xojnlklz',
   // Google Analytics 4 Measurement ID (looks like G-XXXXXXXXXX). Leave empty to disable.
   // Get it at analytics.google.com → Admin → Data Streams → your web stream.
-  GA_ID: ''
+  GA_ID: 'G-T9S2DKKHHR'
 };
