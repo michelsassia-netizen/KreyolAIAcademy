@@ -194,5 +194,23 @@
       s.id = 'kah-assistant-js'; s.src = 'assistant.js'; s.defer = true;
       document.body.appendChild(s);
     }
+    // Google Analytics (loads once on every page, only if a Measurement ID is set)
+    initAnalytics();
   });
+
+  // Google Analytics 4 — dormant until KAH_CONFIG.GA_ID is set (e.g. "G-XXXXXXXXXX").
+  function initAnalytics(){
+    var id = (window.KAH_CONFIG && window.KAH_CONFIG.GA_ID) || '';
+    if (!id || id.indexOf('G-') !== 0) return;            // not configured yet
+    if (document.getElementById('kah-ga-js')) return;      // already loaded
+    var g = document.createElement('script');
+    g.id = 'kah-ga-js'; g.async = true;
+    g.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+    document.head.appendChild(g);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ window.dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', id, { anonymize_ip: true });
+  }
 })();
