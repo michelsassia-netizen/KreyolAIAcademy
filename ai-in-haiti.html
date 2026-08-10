@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <link rel="canonical" href="https://kreyolaihub.com/ai-in-haiti.html">
-<meta name="keywords" content="AI in Haiti, AI Ayiti, entèlijans atifisyèl Ayiti, intelligence artificielle Haïti, AI an Kreyòl, aprann AI, learn AI Haitian Creole, AI in Haitian Creole, chatbot Ayiti, otomatizasyon Ayiti, artificial intelligence Haiti, Kreyòl AI, KreyòlAIHub">
+<meta name="keywords" content="AI in Haiti, AI Ayiti, entèlijans atifisyèl Ayiti, intelligence artificielle Haïti, AI an Kreyòl, aprann AI, learn AI Haitian Creole, AI in Haitian Creole, chatbot Ayiti, otomatizasyon Ayiti, artificial intelligence Haiti, Kreyòl AI, AI jobs Haiti, AI jobs for Haitians, djòb AI, travay AI Ayiti, emplois IA Haïti, KreyòlAIHub">
 <meta name="author" content="KreyòlAIHub">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="article">
@@ -143,6 +143,40 @@
   .callout p { margin: 6px 0; }
   .callout .k { color: var(--ink); font-weight: 600; }
 
+  /* Jobs */
+  .jobs-empty {
+    display:flex; align-items:center; gap:16px;
+    background: var(--surface); border: 1px dashed var(--line); border-radius: 14px;
+    padding: 20px 22px; margin: 20px 0 26px; max-width: 760px;
+  }
+  .jobs-empty-ico { font-size: 26px; }
+  .jobs-empty p { margin: 0; color: var(--ink-3); font-size: 15.5px; }
+  .jbf {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg);
+    padding: 28px; max-width: 760px; backdrop-filter: blur(20px); margin: 6px 0 10px;
+  }
+  .jbf-eyebrow { font-family:'Poppins'; font-weight:700; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color: var(--amber); margin-bottom: 18px; }
+  .jbf-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .jbf-field { margin-bottom: 14px; }
+  .jbf-field label { display:block; font-size:12px; font-family:'Poppins'; font-weight:600; margin-bottom:7px; color:var(--ink-2); letter-spacing:0.04em; text-transform:uppercase; }
+  .jbf-field input, .jbf-field textarea {
+    width:100%; padding:12px 15px; border-radius:11px;
+    border:1px solid var(--line); background:var(--bg); color:var(--ink);
+    font-size:14.5px; font-family:'Noto Sans'; transition:border-color .15s;
+  }
+  .jbf-field input::placeholder, .jbf-field textarea::placeholder { color:var(--ink-4); }
+  .jbf-field input:focus, .jbf-field textarea:focus { outline:none; border-color:var(--amber); background:var(--bg-2); }
+  .jbf-field textarea { min-height:92px; resize:vertical; }
+  .jbf-msg {
+    margin-top:14px; padding:13px 16px; border-radius:11px;
+    background:rgba(52,224,140,0.12); color:var(--green);
+    font-family:'Poppins'; font-weight:600; font-size:14px; display:none;
+    border:1px solid rgba(52,224,140,0.25);
+  }
+  .jbf-msg.show { display:block; }
+  .jbf-note { font-size:12.5px; color:var(--ink-4); margin:12px 0 0; }
+  @media (max-width:560px){ .jbf-row { grid-template-columns:1fr; } }
+
   .faq-item { border-top: 1px solid var(--line-2); padding: 22px 0; max-width: 820px; }
   .faq-item h3 { margin: 0 0 8px; font-size: 19px; }
   .faq-item p { margin: 0; }
@@ -188,6 +222,7 @@
         <a href="#use" data-kw="Ki jan pou sèvi avè l" data-fr="Comment l'utiliser" data-en="How to use it">Ki jan pou sèvi avè l</a>
         <a href="#kreyol" data-kw="AI an Kreyòl" data-fr="L'IA en créole" data-en="AI in Kreyòl">AI an Kreyòl</a>
         <a href="#business" data-kw="AI pou biznis" data-fr="L'IA pour le business" data-en="AI for business">AI pou biznis</a>
+        <a href="#jobs" data-kw="Djòb AI an Ayiti" data-fr="Emplois en IA" data-en="AI Jobs in Haiti">Djòb AI an Ayiti</a>
         <a href="#learn" data-kw="Ki jan pou aprann" data-fr="Comment apprendre" data-en="How to learn">Ki jan pou aprann</a>
         <a href="#faq" data-kw="Kesyon moun poze" data-fr="Questions fréquentes" data-en="FAQ">Kesyon moun poze</a>
       </aside>
@@ -228,6 +263,49 @@
         <h2 id="business" data-kw="AI, chatbot, ak otomatizasyon pou biznis Ayisyen" data-fr="IA, chatbots et automatisation pour les entreprises haïtiennes" data-en="AI, chatbots, and automation for Haitian businesses">AI, chatbot, ak otomatizasyon pou biznis Ayisyen</h2>
         <p data-kw="AI pa sèlman pou aprann — li ka fè biznis ou grandi. Yon <strong>chatbot</strong> se yon asistan otomatik ki reponn kliyan sou WhatsApp oswa Messenger, menm lè w ap dòmi. <strong>Otomatizasyon</strong> vle di kite AI fè travay ki repetitif — fakti, swivi, rapò — pou ou ka konsantre sou sa ki enpòtan." data-fr="L'IA n'est pas seulement pour apprendre — elle peut faire grandir votre entreprise. Un <strong>chatbot</strong> est un assistant automatique qui répond aux clients sur WhatsApp ou Messenger, même pendant votre sommeil. L'<strong>automatisation</strong> consiste à laisser l'IA faire les tâches répétitives — factures, suivis, rapports — pour que vous puissiez vous concentrer sur l'essentiel." data-en="AI is not only for learning — it can grow your business. A <strong>chatbot</strong> is an automatic assistant that answers customers on WhatsApp or Messenger, even while you sleep. <strong>Automation</strong> means letting AI handle repetitive tasks — invoices, follow-ups, reports — so you can focus on what matters.">AI pa sèlman pou aprann — li ka fè biznis ou grandi. Yon <strong>chatbot</strong> se yon asistan otomatik ki reponn kliyan sou WhatsApp oswa Messenger, menm lè w ap dòmi. <strong>Otomatizasyon</strong> vle di kite AI fè travay ki repetitif — fakti, swivi, rapò — pou ou ka konsantre sou sa ki enpòtan.</p>
         <p data-kw="Pou restoran, klinik, lekòl, boutik, oswa ONG ki bezwen yon solisyon ki pale Kreyòl, ekip KreyòlAIHub ka bati l pou ou. Gade paj <a href='consulting.html' style='color:var(--amber);text-decoration:underline;'>Konsiltasyon</a> an pou plis detay." data-fr="Pour les restaurants, cliniques, écoles, commerces ou ONG qui ont besoin d'une solution en créole, l'équipe de KreyòlAIHub peut la construire pour vous. Consultez la page <a href='consulting.html' style='color:var(--amber);text-decoration:underline;'>Conseil</a> pour en savoir plus." data-en="For restaurants, clinics, schools, shops, or NGOs that need a Kreyòl-speaking solution, the KreyòlAIHub team can build it for you. See the <a href='consulting.html' style='color:var(--amber);text-decoration:underline;'>Consulting</a> page for details.">Pou restoran, klinik, lekòl, boutik, oswa ONG ki bezwen yon solisyon ki pale Kreyòl, ekip KreyòlAIHub ka bati l pou ou. Gade paj <a href="consulting.html" style="color:var(--amber);text-decoration:underline;">Konsiltasyon</a> an pou plis detay.</p>
+
+        <h2 id="jobs" data-kw="Djòb AI pou Ayisyen" data-fr="Emplois en IA pour Haïtiens" data-en="AI Jobs for Haitians">Djòb AI pou Ayisyen</h2>
+        <p data-kw="Yon tablo djòb AI ki fèt pou Ayisyen — <strong>kèlkeswa kote yo ye nan mond lan</strong>. Djòb an Ayiti, nan dyaspora a, oswa aleka (remote): nenpòt Ayisyen ka aplike. Ou gen yon djòb, yon staj, oswa yon kontra ki gen rapò ak AI oswa teknoloji? Afiche l gratis. Ou ap chèche travay nan AI? Tounen souvan — n ap ajoute nouvo opòtinite." data-fr="Un tableau d'offres en IA pensé pour les Haïtiens — <strong>où qu'ils soient dans le monde</strong>. Postes en Haïti, dans la diaspora ou en télétravail : tout Haïtien peut postuler. Vous avez un emploi, un stage ou un contrat lié à l'IA ou à la tech ? Publiez-le gratuitement. Vous cherchez un poste en IA ? Revenez souvent — nous ajoutons de nouvelles opportunités." data-en="An AI job board made for Haitians — <strong>wherever they are in the world</strong>. Jobs in Haiti, in the diaspora, or remote: any Haitian can apply. Have a job, internship, or contract related to AI or tech? Post it free. Looking for AI work? Check back often — we add new opportunities.">Yon tablo djòb AI ki fèt pou Ayisyen — <strong>kèlkeswa kote yo ye nan mond lan</strong>. Djòb an Ayiti, nan dyaspora a, oswa aleka (remote): nenpòt Ayisyen ka aplike. Ou gen yon djòb, yon staj, oswa yon kontra ki gen rapò ak AI oswa teknoloji? Afiche l gratis. Ou ap chèche travay nan AI? Tounen souvan — n ap ajoute nouvo opòtinite.</p>
+
+        <div class="jobs-empty">
+          <div class="jobs-empty-ico">💼</div>
+          <p data-kw="<strong>Poko gen djòb afiche.</strong> Se ou ki ka premye a — sèvi ak fòm ki anba a pou afiche yon opòtinite AI." data-fr="<strong>Aucune offre pour l'instant.</strong> Soyez le premier — utilisez le formulaire ci-dessous pour publier une opportunité en IA." data-en="<strong>No jobs posted yet.</strong> Be the first — use the form below to post an AI opportunity."><strong>Poko gen djòb afiche.</strong> Se ou ki ka premye a — sèvi ak fòm ki anba a pou afiche yon opòtinite AI.</p>
+        </div>
+
+        <form id="job-form" class="jbf" novalidate>
+          <div class="jbf-eyebrow" data-kw="Afiche yon djòb AI" data-fr="Publier une offre IA" data-en="Post an AI job">Afiche yon djòb AI</div>
+          <div class="jbf-row">
+            <div class="jbf-field">
+              <label for="j-title" data-kw="Tit djòb la" data-fr="Intitulé du poste" data-en="Job title">Tit djòb la</label>
+              <input id="j-title" name="job_title" type="text" required placeholder="Prompt Engineer, Data Analyst…">
+            </div>
+            <div class="jbf-field">
+              <label for="j-org" data-kw="Konpayi / Òganizasyon" data-fr="Entreprise / Organisation" data-en="Company / Organization">Konpayi / Òganizasyon</label>
+              <input id="j-org" name="company" type="text" required placeholder="Non konpayi an">
+            </div>
+          </div>
+          <div class="jbf-row">
+            <div class="jbf-field">
+              <label for="j-loc" data-kw="Kote" data-fr="Lieu" data-en="Location">Kote</label>
+              <input id="j-loc" name="location" type="text" placeholder="Pòtoprens · Remote · Miami…">
+            </div>
+            <div class="jbf-field">
+              <label for="j-link" data-kw="Link oswa imèl pou aplike" data-fr="Lien ou email pour postuler" data-en="Apply link or email">Link oswa imèl pou aplike</label>
+              <input id="j-link" name="apply_link" type="text" required placeholder="https://… oswa email@…">
+            </div>
+          </div>
+          <div class="jbf-field">
+            <label for="j-desc" data-kw="Ti deskripsyon" data-fr="Brève description" data-en="Short description">Ti deskripsyon</label>
+            <textarea id="j-desc" name="description" placeholder="Kisa djòb la ye, ki sa moun nan bezwen konnen…" data-kw-placeholder="Kisa djòb la ye, ki sa moun nan bezwen konnen…" data-fr-placeholder="En quoi consiste le poste, ce qu'il faut savoir…" data-en-placeholder="What the job is, what applicants should know…"></textarea>
+          </div>
+          <div class="jbf-field">
+            <label for="j-email" data-kw="Imèl ou (pou nou ka kontakte w)" data-fr="Votre email (pour vous contacter)" data-en="Your email (so we can reach you)">Imèl ou (pou nou ka kontakte w)</label>
+            <input id="j-email" name="poster_email" type="email" required placeholder="ou@email.com">
+          </div>
+          <button type="submit" class="btn btn-primary" data-kw="Afiche Djòb la" data-fr="Publier l'offre" data-en="Post the Job">Afiche Djòb la</button>
+          <div class="jbf-msg" id="job-msg" data-kw="✓ Mèsi! Nou resevwa djòb la. N ap revize l epi pibliye l byento." data-fr="✓ Merci ! Nous avons reçu l'offre. Nous la vérifions et la publions bientôt." data-en="✓ Thanks! We got the job. We'll review and publish it soon.">✓ Mèsi! Nou resevwa djòb la. N ap revize l epi pibliye l byento.</div>
+          <p class="jbf-note" data-kw="Djòb yo revize alamen anvan yo parèt pou evite spam." data-fr="Les offres sont vérifiées manuellement avant publication pour éviter le spam." data-en="Jobs are reviewed by hand before appearing, to prevent spam.">Djòb yo revize alamen anvan yo parèt pou evite spam.</p>
+        </form>
 
         <h2 id="learn" data-kw="Ki jan pou w kòmanse aprann AI (gratis)" data-fr="Comment commencer à apprendre l'IA (gratuitement)" data-en="How to start learning AI (free)">Ki jan pou w kòmanse aprann AI (gratis)</h2>
         <p data-kw="Pi bon fason pou pa rete dèyè se kòmanse aprann jodi a. Akademi KreyòlAIHub la ap montre w AI depi zewo, an Kreyòl, Franse, ak Angle. Kou prensipal la — <strong>30 Leson AI</strong> — kouvri baz AI, ChatGPT, Claude, ak ki jan pou ekri bon prompt, epi ou jwenn yon sètifika lè w fini." data-fr="La meilleure façon de ne pas rester à la traîne est de commencer à apprendre aujourd'hui. L'académie KreyòlAIHub vous enseigne l'IA de zéro, en créole, français et anglais. Le cours principal — <strong>30 Leçons IA</strong> — couvre les bases de l'IA, ChatGPT, Claude et l'art d'écrire de bons prompts, avec un certificat à la fin." data-en="The best way not to fall behind is to start learning today. The KreyòlAIHub academy teaches you AI from zero, in Kreyòl, French, and English. The main course — <strong>30 AI Lessons</strong> — covers AI basics, ChatGPT, Claude, and how to write good prompts, with a certificate when you finish.">Pi bon fason pou pa rete dèyè se kòmanse aprann jodi a. Akademi KreyòlAIHub la ap montre w AI depi zewo, an Kreyòl, Franse, ak Angle. Kou prensipal la — <strong>30 Leson AI</strong> — kouvri baz AI, ChatGPT, Claude, ak ki jan pou ekri bon prompt, epi ou jwenn yon sètifika lè w fini.</p>
@@ -281,5 +359,45 @@
 
 <script src="config.js"></script>
 <script src="partials.js"></script>
+<script>
+  // AI job submissions → your Formspree inbox (you review before publishing).
+  (function(){
+    var form = document.getElementById('job-form');
+    if (!form) return;
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var endpoint = (window.KAH_CONFIG && window.KAH_CONFIG.FORMSPREE_URL) || '';
+      var msg = document.getElementById('job-msg');
+      var required = ['j-title','j-org','j-link','j-email'];
+      for (var i=0;i<required.length;i++){
+        var el = document.getElementById(required[i]);
+        if (el && !el.value.trim()){ el.focus(); el.style.borderColor = 'var(--red)'; return; }
+      }
+      var data = {
+        _subject: 'Nouvo Djòb AI — KreyòlAIHub',
+        source: 'ai-jobs',
+        job_title: document.getElementById('j-title').value.trim(),
+        company: document.getElementById('j-org').value.trim(),
+        location: document.getElementById('j-loc').value.trim(),
+        apply_link: document.getElementById('j-link').value.trim(),
+        description: document.getElementById('j-desc').value.trim(),
+        poster_email: document.getElementById('j-email').value.trim()
+      };
+      var btn = form.querySelector('button[type=submit]');
+      if (btn) btn.disabled = true;
+      function done(ok){
+        if (btn) btn.disabled = false;
+        if (ok){ msg.classList.add('show'); form.reset(); }
+        else { alert('Oops — mesaj la pa pati. Eseye ankò oswa voye l sou WhatsApp.'); }
+      }
+      if (!endpoint){ done(true); return; } // no endpoint configured → still confirm to user
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(function(r){ done(r.ok); }).catch(function(){ done(false); });
+    });
+  })();
+</script>
 
 </body></html>
