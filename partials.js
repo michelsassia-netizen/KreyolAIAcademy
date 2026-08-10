@@ -3,6 +3,7 @@
   const WA = 'https://wa.me/447906520032';
   const PAGES = [
     { id: 'academy',    href: 'academy.html',    kw: 'Akademi',      fr: 'Académie',   en: 'Academy' },
+    { id: 'guide',      href: 'ai-in-haiti.html',kw: 'Gid AI',       fr: 'Guide IA',   en: 'AI Guide' },
     { id: 'tools',      href: 'tools.html',      kw: 'Zouti',        fr: 'Outils',     en: 'Tools' },
     { id: 'community',  href: 'community.html',  kw: 'Kominote',     fr: 'Communauté', en: 'Community' },
     { id: 'consulting', href: 'consulting.html', kw: 'Konsiltasyon', fr: 'Conseil',    en: 'Consulting' },

@@ -25,6 +25,7 @@ Contact: kreyolaihub@gmail.com
 ## Pages
 
 - [Home](https://kreyolaihub.com/): Overview of the platform.
+- [AI in Haiti — Complete Guide](https://kreyolaihub.com/ai-in-haiti.html): The definitive guide to artificial intelligence in Haiti and in Haitian Creole — what AI is, how Haitians can use it, AI tools that speak Kreyòl, AI for Haitian businesses, and how to learn AI for free. Trilingual (Kreyòl, French, English).
 - [Academy](https://kreyolaihub.com/academy.html): AI courses in Haitian Creole with certificates.
 - [AI Tools](https://kreyolaihub.com/tools.html): Live AI assistants in Kreyòl.
 - [Grann AI](https://kreyolaihub.com/grann.html): Haitian grandmother AI — proverbs, stories, wisdom.
