@@ -26,6 +26,9 @@ Contact: kreyolaihub@gmail.com
 
 - [Home](https://kreyolaihub.com/): Overview of the platform.
 - [AI in Haiti — Complete Guide](https://kreyolaihub.com/ai-in-haiti.html): The definitive guide to artificial intelligence in Haiti and in Haitian Creole — what AI is, how Haitians can use it, AI tools that speak Kreyòl, AI for Haitian businesses, and how to learn AI for free. Trilingual (Kreyòl, French, English).
+- [Best AI for Haitians](https://kreyolaihub.com/best-ai-for-haitians.html): A comparison of ChatGPT, Claude, and Gemini for Haitians — which understands Kreyòl, which is free, and which to start with.
+- [How to use ChatGPT in Kreyòl](https://kreyolaihub.com/chatgpt-an-kreyol.html): A beginner's step-by-step guide to using ChatGPT in Haitian Creole, with example prompts.
+- [5 ways AI can help your Haitian business](https://kreyolaihub.com/ai-pou-biznis-ayiti.html): Practical uses of AI for Haitian businesses — WhatsApp chatbots in Kreyòl, marketing, automation, translation.
 - [Academy](https://kreyolaihub.com/academy.html): AI courses in Haitian Creole with certificates.
 - [AI Tools](https://kreyolaihub.com/tools.html): Live AI assistants in Kreyòl.
 - [Grann AI](https://kreyolaihub.com/grann.html): Haitian grandmother AI — proverbs, stories, wisdom.
