@@ -177,6 +177,31 @@
   .jbf-note { font-size:12.5px; color:var(--ink-4); margin:12px 0 0; }
   @media (max-width:560px){ .jbf-row { grid-template-columns:1fr; } }
 
+  /* News */
+  .news-empty {
+    display:flex; align-items:flex-start; gap:16px;
+    background: var(--surface); border: 1px dashed var(--line); border-radius: 14px;
+    padding: 22px 24px; margin: 20px 0 8px; max-width: 760px;
+  }
+  .news-empty-ico { font-size: 26px; line-height:1; }
+  .news-empty p { margin: 0 0 12px; color: var(--ink-3); font-size: 15.5px; line-height:1.6; }
+  .news-share { display:flex; gap:10px; flex-wrap:wrap; }
+  .btn.btn-sm { padding:8px 14px; font-size:13px; }
+
+  /* Articles */
+  .art-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0 8px; max-width:760px; }
+  .art-card {
+    display:block; text-decoration:none;
+    background: var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:22px 22px; transition:transform .18s, border-color .18s;
+    backdrop-filter: blur(20px);
+  }
+  .art-card:hover { transform:translateY(-3px); border-color:var(--amber); }
+  .art-ico { font-size:24px; margin-bottom:10px; }
+  .art-t { font-family:'Poppins'; font-weight:700; font-size:16.5px; color:var(--ink); margin-bottom:6px; }
+  .art-d { font-size:14px; color:var(--ink-3); line-height:1.5; }
+  @media (max-width:560px){ .art-grid { grid-template-columns:1fr; } }
+
   .faq-item { border-top: 1px solid var(--line-2); padding: 22px 0; max-width: 820px; }
   .faq-item h3 { margin: 0 0 8px; font-size: 19px; }
   .faq-item p { margin: 0; }
@@ -222,7 +247,9 @@
         <a href="#use" data-kw="Ki jan pou sèvi avè l" data-fr="Comment l'utiliser" data-en="How to use it">Ki jan pou sèvi avè l</a>
         <a href="#kreyol" data-kw="AI an Kreyòl" data-fr="L'IA en créole" data-en="AI in Kreyòl">AI an Kreyòl</a>
         <a href="#business" data-kw="AI pou biznis" data-fr="L'IA pour le business" data-en="AI for business">AI pou biznis</a>
-        <a href="#jobs" data-kw="Djòb AI an Ayiti" data-fr="Emplois en IA" data-en="AI Jobs in Haiti">Djòb AI an Ayiti</a>
+        <a href="#jobs" data-kw="Djòb AI pou Ayisyen" data-fr="Emplois en IA" data-en="AI Jobs">Djòb AI pou Ayisyen</a>
+        <a href="#news" data-kw="Nouvèl AI an Ayiti" data-fr="Actualités IA" data-en="AI News">Nouvèl AI an Ayiti</a>
+        <a href="#articles" data-kw="Atik ki ka ede w" data-fr="Articles utiles" data-en="Helpful articles">Atik ki ka ede w</a>
         <a href="#learn" data-kw="Ki jan pou aprann" data-fr="Comment apprendre" data-en="How to learn">Ki jan pou aprann</a>
         <a href="#faq" data-kw="Kesyon moun poze" data-fr="Questions fréquentes" data-en="FAQ">Kesyon moun poze</a>
       </aside>
@@ -306,6 +333,44 @@
           <div class="jbf-msg" id="job-msg" data-kw="✓ Mèsi! Nou resevwa djòb la. N ap revize l epi pibliye l byento." data-fr="✓ Merci ! Nous avons reçu l'offre. Nous la vérifions et la publions bientôt." data-en="✓ Thanks! We got the job. We'll review and publish it soon.">✓ Mèsi! Nou resevwa djòb la. N ap revize l epi pibliye l byento.</div>
           <p class="jbf-note" data-kw="Djòb yo revize alamen anvan yo parèt pou evite spam." data-fr="Les offres sont vérifiées manuellement avant publication pour éviter le spam." data-en="Jobs are reviewed by hand before appearing, to prevent spam.">Djòb yo revize alamen anvan yo parèt pou evite spam.</p>
         </form>
+
+        <h2 id="news" data-kw="Nouvèl AI an Ayiti" data-fr="Actualités de l'IA en Haïti" data-en="AI News in Haiti">Nouvèl AI an Ayiti</h2>
+        <p data-kw="Dènye nouvèl AI ki enpòtan pou Ayiti ak Ayisyen — nouvo zouti, opòtinite, evènman, ak pwogrè teknolojik. N ap mete seksyon sa a ajou. Tounen souvan pou w pa rete dèyè." data-fr="Les dernières actualités de l'IA qui comptent pour Haïti et les Haïtiens — nouveaux outils, opportunités, événements et avancées technologiques. Nous mettons cette section à jour. Revenez souvent pour ne rien manquer." data-en="The latest AI news that matters for Haiti and Haitians — new tools, opportunities, events, and tech advances. We keep this section updated. Check back often so you don't fall behind.">Dènye nouvèl AI ki enpòtan pou Ayiti ak Ayisyen — nouvo zouti, opòtinite, evènman, ak pwogrè teknolojik. N ap mete seksyon sa a ajou. Tounen souvan pou w pa rete dèyè.</p>
+        <div class="news-empty">
+          <div class="news-empty-ico">📰</div>
+          <div>
+            <p data-kw="<strong>Premye nouvèl yo ap pibliye byento.</strong> Ou konnen yon nouvèl AI ki enpòtan pou Ayiti — yon nouvo zouti, yon evènman, yon lansman? Pataje l avèk nou:" data-fr="<strong>Les premières actualités arrivent bientôt.</strong> Vous connaissez une actualité IA importante pour Haïti — un nouvel outil, un événement, un lancement ? Partagez-la avec nous :" data-en="<strong>The first news is coming soon.</strong> Know an AI story that matters for Haiti — a new tool, an event, a launch? Share it with us:"><strong>Premye nouvèl yo ap pibliye byento.</strong> Ou konnen yon nouvèl AI ki enpòtan pou Ayiti — yon nouvo zouti, yon evènman, yon lansman? Pataje l avèk nou:</p>
+            <div class="news-share">
+              <a href="mailto:kreyolaihub@gmail.com?subject=Nouvèl%20AI%20pou%20KreyòlAIHub" class="btn btn-ghost btn-sm" data-kw="✉️ Voye yon nouvèl" data-fr="✉️ Envoyer une actu" data-en="✉️ Send news">✉️ Voye yon nouvèl</a>
+              <a href="https://wa.me/447906520032?text=Mwen%20gen%20yon%20nouvèl%20AI%20pou%20KreyòlAIHub" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" data-kw="📱 WhatsApp" data-fr="📱 WhatsApp" data-en="📱 WhatsApp">📱 WhatsApp</a>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="articles" data-kw="Atik ak resous ki ka ede w" data-fr="Articles et ressources utiles" data-en="Helpful articles &amp; resources">Atik ak resous ki ka ede w</h2>
+        <p data-kw="Gid ak resous pou w ale pi lwen ak AI. N ap ajoute nouvo atik regilyèman — tounen souvan." data-fr="Des guides et ressources pour aller plus loin avec l'IA. Nous ajoutons régulièrement de nouveaux articles — revenez souvent." data-en="Guides and resources to go further with AI. We add new articles regularly — check back often.">Gid ak resous pou w ale pi lwen ak AI. N ap ajoute nouvo atik regilyèman — tounen souvan.</p>
+        <div class="art-grid">
+          <a class="art-card" href="#what">
+            <div class="art-ico">📘</div>
+            <div class="art-t" data-kw="Kisa AI ye? — Gid debaz la" data-fr="Qu'est-ce que l'IA ? — Les bases" data-en="What is AI? — The basics">Kisa AI ye? — Gid debaz la</div>
+            <div class="art-d" data-kw="Konprann entèlijans atifisyèl an senp mo, san jagon." data-fr="Comprendre l'intelligence artificielle en mots simples, sans jargon." data-en="Understand artificial intelligence in plain words, no jargon.">Konprann entèlijans atifisyèl an senp mo, san jagon.</div>
+          </a>
+          <a class="art-card" href="academy.html">
+            <div class="art-ico">🎓</div>
+            <div class="art-t" data-kw="Aprann AI nan 30 leson" data-fr="Apprendre l'IA en 30 leçons" data-en="Learn AI in 30 lessons">Aprann AI nan 30 leson</div>
+            <div class="art-d" data-kw="Kou gratis nou an — depi zewo rive nan sètifika, an Kreyòl." data-fr="Notre cours gratuit — de zéro au certificat, en créole." data-en="Our free course — from zero to certificate, in Kreyòl.">Kou gratis nou an — depi zewo rive nan sètifika, an Kreyòl.</div>
+          </a>
+          <a class="art-card" href="tools.html">
+            <div class="art-ico">🛠️</div>
+            <div class="art-t" data-kw="Zouti AI an Kreyòl pou eseye" data-fr="Outils IA en créole à essayer" data-en="AI tools in Kreyòl to try">Zouti AI an Kreyòl pou eseye</div>
+            <div class="art-d" data-kw="Grann AI, Lekòl AI, ak Lakay Pale — gratis, kounye a." data-fr="Grann AI, Lekòl AI et Lakay Pale — gratuits, maintenant." data-en="Grann AI, Lekòl AI, and Lakay Pale — free, right now.">Grann AI, Lekòl AI, ak Lakay Pale — gratis, kounye a.</div>
+          </a>
+          <a class="art-card" href="#business">
+            <div class="art-ico">💼</div>
+            <div class="art-t" data-kw="AI ak chatbot pou biznis ou" data-fr="IA et chatbots pour votre business" data-en="AI &amp; chatbots for your business">AI ak chatbot pou biznis ou</div>
+            <div class="art-d" data-kw="Ki jan AI ka fè biznis Ayisyen ou an grandi." data-fr="Comment l'IA peut faire grandir votre entreprise haïtienne." data-en="How AI can grow your Haitian business.">Ki jan AI ka fè biznis Ayisyen ou an grandi.</div>
+          </a>
+        </div>
 
         <h2 id="learn" data-kw="Ki jan pou w kòmanse aprann AI (gratis)" data-fr="Comment commencer à apprendre l'IA (gratuitement)" data-en="How to start learning AI (free)">Ki jan pou w kòmanse aprann AI (gratis)</h2>
         <p data-kw="Pi bon fason pou pa rete dèyè se kòmanse aprann jodi a. Akademi KreyòlAIHub la ap montre w AI depi zewo, an Kreyòl, Franse, ak Angle. Kou prensipal la — <strong>30 Leson AI</strong> — kouvri baz AI, ChatGPT, Claude, ak ki jan pou ekri bon prompt, epi ou jwenn yon sètifika lè w fini." data-fr="La meilleure façon de ne pas rester à la traîne est de commencer à apprendre aujourd'hui. L'académie KreyòlAIHub vous enseigne l'IA de zéro, en créole, français et anglais. Le cours principal — <strong>30 Leçons IA</strong> — couvre les bases de l'IA, ChatGPT, Claude et l'art d'écrire de bons prompts, avec un certificat à la fin." data-en="The best way not to fall behind is to start learning today. The KreyòlAIHub academy teaches you AI from zero, in Kreyòl, French, and English. The main course — <strong>30 AI Lessons</strong> — covers AI basics, ChatGPT, Claude, and how to write good prompts, with a certificate when you finish.">Pi bon fason pou pa rete dèyè se kòmanse aprann jodi a. Akademi KreyòlAIHub la ap montre w AI depi zewo, an Kreyòl, Franse, ak Angle. Kou prensipal la — <strong>30 Leson AI</strong> — kouvri baz AI, ChatGPT, Claude, ak ki jan pou ekri bon prompt, epi ou jwenn yon sètifika lè w fini.</p>
