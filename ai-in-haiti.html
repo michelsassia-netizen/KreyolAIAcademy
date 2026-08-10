@@ -111,6 +111,36 @@
   .guide-hero .lead { font-size: 18px; color: var(--ink-3); max-width: 720px; margin-top: 22px; line-height: 1.65; }
   .guide-hero .hero-ctas { display:flex; gap:12px; flex-wrap:wrap; margin-top: 30px; }
 
+  /* Quick hub nav */
+  .hub-nav { background: var(--bg-2); border-bottom: 1px solid var(--line-2); }
+  .hub-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .hub-card {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 22px 24px; text-decoration: none;
+    border-right: 1px solid var(--line-2);
+    border-top: 3px solid transparent;
+    transition: background .15s, border-color .15s;
+  }
+  .hub-card:last-child { border-right: 0; }
+  .hub-card:hover { background: var(--surface); }
+  .hub-card.jobs:hover  { border-top-color: var(--green); }
+  .hub-card.news:hover  { border-top-color: var(--navy); }
+  .hub-card.arts:hover  { border-top-color: var(--amber); }
+  .hub-ico { font-size: 26px; line-height: 1; }
+  .hub-tx { display: flex; flex-direction: column; }
+  .hub-tt { font-family: 'Poppins'; font-weight: 700; font-size: 15.5px; color: var(--ink); margin-bottom: 3px; }
+  .hub-tt .arw { color: var(--amber); font-weight: 800; margin-left: 2px; }
+  .hub-card.jobs .arw { color: var(--green); }
+  .hub-card.news .arw { color: var(--navy); }
+  .hub-dd { font-size: 13px; color: var(--ink-3); line-height: 1.45; }
+  @media (max-width: 760px) {
+    .hub-grid { grid-template-columns: 1fr; }
+    .hub-card { border-right: 0; border-bottom: 1px solid var(--line-2); border-top: 0; border-left: 3px solid transparent; }
+    .hub-card.jobs { border-left-color: var(--green); }
+    .hub-card.news { border-left-color: var(--navy); }
+    .hub-card.arts { border-left-color: var(--amber); }
+  }
+
   .guide-body { padding: 60px 0 40px; }
   .guide-wrap { display: grid; grid-template-columns: 240px 1fr; gap: 56px; align-items: start; }
   .toc {
@@ -233,6 +263,35 @@
     </div>
   </div>
 </header>
+
+<!-- ===================== QUICK HUB NAV ===================== -->
+<nav class="hub-nav" aria-label="Sections">
+  <div class="container">
+    <div class="hub-grid">
+      <a class="hub-card jobs" href="#jobs">
+        <span class="hub-ico">💼</span>
+        <span class="hub-tx">
+          <span class="hub-tt" data-kw="Afiche / Jwenn yon Djòb AI <span class='arw'>→</span>" data-fr="Publier / Trouver un emploi IA <span class='arw'>→</span>" data-en="Post / Find an AI Job <span class='arw'>→</span>">Afiche / Jwenn yon Djòb AI <span class="arw">→</span></span>
+          <span class="hub-dd" data-kw="Tablo djòb pou Ayisyen toupatou" data-fr="Offres d'emploi pour Haïtiens partout" data-en="Job board for Haitians anywhere">Tablo djòb pou Ayisyen toupatou</span>
+        </span>
+      </a>
+      <a class="hub-card news" href="#news">
+        <span class="hub-ico">📰</span>
+        <span class="hub-tx">
+          <span class="hub-tt" data-kw="Nouvèl AI an Ayiti <span class='arw'>→</span>" data-fr="Actualités IA en Haïti <span class='arw'>→</span>" data-en="AI News in Haiti <span class='arw'>→</span>">Nouvèl AI an Ayiti <span class="arw">→</span></span>
+          <span class="hub-dd" data-kw="Dènye nouvèl ak opòtinite" data-fr="Dernières actus et opportunités" data-en="Latest news and opportunities">Dènye nouvèl ak opòtinite</span>
+        </span>
+      </a>
+      <a class="hub-card arts" href="#articles">
+        <span class="hub-ico">📘</span>
+        <span class="hub-tx">
+          <span class="hub-tt" data-kw="Atik ki ka ede w <span class='arw'>→</span>" data-fr="Articles utiles <span class='arw'>→</span>" data-en="Helpful Articles <span class='arw'>→</span>">Atik ki ka ede w <span class="arw">→</span></span>
+          <span class="hub-dd" data-kw="Gid ak resous pou aprann plis" data-fr="Guides et ressources pour apprendre" data-en="Guides and resources to learn more">Gid ak resous pou aprann plis</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</nav>
 
 <!-- ===================== BODY ===================== -->
 <section class="guide-body">
