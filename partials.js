@@ -131,7 +131,7 @@
               <h4 data-kw="${cols.build.kw}" data-fr="${cols.build.fr}" data-en="${cols.build.en}">${cols.build[l]}</h4>
               <a href="tools.html" data-kw="Zouti AI" data-fr="Outils IA" data-en="AI Tools">AI Tools</a>
               <a href="grann.html" data-kw="Grann AI" data-fr="Grann AI" data-en="Grann AI">Grann AI</a>
-              <a href="tools.html" data-kw="Bibliyotèk Prompt" data-fr="Bibliothèque de prompts" data-en="Prompt Library">Prompt Library</a>
+              <a href="chatbot-ayiti.html" data-kw="Chatbot pou Ayiti" data-fr="Chatbot pour Haïti" data-en="Chatbot for Haiti">Chatbot pou Ayiti</a>
             </div>
             <div>
               <h4 data-kw="${cols.community.kw}" data-fr="${cols.community.fr}" data-en="${cols.community.en}">${cols.community[l]}</h4>
