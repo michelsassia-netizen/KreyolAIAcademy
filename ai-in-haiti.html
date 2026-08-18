@@ -221,12 +221,19 @@
   /* Articles */
   .art-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0 8px; max-width:760px; }
   .art-card {
-    display:block; text-decoration:none;
+    position: relative; display:block; text-decoration:none;
     background: var(--surface); border:1px solid var(--line); border-radius:14px;
     padding:22px 22px; transition:transform .18s, border-color .18s;
     backdrop-filter: blur(20px);
   }
   .art-card:hover { transform:translateY(-3px); border-color:var(--amber); }
+  .art-num {
+    position:absolute; top:14px; right:14px;
+    font-family:'Poppins'; font-weight:800; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--amber); background: rgba(255,198,46,0.14);
+    padding:4px 9px; border-radius:999px;
+  }
+  .art-num.course { color: var(--green); background: rgba(52,224,140,0.14); }
   .art-ico { font-size:24px; margin-bottom:10px; }
   .art-t { font-family:'Poppins'; font-weight:700; font-size:16.5px; color:var(--ink); margin-bottom:6px; }
   .art-d { font-size:14px; color:var(--ink-3); line-height:1.5; }
@@ -410,21 +417,25 @@
         <p data-kw="Gid ak resous pou w ale pi lwen ak AI. N ap ajoute nouvo atik regilyèman — tounen souvan." data-fr="Des guides et ressources pour aller plus loin avec l'IA. Nous ajoutons régulièrement de nouveaux articles — revenez souvent." data-en="Guides and resources to go further with AI. We add new articles regularly — check back often.">Gid ak resous pou w ale pi lwen ak AI. N ap ajoute nouvo atik regilyèman — tounen souvan.</p>
         <div class="art-grid">
           <a class="art-card" href="best-ai-for-haitians.html">
+            <span class="art-num" data-kw="Atik 1" data-fr="Article 1" data-en="Article 1">Atik 1</span>
             <div class="art-ico">⚖️</div>
             <div class="art-t" data-kw="Ki pi bon AI pou Ayisyen?" data-fr="Quelle est la meilleure IA pour les Haïtiens ?" data-en="What's the best AI for Haitians?">Ki pi bon AI pou Ayisyen?</div>
             <div class="art-d" data-kw="ChatGPT, Claude, ak Gemini — konparezon senp pou Ayisyen." data-fr="ChatGPT, Claude et Gemini — comparatif simple pour Haïtiens." data-en="ChatGPT, Claude, and Gemini — a simple comparison for Haitians.">ChatGPT, Claude, ak Gemini — konparezon senp pou Ayisyen.</div>
           </a>
           <a class="art-card" href="chatgpt-an-kreyol.html">
+            <span class="art-num" data-kw="Atik 2" data-fr="Article 2" data-en="Article 2">Atik 2</span>
             <div class="art-ico">💬</div>
             <div class="art-t" data-kw="Itilize ChatGPT an Kreyòl" data-fr="Utiliser ChatGPT en créole" data-en="Use ChatGPT in Kreyòl">Itilize ChatGPT an Kreyòl</div>
             <div class="art-d" data-kw="Gid etap pa etap pou kòmanse — ak egzanp prompt an Kreyòl." data-fr="Guide étape par étape pour débuter — avec exemples de prompts en créole." data-en="A step-by-step starter guide — with example prompts in Kreyòl.">Gid etap pa etap pou kòmanse — ak egzanp prompt an Kreyòl.</div>
           </a>
           <a class="art-card" href="ai-pou-biznis-ayiti.html">
+            <span class="art-num" data-kw="Atik 3" data-fr="Article 3" data-en="Article 3">Atik 3</span>
             <div class="art-ico">💼</div>
             <div class="art-t" data-kw="5 fason AI ka ede biznis ou" data-fr="5 façons dont l'IA aide votre business" data-en="5 ways AI can help your business">5 fason AI ka ede biznis ou</div>
             <div class="art-d" data-kw="Chatbot, piblisite, otomatizasyon — pou biznis Ayisyen." data-fr="Chatbot, publicité, automatisation — pour les entreprises haïtiennes." data-en="Chatbots, ads, automation — for Haitian businesses.">Chatbot, piblisite, otomatizasyon — pou biznis Ayisyen.</div>
           </a>
-          <a class="art-card" href="academy.html">
+          <a class="art-card course" href="academy.html">
+            <span class="art-num course" data-kw="Kou" data-fr="Cours" data-en="Course">Kou</span>
             <div class="art-ico">🎓</div>
             <div class="art-t" data-kw="Aprann AI nan 30 leson" data-fr="Apprendre l'IA en 30 leçons" data-en="Learn AI in 30 lessons">Aprann AI nan 30 leson</div>
             <div class="art-d" data-kw="Kou gratis nou an — depi zewo rive nan sètifika, an Kreyòl." data-fr="Notre cours gratuit — de zéro au certificat, en créole." data-en="Our free course — from zero to certificate, in Kreyòl.">Kou gratis nou an — depi zewo rive nan sètifika, an Kreyòl.</div>
