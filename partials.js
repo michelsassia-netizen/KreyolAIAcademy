@@ -122,9 +122,10 @@
             </div>
             <div>
               <h4 data-kw="${cols.learn.kw}" data-fr="${cols.learn.fr}" data-en="${cols.learn.en}">${cols.learn[l]}</h4>
+              <a href="aprann-ai-an-kreyol.html" data-kw="Aprann AI an Kreyòl" data-fr="Apprendre l'IA en créole" data-en="Learn AI in Haitian Creole">Aprann AI an Kreyòl</a>
+              <a href="ai-in-haiti.html" data-kw="Gid AI an Ayiti" data-fr="Guide IA en Haïti" data-en="AI in Haiti Guide">Gid AI an Ayiti</a>
               <a href="academy.html" data-kw="Akademi" data-fr="Académie" data-en="Academy">Academy</a>
               <a href="academy.html" data-kw="30 Jou pou Metrize AI" data-fr="30 jours pour maîtriser l'IA" data-en="30 Days to Master AI">30 Days to Master AI</a>
-              <a href="academy.html" data-kw="Kou" data-fr="Cours" data-en="Courses">Courses</a>
             </div>
             <div>
               <h4 data-kw="${cols.build.kw}" data-fr="${cols.build.fr}" data-en="${cols.build.en}">${cols.build[l]}</h4>
