@@ -502,7 +502,7 @@ window.KAH_LESSONS = [
     quiz:{kw:{q:'Pou itilize AI byen:',a:['Pa janm verifye','Toujou verifye','Bliye sèvo w','Suiv san reflechi'],c:1},
           fr:{q:'Bien utiliser l\'IA :',a:['Jamais vérifier','Toujours vérifier','Oublier sa tête','Suivre aveuglément'],c:1},
           en:{q:'Using AI well:',a:['Never verify','Always verify','Ignore yourself','Follow blindly'],c:1}} },
-  { id:30, week:4, sec:'Dominasyon Mache', icon:'🇭🇹',
+  { id:30, week:4, sec:'Dominasyon Mache', icon:'📈',
     title:{kw:'Plan Dominasyon Ayiti',fr:'Plan de domination Haïti',en:'Plan to dominate the AI market in Haiti'},
     lesson:{kw:'Pou domine: Niche klè + Prezans rezo sosyal + Pwodwi/sèvis estriktire. Ayiti bezwen lidè dijital.',
             fr:'Niche claire + présence sociale + offre structurée. Haïti a besoin de leaders.',

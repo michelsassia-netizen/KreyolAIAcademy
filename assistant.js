@@ -12,7 +12,7 @@
   var SYSTEM =
     "Ou se Asistan KreyòlAIHub — yon gid cho, zanmitay e itil ki akeyi vizitè sou sitwèb KreyòlAIHub. " +
     "Misyon ou: fè moun santi yo byen resevwa epi ede yo konprann sa platfòm nan ofri ak kijan pou yo kòmanse. " +
-    "Reponn KOUT (1 a 3 fraz), nan MENM lang vizitè a itilize (Kreyòl Ayisyen pa defo; Franse oswa Angle si yo ekri konsa). Mete ti emoji 🇭🇹.\n\n" +
+    "Reponn KOUT (1 a 3 fraz), nan MENM lang vizitè a itilize (Kreyòl Ayisyen pa defo; Franse oswa Angle si yo ekri konsa). Mete yon ti emoji cho detanzantan.\n\n" +
     "SA KREYÒLAIHUB YE: yon platfòm pou aprann Entèlijans Atifisyèl (AI) an Kreyòl Ayisyen — premye nan kalite l. Tout bagay gratis pou kòmanse.\n" +
     "AKADEMI (paj 'Akademi' / academy.html): 4 kou gratis ak sètifika —\n" +
     "  1) 30 Leson AI (fondasyon AI + chemen pou fè lajan),\n" +
@@ -33,9 +33,9 @@
   var T = {
     title:  { kw:'Asistan KreyòlAIHub', fr:'Assistant KreyòlAIHub', en:'KreyòlAIHub Assistant' },
     sub:    { kw:'An liy · reponn an Kreyòl', fr:'En ligne · répond en créole', en:'Online · replies in Kreyòl' },
-    greet:  { kw:'Bonjou! 👋 Mwen se asistan KreyòlAIHub. Mande m nenpòt bagay sou Akademi an, zouti AI yo, oswa kijan pou kòmanse — tout bagay gratis! 🇭🇹',
-              fr:"Bonjour ! 👋 Je suis l'assistant KreyòlAIHub. Demandez-moi tout sur l'Académie, les outils IA, ou comment commencer — c'est gratuit ! 🇭🇹",
-              en:"Hello! 👋 I'm the KreyòlAIHub assistant. Ask me anything about the Academy, the AI tools, or how to get started — it's free! 🇭🇹" },
+    greet:  { kw:'Bonjou! 👋 Mwen se asistan KreyòlAIHub. Mande m nenpòt bagay sou Akademi an, zouti AI yo, oswa kijan pou kòmanse — tout bagay gratis! <img src="assets/flag-ht.svg" alt="Ayiti" style="height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;">',
+              fr:"Bonjour ! 👋 Je suis l'assistant KreyòlAIHub. Demandez-moi tout sur l'Académie, les outils IA, ou comment commencer — c'est gratuit ! <img src='assets/flag-ht.svg' alt='Ayiti' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;'>",
+              en:"Hello! 👋 I'm the KreyòlAIHub assistant. Ask me anything about the Academy, the AI tools, or how to get started — it's free! <img src='assets/flag-ht.svg' alt='Ayiti' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;'>" },
     ph:     { kw:'Ekri yon kesyon…', fr:'Posez une question…', en:'Ask a question…' },
     teaser: { kw:'Bezwen èd? Mande m! 👋', fr:"Besoin d'aide ? 👋", en:'Need help? Ask me! 👋' },
     send:   { kw:'Voye', fr:'Envoyer', en:'Send' },

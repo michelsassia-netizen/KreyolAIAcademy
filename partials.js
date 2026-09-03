@@ -147,7 +147,7 @@
             </div>
           </div>
           <div class="footer-bottom">
-            <div data-kw="© 2026 KreyòlAIHub · Fèt ak 🇭🇹 ann Ayiti &amp; nan Dyaspora" data-fr="© 2026 KreyòlAIHub · Fait avec 🇭🇹 en Haïti &amp; la Diaspora" data-en="© 2026 KreyòlAIHub · Made with 🇭🇹 in Haiti &amp; the Diaspora">© 2026 KreyòlAIHub · Fèt ak 🇭🇹 ann Ayiti &amp; nan Dyaspora</div>
+            <div data-kw="© 2026 KreyòlAIHub · Fèt ak <img src='assets/flag-ht.svg' alt='Ayiti' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;'> ann Ayiti &amp; nan Dyaspora" data-fr="© 2026 KreyòlAIHub · Fait avec <img src='assets/flag-ht.svg' alt='Ayiti' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;'> en Haïti &amp; la Diaspora" data-en="© 2026 KreyòlAIHub · Made with <img src='assets/flag-ht.svg' alt='Ayiti' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;'> in Haiti &amp; the Diaspora">© 2026 KreyòlAIHub · Fèt ak <img src='assets/flag-ht.svg' alt='Ayiti' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;'> ann Ayiti &amp; nan Dyaspora</div>
             <div>kreyolaihub.com</div>
           </div>
         </div>
