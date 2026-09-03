@@ -25,7 +25,6 @@
     "url": "https://kreyolaihub.com/",
     "email": "kreyolaihub@gmail.com",
     "description": "The first AI platform in Haitian Creole — learning, tools, evaluation, and services.",
-    "founder": { "@type": "Person", "name": "Sassia Jolicoeur" },
     "knowsLanguage": ["ht", "fr", "en"]
   }
 }
@@ -54,6 +53,9 @@
   .founder-meta p { margin:10px 0; font-size:15.5px; color:var(--ink-2); line-height:1.65; }
   .cred { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
   .cred span { padding:6px 12px; border:1px solid var(--line); border-radius:999px; font-size:12.5px; color:var(--ink-3); }
+  .cred-group { margin-top:16px; }
+  .cred-lbl { font-family:'Poppins'; font-weight:700; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--amber); }
+  .cred-group .cred { margin-top:6px; }
 </style>
 </head>
 <body data-page="about">
@@ -79,17 +81,41 @@
 
       <h2 data-kw="Moun ki fonde l" data-fr="La fondatrice" data-en="The founder">Moun ki fonde l</h2>
       <div class="founder-card">
-        <div class="founder-av">S</div>
+        <div class="founder-av" style="background:var(--surface); padding:0; overflow:hidden;"><img src="assets/logo-mark.png" alt="KreyòlAIHub" style="width:100%; height:100%; object-fit:cover;"></div>
         <div class="founder-meta">
-          <p class="fname">Sassia Jolicoeur</p>
-          <div class="frole" data-kw="Fondatè · KreyòlAIHub" data-fr="Fondatrice · KreyòlAIHub" data-en="Founder · KreyòlAIHub">Fondatè · KreyòlAIHub</div>
+          <p class="fname" data-kw="Fondatè KreyòlAIHub" data-fr="Fondateur de KreyòlAIHub" data-en="KreyòlAIHub Founder">Fondatè KreyòlAIHub</p>
+          <div class="frole" data-kw="Espesyalis AI · Trileng" data-fr="Spécialiste IA · Trilingue" data-en="AI specialist · Trilingual">Espesyalis AI · Trileng</div>
           <p data-kw="Yon espesyalis trileng nan adopsyon AI ak otomatizasyon, ak eksperyans pratik nan zouti AI, ajan, API, ak workflow. Pakou li soti nan operasyon rive nan edikasyon AI ak fondasyon platfòm — ak yon sèl objektif: fè teknoloji sèvi kominote Ayisyen an." data-fr="Une spécialiste trilingue de l'adoption de l'IA et de l'automatisation, forte d'une expérience pratique des outils IA, des agents, des API et des workflows. Son parcours va des opérations à l'éducation en IA et à la création de plateformes — avec un seul objectif : mettre la technologie au service de la communauté haïtienne." data-en="A trilingual AI adoption and automation specialist with hands-on experience in AI tools, agents, APIs, and workflow automation. Her path runs from operations to AI education and platform-building — with one goal: making technology serve the Haitian community.">Yon espesyalis trileng nan adopsyon AI ak otomatizasyon, ak eksperyans pratik nan zouti AI, ajan, API, ak workflow. Pakou li soti nan operasyon rive nan edikasyon AI ak fondasyon platfòm — ak yon sèl objektif: fè teknoloji sèvi kominote Ayisyen an.</p>
-          <p data-kw="Anplis KreyòlAIHub, li kreye ALASOKID (aprantisaj eritaj trileng pou timoun Ayisyen) epi li fonde KonpaLondon, k ap selebre kilti ak mizik Ayisyen." data-fr="Au-delà de KreyòlAIHub, elle a créé ALASOKID (apprentissage patrimonial trilingue pour les enfants haïtiens) et fondé KonpaLondon, qui célèbre la culture et la musique haïtiennes." data-en="Beyond KreyòlAIHub, she created ALASOKID (trilingual heritage learning for Haitian children) and founded KonpaLondon, celebrating Haitian culture and music.">Anplis KreyòlAIHub, li kreye ALASOKID (aprantisaj eritaj trileng pou timoun Ayisyen) epi li fonde KonpaLondon, k ap selebre kilti ak mizik Ayisyen.</p>
-          <div class="cred">
-            <span>Azure AI Fundamentals</span>
-            <span>Google AI Essentials</span>
-            <span>Make Academy</span>
-            <span data-kw="Trileng: Kreyòl · Franse · Angle" data-fr="Trilingue : créole · français · anglais" data-en="Trilingual: Kreyòl · French · English">Trileng: Kreyòl · Franse · Angle</span>
+          <p data-kw="Espesyalis la se yon bonè itilizatè Microsoft 365 Copilot, ak eksperyans nan Copilot agents, Power Automate, Power Apps, RAG, prompt engineering, ak deplwaman zouti AI an dirèk (Cloudflare Workers, GitHub Pages, Anthropic API)." data-fr="Le spécialiste est un utilisateur pilote précoce de Microsoft 365 Copilot, avec de l'expérience en Copilot agents, Power Automate, Power Apps, RAG, prompt engineering et déploiement d'outils IA en direct (Cloudflare Workers, GitHub Pages, API Anthropic)." data-en="An early Microsoft 365 Copilot pilot user, with experience in Copilot agents, Power Automate, Power Apps, RAG, prompt engineering, and live AI-tool deployment (Cloudflare Workers, GitHub Pages, Anthropic API).">Espesyalis la se yon bonè itilizatè Microsoft 365 Copilot, ak eksperyans nan Copilot agents, Power Automate, Power Apps, RAG, prompt engineering, ak deplwaman zouti AI an dirèk (Cloudflare Workers, GitHub Pages, Anthropic API).</p>
+
+          <div class="cred-group">
+            <div class="cred-lbl">Microsoft</div>
+            <div class="cred">
+              <span>Copilot &amp; Agent Administration Fundamentals (AB-900)</span>
+              <span>Azure AI Fundamentals (AI-900)</span>
+              <span>Azure Fundamentals (AZ-900)</span>
+            </div>
+          </div>
+          <div class="cred-group">
+            <div class="cred-lbl">Anthropic Claude</div>
+            <div class="cred">
+              <span>Claude 101</span>
+              <span>AI Fluency</span>
+              <span>Teaching AI Fluency</span>
+              <span>Claude Code</span>
+              <span>Claude Code in Action</span>
+              <span>Introduction to Agents</span>
+              <span>Agent Skills</span>
+              <span>Subagents</span>
+            </div>
+          </div>
+          <div class="cred-group">
+            <div class="cred-lbl" data-kw="Google &amp; Otomatizasyon" data-fr="Google &amp; Automatisation" data-en="Google &amp; Automation">Google &amp; Otomatizasyon</div>
+            <div class="cred">
+              <span>Google AI Essentials</span>
+              <span>Google Project Management</span>
+              <span>Make Foundation &amp; Intermediate</span>
+            </div>
           </div>
         </div>
       </div>
