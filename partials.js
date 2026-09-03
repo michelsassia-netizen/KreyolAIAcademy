@@ -141,7 +141,7 @@
             </div>
             <div>
               <h4 data-kw="${cols.company.kw}" data-fr="${cols.company.fr}" data-en="${cols.company.en}">${cols.company[l]}</h4>
-              <a href="index.html#about" data-kw="Konsènan" data-fr="À propos" data-en="About">About</a>
+              <a href="about.html" data-kw="Konsènan" data-fr="À propos" data-en="About">About</a>
               <a href="mailto:kreyolaihub@gmail.com" data-kw="Kontak" data-fr="Contact" data-en="Contact">Kontak</a>
               <a href="privacy.html" data-kw="Vi Prive" data-fr="Confidentialité" data-en="Privacy">Vi Prive</a>
               <a href="terms.html" data-kw="Kondisyon" data-fr="Conditions" data-en="Terms">Kondisyon</a>
