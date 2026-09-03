@@ -1823,10 +1823,11 @@
       <div class="eyebrow" style="color: var(--navy-deep);" data-kw="Resous gratis" data-fr="Ressource gratuite" data-en="Free resource">Resous gratis</div>
       <h2 style="margin-top: 14px;" data-kw="Jwenn Pakè Prompt AI an Kreyòl la — gratis." data-fr="Recevez le pack de prompts IA en créole — gratuit." data-en="Get the free Kreyòl AI Prompt Pack.">Jwenn Pakè Prompt AI an Kreyòl la — gratis.</h2>
       <p data-kw="Antre nan lis Kreyòl AI a pou mizajou chak semèn ak yon pakè prompt ki pare pou itilize an Kreyòl Ayisyen." data-fr="Rejoignez la liste Kreyòl AI pour des mises à jour hebdomadaires et un pack de prompts prêts à l'emploi en créole haïtien." data-en="Join the Kreyòl AI list for weekly updates and a free pack of ready-to-use prompts in Haitian Creole.">Antre nan lis Kreyòl AI a pou mizajou chak semèn ak yon pakè prompt ki pare pou itilize an Kreyòl Ayisyen.</p>
-      <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='✓ Mèsi! / Thanks!'; this.querySelector('input').value='';">
-        <input type="email" placeholder="ou@email.com" required="">
+      <form id="news-form">
+        <input id="news-email" type="email" placeholder="ou@email.com" required="">
         <button class="btn btn-primary" type="submit" data-kw="Jwenn Pakè AI Gratis la" data-fr="Obtenir le pack IA gratuit" data-en="Get the Free AI Pack">Jwenn Pakè AI Gratis la</button>
       </form>
+      <div id="news-msg" style="display:none; margin-top:14px; padding:12px 16px; border-radius:12px; background:rgba(10,9,8,0.14); color:var(--bg); font-family:'Poppins'; font-weight:700; font-size:14px;" data-kw="✓ Mèsi! Ou sou lis Kreyòl AI a. Tcheke imèl ou." data-fr="✓ Merci ! Vous êtes sur la liste Kreyòl AI. Vérifiez votre email." data-en="✓ Thanks! You're on the Kreyòl AI list. Check your email.">✓ Mèsi! Ou sou lis Kreyòl AI a. Tcheke imèl ou.</div>
     </div>
     <div class="pic" aria-hidden="true">
       <div>🇭🇹</div><div class="big">AI</div><div>🚀</div>
@@ -2129,6 +2130,33 @@
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email, source: 'founding-evaluator', _subject: 'Nouvo Evalyatè Fondatè — KreyòlAIHub' })
+      }).then(function(r){ done(r.ok); }).catch(function(){ done(false); });
+    });
+  })();
+
+  // Newsletter (Kreyòl AI Prompt Pack) signup → your Formspree inbox.
+  (function(){
+    var f = document.getElementById('news-form');
+    if (!f) return;
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var el = document.getElementById('news-email');
+      var email = el ? el.value.trim() : '';
+      if (!email) { if (el) el.focus(); return; }
+      var endpoint = (window.KAH_CONFIG && window.KAH_CONFIG.FORMSPREE_URL) || '';
+      var msg = document.getElementById('news-msg');
+      var btn = f.querySelector('button[type=submit]');
+      if (btn) btn.disabled = true;
+      function done(ok){
+        if (btn) btn.disabled = false;
+        if (ok){ if (msg) msg.style.display = 'block'; f.reset(); }
+        else { alert('Oops — mesaj la pa pati. Eseye ankò.'); }
+      }
+      if (!endpoint) { done(true); return; }
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, source: 'newsletter', _subject: 'Nouvo enskripsyon Newsletter — KreyòlAIHub' })
       }).then(function(r){ done(r.ok); }).catch(function(){ done(false); });
     });
   })();
