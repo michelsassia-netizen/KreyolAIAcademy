@@ -2,12 +2,12 @@
 (function(){
   const WA = 'https://wa.me/447906520032';
   const PAGES = [
-    { id: 'academy',    href: 'academy.html',    kw: 'Akademi',      fr: 'Académie',   en: 'Academy' },
-    { id: 'guide',      href: 'ai-in-haiti.html',kw: 'Gid AI',       fr: 'Guide IA',   en: 'AI Guide' },
-    { id: 'tools',      href: 'tools.html',      kw: 'Zouti',        fr: 'Outils',     en: 'Tools' },
-    { id: 'community',  href: 'community.html',  kw: 'Kominote',     fr: 'Communauté', en: 'Community' },
-    { id: 'consulting', href: 'consulting.html', kw: 'Konsiltasyon', fr: 'Conseil',    en: 'Consulting' },
-    { id: 'about',      href: 'index.html#about',kw: 'Konsènan',     fr: 'À propos',   en: 'About' },
+    { id: 'academy',    href: 'academy.html',              kw: 'Aprann',    fr: 'Apprendre',     en: 'Learn' },
+    { id: 'evaluate',   href: 'index.html#evaluation',     kw: 'Evalye',    fr: 'Évaluer',       en: 'Evaluate' },
+    { id: 'tools',      href: 'tools.html',                kw: 'Zouti',     fr: 'Outils',        en: 'Tools' },
+    { id: 'jobs',       href: 'ai-in-haiti.html#jobs',     kw: 'Djòb',      fr: 'Emplois',       en: 'Jobs' },
+    { id: 'research',   href: 'ai-in-haiti.html#articles', kw: 'Rechèch',   fr: 'Recherche',     en: 'Research' },
+    { id: 'orgs',       href: 'consulting.html',           kw: 'Antrepriz', fr: 'Organisations', en: 'For Orgs' },
   ];
   const I18N = {
     cta_start:    { kw: 'Kòmanse',     fr: 'Commencer',  en: 'Get Started' },
@@ -66,7 +66,7 @@
               <button data-lang="fr" onclick="kahSetLang('fr')">FR</button>
               <button data-lang="en" onclick="kahSetLang('en')">EN</button>
             </div>
-            <a href="academy.html" class="btn btn-primary" data-kw="Kòmanse Gratis" data-fr="Commencer gratuitement" data-en="Start Free">Start Free</a>
+            <a href="index.html#demo" class="btn btn-primary" data-kw="Eseye AI Gratis" data-fr="Essayer l'IA — Gratuit" data-en="Test AI Free">Test AI Free</a>
             <button class="mobile-toggle" aria-label="Menu" onclick="kahToggleMenu()">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             </button>
@@ -74,7 +74,7 @@
         </div>
         <div id="mobile-menu" style="display:none; padding: 8px var(--pad-x) 18px; border-top: 1px solid var(--line-2);">
           ${PAGES.map(p=>`<a href="${p.href}" style="display:block; padding:10px 0; font-weight:600;" data-kw="${p.kw}" data-fr="${p.fr}" data-en="${p.en}">${p[l]}</a>`).join('')}
-          <a href="academy.html" class="btn btn-primary" style="margin-top:10px;" data-kw="Kòmanse Gratis" data-fr="Commencer gratuitement" data-en="Start Free">Start Free</a>
+          <a href="index.html#demo" class="btn btn-primary" style="margin-top:10px;" data-kw="Eseye AI Gratis" data-fr="Essayer l'IA — Gratuit" data-en="Test AI Free">Test AI Free</a>
         </div>
       </nav>`;
     const mount = document.getElementById('nav-mount');
@@ -142,8 +142,10 @@
             <div>
               <h4 data-kw="${cols.company.kw}" data-fr="${cols.company.fr}" data-en="${cols.company.en}">${cols.company[l]}</h4>
               <a href="index.html#about" data-kw="Konsènan" data-fr="À propos" data-en="About">About</a>
-              <a href="mailto:kreyolaihub@gmail.com" data-kw="Sipò" data-fr="Support" data-en="Support">Support</a>
-              <a href="mailto:kreyolaihub@gmail.com" data-kw="Imèl" data-fr="E-mail" data-en="Email">Imèl</a>
+              <a href="mailto:kreyolaihub@gmail.com" data-kw="Kontak" data-fr="Contact" data-en="Contact">Kontak</a>
+              <a href="privacy.html" data-kw="Vi Prive" data-fr="Confidentialité" data-en="Privacy">Vi Prive</a>
+              <a href="terms.html" data-kw="Kondisyon" data-fr="Conditions" data-en="Terms">Kondisyon</a>
+              <a href="accessibility.html" data-kw="Aksesibilite" data-fr="Accessibilité" data-en="Accessibility">Aksesibilite</a>
             </div>
           </div>
           <div class="footer-bottom">
