@@ -417,7 +417,12 @@
     hitCourse(cid);
     course = c;
     LESSONS = lessonsOf(c);
-    view = 'home';
+    const p = loadProgress();
+    if (!p.current || !LESSONS.some(x => x.id === p.current)) {
+      p.current = (LESSONS[0] && LESSONS[0].id) || 1;
+      saveProgress(p);
+    }
+    view = 'lesson';      // open straight into the lesson (sidebar list stays visible)
     render();
     window.scrollTo({top:0, behavior:'smooth'});
   }
