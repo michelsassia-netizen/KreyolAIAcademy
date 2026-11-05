@@ -25,6 +25,28 @@
   function saveProgress(p){ localStorage.setItem(progKey(course && course.id), JSON.stringify(p)); }
   function lessonsOf(c){ return (c && c.dataset && window[c.dataset]) ? window[c.dataset] : []; }
 
+  // ---- Per-course "started" live counters (abacus; counts once per device per course) ----
+  var COUNTER_NS = 'kreyolaihub';
+  function courseKey(id){ return 'c_' + String(id).toLowerCase().replace(/[^a-z0-9]+/g,'_'); }
+  function hitCourse(id){
+    try {
+      var k = 'kah_started_' + id;
+      if (!localStorage.getItem(k)) {
+        fetch('https://abacus.jasoncameron.dev/hit/'+COUNTER_NS+'/'+courseKey(id), {cache:'no-store'}).catch(function(){});
+        localStorage.setItem(k, '1');
+      }
+    } catch(e){}
+  }
+  function fillCourseCounts(root){
+    (root||document).querySelectorAll('[data-count-course]').forEach(function(el){
+      var id = el.getAttribute('data-count-course');
+      fetch('https://abacus.jasoncameron.dev/get/'+COUNTER_NS+'/'+courseKey(id), {cache:'no-store'})
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(d){ var n = d && (typeof d.value==='number' ? d.value : (typeof d.count==='number' ? d.count : 0)); el.textContent = (typeof n==='number'? n : 0); })
+        .catch(function(){ var w = el.closest('.cc-count'); if (w) w.style.display='none'; });
+    });
+  }
+
   function lang(){ return (window.kahLang && window.kahLang()) || 'kw'; }
   function T(o){ const l = lang(); return o[l] || o.kw || o.en; }
 
@@ -392,6 +414,7 @@
   function openCourse(cid){
     const c = COURSES.find(x => x.id === cid);
     if (!c || c.status !== 'active') return;
+    hitCourse(cid);
     course = c;
     LESSONS = lessonsOf(c);
     view = 'home';
@@ -422,7 +445,8 @@
       start: {kw:'Kòmanse',fr:'Commencer',en:'Start'},
       cont:  {kw:'Kontinye',fr:'Continuer',en:'Continue'},
       soon:  {kw:'Talè konsa',fr:'Bientôt',en:'Coming soon'},
-      done:  {kw:'fini',fr:'faits',en:'done'}
+      done:  {kw:'fini',fr:'faits',en:'done'},
+      started:{kw:'moun kòmanse',fr:'ont commencé',en:'started'}
     };
     // group courses by category, preserving category declaration order
     const order = Object.keys(CATS);
@@ -443,6 +467,7 @@
             <span class="cc-title">${T(c.title)}</span>
             <span class="cc-sub">${T(c.subtitle)}</span>
             ${active ? `<span class="cc-prog"><span class="cc-bar"><span style="width:${pct}%"></span></span><span class="cc-pct">${n}/${total} ${t.done[l]}</span></span>` : ''}
+            ${active ? `<span class="cc-count" style="display:inline-flex;gap:5px;align-items:center;font-size:12px;color:var(--ink-4);margin-top:4px;">👥 <b data-count-course="${c.id}" style="color:var(--ink-2);font-weight:700;">…</b> <span>${t.started[l]}</span></span>` : ''}
             <span class="cc-cta ${active?'':'soon'}">${active?'▶ ':''}${cta}</span>
           </span>
         </button>`;
@@ -487,6 +512,7 @@
       clearUser(); showGate();
     };
     main.querySelectorAll('.lang-mini button').forEach(b=>b.classList.toggle('active', b.dataset.lang===l));
+    fillCourseCounts(main);
   }
 
   // ---- Login gate (name + email, stored on device) ----
