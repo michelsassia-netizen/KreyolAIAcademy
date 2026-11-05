@@ -40,7 +40,10 @@
     'Kòmanse ak Claude':     { fr:'Démarrer avec Claude',      en:'Getting Started with Claude' },
     'Pwofesyonèl ak Claude': { fr:'Professionnel avec Claude', en:'Professional with Claude' },
     'Baz Prompt':            { fr:'Bases du prompt',           en:'Prompt Basics' },
-    'Prompt Avanse ak Lajan':{ fr:'Prompt avancé & Argent',    en:'Advanced Prompts & Money' }
+    'Prompt Avanse ak Lajan':{ fr:'Prompt avancé & Argent',    en:'Advanced Prompts & Money' },
+    'Fondasyon Biznis Dijital':{ fr:'Fondations du business numérique', en:'Digital Business Foundations' },
+    'Lanse Biznis ou ak AI': { fr:'Lancer votre business avec l\'IA', en:'Launch Your Business with AI' },
+    'Grandi ak Fè Lajan':    { fr:'Grandir & Gagner',          en:'Grow & Earn' }
   };
   function secLabel(s){ const l = lang(); if (l === 'kw') return s; const m = SEC_I18N[s]; return (m && m[l]) || s; }
 

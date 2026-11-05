@@ -59,11 +59,11 @@ window.KAH_COURSES = [
     category: 'biznis',
     title:    { kw:'Biznis Dijital ak AI',   fr:'Business Numérique avec IA', en:'Digital Business with AI' },
     subtitle: { kw:'Lanse ak grandi yon biznis online', fr:'Lancez et développez un business en ligne', en:'Launch and grow an online business' },
-    lessons:  20,
+    lessons:  12,
     cover:    'assets/ph/sec-3.svg',
     accent:   ['#ffb028', '#ff7a3d'],
-    dataset:  null,
-    status:   'soon'
+    dataset:  'KAH_BIZNIS',
+    status:   'active'
   },
   {
     id: 'kontni-ai',
